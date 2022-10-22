@@ -1,10 +1,14 @@
 package com.example.myapplication.ui.theme
 
+import android.graphics.fonts.FontFamily
 import androidx.compose.foundation.isSystemInDarkTheme
+import androidx.compose.foundation.layout.padding
 import androidx.compose.material.MaterialTheme
 import androidx.compose.material.darkColors
 import androidx.compose.material.lightColors
 import androidx.compose.runtime.Composable
+import androidx.compose.ui.Modifier
+import androidx.compose.ui.unit.dp
 
 private val DarkColorPalette = darkColors(
     primary = Green,
@@ -37,6 +41,7 @@ fun MyApplicationTheme(
     } else {
         LightColorPalette
     }
+
 
     MaterialTheme(
         colors = colors,

@@ -19,6 +19,7 @@ import androidx.compose.ui.graphics.painter.Painter
 import androidx.compose.ui.layout.ContentScale
 import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.res.stringResource
+import androidx.compose.ui.text.font.Font
 import androidx.compose.ui.text.font.FontFamily
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
@@ -62,7 +63,8 @@ fun ButtonRegistration(fontSize: Int, text: String, handler: () -> Unit) {
         Text(text = text,
             fontSize = fontSize.sp,
             color = Green,
-            fontFamily = FontFamily.Monospace //hay que incluir Bebas
+            fontFamily = FontFamily(Font(R.font.bebas_neue)), //hay que incluirlo en otro lugar
+            modifier = Modifier.padding(7.dp)
         )
     }
 }
@@ -72,21 +74,19 @@ fun Registration() {
     Box {
         BackgroundImage(painter = painterResource(id = R.drawable.registration_background))
         Column(
-            modifier = Modifier
-                .fillMaxWidth()
-                .fillMaxHeight(),
+            modifier = Modifier.fillMaxWidth().fillMaxHeight(),
             verticalArrangement = Arrangement.Center,
             horizontalAlignment = Alignment.CenterHorizontally
         ) {
 
             Spacer(modifier = Modifier.height(300.dp))
-            ButtonRegistration(fontSize = 36, text = stringResource(R.string.try_out)){}
+            ButtonRegistration(fontSize = 56, text = stringResource(R.string.try_out)){}
             Spacer(modifier = Modifier.height(100.dp))
 
             Row {
-                ButtonRegistration(fontSize = 20, text = stringResource(R.string.login)){}
+                ButtonRegistration(fontSize = 36, text = stringResource(R.string.login)){}
                 Spacer(modifier = Modifier.width(100.dp))
-                ButtonRegistration(fontSize = 20, text = stringResource(R.string.sing_up)){}
+                ButtonRegistration(fontSize = 36, text = stringResource(R.string.sing_up)){}
             }
         }
     }
