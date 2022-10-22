@@ -74,12 +74,19 @@ fun Registration() {
     Box {
         BackgroundImage(painter = painterResource(id = R.drawable.registration_background))
         Column(
-            modifier = Modifier.fillMaxWidth().fillMaxHeight(),
+            modifier = Modifier
+                .fillMaxWidth()
+                .fillMaxHeight(),
             verticalArrangement = Arrangement.Center,
             horizontalAlignment = Alignment.CenterHorizontally
         ) {
 
-            Spacer(modifier = Modifier.height(300.dp))
+            Spacer(modifier = Modifier.height(10.dp))
+            Image(
+                painter = painterResource(id = R.drawable.delta_logo),
+                contentDescription = "delta symbol of greek alphabet"
+            )
+            Spacer(modifier = Modifier.height(200.dp))
             ButtonRegistration(fontSize = 56, text = stringResource(R.string.try_out)){}
             Spacer(modifier = Modifier.height(100.dp))
 
