@@ -3,8 +3,10 @@ package com.example.myapplication
 import android.os.Bundle
 import androidx.activity.ComponentActivity
 import androidx.activity.compose.setContent
+import androidx.compose.foundation.BorderStroke
 import androidx.compose.foundation.Image
 import androidx.compose.foundation.layout.*
+import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.material.Button
 import androidx.compose.material.ButtonDefaults
 import androidx.compose.material.Text
@@ -17,9 +19,11 @@ import androidx.compose.ui.graphics.painter.Painter
 import androidx.compose.ui.layout.ContentScale
 import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.res.stringResource
+import androidx.compose.ui.text.font.FontFamily
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
+import com.example.myapplication.ui.theme.Black
 import com.example.myapplication.ui.theme.Green
 import com.example.myapplication.ui.theme.MyApplicationTheme
 
@@ -48,9 +52,17 @@ fun BackgroundImage(painter: Painter) {
 
 @Composable
 fun ButtonRegistration(fontSize: Int, text: String, handler: () -> Unit) {
-    Button(onClick = handler, colors = ButtonDefaults.buttonColors(backgroundColor = Green)) {
+    Button(
+        onClick = handler,
+        colors = ButtonDefaults.buttonColors(backgroundColor = Black),
+        border = BorderStroke(3.dp, Green),
+        shape = RoundedCornerShape(50)
+    ) {
+
         Text(text = text,
             fontSize = fontSize.sp,
+            color = Green,
+            fontFamily = FontFamily.Monospace //hay que incluir Bebas
         )
     }
 }
