@@ -16,6 +16,7 @@ import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.graphics.painter.Painter
 import androidx.compose.ui.layout.ContentScale
 import androidx.compose.ui.res.painterResource
+import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
@@ -53,6 +54,7 @@ fun ButtonRegistration(fontSize: Int, text: String, handler: () -> Unit) {
         )
     }
 }
+
 @Composable
 fun Registration() {
     Box {
@@ -66,13 +68,13 @@ fun Registration() {
         ) {
 
             Spacer(modifier = Modifier.height(300.dp))
-            ButtonRegistration(fontSize = 36, text = "TRY OUT"){}
+            ButtonRegistration(fontSize = 36, text = stringResource(R.string.try_out)){}
             Spacer(modifier = Modifier.height(100.dp))
 
             Row {
-                ButtonRegistration(fontSize = 20, text = "Log In"){}
+                ButtonRegistration(fontSize = 20, text = stringResource(R.string.login)){}
                 Spacer(modifier = Modifier.width(100.dp))
-                ButtonRegistration(fontSize = 20, text = "Sign Up"){}
+                ButtonRegistration(fontSize = 20, text = stringResource(R.string.sing_up)){}
             }
         }
     }
