@@ -57,7 +57,7 @@ fun ButtonRegistration(fontSize: Int, text: String, handler: () -> Unit) {
         onClick = handler,
         colors = ButtonDefaults.buttonColors(backgroundColor = Black),
         border = BorderStroke(3.dp, Green),
-        shape = RoundedCornerShape(50)
+        shape = RoundedCornerShape(20)
     ) {
 
         Text(text = text,
