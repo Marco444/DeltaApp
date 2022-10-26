@@ -1,11 +1,13 @@
 package com.example.myapplication
 
+import android.view.RoundedCorner
 import androidx.compose.foundation.Image
 import androidx.compose.foundation.background
 import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.*
 import androidx.compose.foundation.lazy.LazyColumn
 import androidx.compose.foundation.shape.RoundedCornerShape
+import androidx.compose.material.Button
 import androidx.compose.material.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Alignment
@@ -24,23 +26,45 @@ import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import com.example.myapplication.ui.theme.Green
 
+@Composable
+fun SortButtons() {
+    Row (
+        horizontalArrangement = Arrangement.SpaceEvenly,
+        modifier = Modifier.clip(RoundedCornerShape(20.dp)).background(Color.Gray).padding(5.dp),
+    ){
+        SortButton(onClick ={}, txt = "Favourite")
+        SortButton(onClick ={}, txt = "Recent")
+        SortButton(onClick ={}, txt = "Costum")
+    }
+}
+@Composable
+fun SortButton(onClick: () -> Unit, txt: String) {
+    Box(Modifier.clickable(onClick = onClick)) {
+        Text(
+            text = txt,
+            fontSize = 25.sp,
+            color = Color.White,
+            fontFamily = FontFamily(Font(R.font.bebas_neue)), //hay que incluirlo en otro lugar todo
+            modifier = Modifier.padding(6.dp)
+        )
+    }
+}
 
 @Composable
 fun RoutineCard(backgroundImageId: Int, iconId: Int, onClickCard: () -> Unit, title: String) {
-
-    Spacer(modifier = Modifier.height(30.dp))
-
     Box (
         Modifier
             .fillMaxWidth()
             .height(100.dp)
             .clickable(onClick = onClickCard),
         contentAlignment = Alignment.Center,
-        ){
+    ){
         Image(
             painter = painterResource(backgroundImageId),
             contentDescription = null,
-            modifier = Modifier.width(370.dp).clip(RoundedCornerShape(20.dp)),
+            modifier = Modifier
+                .width(370.dp)
+                .clip(RoundedCornerShape(20.dp)),
             contentScale = ContentScale.Crop,
         )
         Text(
@@ -48,14 +72,21 @@ fun RoutineCard(backgroundImageId: Int, iconId: Int, onClickCard: () -> Unit, ti
             fontSize = 50.sp,
             color = Color.White,
             fontFamily = FontFamily(Font(R.font.bebas_neue)), //hay que incluirlo en otro lugar todo
-            modifier = Modifier.align(Alignment.CenterStart).padding(start = 35.dp)
+            modifier = Modifier
+                .align(Alignment.CenterStart)
+                .padding(start = 35.dp)
         )
         Image(
             painter = painterResource(iconId),
             contentDescription = null,
-            modifier = Modifier.align(Alignment.CenterEnd).padding(end = 60.dp).scale(2F)
+            modifier = Modifier
+                .align(Alignment.CenterEnd)
+                .padding(end = 60.dp)
+                .scale(2F)
         )
     }
+
+    Spacer(modifier = Modifier.height(30.dp))
 }
 
 @Composable
@@ -63,16 +94,22 @@ fun MyRoutines(){
     Column (
         modifier = Modifier.background(Color.Black),
         horizontalAlignment = Alignment.CenterHorizontally
-        ){
+    ){
+
+
 
         Spacer(modifier = Modifier.height(20.dp))
         Text(
             text = stringResource(R.string.my_routines),
-            fontSize = 80.sp,
+            fontSize = 70.sp,
             color = Green,
             fontFamily = FontFamily(Font(R.font.bebas_neue)), //hay que incluirlo en otro lugar todo
         )
 
+        Spacer(modifier = Modifier.height(10.dp))
+        SortButtons()
+
+        Spacer(modifier = Modifier.height(20.dp))
         LazyColumn {
             items(20) {
                 RoutineCard(
