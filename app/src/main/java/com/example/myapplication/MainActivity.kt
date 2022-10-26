@@ -5,6 +5,7 @@ import androidx.activity.ComponentActivity
 import androidx.activity.compose.setContent
 import androidx.compose.foundation.BorderStroke
 import androidx.compose.foundation.Image
+import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.*
 import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.material.Button
@@ -32,8 +33,8 @@ class MainActivity : ComponentActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContent {
-            MyApplicationTheme {
-                DeltaPreview();
+            MyApplicationTheme() {
+                MyRoutinesPreview();
             }
         }
     }
@@ -59,11 +60,10 @@ fun ButtonRegistration(fontSize: Int, text: String, handler: () -> Unit) {
         border = BorderStroke(3.dp, Green),
         shape = RoundedCornerShape(20)
     ) {
-
         Text(text = text,
             fontSize = fontSize.sp,
             color = Green,
-            fontFamily = FontFamily(Font(R.font.bebas_neue)), //hay que incluirlo en otro lugar
+            fontFamily = FontFamily(Font(R.font.bebas_neue)), //hay que incluirlo en otro lugar todo
             modifier = Modifier.padding(7.dp)
         )
     }
@@ -101,6 +101,6 @@ fun Registration() {
 
 @Preview(showBackground = true)
 @Composable
-fun DeltaPreview() {
+fun RegistrationPreview() {
     Registration();
 }
