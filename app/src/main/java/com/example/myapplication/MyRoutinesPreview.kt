@@ -1,15 +1,15 @@
 package com.example.myapplication
 
-import android.view.RoundedCorner
+
 import androidx.compose.foundation.Image
 import androidx.compose.foundation.background
 import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.*
+
 import androidx.compose.foundation.lazy.LazyColumn
 import androidx.compose.foundation.shape.RoundedCornerShape
-import androidx.compose.material.Button
 import androidx.compose.material.Text
-import androidx.compose.runtime.Composable
+import androidx.compose.runtime.*
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.clip
@@ -30,8 +30,12 @@ import com.example.myapplication.ui.theme.Green
 fun SortButtons() {
     Row (
         horizontalArrangement = Arrangement.SpaceEvenly,
-        modifier = Modifier.clip(RoundedCornerShape(20.dp)).background(Color.Gray).padding(5.dp),
-    ){
+        modifier = Modifier
+            .clip(RoundedCornerShape(20.dp))
+            .background(Color.Gray)
+            .padding(5.dp),
+
+        ){
         SortButton(onClick ={}, txt = "Favourite")
         SortButton(onClick ={}, txt = "Recent")
         SortButton(onClick ={}, txt = "Costum")
@@ -45,48 +49,85 @@ fun SortButton(onClick: () -> Unit, txt: String) {
             fontSize = 25.sp,
             color = Color.White,
             fontFamily = FontFamily(Font(R.font.bebas_neue)), //hay que incluirlo en otro lugar todo
-            modifier = Modifier.padding(6.dp)
+            modifier = Modifier.padding(6.dp),
         )
     }
 }
 
 @Composable
-fun RoutineCard(backgroundImageId: Int, iconId: Int, onClickCard: () -> Unit, title: String) {
+fun RoutineCardDetails(title: String) {
+    Text(
+        text = "Lorum ipsum dorum Lorum ipsum doru Lorum ipsum doru Lorum ipsum doru Lorum ipsum",
+        fontSize = 25.sp,
+        color = Green,
+        fontFamily = FontFamily(Font(R.font.bebas_neue)), //hay que incluirlo en otro lugar todo
+        modifier = Modifier.padding(5.dp).fillMaxWidth(0.8f),
+        textAlign = TextAlign.Justify
+    )
+}
+
+@Composable
+fun RoutineCardTitle(title: String, iconId: Int) {
+    Row (verticalAlignment = Alignment.CenterVertically) {
+        Text(
+                text = title,
+                fontSize = 50.sp,
+                color = Color.White,
+                fontFamily = FontFamily(Font(R.font.bebas_neue)), //hay que incluirlo en otro lugar todo
+                modifier = Modifier,
+                textAlign = TextAlign.Start
+            )
+            Image(
+                painter = painterResource(iconId),
+                contentDescription = null,
+                modifier = Modifier
+                    .scale(2F)
+                    .weight(2f) //esto sirve como un padding pero mas responsivo
+            )
+        }
+}
+
+@Composable
+fun RoutineCard(backgroundImageId: Int, iconId: Int, title: String) {
+
+    var expanded by remember { mutableStateOf(false) }
+    var imageHeight by remember { mutableStateOf(70.dp) }
+
     Box (
         Modifier
             .fillMaxWidth()
-            .height(100.dp)
-            .clickable(onClick = onClickCard),
-        contentAlignment = Alignment.Center,
+            .clickable {
+                expanded = !expanded
+                imageHeight = if (expanded) 200.dp else 70.dp
+            },
+        contentAlignment = Alignment.Center
     ){
         Image(
             painter = painterResource(backgroundImageId),
             contentDescription = null,
             modifier = Modifier
                 .width(370.dp)
-                .clip(RoundedCornerShape(20.dp)),
+                .clip(RoundedCornerShape(20.dp))
+                .height(imageHeight),
             contentScale = ContentScale.Crop,
         )
-        Text(
-            text = title,
-            fontSize = 50.sp,
-            color = Color.White,
-            fontFamily = FontFamily(Font(R.font.bebas_neue)), //hay que incluirlo en otro lugar todo
+
+        Column (
             modifier = Modifier
-                .align(Alignment.CenterStart)
-                .padding(start = 35.dp)
-        )
-        Image(
-            painter = painterResource(iconId),
-            contentDescription = null,
-            modifier = Modifier
-                .align(Alignment.CenterEnd)
-                .padding(end = 60.dp)
-                .scale(2F)
-        )
+            .align(Alignment.CenterStart)
+            .padding(start = 40.dp)
+        ) {
+
+            RoutineCardTitle(title = title, iconId = iconId)
+            if (expanded)
+                RoutineCardDetails(title = "")
+        }
+
     }
 
     Spacer(modifier = Modifier.height(30.dp))
+
+
 }
 
 @Composable
@@ -95,8 +136,6 @@ fun MyRoutines(){
         modifier = Modifier.background(Color.Black),
         horizontalAlignment = Alignment.CenterHorizontally
     ){
-
-
 
         Spacer(modifier = Modifier.height(20.dp))
         Text(
@@ -115,7 +154,6 @@ fun MyRoutines(){
                 RoutineCard(
                     backgroundImageId = R.drawable.registration_background,
                     iconId = R.drawable.star_outline_white,
-                    {},
                     "Routine #$it"
                 )
             }
