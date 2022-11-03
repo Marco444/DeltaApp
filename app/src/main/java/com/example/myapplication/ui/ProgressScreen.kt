@@ -42,8 +42,8 @@ fun Progress(){
             items(20) {
                 RoutineCard(
                     backgroundImageId = R.drawable.registration_background,
-                    iconIdUnclicked = R.drawable.star_outline_white,
-                    iconIdClicked = R.drawable.star_outline_white,
+                    iconIdUnclicked = R.drawable.star_border_white_24dp,
+                    iconIdClicked = R.drawable.star_rate_white_24dp,
                     title ="Routine #$it"
                 )
             }

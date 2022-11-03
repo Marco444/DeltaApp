@@ -80,8 +80,8 @@ fun SearchScreen(){
             items(20) {
                 RoutineCard(
                     backgroundImageId = R.drawable.registration_background,
-                    iconIdUnclicked = R.drawable.star_outline_white,
-                    iconIdClicked = R.drawable.star_outline_white,
+                    iconIdUnclicked = R.drawable.add_white_24dp,
+                    iconIdClicked = R.drawable.check_circle_white_24dp,
                     title = "Routine #$it",
                     clickedIcon = {}
                 )

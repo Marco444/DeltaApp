@@ -51,8 +51,8 @@ fun RoutineCardTitle(title: String, iconId: Int, clickedIcon: () -> Unit = {}) {
             painter = painterResource(iconId),
             contentDescription = null,
             modifier = Modifier
-                .scale(2F)
-                .padding(start = 100.dp) //esto sirve como un padding pero mas responsivo
+                .scale(1.5F)
+                .padding(start = 70.dp) //esto sirve como un padding pero mas responsivo
                 .clickable(onClick = clickedIcon)
         )
     }
