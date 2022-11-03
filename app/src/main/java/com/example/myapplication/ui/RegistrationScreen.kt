@@ -46,14 +46,13 @@ fun ButtonRegistration(fontSize: Int, text: String, handler: () -> Unit = {}) {
         Text(text = text,
             fontSize = fontSize.sp,
             color = Green1,
-            fontFamily = FontFamily(Font(R.font.bebas_neue)), //hay que incluirlo en otro lugar todo
             modifier = Modifier.padding(7.dp)
         )
     }
 }
 
 @Composable
-fun Registration() {
+fun RegistrationScreen() {
     Box {
         BackgroundImage(painter = painterResource(id = R.drawable.registration_background))
         Column(
@@ -85,5 +84,5 @@ fun Registration() {
 @Preview(showBackground = true)
 @Composable
 fun RegistrationPreview() {
-    Registration();
+    RegistrationScreen();
 }
