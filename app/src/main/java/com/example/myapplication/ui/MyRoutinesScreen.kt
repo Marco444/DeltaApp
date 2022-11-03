@@ -1,4 +1,4 @@
-package com.example.myapplication
+package com.example.myapplication.ui
 
 
 import androidx.compose.foundation.Image
@@ -10,6 +10,7 @@ import androidx.compose.foundation.lazy.LazyColumn
 import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.material.Text
 import androidx.compose.runtime.*
+import androidx.compose.runtime.saveable.rememberSaveable
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.clip
@@ -25,6 +26,7 @@ import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import com.example.myapplication.ui.theme.Green
+import com.example.myapplication.R
 
 @Composable
 fun SortButtons() {
@@ -61,7 +63,9 @@ fun RoutineCardDetails(title: String) {
         fontSize = 25.sp,
         color = Green,
         fontFamily = FontFamily(Font(R.font.bebas_neue)), //hay que incluirlo en otro lugar todo
-        modifier = Modifier.padding(5.dp).fillMaxWidth(0.8f),
+        modifier = Modifier
+            .padding(5.dp)
+            .fillMaxWidth(0.8f),
         textAlign = TextAlign.Justify
     )
 }
@@ -90,7 +94,7 @@ fun RoutineCardTitle(title: String, iconId: Int) {
 @Composable
 fun RoutineCard(backgroundImageId: Int, iconId: Int, title: String) {
 
-    var expanded by remember { mutableStateOf(false) }
+    var expanded by rememberSaveable { mutableStateOf(false) }
     var imageHeight by remember { mutableStateOf(70.dp) }
 
     Box (
@@ -114,8 +118,8 @@ fun RoutineCard(backgroundImageId: Int, iconId: Int, title: String) {
 
         Column (
             modifier = Modifier
-            .align(Alignment.CenterStart)
-            .padding(start = 40.dp)
+                .align(Alignment.CenterStart)
+                .padding(start = 40.dp)
         ) {
 
             RoutineCardTitle(title = title, iconId = iconId)
