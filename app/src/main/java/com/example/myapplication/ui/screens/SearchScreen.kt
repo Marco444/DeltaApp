@@ -21,6 +21,7 @@ import androidx.compose.ui.unit.sp
 import com.example.myapplication.R
 import com.example.myapplication.ui.components.RoutineCard
 import com.example.myapplication.ui.theme.Green
+import com.example.myapplication.viewmodel.DeltaViewModel
 
 
 @Composable
@@ -56,7 +57,7 @@ fun SearchAndFilter() {
         }
     }}
 @Composable
-fun SearchScreen(){
+fun SearchScreen(viewModel: DeltaViewModel){
     Column (
         modifier = Modifier.background(Color.Black),
         horizontalAlignment = Alignment.CenterHorizontally

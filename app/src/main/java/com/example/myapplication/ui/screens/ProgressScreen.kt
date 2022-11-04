@@ -18,9 +18,10 @@ import com.example.myapplication.R
 import com.example.myapplication.ui.components.RoutineCard
 import com.example.myapplication.ui.components.RoutineCardSortButton
 import com.example.myapplication.ui.theme.Green
+import com.example.myapplication.viewmodel.DeltaViewModel
 
 @Composable
-fun ProgressScreen(){
+fun ProgressScreen(viewModel: DeltaViewModel){
     Column (
         modifier = Modifier.background(androidx.compose.ui.graphics.Color.Black),
         horizontalAlignment = Alignment.CenterHorizontally

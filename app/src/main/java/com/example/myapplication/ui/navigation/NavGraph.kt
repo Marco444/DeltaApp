@@ -7,25 +7,26 @@ import androidx.navigation.compose.composable
 import com.example.myapplication.ui.screens.ProgressScreen
 import com.example.myapplication.ui.screens.RoutinesScreen
 import com.example.myapplication.ui.screens.SearchScreen
+import com.example.myapplication.viewmodel.DeltaViewModel
 
 @Composable
 
-fun NavGraph(navController: NavHostController) {
+fun NavGraph(navController: NavHostController, viewModel: DeltaViewModel ) {
     NavHost(
         navController = navController,
         startDestination = Screen.Progress.route
     ) {
         composable(Screen.Routines.route) {
-            RoutinesScreen()
+            RoutinesScreen(viewModel = viewModel)
         }
         composable(Screen.Progress.route) {
-            ProgressScreen()
+            ProgressScreen(viewModel = viewModel)
         }
         composable(Screen.Search.route) {
-            SearchScreen()
+            SearchScreen(viewModel = viewModel)
         }
         composable(Screen.QR.route) {
-            ProgressScreen()
+            ProgressScreen(viewModel = viewModel)
         }
     }
 }
