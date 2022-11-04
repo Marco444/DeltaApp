@@ -1,4 +1,4 @@
-package com.example.myapplication.ui
+package com.example.myapplication.ui.screens
 
 import android.graphics.Color
 import androidx.compose.foundation.background
@@ -20,7 +20,7 @@ import com.example.myapplication.ui.components.RoutineCardSortButton
 import com.example.myapplication.ui.theme.Green
 
 @Composable
-fun Progress(){
+fun ProgressScreen(){
     Column (
         modifier = Modifier.background(androidx.compose.ui.graphics.Color.Black),
         horizontalAlignment = Alignment.CenterHorizontally
@@ -28,7 +28,7 @@ fun Progress(){
 
         Spacer(modifier = Modifier.height(20.dp))
         Text(
-            text = stringResource(R.string.my_routines),
+            text = "Progress",
             fontSize = 70.sp,
             color = Green,
         )
@@ -49,10 +49,4 @@ fun Progress(){
             }
         }
     }
-}
-
-@Preview(showBackground = true)
-@Composable
-fun ProgressPreview() {
-    Progress();
 }

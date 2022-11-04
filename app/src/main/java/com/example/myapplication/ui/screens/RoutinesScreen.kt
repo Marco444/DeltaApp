@@ -1,4 +1,4 @@
-package com.example.myapplication.ui
+package com.example.myapplication.ui.screens
 
 
 import androidx.compose.foundation.background
@@ -28,7 +28,7 @@ fun RoutinesScreen(){
 
         Spacer(modifier = Modifier.height(20.dp))
         Text(
-            text = "Progress",
+            text = "Routines",
             fontSize = 70.sp,
             color = Green,
         )
@@ -49,10 +49,4 @@ fun RoutinesScreen(){
             }
         }
     }
-}
-
-@Preview(showBackground = true)
-@Composable
-fun RoutinesPreview() {
-    RoutinesScreen();
 }

@@ -3,7 +3,10 @@ package com.example.myapplication
 import android.os.Bundle
 import androidx.activity.ComponentActivity
 import androidx.activity.compose.setContent
-import com.example.myapplication.ui.SearchPreview
+import androidx.compose.material.Scaffold
+import androidx.navigation.compose.rememberNavController
+import com.example.myapplication.ui.navigation.BottomBar
+import com.example.myapplication.ui.navigation.NavGraph
 import com.example.myapplication.ui.theme.MyApplicationTheme
 
 class MainActivity : ComponentActivity() {
@@ -11,7 +14,12 @@ class MainActivity : ComponentActivity() {
         super.onCreate(savedInstanceState)
         setContent {
             MyApplicationTheme() {
-                SearchPreview();
+                val navController = rememberNavController()
+                Scaffold(
+                    bottomBar = { BottomBar(navController = navController)}
+                ) {
+                    NavGraph(navController = navController)
+                }
             }
         }
     }
