@@ -5,6 +5,7 @@ import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.*
 
 import androidx.compose.foundation.lazy.LazyColumn
+import androidx.compose.foundation.lazy.items
 import androidx.compose.material.MaterialTheme
 import androidx.compose.material.Text
 import androidx.compose.runtime.*
@@ -40,14 +41,16 @@ fun RoutinesScreen(viewModel: DeltaViewModel){
 
         Spacer(modifier = Modifier.height(20.dp))
         LazyColumn {
-            items(20) {
-                RoutineCard(
-                    backgroundImageId = R.drawable.registration_background,
-                    iconIdUnclicked = R.drawable.star_border_white_24dp,
-                    iconIdClicked = R.drawable.star_rate_white_24dp,
-                    title = "Routine #$it"
-                )
-            }
+//            items(items = viewModel.uiState.value.exploreRoutines.values.toTypedArray()) {
+//                RoutineCard(
+//                    routine = it,
+//                    iconId = if(viewModel.isAddedRoutine(it.id))
+//                        R.drawable.star_rate_white_24dp
+//                    else
+//                        R.drawable.star_border_white_24dp,
+//                    clickedIcon = { viewModel.addedRoutineFromExplore(it.id) }
+//                )
+//            }
         }
     }
 }

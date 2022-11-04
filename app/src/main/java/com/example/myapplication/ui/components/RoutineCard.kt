@@ -22,12 +22,13 @@ import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import com.example.myapplication.ui.theme.Green
+import com.example.myapplication.viewmodel.RoutinesT
 
 
 @Composable
-fun RoutineCardDetails(title: String) {
+fun RoutineCardDetails(description: String) {
     Text(
-        text = "Lorum ipsum dorum Lorum ipsum doru Lorum ipsum doru Lorum ipsum doru Lorum ipsum",
+        text = description,
         fontSize = 25.sp,
         color = Green,
         modifier = Modifier
@@ -59,10 +60,9 @@ fun RoutineCardTitle(title: String, iconId: Int, clickedIcon: () -> Unit = {}) {
 }
 
 @Composable
-fun RoutineCard(backgroundImageId: Int, iconIdUnclicked: Int, iconIdClicked: Int, title: String, clickedIcon: () -> Unit = {}) {
+fun RoutineCard(routine: RoutinesT, iconId: Int, clickedIcon: () -> Unit = {}) {
 
-    var expanded by rememberSaveable { mutableStateOf(false) }
-    var iconClicked by rememberSaveable { mutableStateOf(false) }
+    var expanded by remember { mutableStateOf(false) }
     var imageHeight by remember { mutableStateOf(70.dp) }
 
     Box (
@@ -75,7 +75,7 @@ fun RoutineCard(backgroundImageId: Int, iconIdUnclicked: Int, iconIdClicked: Int
         contentAlignment = Alignment.Center
     ){
         Image(
-            painter = painterResource(backgroundImageId),
+            painter = painterResource(routine.img),
             contentDescription = null,
             modifier = Modifier
                 .width(370.dp)
@@ -90,12 +90,12 @@ fun RoutineCard(backgroundImageId: Int, iconIdUnclicked: Int, iconIdClicked: Int
         ) {
 
             RoutineCardTitle(
-                title = title,
-                iconId = if(iconClicked) iconIdClicked else iconIdUnclicked,
-                clickedIcon = {clickedIcon(); iconClicked = !iconClicked}
+                title = routine.title,
+                iconId = iconId,
+                clickedIcon = {clickedIcon()}
             )
             if (expanded)
-                RoutineCardDetails(title = "")
+                RoutineCardDetails(description = routine.description)
         }
 
     }

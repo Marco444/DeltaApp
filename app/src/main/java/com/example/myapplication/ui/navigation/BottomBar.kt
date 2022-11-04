@@ -16,7 +16,7 @@ fun BottomBar(navController: NavController) {
     val items = listOf(
         Screen.Routines,
         Screen.Progress,
-        Screen.Search,
+        Screen.Explore,
         Screen.QR
     )
 

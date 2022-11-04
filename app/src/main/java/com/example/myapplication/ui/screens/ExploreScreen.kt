@@ -3,6 +3,7 @@ package com.example.myapplication.ui.screens
 import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.*
 import androidx.compose.foundation.lazy.LazyColumn
+import androidx.compose.foundation.lazy.items
 import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.material.*
 import androidx.compose.material.icons.Icons
@@ -21,7 +22,6 @@ import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import com.example.myapplication.R
 import com.example.myapplication.ui.components.RoutineCard
-import com.example.myapplication.ui.theme.Green
 import com.example.myapplication.viewmodel.DeltaViewModel
 
 
@@ -58,7 +58,7 @@ fun SearchAndFilter() {
         }
     }}
 @Composable
-fun SearchScreen(viewModel: DeltaViewModel){
+fun ExploreScreen(viewModel: DeltaViewModel){
     Column (
         modifier = Modifier.background(Color.Black),
         horizontalAlignment = Alignment.CenterHorizontally
@@ -67,7 +67,7 @@ fun SearchScreen(viewModel: DeltaViewModel){
         Spacer(modifier = Modifier.height(20.dp))
 
         Text(
-            text = stringResource(R.string.search_title),
+            text = stringResource(R.string.explore_title),
             style = MaterialTheme.typography.h1
         )
 
@@ -77,14 +77,15 @@ fun SearchScreen(viewModel: DeltaViewModel){
 
         Spacer(modifier = Modifier.height(20.dp))
         LazyColumn {
-            items(20) {
-                RoutineCard(
-                    backgroundImageId = R.drawable.registration_background,
-                    iconIdUnclicked = R.drawable.add_white_24dp,
-                    iconIdClicked = R.drawable.check_circle_white_24dp,
-                    title = "Routine #$it",
-                    clickedIcon = {}
-                )
+           items(items = viewModel.uiState.value.exploreRoutines.values.toTypedArray()) {
+               RoutineCard(
+                   routine = it,
+                   iconId = if(viewModel.isAddedRoutine(it.id))
+                                R.drawable.check_circle_white_24dp
+                            else
+                                R.drawable.add_white_24dp,
+                   clickedIcon = { viewModel.addedRoutineFromExplore(it.id) }
+               )
             }
         }
     }
