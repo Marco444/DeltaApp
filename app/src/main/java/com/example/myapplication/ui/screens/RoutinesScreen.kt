@@ -5,6 +5,7 @@ import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.*
 
 import androidx.compose.foundation.lazy.LazyColumn
+import androidx.compose.material.MaterialTheme
 import androidx.compose.material.Text
 import androidx.compose.runtime.*
 import androidx.compose.ui.Alignment
@@ -29,9 +30,8 @@ fun RoutinesScreen(viewModel: DeltaViewModel){
 
         Spacer(modifier = Modifier.height(20.dp))
         Text(
-            text = "Routines",
-            fontSize = 70.sp,
-            color = Green,
+            text = stringResource(R.string.routines_title),
+            style = MaterialTheme.typography.h1
         )
 
         Spacer(modifier = Modifier.height(10.dp))

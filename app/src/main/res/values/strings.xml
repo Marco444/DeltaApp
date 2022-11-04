@@ -4,4 +4,7 @@
     <string name="login">Log In</string>
     <string name="sing_up">Sign Up</string>
     <string name="my_routines">My Routines</string>
+    <string name="progress_title">Progress</string>
+    <string name="routines_title">Routines</string>
+    <string name="search_title">Search</string>
 </resources>

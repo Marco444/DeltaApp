@@ -6,6 +6,7 @@ import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.Spacer
 import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.lazy.LazyColumn
+import androidx.compose.material.MaterialTheme
 import androidx.compose.material.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Alignment
@@ -29,9 +30,8 @@ fun ProgressScreen(viewModel: DeltaViewModel){
 
         Spacer(modifier = Modifier.height(20.dp))
         Text(
-            text = "Progress",
-            fontSize = 70.sp,
-            color = Green,
+            text = stringResource(R.string.progress_title),
+            style = MaterialTheme.typography.h1,
         )
 
         Spacer(modifier = Modifier.height(10.dp))

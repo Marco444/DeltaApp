@@ -14,6 +14,7 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.clip
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.graphics.Color.Companion.White
+import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.text.TextStyle
 import androidx.compose.ui.text.input.TextFieldValue
 import androidx.compose.ui.unit.dp
@@ -64,11 +65,12 @@ fun SearchScreen(viewModel: DeltaViewModel){
     ){
 
         Spacer(modifier = Modifier.height(20.dp))
+
         Text(
-            text = "Search",
-            fontSize = 70.sp,
-            color = Green,
+            text = stringResource(R.string.search_title),
+            style = MaterialTheme.typography.h1
         )
+
         Spacer(modifier = Modifier.height(10.dp))
 
         SearchAndFilter();
