@@ -19,6 +19,7 @@ import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import androidx.compose.ui.graphics.Color.Companion.Green as Green1
 import com.example.myapplication.R
+import com.example.myapplication.ui.components.Button1
 
 @Composable
 fun BackgroundImage(painter: Painter) {
@@ -32,21 +33,6 @@ fun BackgroundImage(painter: Painter) {
     )
 }
 
-@Composable
-fun ButtonRegistration(fontSize: Int, text: String, handler: () -> Unit = {}) {
-    Button(
-        onClick = handler,
-        colors = ButtonDefaults.buttonColors(backgroundColor = Black),
-        border = BorderStroke(3.dp, Green1),
-        shape = RoundedCornerShape(20)
-    ) {
-        Text(text = text,
-            fontSize = fontSize.sp,
-            color = Green1,
-            modifier = Modifier.padding(7.dp)
-        )
-    }
-}
 
 @Composable
 fun RegistrationScreen() {
@@ -66,13 +52,13 @@ fun RegistrationScreen() {
                 contentDescription = "delta symbol of greek alphabet"
             )
             Spacer(modifier = Modifier.height(200.dp))
-            ButtonRegistration(fontSize = 56, text = stringResource(R.string.try_out))
+            Button1(fontSize = 56, text = stringResource(R.string.try_out))
             Spacer(modifier = Modifier.height(100.dp))
 
             Row {
-                ButtonRegistration(fontSize = 36, text = stringResource(R.string.login)) {}
+                Button1(fontSize = 36, text = stringResource(R.string.login)) {}
                 Spacer(modifier = Modifier.width(100.dp))
-                ButtonRegistration(fontSize = 36, text = stringResource(R.string.sing_up)) {}
+                Button1(fontSize = 36, text = stringResource(R.string.sing_up)) {}
             }
         }
     }

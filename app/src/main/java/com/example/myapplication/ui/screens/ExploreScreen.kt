@@ -22,7 +22,8 @@ import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import com.example.myapplication.R
 import com.example.myapplication.ui.components.RoutineCard
-import com.example.myapplication.viewmodel.DeltaViewModel
+import com.example.myapplication.viewmodel.RoutinesViewModel
+import com.example.myapplication.viewmodel.RoutineCardAction
 
 
 @Composable
@@ -58,7 +59,7 @@ fun SearchAndFilter() {
         }
     }}
 @Composable
-fun ExploreScreen(viewModel: DeltaViewModel){
+fun ExploreScreen(viewModel: RoutinesViewModel){
     Column (
         modifier = Modifier.background(Color.Black),
         horizontalAlignment = Alignment.CenterHorizontally
@@ -84,7 +85,8 @@ fun ExploreScreen(viewModel: DeltaViewModel){
                                 R.drawable.check_circle_white_24dp
                             else
                                 R.drawable.add_white_24dp,
-                   clickedIcon = { viewModel.addedRoutineFromExplore(it.id) }
+                   clickedIcon = { viewModel.addedRoutineFromExplore(it.id) },
+                   action = RoutineCardAction.Explore
                )
             }
         }

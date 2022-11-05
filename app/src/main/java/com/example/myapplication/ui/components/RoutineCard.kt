@@ -4,6 +4,7 @@ import androidx.compose.foundation.Image
 import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.*
 import androidx.compose.foundation.shape.RoundedCornerShape
+import androidx.compose.material.Button
 import androidx.compose.material.Icon
 import androidx.compose.material.Text
 import androidx.compose.material.icons.Icons
@@ -22,8 +23,8 @@ import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import com.example.myapplication.ui.theme.Green
+import com.example.myapplication.viewmodel.RoutineCardAction
 import com.example.myapplication.viewmodel.RoutinesT
-
 
 @Composable
 fun RoutineCardDetails(description: String) {
@@ -33,14 +34,14 @@ fun RoutineCardDetails(description: String) {
         color = Green,
         modifier = Modifier
             .padding(5.dp)
-            .fillMaxWidth(0.8f),
+            .fillMaxWidth(0.7f),
         textAlign = TextAlign.Justify
     )
 }
 
 @Composable
 fun RoutineCardTitle(title: String, iconId: Int, clickedIcon: () -> Unit = {}) {
-    Row (verticalAlignment = Alignment.CenterVertically) {
+    Row ( horizontalArrangement  =  Arrangement.SpaceBetween, verticalAlignment = Alignment.CenterVertically) {
         Text(
             text = title,
             fontSize = 50.sp,
@@ -53,14 +54,13 @@ fun RoutineCardTitle(title: String, iconId: Int, clickedIcon: () -> Unit = {}) {
             contentDescription = null,
             modifier = Modifier
                 .scale(1.5F)
-                .padding(start = 70.dp) //esto sirve como un padding pero mas responsivo
                 .clickable(onClick = clickedIcon)
         )
     }
 }
 
 @Composable
-fun RoutineCard(routine: RoutinesT, iconId: Int, clickedIcon: () -> Unit = {}) {
+fun RoutineCard(routine: RoutinesT, iconId: Int, clickedIcon: () -> Unit = {}, actionHandler: () -> Unit = {}, action: RoutineCardAction) {
 
     var expanded by remember { mutableStateOf(false) }
     var imageHeight by remember { mutableStateOf(70.dp) }
@@ -94,8 +94,12 @@ fun RoutineCard(routine: RoutinesT, iconId: Int, clickedIcon: () -> Unit = {}) {
                 iconId = iconId,
                 clickedIcon = {clickedIcon()}
             )
-            if (expanded)
-                RoutineCardDetails(description = routine.description)
+            if (expanded) {
+                Column () {
+                    RoutineCardDetails(description = routine.description)
+                    Button1(fontSize = 16, text = action.description, handler = actionHandler)
+                }
+            }
         }
 
     }

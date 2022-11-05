@@ -7,13 +7,13 @@ import androidx.navigation.NavHostController
 import androidx.navigation.compose.rememberNavController
 import com.example.myapplication.ui.navigation.BottomBar
 import com.example.myapplication.ui.navigation.NavGraph
-import com.example.myapplication.viewmodel.DeltaViewModel
+import com.example.myapplication.viewmodel.RoutinesViewModel
 import androidx.lifecycle.viewmodel.compose.viewModel
 
 @Composable
 fun DeltaApp(
     modifier: Modifier = Modifier,
-    viewModel: DeltaViewModel = viewModel(),
+    viewModel: RoutinesViewModel = viewModel(),
     navController: NavHostController = rememberNavController()
 ) {
     Scaffold(

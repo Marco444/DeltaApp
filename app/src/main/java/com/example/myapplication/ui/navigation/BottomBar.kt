@@ -14,10 +14,10 @@ import com.example.myapplication.ui.theme.Green
 @Composable
 fun BottomBar(navController: NavController) {
     val items = listOf(
-        Screen.Routines,
-        Screen.Progress,
-        Screen.Explore,
-        Screen.QR
+        NavBarScreen.Routines,
+        NavBarScreen.Progress,
+        NavBarScreen.Explore,
+        NavBarScreen.QR
     )
 
     BottomNavigation (backgroundColor = Green) {
