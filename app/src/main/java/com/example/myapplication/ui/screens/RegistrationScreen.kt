@@ -15,11 +15,13 @@ import androidx.compose.ui.graphics.painter.Painter
 import androidx.compose.ui.layout.ContentScale
 import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.res.stringResource
+import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import androidx.compose.ui.graphics.Color.Companion.Green as Green1
 import com.example.myapplication.R
 import com.example.myapplication.ui.components.Button1
+
 
 @Composable
 fun BackgroundImage(painter: Painter) {
@@ -33,7 +35,7 @@ fun BackgroundImage(painter: Painter) {
     )
 }
 
-
+@Preview
 @Composable
 fun RegistrationScreen() {
     Box {
@@ -52,13 +54,15 @@ fun RegistrationScreen() {
                 contentDescription = "delta symbol of greek alphabet"
             )
             Spacer(modifier = Modifier.height(200.dp))
-            Button1(fontSize = 56, text = stringResource(R.string.try_out))
+            Button1(fontSize = 42, text = stringResource(R.string.try_out))
             Spacer(modifier = Modifier.height(100.dp))
 
             Row {
-                Button1(fontSize = 36, text = stringResource(R.string.login)) {}
-                Spacer(modifier = Modifier.width(100.dp))
-                Button1(fontSize = 36, text = stringResource(R.string.sing_up)) {}
+                Spacer(modifier = Modifier.width(10.dp))
+                Button1(fontSize = 24, text = stringResource(R.string.login)) {}
+                Spacer(modifier = Modifier.width(20.dp))
+                Button1(fontSize = 24, text = stringResource(R.string.sing_up)) {}
+                Spacer(modifier = Modifier.width(10.dp))
             }
         }
     }

@@ -8,6 +8,9 @@ import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.unit.sp
 import com.example.myapplication.R
 
+val H1Font = FontFamily(
+    Font(R.font.bebas_neue, FontWeight.Normal)
+)
 
 // Set of Material typography styles to start with
 val Typography = Typography(
