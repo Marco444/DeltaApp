@@ -1,5 +1,5 @@
 <resources>
-    <string name="app_name">My Application</string>
+    <string name="app_name">Delta</string>
     <string name="try_out">Try Out</string>
     <string name="login">Log In</string>
     <string name="sing_up">Sign Up</string>
