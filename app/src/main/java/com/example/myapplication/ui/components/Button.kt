@@ -37,6 +37,7 @@ fun Button1(fontSize: Int, text: String, handler: () -> Unit = {}) {
             fontSize = fontSize.sp,
             fontFamily = H1Font,
             color = Green,
+
             modifier = Modifier.padding(7.dp)
         )
     }
