@@ -56,7 +56,7 @@ fun LogIn(){
                             contentDescription = null,
                             modifier = Modifier
                                 .scale(1.5F)
-                                .padding(top = 50.dp, start = 100.dp)
+                                .padding(top = 50.dp, start = 120.dp)
                         )
 
                 }
@@ -77,21 +77,7 @@ fun LogIn(){
                         textStyle = TextStyle.Default.copy(fontSize = 15.sp)
                     )
                     Spacer(modifier = Modifier.height(20.dp))
-                    TextField( value = passWord,
-                        onValueChange = { newText ->
-                            passWord = newText
-                        },
-                        shape = RoundedCornerShape(8.dp),
-                        colors = TextFieldDefaults.textFieldColors(
-                            backgroundColor = Color.White,
-                            focusedIndicatorColor =  Color.Transparent),
-                        label = {
-                            Text(text = "Password")
-                        },
-                        visualTransformation =  PasswordVisualTransformation(),
-                        keyboardOptions = KeyboardOptions(keyboardType = KeyboardType.Password),
-                        textStyle = TextStyle.Default.copy(fontSize = 15.sp)
-                    )
+                  
                     Spacer(modifier = Modifier.height(20.dp))
                     val mAnnotatedLinkString = buildAnnotatedString {
                         // creating a string to display in the Text
