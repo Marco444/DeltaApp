@@ -24,6 +24,8 @@ fun DeltaApp(
     viewModel: RoutinesViewModel = viewModel(),
     navController: NavHostController = rememberNavController()
 ) {
+    viewModel.setWidth(windowSize)
+
     Scaffold(
         bottomBar = {   if( WindowWidthSizeClass.Compact == windowSize)
                             BottomBar(navController = navController)

@@ -21,13 +21,12 @@ import com.example.myapplication.ui.components.RoutineCard
 import com.example.myapplication.ui.components.RoutineCardSortButton
 import com.example.myapplication.ui.components.RoutinesGrid
 import com.example.myapplication.viewmodel.RoutinesViewModel
-import com.example.myapplication.viewmodel.RoutineCardAction
 
 @Composable
 fun ProgressScreen(viewModel: RoutinesViewModel){
     Column (
         modifier = Modifier
-            .fillMaxWidth()
+            .fillMaxWidth().fillMaxHeight()
             .background(Color.Black),
         horizontalAlignment = Alignment.CenterHorizontally
     ){
@@ -44,6 +43,6 @@ fun ProgressScreen(viewModel: RoutinesViewModel){
 
         Spacer(modifier = Modifier.height(20.dp))
 
-        RoutinesGrid(viewModel = viewModel, actionRedirect = { }, routineCard = RoutineCard.MyRoutine)
+        RoutinesGrid(viewModel = viewModel, actionRedirect = { }, routineCard = RoutineCard.Progress)
     }
 }

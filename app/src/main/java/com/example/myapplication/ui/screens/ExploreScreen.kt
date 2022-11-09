@@ -29,7 +29,6 @@ import com.example.myapplication.ui.components.ROUTINE_CARD_WIDTH
 import com.example.myapplication.ui.components.RoutineCard
 import com.example.myapplication.ui.components.RoutinesGrid
 import com.example.myapplication.viewmodel.RoutinesViewModel
-import com.example.myapplication.viewmodel.RoutineCardAction
 
 
 @Composable
@@ -69,7 +68,7 @@ fun SearchAndFilter() {
 fun ExploreScreen(viewModel: RoutinesViewModel){
     Column (
         modifier = Modifier
-            .fillMaxWidth()
+            .fillMaxWidth().fillMaxHeight()
             .background(Color.Black),
         horizontalAlignment = Alignment.CenterHorizontally
     ){

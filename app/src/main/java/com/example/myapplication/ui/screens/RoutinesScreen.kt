@@ -23,16 +23,14 @@ import com.example.myapplication.ui.components.RoutineCard
 import com.example.myapplication.ui.components.RoutineCardSortButton
 import com.example.myapplication.ui.components.RoutinesGrid
 import com.example.myapplication.viewmodel.RoutinesViewModel
-import com.example.myapplication.viewmodel.RoutineCardAction
 
-@OptIn(ExperimentalFoundationApi::class)
 @Composable
 fun RoutinesScreen(viewModel: RoutinesViewModel,
                    actionRedirect: () -> Unit,
 ){
     Column (
-        modifier = Modifier.background(Color.Black),
-        horizontalAlignment = Alignment.CenterHorizontally,
+        modifier = Modifier.background(Color.Black).fillMaxWidth().fillMaxHeight(),
+    horizontalAlignment = Alignment.CenterHorizontally,
     ){
 
         Spacer(modifier = Modifier.height(20.dp))

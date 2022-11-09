@@ -24,15 +24,16 @@ import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import com.example.myapplication.R
 import com.example.myapplication.ui.theme.Green
-import com.example.myapplication.viewmodel.RoutineCardAction
 import com.example.myapplication.viewmodel.RoutinesT
+import com.example.myapplication.viewmodel.RoutinesViewModel
 
 
 const val ROUTINE_CARD_WIDTH = 370;
 
-sealed class RoutineCard(val iconClicked: Int, val iconUnClicked: Int) {
-    object MyRoutine: RoutineCard ( R.drawable.star_rate_white_24dp, R.drawable.star_border_white_24dp)
-   object ExploreRoutine: RoutineCard ( R.drawable.check_circle_white_24dp, R.drawable.add_white_24dp)
+sealed class RoutineCard(val iconClicked: Int, val iconUnClicked: Int, val description: String) {
+    object MyRoutine: RoutineCard ( R.drawable.star_rate_white_24dp, R.drawable.star_border_white_24dp, "Go")
+    object Progress: RoutineCard ( R.drawable.star_rate_white_24dp, R.drawable.star_border_white_24dp, "See Progress")
+    object ExploreRoutine: RoutineCard ( R.drawable.check_circle_white_24dp, R.drawable.add_white_24dp, "Share")
 }
 
 @Composable
@@ -66,17 +67,18 @@ fun RoutineCardTitle(title: String, iconId: Int, clickedIcon: () -> Unit = {}) {
     }
 }
 
-@Composable
-fun RoutineCard(routine: RoutinesT, iconId: Int, clickedIcon: () -> Unit = {}, actionHandler: () -> Unit = {}, action: RoutineCardAction) {
 
-    var expanded by remember { mutableStateOf(false) }
-    var imageHeight by remember { mutableStateOf(70.dp) }
+@Composable
+fun RoutineCard(routine: RoutinesT, iconId: Int, clickedIcon: () -> Unit = {}, actionHandler: () -> Unit = {}, routineCard: RoutineCard, viewModel: RoutinesViewModel) {
+
+    var expanded by remember { mutableStateOf(!viewModel.cardsExpandable()) }
+    var imageHeight by remember { mutableStateOf(if(!viewModel.cardsExpandable()) 200.dp else 70.dp ) }
 
     Box (
         Modifier
             .width(ROUTINE_CARD_WIDTH.dp)
             .clickable {
-                expanded = !expanded
+                expanded = if(viewModel.cardsExpandable()) !expanded else true
                 imageHeight = if (expanded) 200.dp else 70.dp
             },
         contentAlignment = Alignment.Center
@@ -101,7 +103,7 @@ fun RoutineCard(routine: RoutinesT, iconId: Int, clickedIcon: () -> Unit = {}, a
             )
             if (expanded) {
                     RoutineCardDetails(description = routine.description)
-                    Button1(fontSize = 16, text = action.description, handler = actionHandler)
+                    Button1(fontSize = 16, text = routineCard.description, handler = actionHandler)
             }
         }
 

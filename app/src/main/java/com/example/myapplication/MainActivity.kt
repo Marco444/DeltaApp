@@ -17,8 +17,8 @@ class MainActivity : ComponentActivity() {
                 val systemUiController = rememberSystemUiController()
                 systemUiController.setSystemBarsColor(color = androidx.compose.ui.graphics.Color.Black )
 
-               val windowSize = calculateWindowSizeClass(this)
-               DeltaApp(windowSize = windowSize.widthSizeClass)
+                val windowSize = calculateWindowSizeClass(this)
+                DeltaApp(windowSize = windowSize.widthSizeClass)
             }
         }
     }

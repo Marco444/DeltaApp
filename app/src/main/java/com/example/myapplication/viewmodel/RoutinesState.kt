@@ -11,12 +11,6 @@ data class RoutinesT (
     var added: Boolean,
 )
 
-sealed class RoutineCardAction(val description: String, val icon: Int = 0) {
-    object Progress: RoutineCardAction("See Progress", R.drawable.bar_chart_fill0_wght400_grad0_opsz48 )
-    object Explore: RoutineCardAction("Share")
-    object Routine: RoutineCardAction("Go")
-}
-
 
 class RoutinesState {
 

@@ -9,8 +9,6 @@ import androidx.compose.runtime.Composable
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.unit.dp
-import com.example.myapplication.R
-import com.example.myapplication.viewmodel.RoutineCardAction
 import com.example.myapplication.viewmodel.RoutinesViewModel
 
 @OptIn(ExperimentalFoundationApi::class)
@@ -26,12 +24,13 @@ fun RoutinesGrid(viewModel: RoutinesViewModel, actionRedirect: () -> Unit, routi
                 ) {
                     RoutineCard(
                         routine = routine,
-                        iconId = if (!viewModel.isAddedRoutine(routine.id))
-                            routineCard.iconUnClicked
-                        else
-                            routineCard.iconClicked,
+                        iconId =    if (!viewModel.isAddedRoutine(routine.id))
+                                        routineCard.iconUnClicked
+                                    else
+                                        routineCard.iconClicked,
                         clickedIcon = { viewModel.addedRoutineFromExplore(routine.id) },
-                        action = RoutineCardAction.Progress
+                        routineCard = routineCard,
+                        viewModel = viewModel,
                     )
 
                     Spacer(modifier = Modifier.height(30.dp))
