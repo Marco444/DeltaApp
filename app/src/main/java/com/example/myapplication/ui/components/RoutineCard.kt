@@ -33,9 +33,6 @@ fun RoutineCardDetails(description: String) {
         fontSize = 25.sp,
         color = Green,
         modifier = Modifier
-            .padding(5.dp)
-            .fillMaxWidth(0.7f),
-        textAlign = TextAlign.Justify
     )
 }
 
@@ -49,6 +46,7 @@ fun RoutineCardTitle(title: String, iconId: Int, clickedIcon: () -> Unit = {}) {
             modifier = Modifier,
             textAlign = TextAlign.Start,
         )
+        Spacer(modifier = Modifier.width(10.dp))
         Image(
             painter = painterResource(iconId),
             contentDescription = null,
@@ -84,9 +82,7 @@ fun RoutineCard(routine: RoutinesT, iconId: Int, clickedIcon: () -> Unit = {}, a
             contentScale = ContentScale.Crop,
         )
         Column (
-            modifier = Modifier
-                .align(Alignment.CenterStart)
-                .padding(start = 40.dp)
+            horizontalAlignment = Alignment.CenterHorizontally
         ) {
 
             RoutineCardTitle(
@@ -95,10 +91,8 @@ fun RoutineCard(routine: RoutinesT, iconId: Int, clickedIcon: () -> Unit = {}, a
                 clickedIcon = {clickedIcon()}
             )
             if (expanded) {
-                Column () {
                     RoutineCardDetails(description = routine.description)
                     Button1(fontSize = 16, text = action.description, handler = actionHandler)
-                }
             }
         }
 
