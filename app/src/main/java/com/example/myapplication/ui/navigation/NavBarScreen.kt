@@ -7,6 +7,9 @@ import androidx.compose.ui.graphics.vector.ImageVector
 
 sealed class Screen(val route: String) {
     object Execute: Screen( "execute_screen")
+    object LogIng: Screen( "login")
+    object Registration: Screen( "registration")
+
 }
 
 sealed class NavBarScreen(val title: String, val icon: ImageVector, private val route_: String): Screen(route = route_) {
@@ -14,5 +17,6 @@ sealed class NavBarScreen(val title: String, val icon: ImageVector, private val 
     object Progress: NavBarScreen("Progress", Icons.Filled.Home, "progress_screen")
     object Explore: NavBarScreen("Explore", Icons.Filled.Search, "explore_screen")
     object QR: NavBarScreen("QR", Icons.Filled.Lock, "qr_screen")
+
 }
 

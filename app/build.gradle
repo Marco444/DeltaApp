@@ -47,6 +47,7 @@ android {
 }
 
 dependencies {
+    implementation "androidx.compose.material:material-icons-extended:$compose_ui_version"
     implementation "androidx.compose.material3:material3-window-size-class:$material3_version"
     implementation "com.google.accompanist:accompanist-systemuicontroller:0.27.0"
     implementation 'androidx.core:core-ktx:1.7.0'

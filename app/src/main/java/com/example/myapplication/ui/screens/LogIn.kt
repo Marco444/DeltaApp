@@ -1,5 +1,6 @@
 package com.example.myapplication
 
+import android.view.KeyEvent
 import androidx.compose.foundation.Image
 import androidx.compose.foundation.layout.*
 import androidx.compose.foundation.shape.CircleShape
@@ -8,16 +9,16 @@ import androidx.compose.foundation.text.ClickableText
 import androidx.compose.foundation.text.KeyboardOptions
 import androidx.compose.material.*
 import androidx.compose.material.icons.Icons
-import androidx.compose.material.icons.filled.Add
-import androidx.compose.material.icons.filled.ArrowBack
-import androidx.compose.material.icons.filled.Lock
-import androidx.compose.material.icons.filled.Search
+import androidx.compose.material.icons.filled.*
 import androidx.compose.runtime.*
 import androidx.compose.ui.Alignment
+import androidx.compose.ui.Alignment.Companion.CenterHorizontally
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.scale
+import androidx.compose.ui.focus.FocusRequester
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.graphics.Shape
+import androidx.compose.ui.input.key.onKeyEvent
 import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.text.SpanStyle
 import androidx.compose.ui.text.TextStyle
@@ -35,10 +36,11 @@ import com.example.myapplication.ui.screens.BackgroundImage
 import com.example.myapplication.ui.theme.Black
 import com.example.myapplication.ui.theme.Green
 import com.example.myapplication.ui.theme.Purple500
+import com.example.myapplication.viewmodel.RoutinesViewModel
 
 
 @Composable
-fun LogIn(){
+fun LogIn(viewModel: RoutinesViewModel,actionRedirect: () -> Unit,backButton : () -> Unit){
     var passWord by remember { mutableStateOf(TextFieldValue("")) }
 
     Box{
@@ -47,35 +49,39 @@ fun LogIn(){
             Row(verticalAlignment = Alignment.CenterVertically) {
                 Column(modifier = Modifier.fillMaxWidth())
                 {
-                        Button(onClick = { /*TODO*/ }, shape = CircleShape, colors = ButtonDefaults.buttonColors(backgroundColor = Green), modifier = Modifier.padding(start = 18.dp, top = 15.dp))
+                        Button(onClick = backButton,
+                            shape = CircleShape,
+                            colors = ButtonDefaults.buttonColors(backgroundColor = Green),
+                            modifier = Modifier.padding(start = 18.dp, top = 15.dp).size(55.dp))
                         {
                             Icon(Icons.Default.ArrowBack ,contentDescription = "content description", tint= Color.Black)
                         }
-                        Image(
 
-                            painter = painterResource(R.drawable.delta_logo),
-                            contentDescription = null,
-                            modifier = Modifier
-                                .scale(1.5F)
-                                .padding(top = 50.dp, start = 120.dp)
-                        )
 
                 }
             }
             Row(verticalAlignment = Alignment.CenterVertically) {
-                Column(modifier = Modifier.padding(top = 100.dp, start = 20.dp)) {
-                    EmailTextField(onTextChange = {/*TODO*/})
+                Column(modifier = Modifier.padding(top = 100.dp)) {
+                    Image(
+
+                        painter = painterResource(R.drawable.delta_logo),
+                        contentDescription = null,
+                        modifier = Modifier
+                            .scale(1.5F).align(CenterHorizontally)
+                    )
+                    Spacer(modifier = Modifier.height(100.dp))
+                    EmailTextField(onTextChange = {/*TODO AGREGAR EL MODIFICADOR DEL STORE*/})
                     Spacer(modifier = Modifier.height(20.dp))
                     PasswordTextField(onTextChange = {})
                     Spacer(modifier = Modifier.height(20.dp))
-                   LinkedText(handler = {/*TODO*/})
+                    LinkedText(handler = {/*TODO AGREGAR EL MODIFICADOR DEL STORE*/})
                 }
 
             }
             Spacer(modifier = Modifier.height(20.dp))
             Row(verticalAlignment = Alignment.CenterVertically){
                 Column(horizontalAlignment = Alignment.CenterHorizontally) {
-                    Button1(fontSize = 35, text = "Log In")
+                    Button1(fontSize = 35, text = "Log In", handler = actionRedirect)
                 }
             }
         }
@@ -95,10 +101,16 @@ fun EmailTextField(onTextChange :(TextFieldValue) -> Unit){
         },
         shape = RoundedCornerShape(8.dp),
         colors = TextFieldDefaults.textFieldColors(
-            backgroundColor = Color.White,
+            backgroundColor = MaterialTheme.colors.background,
             focusedIndicatorColor =  Color.Transparent),
         label = {
             Text(text = "Email")
+        },
+        modifier = Modifier.onKeyEvent {
+            if (it.nativeKeyEvent.keyCode == KeyEvent.KEYCODE_ENTER){
+                true
+            }
+            false
         },
         textStyle = TextStyle.Default.copy(fontSize = 15.sp)
     )
@@ -114,7 +126,7 @@ fun PasswordTextField(onTextChange :(TextFieldValue) -> Unit){
         },
         shape = RoundedCornerShape(8.dp),
         colors = TextFieldDefaults.textFieldColors(
-            backgroundColor = Color.White,
+            backgroundColor = MaterialTheme.colors.background,
             focusedIndicatorColor =  Color.Transparent),
         label = {
             Text(text = "Password")
@@ -123,15 +135,11 @@ fun PasswordTextField(onTextChange :(TextFieldValue) -> Unit){
         keyboardOptions = KeyboardOptions(keyboardType = KeyboardType.Password),
         trailingIcon = {
             val image = if (passwordVisible)
-                Icon(Icons.Default.Lock,contentDescription = "content description", tint= Color.Black)
-            else  Icon(Icons.Default.Lock,contentDescription = "content description", tint= Color.Black)
-
-
-            // Please provide localized description for accessibility services
+                Icons.Filled.Visibility
+            else Icons.Filled.VisibilityOff
             val description = if (passwordVisible) "Hide password" else "Show password"
-
             IconButton(onClick = {passwordVisible = !passwordVisible}){
-                Icon(Icons.Default.Lock,contentDescription = "content description", tint= Color.Black)
+                Icon(imageVector  = image, description)
             }
         },
         textStyle = TextStyle.Default.copy(fontSize = 15.sp)
@@ -154,8 +162,3 @@ fun LinkedText(handler : (Int) -> Unit){
     ClickableText(text = mAnnotatedLinkString, onClick = handler)
 }
 
-@Preview
-@Composable
-fun LogInPreview() {
-    LogIn();
-}

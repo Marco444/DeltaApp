@@ -35,9 +35,8 @@ fun BackgroundImage(painter: Painter) {
     )
 }
 
-@Preview
 @Composable
-fun RegistrationScreen() {
+fun RegistrationScreen(actionRedirect: () -> Unit) {
     Box {
         BackgroundImage(painter = painterResource(id = R.drawable.registration_background))
         Column(
@@ -59,7 +58,7 @@ fun RegistrationScreen() {
 
             Row {
                 Spacer(modifier = Modifier.width(10.dp))
-                Button1(fontSize = 24, text = stringResource(R.string.login)) {}
+                Button1(fontSize = 24, text = stringResource(R.string.login), handler = actionRedirect)
                 Spacer(modifier = Modifier.width(20.dp))
                 Button1(fontSize = 24, text = stringResource(R.string.sing_up)) {}
                 Spacer(modifier = Modifier.width(10.dp))

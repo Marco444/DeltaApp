@@ -4,10 +4,8 @@ import androidx.compose.runtime.Composable
 import androidx.navigation.NavHostController
 import androidx.navigation.compose.NavHost
 import androidx.navigation.compose.composable
-import com.example.myapplication.ui.screens.ExploreScreen
-import com.example.myapplication.ui.screens.ProgressScreen
-import com.example.myapplication.ui.screens.QRScreen
-import com.example.myapplication.ui.screens.RoutinesScreen
+import com.example.myapplication.LogIn
+import com.example.myapplication.ui.screens.*
 import com.example.myapplication.viewmodel.RoutinesViewModel
 
 @Composable
@@ -20,7 +18,7 @@ import com.example.myapplication.viewmodel.RoutinesViewModel
 fun NavGraph(navController: NavHostController, viewModel: RoutinesViewModel ) {
     NavHost(
         navController = navController,
-        startDestination = NavBarScreen.Progress.route
+        startDestination = "Registration"
     ) {
         composable(NavBarScreen.Routines.route) {
             RoutinesScreen(viewModel = viewModel, actionRedirect = { navController.navigate(Screen.Execute.route) })
@@ -34,8 +32,11 @@ fun NavGraph(navController: NavHostController, viewModel: RoutinesViewModel ) {
         composable(NavBarScreen.QR.route) {
             QRScreen(viewModel = viewModel)
         }
-        composable(Screen.Execute.route) {
-            ///new activity??
+        composable("LogIn") {
+            LogIn(viewModel = viewModel, actionRedirect = {navController.navigate(NavBarScreen.Progress.route)}, backButton = {navController.navigate(Screen.Registration.route)})
+        }
+        composable("Registration") {
+            RegistrationScreen(actionRedirect = {navController.navigate(Screen.LogIng.route)})
         }
     }
 }
