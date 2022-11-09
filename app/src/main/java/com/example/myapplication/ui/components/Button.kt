@@ -26,12 +26,13 @@ import com.example.myapplication.ui.theme.H1Font
 
 
 @Composable
-fun Button1(fontSize: Int, text: String, handler: () -> Unit = {}) {
+fun Button1(fontSize: Int, text: String, handler: () -> Unit = {}, modifier: Modifier = Modifier) {
     Button(
         onClick = handler,
         colors = ButtonDefaults.buttonColors(backgroundColor = BackgroundButton),
         border = BorderStroke(3.dp, Green),
-        shape = RoundedCornerShape(20)
+        shape = RoundedCornerShape(20),
+        modifier = modifier
     ) {
         Text(text = text,
             fontSize = fontSize.sp,

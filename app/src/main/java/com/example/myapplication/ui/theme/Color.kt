@@ -3,7 +3,7 @@ package com.example.myapplication.ui.theme
 import androidx.compose.ui.graphics.Color
 
 val Green = Color(0xFFCFFFB3)
-
+val cardBackgroundColor = Color(0xD9D9D9)
 val Black = Color(0x1f1f1f1f)
 val BackgroundButton = Color(0xe51e1e1e)
 val Purple500 = Color(0xFF6200EE)
