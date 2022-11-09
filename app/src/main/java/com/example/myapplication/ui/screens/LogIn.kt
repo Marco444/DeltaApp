@@ -10,6 +10,7 @@ import androidx.compose.material.*
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.filled.Add
 import androidx.compose.material.icons.filled.ArrowBack
+import androidx.compose.material.icons.filled.Lock
 import androidx.compose.material.icons.filled.Search
 import androidx.compose.runtime.*
 import androidx.compose.ui.Alignment
@@ -24,6 +25,7 @@ import androidx.compose.ui.text.buildAnnotatedString
 import androidx.compose.ui.text.input.KeyboardType
 import androidx.compose.ui.text.input.PasswordVisualTransformation
 import androidx.compose.ui.text.input.TextFieldValue
+import androidx.compose.ui.text.input.VisualTransformation
 import androidx.compose.ui.text.style.TextDecoration
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
@@ -37,7 +39,6 @@ import com.example.myapplication.ui.theme.Purple500
 
 @Composable
 fun LogIn(){
-    var email by remember { mutableStateOf(TextFieldValue("")) }
     var passWord by remember { mutableStateOf(TextFieldValue("")) }
 
     Box{
@@ -63,42 +64,18 @@ fun LogIn(){
             }
             Row(verticalAlignment = Alignment.CenterVertically) {
                 Column(modifier = Modifier.padding(top = 100.dp, start = 20.dp)) {
-                    TextField( value = email,
-                        onValueChange = { newText ->
-                            email = newText
-                        },
-                        shape = RoundedCornerShape(8.dp),
-                        colors = TextFieldDefaults.textFieldColors(
-                            backgroundColor = Color.White,
-                            focusedIndicatorColor =  Color.Transparent),
-                        label = {
-                                Text(text = "Email")
-                        },
-                        textStyle = TextStyle.Default.copy(fontSize = 15.sp)
-                    )
+                    EmailTextField(onTextChange = {/*TODO*/})
                     Spacer(modifier = Modifier.height(20.dp))
-                  
+                    PasswordTextField(onTextChange = {})
                     Spacer(modifier = Modifier.height(20.dp))
-                    val mAnnotatedLinkString = buildAnnotatedString {
-                        // creating a string to display in the Text
-                        val mStr = "Forgot password?"
-                        append(mStr)
-                        addStyle(
-                            style = SpanStyle(
-                                color = Color.White,
-                                textDecoration = TextDecoration.Underline
-                            ), start = 0, end = mStr.length
-                        )
-
-                    }
-                    ClickableText(text = mAnnotatedLinkString, onClick = {})
+                   LinkedText(handler = {/*TODO*/})
                 }
 
             }
             Spacer(modifier = Modifier.height(20.dp))
             Row(verticalAlignment = Alignment.CenterVertically){
                 Column(horizontalAlignment = Alignment.CenterHorizontally) {
-                    Button1(fontSize = 10, text = "Log In")
+                    Button1(fontSize = 35, text = "Log In")
                 }
             }
         }
@@ -108,7 +85,74 @@ fun LogIn(){
 
 
 }
+@Composable
+fun EmailTextField(onTextChange :(TextFieldValue) -> Unit){
+    var email by remember { mutableStateOf(TextFieldValue("")) }
+    TextField( value = email,
+        onValueChange = { newText ->
+            email = newText
+            onTextChange(newText);
+        },
+        shape = RoundedCornerShape(8.dp),
+        colors = TextFieldDefaults.textFieldColors(
+            backgroundColor = Color.White,
+            focusedIndicatorColor =  Color.Transparent),
+        label = {
+            Text(text = "Email")
+        },
+        textStyle = TextStyle.Default.copy(fontSize = 15.sp)
+    )
+}
+@Composable
+fun PasswordTextField(onTextChange :(TextFieldValue) -> Unit){
+    var email by remember { mutableStateOf(TextFieldValue("")) }
+    var passwordVisible by remember { mutableStateOf(false) }
+    TextField( value = email,
+        onValueChange = { newText ->
+            email = newText
+            onTextChange(newText);
+        },
+        shape = RoundedCornerShape(8.dp),
+        colors = TextFieldDefaults.textFieldColors(
+            backgroundColor = Color.White,
+            focusedIndicatorColor =  Color.Transparent),
+        label = {
+            Text(text = "Password")
+        },
+        visualTransformation = if (passwordVisible) VisualTransformation.None else PasswordVisualTransformation(),
+        keyboardOptions = KeyboardOptions(keyboardType = KeyboardType.Password),
+        trailingIcon = {
+            val image = if (passwordVisible)
+                Icon(Icons.Default.Lock,contentDescription = "content description", tint= Color.Black)
+            else  Icon(Icons.Default.Lock,contentDescription = "content description", tint= Color.Black)
 
+
+            // Please provide localized description for accessibility services
+            val description = if (passwordVisible) "Hide password" else "Show password"
+
+            IconButton(onClick = {passwordVisible = !passwordVisible}){
+                Icon(Icons.Default.Lock,contentDescription = "content description", tint= Color.Black)
+            }
+        },
+        textStyle = TextStyle.Default.copy(fontSize = 15.sp)
+    )
+}
+@Composable
+fun LinkedText(handler : (Int) -> Unit){
+    val mAnnotatedLinkString = buildAnnotatedString {
+        // creating a string to display in the Text
+        val mStr = "Forgot password?"
+        append(mStr)
+        addStyle(
+            style = SpanStyle(
+                color = Color.White,
+                textDecoration = TextDecoration.Underline
+            ), start = 0, end = mStr.length
+        )
+
+    }
+    ClickableText(text = mAnnotatedLinkString, onClick = handler)
+}
 
 @Preview
 @Composable
