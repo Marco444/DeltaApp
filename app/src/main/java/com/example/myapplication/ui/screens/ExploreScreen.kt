@@ -1,8 +1,11 @@
 package com.example.myapplication.ui.screens
 
+import androidx.compose.foundation.ExperimentalFoundationApi
 import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.*
+import androidx.compose.foundation.lazy.GridCells
 import androidx.compose.foundation.lazy.LazyColumn
+import androidx.compose.foundation.lazy.LazyVerticalGrid
 import androidx.compose.foundation.lazy.items
 import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.material.*
@@ -22,7 +25,9 @@ import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import com.example.myapplication.R
+import com.example.myapplication.ui.components.ROUTINE_CARD_WIDTH
 import com.example.myapplication.ui.components.RoutineCard
+import com.example.myapplication.ui.components.RoutinesGrid
 import com.example.myapplication.viewmodel.RoutinesViewModel
 import com.example.myapplication.viewmodel.RoutineCardAction
 
@@ -63,7 +68,9 @@ fun SearchAndFilter() {
 @Composable
 fun ExploreScreen(viewModel: RoutinesViewModel){
     Column (
-        modifier = Modifier.background(Color.Black),
+        modifier = Modifier
+            .fillMaxWidth()
+            .background(Color.Black),
         horizontalAlignment = Alignment.CenterHorizontally
     ){
 
@@ -79,18 +86,7 @@ fun ExploreScreen(viewModel: RoutinesViewModel){
         SearchAndFilter();
 
         Spacer(modifier = Modifier.height(20.dp))
-        LazyColumn {
-           items(items = viewModel.uiState.value.exploreRoutines.values.toTypedArray()) {
-               RoutineCard(
-                   routine = it,
-                   iconId = if(viewModel.isAddedRoutine(it.id))
-                                R.drawable.check_circle_white_24dp
-                            else
-                                R.drawable.add_white_24dp,
-                   clickedIcon = { viewModel.addedRoutineFromExplore(it.id) },
-                   action = RoutineCardAction.Explore
-               )
-            }
-        }
+
+       RoutinesGrid(viewModel = viewModel, actionRedirect = { }, routineCard = RoutineCard.ExploreRoutine)
     }
 }

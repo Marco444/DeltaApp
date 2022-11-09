@@ -22,9 +22,18 @@ import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
+import com.example.myapplication.R
 import com.example.myapplication.ui.theme.Green
 import com.example.myapplication.viewmodel.RoutineCardAction
 import com.example.myapplication.viewmodel.RoutinesT
+
+
+const val ROUTINE_CARD_WIDTH = 370;
+
+sealed class RoutineCard(val iconClicked: Int, val iconUnClicked: Int) {
+    object MyRoutine: RoutineCard ( R.drawable.star_rate_white_24dp, R.drawable.star_border_white_24dp)
+   object ExploreRoutine: RoutineCard ( R.drawable.check_circle_white_24dp, R.drawable.add_white_24dp)
+}
 
 @Composable
 fun RoutineCardDetails(description: String) {
@@ -65,7 +74,7 @@ fun RoutineCard(routine: RoutinesT, iconId: Int, clickedIcon: () -> Unit = {}, a
 
     Box (
         Modifier
-            .fillMaxWidth()
+            .width(ROUTINE_CARD_WIDTH.dp)
             .clickable {
                 expanded = !expanded
                 imageHeight = if (expanded) 200.dp else 70.dp
@@ -76,7 +85,7 @@ fun RoutineCard(routine: RoutinesT, iconId: Int, clickedIcon: () -> Unit = {}, a
             painter = painterResource(routine.img),
             contentDescription = null,
             modifier = Modifier
-                .width(370.dp)
+                .width(ROUTINE_CARD_WIDTH.dp)
                 .clip(RoundedCornerShape(20.dp))
                 .height(imageHeight),
             contentScale = ContentScale.Crop,
