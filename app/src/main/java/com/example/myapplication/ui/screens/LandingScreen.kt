@@ -35,23 +35,18 @@ fun LandingScreenPortrait(actionRedirect: () -> Unit) {
             modifier = Modifier
                 .fillMaxWidth()
                 .fillMaxHeight(),
-            verticalArrangement = Arrangement.Center,
-            horizontalAlignment = Alignment.CenterHorizontally
+            horizontalAlignment = Alignment.CenterHorizontally,
+                    verticalArrangement = Arrangement.SpaceEvenly
         ) {
 
-            Spacer(modifier = Modifier.height(10.dp))
             Image(
                 painter = painterResource(id = R.drawable.delta_logo),
                 contentDescription = "delta symbol of greek alphabet"
             )
-            Spacer(modifier = Modifier.height(200.dp))
             Button1(fontSize = 42, text = stringResource(R.string.try_out))
-            Spacer(modifier = Modifier.height(100.dp))
 
             Row {
-                Spacer(modifier = Modifier.width(10.dp))
                 Button1(fontSize = 24, text = stringResource(R.string.login), handler = actionRedirect)
-                Spacer(modifier = Modifier.width(20.dp))
             }
         }
     }
@@ -65,22 +60,18 @@ fun LandingScreenLandscape(actionRedirect: () -> Unit) {
             modifier = Modifier
                 .fillMaxWidth()
                 .fillMaxHeight(),
-            horizontalAlignment = Alignment.CenterHorizontally
+            horizontalAlignment = Alignment.CenterHorizontally,
+            verticalArrangement = Arrangement.SpaceEvenly
         ) {
 
-            Spacer(modifier = Modifier.height(10.dp))
             Image(
                 painter = painterResource(id = R.drawable.delta_logo),
                 contentDescription = "delta symbol of greek alphabet"
             )
-            Spacer(modifier = Modifier.height(40.dp))
             Button1(fontSize = 42, text = stringResource(R.string.try_out))
-            Spacer(modifier = Modifier.height(40.dp))
 
             Row {
-                Spacer(modifier = Modifier.width(10.dp))
                 Button1(fontSize = 24, text = stringResource(R.string.login), handler = actionRedirect)
-                Spacer(modifier = Modifier.width(20.dp))
             }
         }
     }
