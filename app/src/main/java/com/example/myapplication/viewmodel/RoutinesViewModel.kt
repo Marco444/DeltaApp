@@ -13,11 +13,13 @@ class RoutinesViewModel : ViewModel() {
     val uiState: StateFlow<RoutinesState> = _uiState.asStateFlow()
 
 
-    private var screenWidth: WindowWidthSizeClass = WindowWidthSizeClass.Compact;
+     var screenWidth: WindowWidthSizeClass = WindowWidthSizeClass.Compact
+        private set
 
     fun cardsExpandable(): Boolean {
         return screenWidth != WindowWidthSizeClass.Expanded
     }
+
 
     fun setWidth(width: WindowWidthSizeClass) {
         screenWidth = width;

@@ -1,0 +1,90 @@
+Index: app/src/main/java/com/example/myapplication/ui/screens/RegistrationScreen.kt
+IDEA additional info:
+Subsystem: com.intellij.openapi.diff.impl.patch.CharsetEP
+<+>UTF-8
+===================================================================
+diff --git a/app/src/main/java/com/example/myapplication/ui/screens/RegistrationScreen.kt b/app/src/main/java/com/example/myapplication/ui/screens/LandingScreen.kt
+rename from app/src/main/java/com/example/myapplication/ui/screens/RegistrationScreen.kt
+rename to app/src/main/java/com/example/myapplication/ui/screens/LandingScreen.kt
+--- a/app/src/main/java/com/example/myapplication/ui/screens/RegistrationScreen.kt	(revision f25b381487d41866a71bab3d1b8851cd6be18cf8)
++++ b/app/src/main/java/com/example/myapplication/ui/screens/LandingScreen.kt	(date 1668004791293)
+@@ -1,24 +1,16 @@
+ package com.example.myapplication.ui.screens
+ 
+-import androidx.compose.foundation.BorderStroke
+ import androidx.compose.foundation.Image
+ import androidx.compose.foundation.layout.*
+-import androidx.compose.foundation.shape.RoundedCornerShape
+-import androidx.compose.material.Button
+-import androidx.compose.material.ButtonDefaults
+-import androidx.compose.material.Text
+ import androidx.compose.runtime.Composable
+ import androidx.compose.ui.Alignment
+ import androidx.compose.ui.Modifier
+-import androidx.compose.ui.graphics.Color.Companion.Black
+ import androidx.compose.ui.graphics.painter.Painter
+ import androidx.compose.ui.layout.ContentScale
+ import androidx.compose.ui.res.painterResource
+ import androidx.compose.ui.res.stringResource
+ import androidx.compose.ui.tooling.preview.Preview
+ import androidx.compose.ui.unit.dp
+-import androidx.compose.ui.unit.sp
+-import androidx.compose.ui.graphics.Color.Companion.Green as Green1
+ import com.example.myapplication.R
+ import com.example.myapplication.ui.components.Button1
+ 
+@@ -35,9 +27,8 @@
+     )
+ }
+ 
+-@Preview
+ @Composable
+-fun RegistrationScreen() {
++fun LandingScreenLandscape() {
+     Box {
+         BackgroundImage(painter = painterResource(id = R.drawable.registration_background))
+         Column(
+@@ -61,9 +52,42 @@
+                 Spacer(modifier = Modifier.width(10.dp))
+                 Button1(fontSize = 24, text = stringResource(R.string.login)) {}
+                 Spacer(modifier = Modifier.width(20.dp))
+-                Button1(fontSize = 24, text = stringResource(R.string.sing_up)) {}
++            }
++        }
++    }
++}
++
++@Composable
++fun LandingScreenPortrait() {
++    Box {
++        BackgroundImage(painter = painterResource(id = R.drawable.registration_background))
++        Row(
++            modifier = Modifier
++                .fillMaxWidth()
++                .fillMaxHeight(),
++        ) {
++
++            Spacer(modifier = Modifier.height(10.dp))
++            Image(
++                painter = painterResource(id = R.drawable.delta_logo),
++                contentDescription = "delta symbol of greek alphabet"
++            )
++            Button1(fontSize = 42, text = stringResource(R.string.try_out))
++            Spacer(modifier = Modifier.height(100.dp))
++
++            Row {
+                 Spacer(modifier = Modifier.width(10.dp))
++                Button1(fontSize = 24, text = stringResource(R.string.login)) {}
++                Spacer(modifier = Modifier.width(20.dp))
+             }
+         }
+     }
+ }
++
++
++@Preview
++@Composable
++fun LandingScreen(landscape: Boolean = true) {
++    if(landscape) LandingScreenLandscape()
++    else LandingScreenPortrait()
++}

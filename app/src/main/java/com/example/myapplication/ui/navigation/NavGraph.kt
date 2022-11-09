@@ -1,5 +1,6 @@
 package com.example.myapplication.ui.navigation
 
+import androidx.compose.material3.windowsizeclass.WindowWidthSizeClass
 import androidx.compose.runtime.Composable
 import androidx.navigation.NavHostController
 import androidx.navigation.compose.NavHost
@@ -18,10 +19,11 @@ import com.example.myapplication.viewmodel.RoutinesViewModel
 fun NavGraph(navController: NavHostController, viewModel: RoutinesViewModel ) {
     NavHost(
         navController = navController,
-        startDestination = "Registration"
+        startDestination = Screen.Landing.route
     ) {
         composable(NavBarScreen.Routines.route) {
-            RoutinesScreen(viewModel = viewModel, actionRedirect = { navController.navigate(Screen.Execute.route) })
+            RoutinesScreen(viewModel = viewModel,
+                           actionRedirect = { navController.navigate(Screen.Execute.route) })
         }
         composable(NavBarScreen.Progress.route) {
             ProgressScreen(viewModel = viewModel)
@@ -32,11 +34,13 @@ fun NavGraph(navController: NavHostController, viewModel: RoutinesViewModel ) {
         composable(NavBarScreen.QR.route) {
             QRScreen(viewModel = viewModel)
         }
-        composable("LogIn") {
-            LogIn(viewModel = viewModel, actionRedirect = {navController.navigate(NavBarScreen.Progress.route)}, backButton = {navController.navigate(Screen.Registration.route)})
+        composable(Screen.Login.route) {
+            LogIn(viewModel = viewModel, actionRedirect = {navController.navigate(NavBarScreen.Progress.route)},
+                                        backButton = {navController.navigate(Screen.Landing.route)})
         }
-        composable("Registration") {
-            RegistrationScreen(actionRedirect = {navController.navigate(Screen.LogIng.route)})
+        composable(Screen.Landing.route) {
+            LandingScreen(landscape = viewModel.screenWidth == WindowWidthSizeClass.Expanded || viewModel.screenWidth == WindowWidthSizeClass.Medium
+                , actionRedirect = {navController.navigate(Screen.Login.route)})
         }
     }
 }
