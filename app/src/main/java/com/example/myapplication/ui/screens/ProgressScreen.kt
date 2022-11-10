@@ -16,11 +16,18 @@ import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.unit.dp
 import com.example.myapplication.R
+import com.example.myapplication.data.Routines
 import com.example.myapplication.ui.components.ROUTINE_CARD_WIDTH
 import com.example.myapplication.ui.components.RoutineCard
 import com.example.myapplication.ui.components.RoutineCardSortButton
 import com.example.myapplication.ui.components.RoutinesGrid
+import com.example.myapplication.ui.navigation.NavBarScreen
+import com.example.myapplication.ui.navigation.Screen
 import com.example.myapplication.viewmodel.RoutinesViewModel
+
+fun comparebyFavourite(routine1: Routines, routine2: Routines): Int {
+    return routine1.id - routine2.id
+}
 
 @Composable
 fun ProgressScreen(viewModel: RoutinesViewModel, actionRedirect: (Int) -> Unit){
@@ -32,10 +39,6 @@ fun ProgressScreen(viewModel: RoutinesViewModel, actionRedirect: (Int) -> Unit){
         horizontalAlignment = Alignment.CenterHorizontally
     ){
 
-        if(viewModel.isLoggedIn()) {
-            Text(text = "logged in!", color = Color.White)
-        }
-
         Spacer(modifier = Modifier.height(20.dp))
         Text(
             text = stringResource(R.string.progress_title),
@@ -44,7 +47,12 @@ fun ProgressScreen(viewModel: RoutinesViewModel, actionRedirect: (Int) -> Unit){
 
         Spacer(modifier = Modifier.height(10.dp))
 
-        RoutineCardSortButton()
+        RoutineCardSortButton(
+            favoriteHandler = {viewModel.sortRoutinesFavourite(NavBarScreen.Progress)},
+            dateSortHandler = {viewModel.sortRoutinesDate(NavBarScreen.Progress)},
+            pointsSortHandler = {viewModel.sortRoutinesPoints(NavBarScreen.Progress)}
+        )
+
 
         Spacer(modifier = Modifier.height(20.dp))
 

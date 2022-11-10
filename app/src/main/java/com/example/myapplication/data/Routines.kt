@@ -1,7 +1,11 @@
 package com.example.myapplication.data
 
-import android.graphics.Color
+import androidx.compose.material.MaterialTheme
+import androidx.compose.ui.graphics.Color
 import com.example.myapplication.ui.theme.Green
+import com.example.myapplication.ui.theme.GreenSuccess
+import com.example.myapplication.ui.theme.Red
+import com.example.myapplication.ui.theme.Yellow
 
 class RoutineProgress (
     private val sessions: Int,
@@ -20,9 +24,11 @@ class RoutineProgress (
                 "average"
     }
 
-//    fun sliderColor(): Color {
-//        return Color.RED
-//    }
+    fun color(): Color {
+       return if(agreggatePerformance < 50) Red
+       else if(agreggatePerformance < 60) Yellow
+       else GreenSuccess
+    }
 }
 
 data class Routines (
@@ -33,5 +39,5 @@ data class Routines (
     var added: Boolean,
     var favourite: Boolean = false,
     var points: Int = 0,
-    val routineProgress: RoutineProgress = RoutineProgress(0, 40f)
+    val routineProgress: RoutineProgress = RoutineProgress(0, 80f)
 )
