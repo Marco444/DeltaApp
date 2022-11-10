@@ -1,12 +1,13 @@
 package com.example.myapplication.ui.navigation
 
-import androidx.compose.material3.windowsizeclass.WindowWidthSizeClass
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.State
 import androidx.navigation.NavHostController
 import androidx.navigation.compose.NavHost
 import androidx.navigation.compose.composable
 import com.example.myapplication.LogIn
 import com.example.myapplication.ui.screens.*
+import com.example.myapplication.viewmodel.RoutinesState
 import com.example.myapplication.viewmodel.RoutinesViewModel
 
 @Composable
@@ -16,7 +17,7 @@ import com.example.myapplication.viewmodel.RoutinesViewModel
 * que va a llevar, y de esa manera hacer que esa accion se manje direction directamente y
 * unicamente desde aca
 * */
-fun NavGraph(navController: NavHostController, viewModel: RoutinesViewModel ) {
+fun NavGraph(navController: NavHostController, viewModel: RoutinesViewModel) {
     NavHost(
         navController = navController,
         startDestination = Screen.Landing.route

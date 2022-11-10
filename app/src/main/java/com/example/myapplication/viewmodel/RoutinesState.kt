@@ -7,7 +7,7 @@ import com.example.myapplication.data.Routines
 class RoutinesState {
 
 
-    val userRoutines = mutableListOf<Routines>()
+    var userRoutines = mutableListOf<Routines>()
 
     var exploreRoutines = mutableListOf<Routines>()//mutableListOf<RoutinesT>()
 

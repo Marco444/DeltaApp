@@ -12,9 +12,8 @@ import kotlinx.coroutines.flow.update
 
 class RoutinesViewModel : ViewModel() {
 
-
     private val _routinesState = MutableStateFlow(RoutinesState())
-    val routinesState: StateFlow<RoutinesState> = _routinesState.asStateFlow()
+    private val routinesState: StateFlow<RoutinesState> = _routinesState.asStateFlow()
 
     fun getRoutines(routineCard: RoutineCard): MutableList<Routines> {
         return if(routineCard == RoutineCard.ExploreRoutine) routinesState.value.exploreRoutines
@@ -26,15 +25,15 @@ class RoutinesViewModel : ViewModel() {
     }
 
     fun sortRoutinesDate(screen: NavBarScreen) {
-       routinesState.value.exploreRoutines.sortBy { routines: Routines -> routines.id }
+       routinesState.value.userRoutines.sortBy { routines: Routines -> routines.id }
     }
 
     fun sortRoutinesFavourite(screen: NavBarScreen) {
-        routinesState.value.exploreRoutines.sortBy { routines: Routines -> routines.favourite }
+        routinesState.value.userRoutines.sortBy { routines: Routines -> routines.favourite }
     }
 
     fun sortRoutinesPoints(screen: NavBarScreen) {
-        _routinesState.value.exploreRoutines = _routinesState.value.exploreRoutines.sortedBy { it.points } as MutableList<Routines>
+        _routinesState.value.userRoutines = _routinesState.value.userRoutines.sortedBy { routines: Routines -> routines.points} as MutableList<Routines>
     }
 
     fun clickedIcon(id: Int, routineCard: RoutineCard) {
@@ -51,7 +50,6 @@ class RoutinesViewModel : ViewModel() {
         else
             _routinesState.value.userRoutines.find { routine: Routines -> routine.id == id }!!.favourite
     }
-
 
     //Should this go userViewModel??
     private var _loggedIn  = MutableStateFlow(false)
