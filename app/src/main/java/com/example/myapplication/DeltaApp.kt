@@ -56,7 +56,7 @@ fun DeltaApp(
                 modifier = Modifier
                     .fillMaxSize()
                     .padding(
-                        start = it.calculateLeftPadding(LayoutDirection.Ltr),
+                        start = it.calculateLeftPadding(LayoutDirection.Rtl),
                     )
             ) {
                 NavGraph(navController = navController, viewModel = viewModel)
