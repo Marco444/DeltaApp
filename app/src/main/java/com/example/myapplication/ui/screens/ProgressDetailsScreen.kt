@@ -15,12 +15,29 @@ import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import com.example.myapplication.R
+import com.example.myapplication.data.RoutineProgress
 import com.example.myapplication.data.Routines
 import com.example.myapplication.ui.components.BackButton
 import com.example.myapplication.ui.components.Button1
 import com.example.myapplication.ui.theme.Green
 import com.example.myapplication.viewmodel.RoutinesViewModel
 
+
+@Composable
+fun SliderDelta(value: Float,
+                enabled: Boolean,
+                handler: (Float) -> Unit,
+                color: Color = Green,
+                range: ClosedFloatingPointRange<Float> = 0f..100f) {
+    Slider(
+        value = value,
+        enabled = enabled,
+        onValueChange = handler,
+        valueRange = range,
+        modifier = Modifier
+            .clip(RoundedCornerShape(20.dp))
+            .background(color))
+}
 
 @Composable
 fun ProgressDetailScreen(viewModel: RoutinesViewModel, viewRoutineHandler: () -> Unit, routineId: String?, backButtonHandler: () -> Unit) {
@@ -42,32 +59,35 @@ fun ProgressDetailScreen(viewModel: RoutinesViewModel, viewRoutineHandler: () ->
                 .fillMaxWidth(0.7f)) {
 
                 val id = routineId?.substringAfter('}')?.toInt() ?: -1
-                val routine: Routines = viewModel.routine(id)!!
+                val routineProgress: RoutineProgress = viewModel.routine(id)!!.routineProgress
 
-                Text(
-                    text = routine.routineProgress.progressTile(),
-                    style = MaterialTheme.typography.h1,
-                )
+                    Text(
+                        text = routineProgress.progressTile(),
+                        style = MaterialTheme.typography.h1,
+                        color = routineProgress.color()
+                    )
 
-                Slider(
-                    value = routine.routineProgress.agreggatePerformance,
-                    enabled = false, onValueChange = {}, valueRange = 0f..100f,
-                    modifier = Modifier.clip(RoundedCornerShape(20.dp)).background(
-                        Green))
+                    SliderDelta(
+                        routineProgress.agreggatePerformance,
+                        false,
+                        {},
+                        routineProgress.color()
+                    )
 
-                Text(
-                    text = routine.routineProgress.progressDescription(),
-                    fontSize = 30.sp,
-                    color = Color.White
-                )
+                    Spacer(modifier = Modifier.height(20.dp))
+                    Text(
+                        text = routineProgress.progressDescription(),
+                        fontSize = 30.sp,
+                        color = Color.White
+                    )
             }
 
         }
 
         Spacer(modifier = Modifier.height(20.dp))
 
-        Row(verticalAlignment = Alignment.CenterVertically){
-            Button1(fontSize = 20, text = stringResource(R.string.see_routine_details), handler = viewRoutineHandler)
-        }
+//        Row(verticalAlignment = Alignment.CenterVertically){
+//            Button1(fontSize = 20, text = stringResource(R.string.see_routine_details), handler = viewRoutineHandler)
+//        }
     }
 }

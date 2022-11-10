@@ -17,18 +17,18 @@ fun RoutinesGrid(viewModel: RoutinesViewModel, actionRedirect: (Int) -> Unit, ro
     LazyVerticalGrid(
         cells = GridCells.Adaptive(ROUTINE_CARD_WIDTH.dp),
         content = {
-            items(viewModel.uiState.value.exploreRoutines.values.toTypedArray()) { routine ->
+            items(viewModel.getRoutines(routineCard)) { routine ->
                 Box(
                     modifier= Modifier.fillMaxSize().padding(bottom = 20.dp),
                     contentAlignment = Alignment.Center
                 ) {
                     RoutineCard(
                         routine = routine,
-                        iconId =    if (!viewModel.isAddedRoutine(routine.id))
+                        iconId =    if (!viewModel.isSelected(routine.id, routineCard))
                                         routineCard.iconUnClicked
                                     else
                                         routineCard.iconClicked,
-                        clickedIcon = { viewModel.addedRoutineFromExplore(routine.id) },
+                        clickedIcon = { viewModel.clickedIcon(routine.id, routineCard) },
                         routineCard = routineCard,
                         viewModel = viewModel,
                         actionHandler = { actionRedirect(routine.id) }

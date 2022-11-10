@@ -22,6 +22,7 @@ import com.example.myapplication.ui.components.ROUTINE_CARD_WIDTH
 import com.example.myapplication.ui.components.RoutineCard
 import com.example.myapplication.ui.components.RoutineCardSortButton
 import com.example.myapplication.ui.components.RoutinesGrid
+import com.example.myapplication.ui.navigation.NavBarScreen
 import com.example.myapplication.viewmodel.RoutinesViewModel
 
 @Composable
@@ -41,8 +42,12 @@ fun RoutinesScreen(viewModel: RoutinesViewModel,
 
         Spacer(modifier = Modifier.height(10.dp))
 
-        RoutineCardSortButton()
 
+        RoutineCardSortButton(
+            favoriteHandler = {viewModel.sortRoutinesFavourite(NavBarScreen.Progress)},
+            dateSortHandler = {viewModel.sortRoutinesDate(NavBarScreen.Progress)},
+            pointsSortHandler = {viewModel.sortRoutinesPoints(NavBarScreen.Progress)}
+        )
         Spacer(modifier = Modifier.height(20.dp))
 
         RoutinesGrid(viewModel = viewModel, actionRedirect = {}, routineCard = RoutineCard.MyRoutine)

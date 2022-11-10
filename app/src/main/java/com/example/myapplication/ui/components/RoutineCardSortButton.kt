@@ -12,24 +12,26 @@ import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.clip
 import androidx.compose.ui.graphics.Color
+import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
+import com.example.myapplication.R
+import com.example.myapplication.data.Routines
+import com.example.myapplication.viewmodel.RoutinesViewModel
 
 @Composable
-fun RoutineCardSortButton() {
+fun RoutineCardSortButton(favoriteHandler: () -> Unit, dateSortHandler: () -> Unit, pointsSortHandler: () -> Unit) {
     Row (
-        horizontalArrangement = Arrangement.SpaceEvenly,
         modifier = Modifier
             .clip(RoundedCornerShape(20.dp))
             .background(Color.Gray)
             .padding(5.dp),
-
         ){
-        SortButton(onClick ={}, txt = " Favourite")
+        SortButton(onClick = favoriteHandler, txt = stringResource(R.string.favourite))
         Delimiter()
-        SortButton(onClick ={}, txt = "Date")
+        SortButton(onClick = dateSortHandler, txt = stringResource(R.string.date))
         Delimiter()
-        SortButton(onClick ={}, txt = "Points ")
+        SortButton(onClick = pointsSortHandler, txt = stringResource(R.string.points))
     }
 }
 

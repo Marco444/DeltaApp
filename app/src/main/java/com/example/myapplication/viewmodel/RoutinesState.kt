@@ -4,53 +4,39 @@ package com.example.myapplication.viewmodel
 import com.example.myapplication.R
 import com.example.myapplication.data.Routines
 
-
-class UserRoutinesState {
-    val exploreRoutines = mutableMapOf<Int, Routines>()//mutableListOf<RoutinesT>()
-
-    init {
-        exploreRoutines[0] = Routines(0, R.drawable.registration_background,
-            "This is a sample routine text", "PUSH", false)
-        exploreRoutines[1] = Routines(1, R.drawable.registration_background,
-            "This is a sample routine text", "PULL", false)
-        exploreRoutines[2] = Routines(2, R.drawable.registration_background,
-            "This is a sample routine text", "PUSH", false)
-        exploreRoutines[3] = Routines(3, R.drawable.registration_background,
-            "This is a sample routine text", "PULL", false)
-        exploreRoutines[4] = Routines(4, R.drawable.registration_background,
-            "This is a sample routine text", "PUSH", false)
-        exploreRoutines[5] = Routines(5, R.drawable.registration_background,
-            "This is a sample routine text", "PULL", false)
-        exploreRoutines[6] = Routines(6, R.drawable.registration_background,
-            "This is a sample routine text", "PUSH", false)
-        exploreRoutines[7] = Routines(7, R.drawable.registration_background,
-            "This is a sample routine text", "PULL", false)
-    }
-}
-
 class RoutinesState {
 
 
-    val userRoutines = listOf<Routines>()
+    val userRoutines = mutableListOf<Routines>()
 
-    val exploreRoutines = mutableMapOf<Int, Routines>()//mutableListOf<RoutinesT>()
+    var exploreRoutines = mutableListOf<Routines>()//mutableListOf<RoutinesT>()
 
     init {
-        exploreRoutines[0] = Routines(0, R.drawable.registration_background,
-            "This is a sample routine text", "PUSH", false)
-        exploreRoutines[1] = Routines(1, R.drawable.registration_background,
-            "This is a sample routine text", "PULL", false)
-        exploreRoutines[2] = Routines(2, R.drawable.registration_background,
-            "This is a sample routine text", "PUSH", false)
-        exploreRoutines[3] = Routines(3, R.drawable.registration_background,
-            "This is a sample routine text", "PULL", false)
-        exploreRoutines[4] = Routines(4, R.drawable.registration_background,
-            "This is a sample routine text", "PUSH", false)
-        exploreRoutines[5] = Routines(5, R.drawable.registration_background,
-            "This is a sample routine text", "PULL", false)
-        exploreRoutines[6] = Routines(6, R.drawable.registration_background,
-            "This is a sample routine text", "PUSH", false)
-        exploreRoutines[7] = Routines(7, R.drawable.registration_background,
-            "This is a sample routine text", "PULL", false)
+        exploreRoutines.add( Routines(0, R.drawable.registration_background,
+            "This is a sample routine text", "PUSH", false))
+        exploreRoutines.add( Routines(1, R.drawable.registration_background,
+            "This is a sample routine text", "PULL", false))
+        exploreRoutines.add( Routines(2, R.drawable.registration_background,
+            "This is a sample routine text", "PUSH", false))
+        exploreRoutines.add( Routines(3, R.drawable.registration_background,
+            "This is a sample routine text", "PULL 3", false))
+        exploreRoutines.add( Routines(4, R.drawable.registration_background,
+            "This is a sample routine text", "PUSH 4", false))
+        exploreRoutines.add( Routines(5, R.drawable.registration_background,
+            "This is a sample routine text", "PULL 5", false))
+        exploreRoutines.add( Routines(6, R.drawable.registration_background,
+            "This is a sample routine text", "PUSH 6", false))
+        exploreRoutines.add( Routines(7, R.drawable.registration_background,
+            "This is a sample routine text", "PULL 7", false))
+
+
+        userRoutines.add( Routines(8, R.drawable.registration_background,
+            "This is a sample routine text", "MY PUSH 8", false, points = 3))
+        userRoutines.add( Routines(9, R.drawable.registration_background,
+            "This is a sample routine text", "MY PULL 9", false, points = 10))
+        userRoutines.add( Routines(10, R.drawable.registration_background,
+            "This is a sample routine text", "MY PUSH 10", false, points = 1))
+      userRoutines.add( Routines(11, R.drawable.registration_background,
+            "This is a sample routine text", "MY PULL 11", false))
     }
 }
