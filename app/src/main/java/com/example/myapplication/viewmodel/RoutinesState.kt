@@ -8,7 +8,7 @@ import com.example.myapplication.data.Routines
 class RoutinesState {
 
 
-    val userRoutines = mutableListOf<Routines>()
+    var userRoutines = mutableListOf<Routines>()
 
     var exploreRoutines = mutableListOf<Routines>()//mutableListOf<RoutinesT>()
 
@@ -28,7 +28,7 @@ class RoutinesState {
         exploreRoutines.add( Routines(6, R.drawable.registration_background,
             "This is a sample routine text", "PUSH 6", false))
         exploreRoutines.add( Routines(7, R.drawable.registration_background,
-            "This is a sample routine text", "PULL 7", false))
+            "This is a sample routine text", "PULL 7", false, points = 10))
 
         userRoutines.add( Routines(8, R.drawable.registration_background,
             "This is a sample routine text", "MY PUSH 8", false, points = 3))

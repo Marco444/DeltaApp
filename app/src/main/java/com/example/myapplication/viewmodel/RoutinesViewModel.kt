@@ -13,9 +13,8 @@ import kotlinx.coroutines.flow.update
 
 class RoutinesViewModel : ViewModel() {
 
-
     private val _routinesState = MutableStateFlow(RoutinesState())
-    val routinesState: StateFlow<RoutinesState> = _routinesState.asStateFlow()
+    private val routinesState: StateFlow<RoutinesState> = _routinesState.asStateFlow()
 
     fun getRoutines(routineCard: RoutineCard): MutableList<Routines> {
         return if(routineCard == RoutineCard.ExploreRoutine) routinesState.value.exploreRoutines
@@ -27,21 +26,33 @@ class RoutinesViewModel : ViewModel() {
     }
 
     fun sortRoutinesDate(screen: NavBarScreen) {
-       routinesState.value.exploreRoutines.sortBy { routines: Routines -> routines.id }
+        if(screen == NavBarScreen.Explore)
+            routinesState.value.exploreRoutines.sortBy { routines: Routines -> routines.id }
+        else
+            routinesState.value.userRoutines.sortBy { routines: Routines -> routines.id }
     }
 
     fun sortRoutinesFavourite(screen: NavBarScreen) {
-        routinesState.value.exploreRoutines.sortBy { routines: Routines -> routines.favourite }
+        if(screen == NavBarScreen.Explore)
+            routinesState.value.exploreRoutines.sortBy { routines: Routines -> routines.favourite}
+        else
+            routinesState.value.userRoutines.sortBy { routines: Routines -> routines.favourite }
     }
 
     fun sortRoutinesPoints(screen: NavBarScreen) {
-        _routinesState.value.exploreRoutines = _routinesState.value.exploreRoutines.sortedBy { it.points } as MutableList<Routines>
+        if(screen == NavBarScreen.Explore)
+            routinesState.value.exploreRoutines.sortBy { routines: Routines -> routines.points}
+        else
+            routinesState.value.userRoutines.sortBy { routines: Routines -> routines.points}
     }
 
     fun clickedIcon(id: Int, routineCard: RoutineCard) {
-        if(RoutineCard.ExploreRoutine == routineCard)
-            _routinesState.value.exploreRoutines.find { routine: Routines -> routine.id == id }!!.added = true
-        else
+        if(RoutineCard.ExploreRoutine == routineCard) {
+           val routine = _routinesState.value.exploreRoutines.
+            find { routine: Routines -> routine.id == id }!!
+            routine.added = true
+            _routinesState.value.userRoutines.add(routine)
+        }else
             _routinesState.value.userRoutines
                 .find { routine: Routines -> routine.id == id }!!.favourite = true
     }

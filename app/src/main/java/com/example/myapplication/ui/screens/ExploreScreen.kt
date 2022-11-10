@@ -11,7 +11,9 @@ import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.material.*
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.filled.Edit
+import androidx.compose.material.icons.filled.Filter
 import androidx.compose.material.icons.filled.Search
+import androidx.compose.material.icons.filled.Sort
 import androidx.compose.runtime.*
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
@@ -24,10 +26,12 @@ import androidx.compose.ui.text.input.TextFieldValue
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
+import androidx.compose.ui.window.Dialog
 import com.example.myapplication.R
 import com.example.myapplication.ui.components.ROUTINE_CARD_WIDTH
 import com.example.myapplication.ui.components.RoutineCard
 import com.example.myapplication.ui.components.RoutinesGrid
+import com.example.myapplication.ui.navigation.NavBarScreen
 import com.example.myapplication.viewmodel.RoutinesViewModel
 
 
@@ -51,24 +55,50 @@ fun SearchField() {
 }
 
 @Composable
-fun SearchAndFilter() {
-    Row (verticalAlignment = Alignment.CenterVertically){
-        SearchField()
-        Spacer(Modifier.width(10.dp))
+fun FilterButton(viewModel: RoutinesViewModel) {
+    var expanded by remember { mutableStateOf(false) }
+
+    Box {
         IconButton(
-            onClick = { },
+            onClick = { expanded = !expanded},
             modifier = Modifier
                 .clip(RoundedCornerShape(8.dp))
-                .background(White)     ) {
-            Icon(Icons.Filled.Edit, contentDescription = null)
+                .background(White)
+        ) {
+            Icon(Icons.Filled.Sort, contentDescription = null)
+        }
+
+        DropdownMenu(expanded = expanded, onDismissRequest = { expanded = false }, modifier =  Modifier.background(
+            Color.White
+        ).clip(RoundedCornerShape(8.dp))) {
+           DropdownMenuItem(onClick = { viewModel.sortRoutinesFavourite(NavBarScreen.Explore); expanded = false}) {
+                Text(text = "favourite")
+           }
+            DropdownMenuItem(onClick = { viewModel.sortRoutinesDate(NavBarScreen.Explore) ; expanded = false}) {
+                Text(text = "date")
+            }
+            DropdownMenuItem(onClick = { viewModel.sortRoutinesPoints(NavBarScreen.Explore); expanded = false }) {
+                Text(text = "points")
+            }
         }
     }}
+
+@Composable
+fun SearchAndFilter(viewModel: RoutinesViewModel) {
+
+        Row(verticalAlignment = Alignment.CenterVertically) {
+            SearchField()
+            Spacer(Modifier.width(10.dp))
+            FilterButton(viewModel = viewModel)
+    }
+}
 
 @Composable
 fun ExploreScreen(viewModel: RoutinesViewModel){
     Column (
         modifier = Modifier
-            .fillMaxWidth().fillMaxHeight()
+            .fillMaxWidth()
+            .fillMaxHeight()
             .background(Color.Black),
         horizontalAlignment = Alignment.CenterHorizontally
     ){
@@ -82,7 +112,7 @@ fun ExploreScreen(viewModel: RoutinesViewModel){
 
         Spacer(modifier = Modifier.height(10.dp))
 
-        SearchAndFilter();
+        SearchAndFilter(viewModel = viewModel);
 
         Spacer(modifier = Modifier.height(20.dp))
 

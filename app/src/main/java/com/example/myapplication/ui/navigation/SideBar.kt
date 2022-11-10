@@ -8,6 +8,7 @@ import androidx.compose.runtime.Composable
 import androidx.compose.runtime.getValue
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.scale
+import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.unit.dp
 import androidx.navigation.NavController
@@ -29,15 +30,11 @@ fun SideBar(navController: NavController) {
         val currentRoute = navBackStackEntry?.destination?.route
         items.forEach { item ->
             NavigationRailItem(
-                icon = {
-                    Icon(
-                        painter = painterResource(item.icon),
-                        contentDescription = item.title,
-                        modifier = Modifier.scale(0.7f)
-                    )
-                },
-                label = { Text(text = item.title) },
+                icon = { Icon(imageVector = item.icon, contentDescription = item.title) },
+                label = { Text(text = item.title, color = Color.Gray) },
                 alwaysShowLabel = true,
+                selectedContentColor = Color.Black,
+                unselectedContentColor = Color.Gray,
                 selected = currentRoute == item.route,
                 onClick = {
                     navController.navigate(item.route) {
