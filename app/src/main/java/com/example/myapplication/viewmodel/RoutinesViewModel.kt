@@ -25,21 +25,33 @@ class RoutinesViewModel : ViewModel() {
     }
 
     fun sortRoutinesDate(screen: NavBarScreen) {
-       routinesState.value.userRoutines.sortBy { routines: Routines -> routines.id }
+        if(screen == NavBarScreen.Explore)
+            routinesState.value.exploreRoutines.sortBy { routines: Routines -> routines.id }
+        else
+            routinesState.value.userRoutines.sortBy { routines: Routines -> routines.id }
     }
 
     fun sortRoutinesFavourite(screen: NavBarScreen) {
-        routinesState.value.userRoutines.sortBy { routines: Routines -> routines.favourite }
+        if(screen == NavBarScreen.Explore)
+            routinesState.value.exploreRoutines.sortBy { routines: Routines -> routines.favourite}
+        else
+            routinesState.value.userRoutines.sortBy { routines: Routines -> routines.favourite }
     }
 
     fun sortRoutinesPoints(screen: NavBarScreen) {
-        _routinesState.value.userRoutines = _routinesState.value.userRoutines.sortedBy { routines: Routines -> routines.points} as MutableList<Routines>
+        if(screen == NavBarScreen.Explore)
+            routinesState.value.exploreRoutines.sortBy { routines: Routines -> routines.points}
+        else
+            routinesState.value.userRoutines.sortBy { routines: Routines -> routines.points}
     }
 
     fun clickedIcon(id: Int, routineCard: RoutineCard) {
-        if(RoutineCard.ExploreRoutine == routineCard)
-            _routinesState.value.exploreRoutines.find { routine: Routines -> routine.id == id }!!.added = true
-        else
+        if(RoutineCard.ExploreRoutine == routineCard) {
+           val routine = _routinesState.value.exploreRoutines.
+            find { routine: Routines -> routine.id == id }!!
+            routine.added = true
+            _routinesState.value.userRoutines.add(routine)
+        }else
             _routinesState.value.userRoutines
                 .find { routine: Routines -> routine.id == id }!!.favourite = true
     }
@@ -71,18 +83,4 @@ class RoutinesViewModel : ViewModel() {
     fun setWidth(width: WindowWidthSizeClass) {
         screenWidth = width;
     }
-//    private var _exploreRoutines = mutableListOf<MutableStateFlow<RoutinesT>>()
-//
-//    fun getExploreRoutines(): List<RoutinesT> {
-//        return _exploreRoutines.map{it.asStateFlow().value}
-//    }
-//
-//    fun addedRoutineFromExplore(id: Int) {
-//        _exploreRoutines[id].value.added = true;
-//    }
-//
-//    fun isAddedRoutine(id: Int): Boolean {
-//        return  _exploreRoutines[id].value.added;
-//    }
-
 }

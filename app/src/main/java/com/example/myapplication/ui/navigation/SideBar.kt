@@ -31,8 +31,9 @@ fun SideBar(navController: NavController) {
         items.forEach { item ->
             NavigationRailItem(
                 icon = { Icon(imageVector = item.icon, contentDescription = item.title) },
-                label = { Text(text = item.title, color = Color.Black) },
-                alwaysShowLabel = false,
+                label = { Text(text = item.title, color = Color.Gray) },
+                alwaysShowLabel = true,
+                selectedContentColor = Color.Black,
                 unselectedContentColor = Color.Gray,
                 selected = currentRoute == item.route,
                 onClick = {
