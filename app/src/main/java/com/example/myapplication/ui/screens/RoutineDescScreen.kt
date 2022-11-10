@@ -32,7 +32,7 @@ import com.example.myapplication.ui.theme.MyApplicationTheme
 import com.example.myapplication.viewmodel.RoutinesViewModel
 
 @Composable
-fun RoutineDescriptionScreen(viewModel: RoutinesViewModel, routineId: String?){
+fun RoutineDescriptionScreen(viewModel: RoutinesViewModel, routineId: String?,backHandler : () -> Unit,starRoutineHanlder : ()->Unit){
 
     val id = routineId?.substringAfter('}')?.toInt() ?: -1
 
@@ -43,7 +43,7 @@ fun RoutineDescriptionScreen(viewModel: RoutinesViewModel, routineId: String?){
          Column(modifier = Modifier.fillMaxWidth()) {
 
              Button(
-                 onClick = { } ,
+                 onClick = backHandler ,
                  shape = CircleShape,
                  colors = ButtonDefaults.buttonColors(backgroundColor = Green),
                  modifier = Modifier
@@ -60,35 +60,44 @@ fun RoutineDescriptionScreen(viewModel: RoutinesViewModel, routineId: String?){
          }
          Spacer(modifier = Modifier.height(20.dp))
          Column(modifier = Modifier.fillMaxSize(), horizontalAlignment = Alignment.CenterHorizontally) {
-             ExPreviewCard("Ejercicio $id",30,"Lorem ipsum Lorem ipsum Lorem ipsum Lorem ipsum Lorem ipsum Lorem ipsum Lorem ipsum Lorem ipsum Lorem ipsum Lorem ipsum Lorem ipsum Lorem ipsumLorem ipsumLorem ipsum")
-             ListOfExercises()
-             Spacer(modifier = Modifier.height(20.dp))
-             Button1(fontSize = 20, text = "Start Routine")
+             ExPreviewCard(routine?.title ?: "",30,routine?.description ?: "")
+             Spacer(modifier = Modifier.height(40.dp))
+             ListOfExercises(viewModel,id)
+             Spacer(modifier = Modifier.height(10.dp))
+             Button1(fontSize = 20, text = "Start Routine", handler = starRoutineHanlder)
          }
      }
 
     }
 }
 
-@OptIn(ExperimentalFoundationApi::class)
 @Composable
-fun ListOfExercises(){
-    val otherStrings = arrayOf("a", "b", "c","c","c","c","c","c","c","c","c","c","c","c","c","c","c")
-    LazyColumn(modifier = Modifier.height(450.dp), horizontalAlignment = Alignment.CenterHorizontally){
-            items(otherStrings) { routine ->
-               if(! routine.equals( "Cooldown") ||! routine.equals("mainSet") || !routine.equals( "warmUp" )) {
-                   Text(text = routine, fontSize = 30.sp, color = Color.White)
-               }else{
-                   Text(text = routine, fontSize = 30.sp, color = Green)
-               }
+fun ListOfExercises(viewModel: RoutinesViewModel,id : Int){
+    LazyColumn( horizontalAlignment = Alignment.CenterHorizontally){
+        item {
+            Text(text = "WarmUp", fontSize = 30.sp, color = Green)
+
+        }
+        items(viewModel.getRoutineWarmUpExercises(id)) { item ->
+                   Text(text = item.name, fontSize = 30.sp, color = Color.White)
                     Spacer(modifier = Modifier.height(1.dp))
             }
+        item {
+            Text(text = "mainSet", fontSize = 30.sp, color = Green)
+
+        }
+        items(viewModel.getRoutineMainSetExercises(id)){ item ->
+                Text(text = item.name, fontSize = 30.sp, color = Color.White)
+                Spacer(modifier = Modifier.height(1.dp))
+            }
+        item {
+            Text(text = "CoolDown", fontSize = 30.sp, color = Green)
+
+        }
+        items(viewModel.getRoutineCoolDownExercises(id)){ item ->
+            Text(text = item.name, fontSize = 30.sp, color = Color.White)
+            Spacer(modifier = Modifier.height(1.dp))
+        }
         }
 }
 
-//
-//@Preview
-//@Composable
-//fun preview() {
-//    routineDesc()
-//}

@@ -38,10 +38,13 @@ fun NavGraph(navController: NavHostController, viewModel: RoutinesViewModel ) {
         composable(Screen.Login.route) {
             LogIn(viewModel = viewModel, actionRedirect = {viewModel.login("", "");
                 navController.navigate(NavBarScreen.Routines.route)},
-                backButton = {navController.navigate(Screen.Landing.route)})
+                backButton = {navController.popBackStack()})
         }
         composable(Screen.RoutineDescriptionScreen.route) {backStackEntry ->
-            RoutineDescriptionScreen(viewModel = viewModel, backStackEntry.arguments?.getString("routineId"))
+            RoutineDescriptionScreen(viewModel = viewModel, backStackEntry.arguments?.getString("routineId"),{}) {
+                navController.popBackStack()
+
+            }
         }
         composable(Screen.Landing.route) {
             LandingScreen(loginHandler = {navController.navigate(Screen.Login.route)},
@@ -50,7 +53,7 @@ fun NavGraph(navController: NavHostController, viewModel: RoutinesViewModel ) {
         composable(Screen.ProgressDetail.route) {backStackEntry ->
             ProgressDetailScreen(viewModel = viewModel,
                                  viewRoutineHandler = {navController.navigate(Screen.Execute.route)},
-                backButtonHandler = {navController.navigate(NavBarScreen.Progress.route)},
+                backButtonHandler = {navController.popBackStack()},
                                  routineId = backStackEntry.arguments?.getString("routineId") )
         }
 

@@ -2,6 +2,7 @@ package com.example.myapplication.viewmodel
 
 
 import com.example.myapplication.R
+import com.example.myapplication.data.RoutineExercises
 import com.example.myapplication.data.Routines
 
 class RoutinesState {
@@ -28,7 +29,6 @@ class RoutinesState {
             "This is a sample routine text", "PUSH 6", false))
         exploreRoutines.add( Routines(7, R.drawable.registration_background,
             "This is a sample routine text", "PULL 7", false))
-
 
         userRoutines.add( Routines(8, R.drawable.registration_background,
             "This is a sample routine text", "MY PUSH 8", false, points = 3))

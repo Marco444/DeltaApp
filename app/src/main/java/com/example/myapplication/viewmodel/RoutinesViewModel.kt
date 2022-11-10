@@ -2,6 +2,7 @@ package com.example.myapplication.viewmodel
 
 import androidx.compose.material3.windowsizeclass.WindowWidthSizeClass
 import androidx.lifecycle.ViewModel
+import com.example.myapplication.data.Exercise
 import com.example.myapplication.data.Routines
 import com.example.myapplication.ui.components.RoutineCard
 import com.example.myapplication.ui.navigation.NavBarScreen
@@ -72,6 +73,15 @@ class RoutinesViewModel : ViewModel() {
 
     fun setWidth(width: WindowWidthSizeClass) {
         screenWidth = width;
+    }
+    fun getRoutineWarmUpExercises(id:Int) : List<Exercise>{
+        return   _routinesState.value.userRoutines.find { routine: Routines -> routine.id == id }!!.exercises.warmUpExercises
+    }
+    fun getRoutineCoolDownExercises(id:Int) : List<Exercise>{
+        return   _routinesState.value.userRoutines.find { routine: Routines -> routine.id == id }!!.exercises.coolDownExercises
+    }
+    fun getRoutineMainSetExercises(id:Int) : List<Exercise>{
+        return   _routinesState.value.userRoutines.find { routine: Routines -> routine.id == id }!!.exercises.mainSetExercises
     }
 //    private var _exploreRoutines = mutableListOf<MutableStateFlow<RoutinesT>>()
 //

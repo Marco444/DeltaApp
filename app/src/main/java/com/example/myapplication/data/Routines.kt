@@ -39,5 +39,6 @@ data class Routines (
     var added: Boolean,
     var favourite: Boolean = false,
     var points: Int = 0,
-    val routineProgress: RoutineProgress = RoutineProgress(0, 80f)
+    val routineProgress: RoutineProgress = RoutineProgress(0, 80f),
+    val exercises: RoutineExercises = RoutineExercises(mutableListOf(Exercise(0,0,15,15,1,"Pecho","aaa")),mutableListOf(Exercise(0,0,15,15,1,"Pecho","aaa")),mutableListOf(Exercise(0,0,15,15,1,"Pecho","aaa")))
 )
