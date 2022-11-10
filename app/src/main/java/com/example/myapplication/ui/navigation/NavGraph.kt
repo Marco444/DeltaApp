@@ -23,7 +23,7 @@ fun NavGraph(navController: NavHostController, viewModel: RoutinesViewModel ) {
     ) {
         composable(NavBarScreen.Routines.route) {
             RoutinesScreen(viewModel = viewModel,
-                actionRedirect = { navController.navigate(Screen.Execute.route) })
+                actionRedirect = { navController.navigate(Screen.RoutineDescriptionScreen.route + it) })
         }
         composable(NavBarScreen.Progress.route) {
             ProgressScreen(viewModel = viewModel,
@@ -39,6 +39,9 @@ fun NavGraph(navController: NavHostController, viewModel: RoutinesViewModel ) {
             LogIn(viewModel = viewModel, actionRedirect = {viewModel.login("", "");
                 navController.navigate(NavBarScreen.Routines.route)},
                 backButton = {navController.navigate(Screen.Landing.route)})
+        }
+        composable(Screen.RoutineDescriptionScreen.route) {backStackEntry ->
+            RoutineDescriptionScreen(viewModel = viewModel, backStackEntry.arguments?.getString("routineId"))
         }
         composable(Screen.Landing.route) {
             LandingScreen(loginHandler = {navController.navigate(Screen.Login.route)},

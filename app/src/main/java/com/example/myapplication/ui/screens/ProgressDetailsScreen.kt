@@ -61,25 +61,25 @@ fun ProgressDetailScreen(viewModel: RoutinesViewModel, viewRoutineHandler: () ->
                 val id = routineId?.substringAfter('}')?.toInt() ?: -1
                 val routineProgress: RoutineProgress = viewModel.routine(id)!!.routineProgress
 
-                    Text(
-                        text = routineProgress.progressTile(),
-                        style = MaterialTheme.typography.h1,
-                        color = routineProgress.color()
-                    )
+                Text(
+                    text = routineProgress.progressTile(),
+                    style = MaterialTheme.typography.h1,
+                    color = routineProgress.color()
+                )
 
-                    SliderDelta(
-                        routineProgress.agreggatePerformance,
-                        false,
-                        {},
-                        routineProgress.color()
-                    )
+                SliderDelta(
+                    routineProgress.agreggatePerformance,
+                    false,
+                    {},
+                    routineProgress.color()
+                )
 
-                    Spacer(modifier = Modifier.height(20.dp))
-                    Text(
-                        text = routineProgress.progressDescription(),
-                        fontSize = 30.sp,
-                        color = Color.White
-                    )
+                Spacer(modifier = Modifier.height(20.dp))
+                Text(
+                    text = routineProgress.progressDescription(),
+                    fontSize = 30.sp,
+                    color = Color.White
+                )
             }
 
         }

@@ -27,7 +27,7 @@ import com.example.myapplication.viewmodel.RoutinesViewModel
 
 @Composable
 fun RoutinesScreen(viewModel: RoutinesViewModel,
-                   actionRedirect: () -> Unit,
+                   actionRedirect: (Int) -> Unit,
 ){
     Column (
         modifier = Modifier.background(Color.Black).fillMaxWidth().fillMaxHeight(),
@@ -50,6 +50,6 @@ fun RoutinesScreen(viewModel: RoutinesViewModel,
         )
         Spacer(modifier = Modifier.height(20.dp))
 
-        RoutinesGrid(viewModel = viewModel, actionRedirect = {}, routineCard = RoutineCard.MyRoutine)
+        RoutinesGrid(viewModel = viewModel, actionRedirect = actionRedirect, routineCard = RoutineCard.MyRoutine)
     }
 }
