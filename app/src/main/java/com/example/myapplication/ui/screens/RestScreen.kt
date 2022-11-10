@@ -15,12 +15,11 @@ import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import com.example.myapplication.ui.components.Button1
-import com.example.myapplication.ui.components.ExPreviewCard
 import com.example.myapplication.ui.components.ExerciseExecCard
 import com.example.myapplication.ui.theme.Green
 
 @Composable
-fun ExerciseExecScreen(){
+fun RestScreen(){
 
     Box(modifier = Modifier.background(Color(0xFF1E1E1E))) {
         Column(verticalArrangement = Arrangement.SpaceEvenly) {
@@ -43,7 +42,6 @@ fun ExerciseExecScreen(){
             }
             Spacer(modifier = Modifier.height(20.dp))
             Column(modifier = Modifier.fillMaxSize(), horizontalAlignment = Alignment.CenterHorizontally) {
-                ExerciseExecCard(nombre = "Biceps")
                 Spacer(modifier = Modifier.height(20.dp))
                 Row(verticalAlignment = Alignment.CenterVertically, horizontalArrangement = Arrangement.SpaceEvenly, modifier = Modifier.width(300.dp)) {
                     Button1(fontSize = 13, text = "Previous")
@@ -54,11 +52,10 @@ fun ExerciseExecScreen(){
         }
 
     }
-
 }
 
 @Preview
 @Composable
-fun ExerciseCardPrev() {
-    ExerciseExecScreen()
+fun RestScreenPrev() {
+    RestScreen()
 }
