@@ -27,33 +27,9 @@ fun BackgroundImage(painter: Painter) {
     )
 }
 
-@Composable
-fun LandingScreenPortrait(actionRedirect: () -> Unit) {
-    Box {
-        BackgroundImage(painter = painterResource(id = R.drawable.registration_background))
-        Column(
-            modifier = Modifier
-                .fillMaxWidth()
-                .fillMaxHeight(),
-            horizontalAlignment = Alignment.CenterHorizontally,
-                    verticalArrangement = Arrangement.SpaceEvenly
-        ) {
-
-            Image(
-                painter = painterResource(id = R.drawable.delta_logo),
-                contentDescription = "delta symbol of greek alphabet"
-            )
-            Button1(fontSize = 42, text = stringResource(R.string.try_out))
-
-            Row {
-                Button1(fontSize = 24, text = stringResource(R.string.login), handler = actionRedirect)
-            }
-        }
-    }
-}
 
 @Composable
-fun LandingScreenLandscape(actionRedirect: () -> Unit) {
+fun LandingScreen(loginHandler: () -> Unit, tryOutHandler: () -> Unit) {
     Box {
         BackgroundImage(painter = painterResource(id = R.drawable.registration_background))
         Column(
@@ -68,18 +44,14 @@ fun LandingScreenLandscape(actionRedirect: () -> Unit) {
                 painter = painterResource(id = R.drawable.delta_logo),
                 contentDescription = "delta symbol of greek alphabet"
             )
-            Button1(fontSize = 42, text = stringResource(R.string.try_out))
+            Button1(fontSize = 42, text = stringResource(R.string.try_out), handler = tryOutHandler)
 
             Row {
-                Button1(fontSize = 24, text = stringResource(R.string.login), handler = actionRedirect)
+                Button1(fontSize = 24, text = stringResource(R.string.login), handler = loginHandler)
             }
         }
     }
 }
 
 
-@Composable
-fun LandingScreen(landscape: Boolean, actionRedirect: () -> Unit) {
-    if(landscape) LandingScreenLandscape(actionRedirect = actionRedirect)
-    else LandingScreenPortrait(actionRedirect = actionRedirect)
-}
+

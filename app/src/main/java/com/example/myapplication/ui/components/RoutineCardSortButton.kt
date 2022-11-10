@@ -25,11 +25,24 @@ fun RoutineCardSortButton() {
             .padding(5.dp),
 
         ){
-        SortButton(onClick ={}, txt = "Favourite")
-        SortButton(onClick ={}, txt = "Recent")
-        SortButton(onClick ={}, txt = "Costum")
+        SortButton(onClick ={}, txt = " Favourite")
+        Delimiter()
+        SortButton(onClick ={}, txt = "Date")
+        Delimiter()
+        SortButton(onClick ={}, txt = "Points ")
     }
 }
+
+@Composable
+fun Delimiter() {
+    Text(
+        text = " | ",
+        fontSize = 25.sp,
+        color = Color.White,
+        modifier = Modifier.padding(6.dp),
+    )
+}
+
 @Composable
 fun SortButton(onClick: () -> Unit, txt: String) {
     Box(Modifier.clickable(onClick = onClick)) {

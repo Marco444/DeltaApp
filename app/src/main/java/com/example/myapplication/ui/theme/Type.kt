@@ -1,5 +1,6 @@
 package com.example.myapplication.ui.theme
 
+import androidx.compose.material.MaterialTheme
 import androidx.compose.material.Typography
 import androidx.compose.ui.text.TextStyle
 import androidx.compose.ui.text.font.Font
@@ -22,7 +23,7 @@ val Typography = Typography(
     h1 = TextStyle(
         fontSize = 70.sp,
         color = Green,
-    )
+    ),
     /* Other default text styles to override
     button = TextStyle(
         fontFamily = FontFamily.Default,

@@ -2,9 +2,11 @@ package com.example.myapplication.viewmodel
 
 import androidx.compose.material3.windowsizeclass.WindowWidthSizeClass
 import androidx.lifecycle.ViewModel
+import com.example.myapplication.data.Routines
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.StateFlow
 import kotlinx.coroutines.flow.asStateFlow
+import kotlinx.coroutines.flow.update
 
 class RoutinesViewModel : ViewModel() {
 
@@ -12,6 +14,21 @@ class RoutinesViewModel : ViewModel() {
     private val _uiState = MutableStateFlow(RoutinesState())
     val uiState: StateFlow<RoutinesState> = _uiState.asStateFlow()
 
+
+    fun routine(id: Int): Routines? {
+        return uiState.value.exploreRoutines[id]
+    }
+
+    //Should this go userViewModel??
+    private var _loggedIn  = MutableStateFlow(false)
+
+    fun login(username: String, password: String) {
+        _loggedIn.update { true } ;
+    }
+
+    fun isLoggedIn(): Boolean {
+        return _loggedIn.value
+    }
 
      var screenWidth: WindowWidthSizeClass = WindowWidthSizeClass.Compact
         private set

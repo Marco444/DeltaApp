@@ -31,6 +31,7 @@ import androidx.compose.ui.text.style.TextDecoration
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
+import com.example.myapplication.ui.components.BackButton
 import com.example.myapplication.ui.components.Button1
 import com.example.myapplication.ui.screens.BackgroundImage
 import com.example.myapplication.ui.theme.Black
@@ -49,14 +50,7 @@ fun LogIn(viewModel: RoutinesViewModel,actionRedirect: () -> Unit,backButton : (
             Row(verticalAlignment = Alignment.CenterVertically) {
                 Column(modifier = Modifier.fillMaxWidth())
                 {
-                        Button(onClick = backButton,
-                            shape = CircleShape,
-                            colors = ButtonDefaults.buttonColors(backgroundColor = Green),
-                            modifier = Modifier.padding(start = 18.dp, top = 15.dp).size(55.dp))
-                        {
-                            Icon(Icons.Default.ArrowBack ,contentDescription = "content description", tint= Color.Black)
-                        }
-
+                        BackButton(handler = backButton)
 
                 }
             }

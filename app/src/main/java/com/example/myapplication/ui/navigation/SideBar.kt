@@ -1,8 +1,15 @@
 package com.example.myapplication.ui.navigation
 
+import androidx.compose.foundation.layout.Column
+import androidx.compose.foundation.layout.padding
+import androidx.compose.foundation.layout.width
 import androidx.compose.material.*
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.getValue
+import androidx.compose.ui.Modifier
+import androidx.compose.ui.draw.scale
+import androidx.compose.ui.res.painterResource
+import androidx.compose.ui.unit.dp
 import androidx.navigation.NavController
 import androidx.navigation.compose.currentBackStackEntryAsState
 import com.example.myapplication.ui.theme.Green
@@ -16,12 +23,19 @@ fun SideBar(navController: NavController) {
         NavBarScreen.QR
     )
 
-    NavigationRail(backgroundColor = Green) {
+    NavigationRail(backgroundColor = Green, contentColor = MaterialTheme.colors.onPrimary) {
+
         val navBackStackEntry by navController.currentBackStackEntryAsState()
         val currentRoute = navBackStackEntry?.destination?.route
         items.forEach { item ->
             NavigationRailItem(
-                icon = { Icon(imageVector = item.icon, contentDescription = item.title) },
+                icon = {
+                    Icon(
+                        painter = painterResource(item.icon),
+                        contentDescription = item.title,
+                        modifier = Modifier.scale(0.7f)
+                    )
+                },
                 label = { Text(text = item.title) },
                 alwaysShowLabel = true,
                 selected = currentRoute == item.route,

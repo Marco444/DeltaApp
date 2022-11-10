@@ -13,7 +13,7 @@ import com.example.myapplication.viewmodel.RoutinesViewModel
 
 @OptIn(ExperimentalFoundationApi::class)
 @Composable
-fun RoutinesGrid(viewModel: RoutinesViewModel, actionRedirect: () -> Unit, routineCard: RoutineCard) {
+fun RoutinesGrid(viewModel: RoutinesViewModel, actionRedirect: (Int) -> Unit, routineCard: RoutineCard) {
     LazyVerticalGrid(
         cells = GridCells.Adaptive(ROUTINE_CARD_WIDTH.dp),
         content = {
@@ -31,6 +31,7 @@ fun RoutinesGrid(viewModel: RoutinesViewModel, actionRedirect: () -> Unit, routi
                         clickedIcon = { viewModel.addedRoutineFromExplore(routine.id) },
                         routineCard = routineCard,
                         viewModel = viewModel,
+                        actionHandler = { actionRedirect(routine.id) }
                     )
 
                     Spacer(modifier = Modifier.height(30.dp))

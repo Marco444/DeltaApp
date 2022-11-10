@@ -7,4 +7,5 @@
     <string name="progress_title">Progress</string>
     <string name="routines_title">Routines</string>
     <string name="explore_title">Explore</string>
+    <string name="see_routine_details">See routine details</string>
 </resources>

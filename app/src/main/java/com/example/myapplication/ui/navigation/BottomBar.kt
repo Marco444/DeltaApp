@@ -1,14 +1,17 @@
 package com.example.myapplication.ui.navigation
 
-import androidx.compose.material.BottomNavigation
-import androidx.compose.material.BottomNavigationItem
-import androidx.compose.material.Icon
-import androidx.compose.material.Text
+import androidx.compose.foundation.layout.padding
+import androidx.compose.material.*
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.getValue
+import androidx.compose.ui.Modifier
+import androidx.compose.ui.draw.scale
+import androidx.compose.ui.res.painterResource
+import androidx.compose.ui.unit.dp
 import androidx.navigation.NavController
 import androidx.navigation.compose.currentBackStackEntryAsState
 import com.example.myapplication.ui.theme.Green
+import com.example.myapplication.viewmodel.RoutinesViewModel
 
 
 @Composable
@@ -20,13 +23,19 @@ fun BottomBar(navController: NavController) {
         NavBarScreen.QR
     )
 
-    BottomNavigation (backgroundColor = Green) {
+    BottomNavigation(backgroundColor = Green, contentColor = MaterialTheme.colors.onPrimary) {
         val navBackStackEntry by navController.currentBackStackEntryAsState()
         val currentRoute = navBackStackEntry?.destination?.route
         items.forEach { item ->
             BottomNavigationItem(
-                icon = { Icon(imageVector = item.icon, contentDescription = item.title) },
-                label = { Text(text = item.title) },
+                icon = {
+                    Icon(
+                        painter = painterResource(item.icon),
+                        contentDescription = item.title,
+                        modifier = Modifier.scale(0.5f)
+                    )
+                },
+                label = { Text(text = item.title, modifier = Modifier.padding(0.dp)) },
                 alwaysShowLabel = true,
                 selected = currentRoute == item.route,
                 onClick = {

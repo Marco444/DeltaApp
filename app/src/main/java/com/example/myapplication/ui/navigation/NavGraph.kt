@@ -23,10 +23,11 @@ fun NavGraph(navController: NavHostController, viewModel: RoutinesViewModel ) {
     ) {
         composable(NavBarScreen.Routines.route) {
             RoutinesScreen(viewModel = viewModel,
-                           actionRedirect = { navController.navigate(Screen.Execute.route) })
+                actionRedirect = { navController.navigate(Screen.Execute.route) })
         }
         composable(NavBarScreen.Progress.route) {
-            ProgressScreen(viewModel = viewModel)
+            ProgressScreen(viewModel = viewModel,
+            actionRedirect = {navController.navigate(Screen.ProgressDetail.route + it  )})
         }
         composable(NavBarScreen.Explore.route) {
             ExploreScreen(viewModel = viewModel)
@@ -35,12 +36,20 @@ fun NavGraph(navController: NavHostController, viewModel: RoutinesViewModel ) {
             QRScreen(viewModel = viewModel)
         }
         composable(Screen.Login.route) {
-            LogIn(viewModel = viewModel, actionRedirect = {navController.navigate(NavBarScreen.Progress.route)},
-                                        backButton = {navController.navigate(Screen.Landing.route)})
+            LogIn(viewModel = viewModel, actionRedirect = {viewModel.login("", "");
+                navController.navigate(NavBarScreen.Routines.route)},
+                backButton = {navController.navigate(Screen.Landing.route)})
         }
         composable(Screen.Landing.route) {
-            LandingScreen(landscape = viewModel.screenWidth == WindowWidthSizeClass.Expanded || viewModel.screenWidth == WindowWidthSizeClass.Medium
-                , actionRedirect = {navController.navigate(Screen.Login.route)})
+            LandingScreen(loginHandler = {navController.navigate(Screen.Login.route)},
+                            tryOutHandler = {navController.navigate(NavBarScreen.Routines.route)})
         }
+        composable(Screen.ProgressDetail.route) {backStackEntry ->
+            ProgressDetailScreen(viewModel = viewModel,
+                                 viewRoutineHandler = {navController.navigate(Screen.Execute.route)},
+                backButtonHandler = {navController.navigate(NavBarScreen.Progress.route)},
+                                 routineId = backStackEntry.arguments?.getString("routineId") )
+        }
+
     }
 }

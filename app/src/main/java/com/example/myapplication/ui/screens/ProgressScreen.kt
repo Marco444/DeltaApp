@@ -23,13 +23,18 @@ import com.example.myapplication.ui.components.RoutinesGrid
 import com.example.myapplication.viewmodel.RoutinesViewModel
 
 @Composable
-fun ProgressScreen(viewModel: RoutinesViewModel){
+fun ProgressScreen(viewModel: RoutinesViewModel, actionRedirect: (Int) -> Unit){
     Column (
         modifier = Modifier
-            .fillMaxWidth().fillMaxHeight()
+            .fillMaxWidth()
+            .fillMaxHeight()
             .background(Color.Black),
         horizontalAlignment = Alignment.CenterHorizontally
     ){
+
+        if(viewModel.isLoggedIn()) {
+            Text(text = "logged in!", color = Color.White)
+        }
 
         Spacer(modifier = Modifier.height(20.dp))
         Text(
@@ -43,6 +48,6 @@ fun ProgressScreen(viewModel: RoutinesViewModel){
 
         Spacer(modifier = Modifier.height(20.dp))
 
-        RoutinesGrid(viewModel = viewModel, actionRedirect = { }, routineCard = RoutineCard.Progress)
+        RoutinesGrid(viewModel = viewModel, actionRedirect = actionRedirect, routineCard = RoutineCard.Progress)
     }
 }
