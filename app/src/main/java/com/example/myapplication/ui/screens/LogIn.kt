@@ -3,8 +3,7 @@ package com.example.myapplication
 import android.app.Activity
 import android.content.Context
 import android.content.ContextWrapper
-import android.content.pm.ActivityInfo
-import android.content.res.Configuration
+import android.content.Intent
 import android.view.KeyEvent
 import androidx.compose.foundation.Image
 import androidx.compose.foundation.clickable
@@ -20,12 +19,9 @@ import androidx.compose.material.*
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.filled.*
 import androidx.compose.runtime.*
-import androidx.compose.ui.Alignment
-import androidx.compose.ui.Alignment.Companion.Center
 import androidx.compose.ui.Alignment.Companion.CenterHorizontally
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.scale
-import androidx.compose.ui.focus.FocusRequester
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.graphics.Shape
 import androidx.compose.ui.input.key.onKeyEvent
@@ -50,11 +46,14 @@ import com.example.myapplication.ui.theme.Black
 import com.example.myapplication.ui.theme.Green
 import com.example.myapplication.ui.theme.Purple500
 import com.example.myapplication.viewmodel.RoutinesViewModel
+import com.example.myapplication.viewmodel.UserViewModel
 
 
 @Composable
-fun LogIn(actionRedirect: () -> Unit,backButton : () -> Unit){
+fun LogIn(viewModel: UserViewModel, actionRedirect: () -> Unit, backButton: () -> Unit){
+
     var passWord by remember { mutableStateOf(TextFieldValue("")) }
+    var snackbar by remember { mutableStateOf(false) }
     val configuration = LocalConfiguration.current
     val focusManager = LocalFocusManager.current
 
@@ -110,7 +109,7 @@ fun LogIn(actionRedirect: () -> Unit,backButton : () -> Unit){
             Button1(
                 fontSize = 23,
                 text = "Log In",
-                handler = actionRedirect,
+                handler = {if(viewModel.loginAttempt("", "")) actionRedirect() else snackbar = true},
                 modifier = Modifier.align(CenterHorizontally)
             )
 

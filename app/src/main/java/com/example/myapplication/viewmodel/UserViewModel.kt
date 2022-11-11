@@ -10,12 +10,12 @@ class UserViewModel : ViewModel() {
 
     private val _userState = MutableStateFlow(UserState())
 
-    fun isLoggedIn(): StateFlow<Boolean> {
-        return _userState.asStateFlow().value.loggedIn.asStateFlow()
-    }
 
-    fun loginAttempt(username: String, password: String) {
+    //la funcion deberia hacer la llamada a la api y devolver si
+    //fue exitosa o no
+    fun loginAttempt(username: String, password: String): Boolean {
         _userState.value.loggedIn.value = true
+        return true;
     }
 
 }

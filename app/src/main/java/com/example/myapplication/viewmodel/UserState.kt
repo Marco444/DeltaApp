@@ -10,5 +10,8 @@ data class User(
 
 class UserState {
     val user: User = User()
+
+    //la idea de hacerlo un mutableState flow tambien es para ver si asi
+    //se propaga bien, podria ser booleano y ya esta
     var loggedIn: MutableStateFlow<Boolean> = MutableStateFlow(false)
 }
