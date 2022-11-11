@@ -6,6 +6,7 @@ import com.example.myapplication.ui.theme.Green
 import com.example.myapplication.ui.theme.GreenSuccess
 import com.example.myapplication.ui.theme.Red
 import com.example.myapplication.ui.theme.Yellow
+import kotlinx.coroutines.flow.MutableStateFlow
 
 class RoutineProgress (
     private val sessions: Int,
@@ -39,6 +40,7 @@ data class Routines (
     var added: Boolean,
     var favourite: Boolean = false,
     var points: Int = 0,
+    var changed: MutableStateFlow<Boolean> = MutableStateFlow(false),
     val routineProgress: RoutineProgress = RoutineProgress(0, 80f),
     val exercises: RoutineExercises = RoutineExercises(mutableListOf(Exercise(0,0,15,15,1,"Pecho","aaa")),mutableListOf(Exercise(0,0,15,15,1,"Pecho","aaa")),mutableListOf(Exercise(0,0,15,15,1,"Pecho","aaa")))
 )

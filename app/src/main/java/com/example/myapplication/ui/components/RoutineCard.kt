@@ -20,6 +20,8 @@ import com.example.myapplication.R
 import com.example.myapplication.data.Routines
 import com.example.myapplication.ui.theme.Green
 import com.example.myapplication.viewmodel.RoutinesViewModel
+import kotlinx.coroutines.flow.MutableStateFlow
+import kotlinx.coroutines.flow.StateFlow
 
 
 const val ROUTINE_CARD_WIDTH = 370;
@@ -68,6 +70,7 @@ fun RoutineCard(routine: Routines, iconId: Int, clickedIcon: () -> Unit = {}, ac
     var expanded by remember { mutableStateOf(!viewModel.cardsExpandable()) }
     var imageHeight by remember { mutableStateOf(if(!viewModel.cardsExpandable()) 200.dp else 70.dp ) }
 
+
     Box (
         Modifier
             .width(ROUTINE_CARD_WIDTH.dp)
@@ -91,7 +94,7 @@ fun RoutineCard(routine: Routines, iconId: Int, clickedIcon: () -> Unit = {}, ac
         ) {
 
             RoutineCardTitle(
-                title = viewModel.getRoutines(routineCard).find { it.id == routine.id }!!.title,
+                title = viewModel.getRoutines(routineCard).find { it.value.id == routine.id }!!.value.title,
                 iconId = iconId,
                 clickedIcon = {clickedIcon()}
             )
