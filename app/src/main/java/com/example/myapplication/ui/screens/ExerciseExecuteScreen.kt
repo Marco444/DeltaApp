@@ -24,15 +24,15 @@ import com.example.myapplication.ui.components.ExPreviewCard
 import com.example.myapplication.ui.components.ExerciseExecCard
 import com.example.myapplication.ui.theme.Green
 import com.example.myapplication.ui.theme.GreenTransparency
+import com.example.myapplication.viewmodel.ExecuteRoutineViewModel
 import com.example.myapplication.viewmodel.RoutinesViewModel
 
 @Composable
-fun ExerciseExecScreen(viewModel: RoutinesViewModel,order:Int,routineId : String?, handlerBack : () ->Unit,handlerFinishRoutine: ()->Unit){
+fun ExerciseExecScreen(viewModel: ExecuteRoutineViewModel = ExecuteRoutineViewModel(), order:Int, routineId : String?, handlerBack : () ->Unit, handlerFinishRoutine: ()->Unit){
     var popupControl by remember { mutableStateOf(true) }
     var propierties = PopupProperties(focusable = true, dismissOnBackPress = true)
     val id = routineId?.substringAfter('}')?.toInt() ?: -1
     var oderExer = order
-    viewModel.setNextExercise(id,order)
     Box(modifier = Modifier.background(Color(0xFF1E1E1E))) {
         Column(verticalArrangement = Arrangement.SpaceEvenly) {
             Column(modifier = Modifier.fillMaxWidth()) {
@@ -59,12 +59,13 @@ fun ExerciseExecScreen(viewModel: RoutinesViewModel,order:Int,routineId : String
                 Row(verticalAlignment = Alignment.CenterVertically, horizontalArrangement = Arrangement.SpaceEvenly, modifier = Modifier.width(300.dp)) {
                     Button1(fontSize = 13, text = "Previous", handler = {
                         if (oderExer != 0)
-                            viewModel.setNextExercise(id,oderExer--)
+                            viewModel.nextExercise()
+                            handlerFinishRoutine()
 
                     })
                     Button1(fontSize = 13, text = "Next", handler = {
-                        if(viewModel.hasNext(id,oderExer + 1))
-                            viewModel.setNextExercise(id,++oderExer)
+                        if(viewModel.hasNext())
+                            viewModel.nextExercise()
                         else
                             handlerFinishRoutine()
                     })

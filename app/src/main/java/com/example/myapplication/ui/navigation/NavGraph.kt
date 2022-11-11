@@ -2,11 +2,13 @@ package com.example.myapplication.ui.navigation
 
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.State
+import androidx.lifecycle.ViewModel
 import androidx.navigation.NavHostController
 import androidx.navigation.compose.NavHost
 import androidx.navigation.compose.composable
 import com.example.myapplication.LogIn
 import com.example.myapplication.ui.screens.*
+import com.example.myapplication.viewmodel.ExecuteRoutineViewModel
 import com.example.myapplication.viewmodel.RoutinesState
 import com.example.myapplication.viewmodel.RoutinesViewModel
 
@@ -40,7 +42,7 @@ fun NavGraph(navController: NavHostController, viewModel: RoutinesViewModel) {
             RoutineDescriptionScreen(viewModel = viewModel, backStackEntry.arguments?.getString("routineId"),starRoutineHanlder = {navController.navigate(Screen.Execute.route + backStackEntry.arguments?.getString("routineId")?.substringAfter('}')?.toInt() )},backHandler = {  navController.popBackStack() })
         }
         composable(Screen.Execute.route){ backStackEntry ->
-            ExerciseExecScreen(viewModel = viewModel, order = 0, backStackEntry.arguments?.getString("routineId"), handlerBack = {navController.popBackStack()},handlerFinishRoutine = {navController.navigate(Screen.ProgressDetail.route + backStackEntry.arguments?.getString("routineId")?.substringAfter('}')?.toInt())})
+            ExerciseExecScreen( order = 0, routineId = backStackEntry.arguments?.getString("routineId"), handlerBack = {navController.popBackStack()},handlerFinishRoutine = {navController.navigate(Screen.ProgressDetail.route + backStackEntry.arguments?.getString("routineId")?.substringAfter('}')?.toInt())})
         }
         composable(Screen.ProgressDetail.route) {backStackEntry ->
             ProgressDetailScreen(viewModel = viewModel,
