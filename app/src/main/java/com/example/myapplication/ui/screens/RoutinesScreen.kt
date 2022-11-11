@@ -43,11 +43,7 @@ fun RoutinesScreen(viewModel: RoutinesViewModel,
         Spacer(modifier = Modifier.height(10.dp))
 
 
-        RoutineCardSortButton(
-            favoriteHandler = {viewModel.sortRoutinesFavourite(NavBarScreen.Progress)},
-            dateSortHandler = {viewModel.sortRoutinesDate(NavBarScreen.Progress)},
-            pointsSortHandler = {viewModel.sortRoutinesPoints(NavBarScreen.Progress)}
-        )
+        RoutineCardSortButton(viewModel = viewModel)
         Spacer(modifier = Modifier.height(20.dp))
 
         RoutinesGrid(viewModel = viewModel, actionRedirect = actionRedirect, routineCard = RoutineCard.MyRoutine)

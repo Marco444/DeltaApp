@@ -6,16 +6,25 @@ import androidx.lifecycle.ViewModel
 import com.example.myapplication.data.Exercise
 import com.example.myapplication.data.Routines
 import com.example.myapplication.ui.components.RoutineCard
+import com.example.myapplication.ui.components.SortOption
 import com.example.myapplication.ui.navigation.NavBarScreen
 import kotlinx.coroutines.flow.MutableStateFlow
-import kotlinx.coroutines.flow.StateFlow
-import kotlinx.coroutines.flow.asStateFlow
 import kotlinx.coroutines.flow.update
 
 class RoutinesViewModel : ViewModel() {
 
+    private val _sortState = MutableStateFlow(SortOption.POINTS)
+
     private val _routinesState = MutableStateFlow(RoutinesState())
     //private val routinesState: StateFlow<RoutinesState> = _routinesState.asStateFlow()
+
+    fun getSortState(): MutableStateFlow<SortOption> {
+        return _sortState
+    }
+
+    fun setSortState(option: SortOption, ) {
+        _sortState.value = option
+    }
 
     fun getRoutines(routineCard: RoutineCard): MutableList<MutableStateFlow<Routines>> {
         return if(routineCard == RoutineCard.ExploreRoutine) _routinesState.value.exploreRoutines

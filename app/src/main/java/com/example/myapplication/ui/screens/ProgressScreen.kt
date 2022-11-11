@@ -48,9 +48,7 @@ fun ProgressScreen(viewModel: RoutinesViewModel, actionRedirect: (Int) -> Unit){
         Spacer(modifier = Modifier.height(10.dp))
 
         RoutineCardSortButton(
-            favoriteHandler = {viewModel.sortRoutinesFavourite(NavBarScreen.Progress)},
-            dateSortHandler = {viewModel.sortRoutinesDate(NavBarScreen.Progress)},
-            pointsSortHandler = {viewModel.sortRoutinesPoints(NavBarScreen.Progress)}
+          viewModel = viewModel
         )
 
 
