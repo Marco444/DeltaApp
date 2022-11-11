@@ -1,7 +1,9 @@
 package com.example.myapplication.viewmodel
 
 
+import androidx.compose.runtime.mutableStateOf
 import com.example.myapplication.R
+import com.example.myapplication.data.Exercise
 import com.example.myapplication.data.RoutineExercises
 import com.example.myapplication.data.Routines
 
@@ -11,7 +13,7 @@ class RoutinesState {
     var userRoutines = mutableListOf<Routines>()
 
     var exploreRoutines = mutableListOf<Routines>()//mutableListOf<RoutinesT>()
-
+    var actualExercise = mutableStateOf(Exercise(0,0,0,0,0,"AA","AAA"))
     init {
         exploreRoutines.add( Routines(0, R.drawable.registration_background,
             "This is a sample routine text", "PUSH", false))
