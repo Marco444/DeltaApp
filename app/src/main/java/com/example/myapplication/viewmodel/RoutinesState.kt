@@ -11,7 +11,6 @@ class RoutinesState {
 
 
     var userRoutines = mutableListOf<Routines>()
-
     var exploreRoutines = mutableListOf<Routines>()//mutableListOf<RoutinesT>()
     var actualExercise = mutableStateOf(Exercise(0,0,0,0,0,"AA","AAA"))
     init {

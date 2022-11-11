@@ -72,7 +72,7 @@ fun RoutineCard(routine: Routines, iconId: Int, clickedIcon: () -> Unit = {}, ac
         Modifier
             .width(ROUTINE_CARD_WIDTH.dp)
             .clickable {
-                expanded = if(viewModel.cardsExpandable()) !expanded else true
+                expanded = if (viewModel.cardsExpandable()) !expanded else true
                 imageHeight = if (expanded) 200.dp else 70.dp
             },
         contentAlignment = Alignment.Center
@@ -91,7 +91,7 @@ fun RoutineCard(routine: Routines, iconId: Int, clickedIcon: () -> Unit = {}, ac
         ) {
 
             RoutineCardTitle(
-                title = routine.title,
+                title = viewModel.getRoutines(routineCard).find { it.id == routine.id }!!.title,
                 iconId = iconId,
                 clickedIcon = {clickedIcon()}
             )

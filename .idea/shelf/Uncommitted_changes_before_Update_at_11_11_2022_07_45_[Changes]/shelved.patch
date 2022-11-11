@@ -1,0 +1,238 @@
+Index: app/src/main/java/com/example/myapplication/ui/components/RoutineCard.kt
+IDEA additional info:
+Subsystem: com.intellij.openapi.diff.impl.patch.BaseRevisionTextPatchEP
+<+>package com.example.myapplication.ui.components\n\nimport androidx.compose.foundation.Image\nimport androidx.compose.foundation.clickable\nimport androidx.compose.foundation.layout.*\nimport androidx.compose.foundation.shape.RoundedCornerShape\nimport androidx.compose.material.Text\nimport androidx.compose.runtime.*\nimport androidx.compose.ui.Alignment\nimport androidx.compose.ui.Modifier\nimport androidx.compose.ui.draw.clip\nimport androidx.compose.ui.draw.scale\nimport androidx.compose.ui.graphics.Color\nimport androidx.compose.ui.layout.ContentScale\nimport androidx.compose.ui.res.painterResource\nimport androidx.compose.ui.text.style.TextAlign\nimport androidx.compose.ui.unit.dp\nimport androidx.compose.ui.unit.sp\nimport com.example.myapplication.R\nimport com.example.myapplication.data.Routines\nimport com.example.myapplication.ui.theme.Green\nimport com.example.myapplication.viewmodel.RoutinesViewModel\n\n\nconst val ROUTINE_CARD_WIDTH = 370;\n\nsealed class RoutineCard(val iconClicked: Int, val iconUnClicked: Int, val description: String) {\n    object MyRoutine: RoutineCard ( R.drawable.star_rate_white_24dp, R.drawable.star_border_white_24dp, \"Go\")\n    object Progress: RoutineCard ( R.drawable.star_rate_white_24dp, R.drawable.star_border_white_24dp, \"See Progress\")\n    object ExploreRoutine: RoutineCard ( R.drawable.check_circle_white_24dp, R.drawable.add_white_24dp, \"Share\")\n}\n\n@Composable\nfun RoutineCardDetails(description: String) {\n    Text(\n        text = description,\n        fontSize = 25.sp,\n        color = Green,\n        modifier = Modifier\n    )\n}\n\n@Composable\nfun RoutineCardTitle(title: String, iconId: Int, clickedIcon: () -> Unit = {}) {\n    Row ( horizontalArrangement  =  Arrangement.SpaceBetween, verticalAlignment = Alignment.CenterVertically) {\n        Text(\n            text = title,\n            fontSize = 50.sp,\n            color = Color.White,\n            modifier = Modifier,\n            textAlign = TextAlign.Start,\n        )\n        Spacer(modifier = Modifier.width(10.dp))\n        Image(\n            painter = painterResource(iconId),\n            contentDescription = null,\n            modifier = Modifier\n                .scale(1.5F)\n                .clickable(onClick = clickedIcon)\n        )\n    }\n}\n\n\n@Composable\nfun RoutineCard(routine: Routines, iconId: Int, clickedIcon: () -> Unit = {}, actionHandler: () -> Unit = {}, routineCard: RoutineCard, viewModel: RoutinesViewModel) {\n\n    var expanded by remember { mutableStateOf(!viewModel.cardsExpandable()) }\n    var imageHeight by remember { mutableStateOf(if(!viewModel.cardsExpandable()) 200.dp else 70.dp ) }\n\n    Box (\n        Modifier\n            .width(ROUTINE_CARD_WIDTH.dp)\n            .clickable {\n                expanded = if(viewModel.cardsExpandable()) !expanded else true\n                imageHeight = if (expanded) 200.dp else 70.dp\n            },\n        contentAlignment = Alignment.Center\n    ){\n        Image(\n            painter = painterResource(routine.img),\n            contentDescription = null,\n            modifier = Modifier\n                .width(ROUTINE_CARD_WIDTH.dp)\n                .clip(RoundedCornerShape(20.dp))\n                .height(imageHeight),\n            contentScale = ContentScale.Crop,\n        )\n        Column (\n            horizontalAlignment = Alignment.CenterHorizontally\n        ) {\n\n            RoutineCardTitle(\n                title = routine.title,\n                iconId = iconId,\n                clickedIcon = {clickedIcon()}\n            )\n            if (expanded) {\n                    RoutineCardDetails(description = routine.description)\n                    Button1(fontSize = 16, text = routineCard.description, handler = actionHandler)\n            }\n        }\n\n    }\n\n    Spacer(modifier = Modifier.height(30.dp))\n\n\n}\n
+Subsystem: com.intellij.openapi.diff.impl.patch.CharsetEP
+<+>UTF-8
+===================================================================
+diff --git a/app/src/main/java/com/example/myapplication/ui/components/RoutineCard.kt b/app/src/main/java/com/example/myapplication/ui/components/RoutineCard.kt
+--- a/app/src/main/java/com/example/myapplication/ui/components/RoutineCard.kt	(revision ef2d9a2af494b7bc258a1a1ecd7350bc9f35ac9c)
++++ b/app/src/main/java/com/example/myapplication/ui/components/RoutineCard.kt	(date 1668118571471)
+@@ -72,7 +72,7 @@
+         Modifier
+             .width(ROUTINE_CARD_WIDTH.dp)
+             .clickable {
+-                expanded = if(viewModel.cardsExpandable()) !expanded else true
++                expanded = if (viewModel.cardsExpandable()) !expanded else true
+                 imageHeight = if (expanded) 200.dp else 70.dp
+             },
+         contentAlignment = Alignment.Center
+@@ -91,7 +91,7 @@
+         ) {
+ 
+             RoutineCardTitle(
+-                title = routine.title,
++                title = viewModel.getRoutines(routineCard).find { it.id == routine.id }!!.title,
+                 iconId = iconId,
+                 clickedIcon = {clickedIcon()}
+             )
+Index: app/src/main/java/com/example/myapplication/MainActivity.kt
+IDEA additional info:
+Subsystem: com.intellij.openapi.diff.impl.patch.BaseRevisionTextPatchEP
+<+>package com.example.myapplication\n\nimport android.os.Bundle\nimport androidx.activity.ComponentActivity\nimport androidx.activity.compose.setContent\nimport androidx.compose.material3.windowsizeclass.ExperimentalMaterial3WindowSizeClassApi\nimport androidx.compose.material3.windowsizeclass.calculateWindowSizeClass\nimport com.example.myapplication.ui.theme.MyApplicationTheme\nimport com.google.accompanist.systemuicontroller.rememberSystemUiController\n\nclass MainActivity : ComponentActivity() {\n    @OptIn(ExperimentalMaterial3WindowSizeClassApi::class)\n    override fun onCreate(savedInstanceState: Bundle?) {\n        super.onCreate(savedInstanceState)\n        setContent {\n            MyApplicationTheme {\n                val systemUiController = rememberSystemUiController()\n                systemUiController.setSystemBarsColor(color = androidx.compose.ui.graphics.Color.Black )\n\n                val windowSize = calculateWindowSizeClass(this)\n                DeltaApp(windowSize = windowSize.widthSizeClass)\n            }\n        }\n    }\n}
+Subsystem: com.intellij.openapi.diff.impl.patch.CharsetEP
+<+>UTF-8
+===================================================================
+diff --git a/app/src/main/java/com/example/myapplication/MainActivity.kt b/app/src/main/java/com/example/myapplication/MainActivity.kt
+--- a/app/src/main/java/com/example/myapplication/MainActivity.kt	(revision ef2d9a2af494b7bc258a1a1ecd7350bc9f35ac9c)
++++ b/app/src/main/java/com/example/myapplication/MainActivity.kt	(date 1668120013425)
+@@ -1,15 +1,25 @@
+ package com.example.myapplication
+ 
++import android.content.Intent
+ import android.os.Bundle
+ import androidx.activity.ComponentActivity
+ import androidx.activity.compose.setContent
++import androidx.compose.foundation.layout.Arrangement
++import androidx.compose.foundation.layout.Column
++import androidx.compose.foundation.layout.fillMaxSize
++import androidx.compose.material.Button
++import androidx.compose.material.ButtonDefaults
++import androidx.compose.material.Text
+ import androidx.compose.material3.windowsizeclass.ExperimentalMaterial3WindowSizeClassApi
+ import androidx.compose.material3.windowsizeclass.calculateWindowSizeClass
++import androidx.compose.ui.Alignment
++import androidx.compose.ui.Modifier
++import androidx.compose.ui.graphics.Color
++import androidx.compose.ui.platform.LocalContext
+ import com.example.myapplication.ui.theme.MyApplicationTheme
+ import com.google.accompanist.systemuicontroller.rememberSystemUiController
+ 
+ class MainActivity : ComponentActivity() {
+-    @OptIn(ExperimentalMaterial3WindowSizeClassApi::class)
+     override fun onCreate(savedInstanceState: Bundle?) {
+         super.onCreate(savedInstanceState)
+         setContent {
+@@ -17,9 +27,24 @@
+                 val systemUiController = rememberSystemUiController()
+                 systemUiController.setSystemBarsColor(color = androidx.compose.ui.graphics.Color.Black )
+ 
+-                val windowSize = calculateWindowSizeClass(this)
+-                DeltaApp(windowSize = windowSize.widthSizeClass)
++                val mContext = LocalContext.current
++
++                Column(Modifier.fillMaxSize(), horizontalAlignment = Alignment.CenterHorizontally, verticalArrangement = Arrangement.Center) {
++
++                    // Creating a Button that on-click
++                    // implements an Intent to go to SecondActivity
++                    Button(onClick = {
++                        mContext.startActivity(Intent(mContext, SecondActivity::class.java))
++                    },
++                        colors = ButtonDefaults.buttonColors(backgroundColor = Color(0XFF0F9D58)),
++                    ) {
++                        Text("Go to Second Activity", color = Color.White)
++                    }
++                }
+             }
+         }
+     }
+-}
+\ No newline at end of file
++}
++
++
++//para empezar una nueva actividad usar Intents
+\ No newline at end of file
+Index: .idea/deploymentTargetDropDown.xml
+IDEA additional info:
+Subsystem: com.intellij.openapi.diff.impl.patch.BaseRevisionTextPatchEP
+<+><?xml version=\"1.0\" encoding=\"UTF-8\"?>\n<project version=\"4\">\n  <component name=\"deploymentTargetDropDown\">\n    <targetSelectedWithDropDown>\n      <Target>\n        <type value=\"QUICK_BOOT_TARGET\" />\n        <deviceKey>\n          <Key>\n            <type value=\"VIRTUAL_DEVICE_PATH\" />\n            <value value=\"$USER_HOME$/.android/avd/Pixel_C_API_33.avd\" />\n          </Key>\n        </deviceKey>\n      </Target>\n    </targetSelectedWithDropDown>\n    <timeTargetWasSelectedWithDropDown value=\"2022-11-10T21:51:51.993706Z\" />\n  </component>\n</project>
+Subsystem: com.intellij.openapi.diff.impl.patch.CharsetEP
+<+>UTF-8
+===================================================================
+diff --git a/.idea/deploymentTargetDropDown.xml b/.idea/deploymentTargetDropDown.xml
+--- a/.idea/deploymentTargetDropDown.xml	(revision ef2d9a2af494b7bc258a1a1ecd7350bc9f35ac9c)
++++ b/.idea/deploymentTargetDropDown.xml	(date 1668118989334)
+@@ -1,17 +1,17 @@
+ <?xml version="1.0" encoding="UTF-8"?>
+ <project version="4">
+   <component name="deploymentTargetDropDown">
+-    <targetSelectedWithDropDown>
++    <runningDeviceTargetSelectedWithDropDown>
+       <Target>
+-        <type value="QUICK_BOOT_TARGET" />
++        <type value="RUNNING_DEVICE_TARGET" />
+         <deviceKey>
+           <Key>
+             <type value="VIRTUAL_DEVICE_PATH" />
+-            <value value="$USER_HOME$/.android/avd/Pixel_C_API_33.avd" />
++            <value value="$USER_HOME$/.android/avd/Pixel_XL_API_33.avd" />
+           </Key>
+         </deviceKey>
+       </Target>
+-    </targetSelectedWithDropDown>
+-    <timeTargetWasSelectedWithDropDown value="2022-11-10T21:51:51.993706Z" />
++    </runningDeviceTargetSelectedWithDropDown>
++    <timeTargetWasSelectedWithDropDown value="2022-11-10T21:57:16.697648Z" />
+   </component>
+ </project>
+\ No newline at end of file
+Index: app/src/main/java/com/example/myapplication/viewmodel/RoutinesState.kt
+IDEA additional info:
+Subsystem: com.intellij.openapi.diff.impl.patch.BaseRevisionTextPatchEP
+<+>package com.example.myapplication.viewmodel\n\n\nimport com.example.myapplication.R\nimport com.example.myapplication.data.RoutineExercises\nimport com.example.myapplication.data.Routines\n\nclass RoutinesState {\n\n\n    var userRoutines = mutableListOf<Routines>()\n\n    var exploreRoutines = mutableListOf<Routines>()//mutableListOf<RoutinesT>()\n\n    init {\n        exploreRoutines.add( Routines(0, R.drawable.registration_background,\n            \"This is a sample routine text\", \"PUSH\", false))\n        exploreRoutines.add( Routines(1, R.drawable.registration_background,\n            \"This is a sample routine text\", \"PULL\", false))\n        exploreRoutines.add( Routines(2, R.drawable.registration_background,\n            \"This is a sample routine text\", \"PUSH\", false))\n        exploreRoutines.add( Routines(3, R.drawable.registration_background,\n            \"This is a sample routine text\", \"PULL 3\", false))\n        exploreRoutines.add( Routines(4, R.drawable.registration_background,\n            \"This is a sample routine text\", \"PUSH 4\", false))\n        exploreRoutines.add( Routines(5, R.drawable.registration_background,\n            \"This is a sample routine text\", \"PULL 5\", false))\n        exploreRoutines.add( Routines(6, R.drawable.registration_background,\n            \"This is a sample routine text\", \"PUSH 6\", false))\n        exploreRoutines.add( Routines(7, R.drawable.registration_background,\n            \"This is a sample routine text\", \"PULL 7\", false, points = 10))\n\n        userRoutines.add( Routines(8, R.drawable.registration_background,\n            \"This is a sample routine text\", \"MY PUSH 8\", false, points = 3))\n        userRoutines.add( Routines(9, R.drawable.registration_background,\n            \"This is a sample routine text\", \"MY PULL 9\", false, points = 10))\n        userRoutines.add( Routines(10, R.drawable.registration_background,\n            \"This is a sample routine text\", \"MY PUSH 10\", false, points = 1))\n      userRoutines.add( Routines(11, R.drawable.registration_background,\n            \"This is a sample routine text\", \"MY PULL 11\", false))\n    }\n}
+Subsystem: com.intellij.openapi.diff.impl.patch.CharsetEP
+<+>UTF-8
+===================================================================
+diff --git a/app/src/main/java/com/example/myapplication/viewmodel/RoutinesState.kt b/app/src/main/java/com/example/myapplication/viewmodel/RoutinesState.kt
+--- a/app/src/main/java/com/example/myapplication/viewmodel/RoutinesState.kt	(revision ef2d9a2af494b7bc258a1a1ecd7350bc9f35ac9c)
++++ b/app/src/main/java/com/example/myapplication/viewmodel/RoutinesState.kt	(date 1668117926472)
+@@ -9,7 +9,6 @@
+ 
+ 
+     var userRoutines = mutableListOf<Routines>()
+-
+     var exploreRoutines = mutableListOf<Routines>()//mutableListOf<RoutinesT>()
+ 
+     init {
+Index: app/src/main/java/com/example/myapplication/SecondActivity.kt
+IDEA additional info:
+Subsystem: com.intellij.openapi.diff.impl.patch.CharsetEP
+<+>UTF-8
+===================================================================
+diff --git a/app/src/main/java/com/example/myapplication/SecondActivity.kt b/app/src/main/java/com/example/myapplication/SecondActivity.kt
+new file mode 100644
+--- /dev/null	(date 1668120072206)
++++ b/app/src/main/java/com/example/myapplication/SecondActivity.kt	(date 1668120072206)
+@@ -0,0 +1,26 @@
++package com.example.myapplication;
++
++import android.os.Bundle
++import androidx.activity.ComponentActivity
++import androidx.activity.compose.setContent
++import androidx.compose.material.Text
++import androidx.compose.material3.windowsizeclass.ExperimentalMaterial3WindowSizeClassApi
++import androidx.compose.material3.windowsizeclass.calculateWindowSizeClass
++import androidx.compose.ui.graphics.Color
++import com.example.myapplication.ui.theme.MyApplicationTheme
++import com.google.accompanist.systemuicontroller.rememberSystemUiController
++
++
++class SecondActivity: ComponentActivity() {
++        override fun onCreate(savedInstanceState: Bundle?) {
++                super.onCreate(savedInstanceState)
++                setContent {
++                        MyApplicationTheme {
++
++                                Text("SECOND", color = Color.Black)
++                                //DeltaApp(windowSize = windowSize.widthSizeClass)
++
++                        }
++                }
++        }
++}
+Index: app/src/main/java/com/example/myapplication/viewmodel/RoutinesViewModel.kt
+IDEA additional info:
+Subsystem: com.intellij.openapi.diff.impl.patch.BaseRevisionTextPatchEP
+<+>package com.example.myapplication.viewmodel\n\nimport androidx.compose.material3.windowsizeclass.WindowWidthSizeClass\nimport androidx.lifecycle.ViewModel\nimport com.example.myapplication.data.Exercise\nimport com.example.myapplication.data.Routines\nimport com.example.myapplication.ui.components.RoutineCard\nimport com.example.myapplication.ui.navigation.NavBarScreen\nimport kotlinx.coroutines.flow.MutableStateFlow\nimport kotlinx.coroutines.flow.StateFlow\nimport kotlinx.coroutines.flow.asStateFlow\nimport kotlinx.coroutines.flow.update\n\nclass RoutinesViewModel : ViewModel() {\n\n    private val _routinesState = MutableStateFlow(RoutinesState())\n    private val routinesState: StateFlow<RoutinesState> = _routinesState.asStateFlow()\n\n    fun getRoutines(routineCard: RoutineCard): MutableList<Routines> {\n        return if(routineCard == RoutineCard.ExploreRoutine) routinesState.value.exploreRoutines\n        else routinesState.value.userRoutines\n    }\n\n    fun routine(id: Int): Routines? {\n        return _routinesState.value.userRoutines.find { routine: Routines -> routine.id == id }\n    }\n\n    fun sortRoutinesDate(screen: NavBarScreen) {\n        if(screen == NavBarScreen.Explore)\n            routinesState.value.exploreRoutines.sortBy { routines: Routines -> routines.id }\n        else\n            routinesState.value.userRoutines.sortBy { routines: Routines -> routines.id }\n    }\n\n    fun sortRoutinesFavourite(screen: NavBarScreen) {\n        if(screen == NavBarScreen.Explore)\n            routinesState.value.exploreRoutines.sortBy { routines: Routines -> routines.favourite}\n        else\n            routinesState.value.userRoutines.sortBy { routines: Routines -> routines.favourite }\n    }\n\n    fun sortRoutinesPoints(screen: NavBarScreen) {\n        if(screen == NavBarScreen.Explore)\n            routinesState.value.exploreRoutines.sortBy { routines: Routines -> routines.points}\n        else\n            routinesState.value.userRoutines.sortBy { routines: Routines -> routines.points}\n    }\n\n    fun clickedIcon(id: Int, routineCard: RoutineCard) {\n        if(RoutineCard.ExploreRoutine == routineCard) {\n           val routine = _routinesState.value.exploreRoutines.\n            find { routine: Routines -> routine.id == id }!!\n            routine.added = true\n            _routinesState.value.userRoutines.add(routine)\n        }else\n            _routinesState.value.userRoutines\n                .find { routine: Routines -> routine.id == id }!!.favourite = true\n    }\n\n    fun isSelected(id: Int, routineCard: RoutineCard): Boolean {\n        return if(RoutineCard.ExploreRoutine == routineCard)\n            _routinesState.value.exploreRoutines.find { routine: Routines -> routine.id == id }!!.added\n        else\n            _routinesState.value.userRoutines.find { routine: Routines -> routine.id == id }!!.favourite\n    }\n\n\n    //Should this go userViewModel??\n    private var _loggedIn  = MutableStateFlow(false)\n\n    fun login(username: String, password: String) {\n        _loggedIn.update { true } ;\n    }\n\n    fun isLoggedIn(): Boolean {\n        return _loggedIn.value\n    }\n\n    private var screenWidth: WindowWidthSizeClass = WindowWidthSizeClass.Compact\n\n    fun cardsExpandable(): Boolean {\n        return screenWidth != WindowWidthSizeClass.Expanded\n    }\n\n    fun setWidth(width: WindowWidthSizeClass) {\n        screenWidth = width;\n    }\n    fun getRoutineWarmUpExercises(id:Int) : List<Exercise>{\n        return   _routinesState.value.userRoutines.find { routine: Routines -> routine.id == id }!!.exercises.warmUpExercises\n    }\n    fun getRoutineCoolDownExercises(id:Int) : List<Exercise>{\n        return   _routinesState.value.userRoutines.find { routine: Routines -> routine.id == id }!!.exercises.coolDownExercises\n    }\n    fun getRoutineMainSetExercises(id:Int) : List<Exercise>{\n        return   _routinesState.value.userRoutines.find { routine: Routines -> routine.id == id }!!.exercises.mainSetExercises\n    }\n//    private var _exploreRoutines = mutableListOf<MutableStateFlow<RoutinesT>>()\n//\n//    fun getExploreRoutines(): List<RoutinesT> {\n//        return _exploreRoutines.map{it.asStateFlow().value}\n//    }\n//\n//    fun addedRoutineFromExplore(id: Int) {\n//        _exploreRoutines[id].value.added = true;\n//    }\n//\n//    fun isAddedRoutine(id: Int): Boolean {\n//        return  _exploreRoutines[id].value.added;\n//    }\n\n}
+Subsystem: com.intellij.openapi.diff.impl.patch.CharsetEP
+<+>UTF-8
+===================================================================
+diff --git a/app/src/main/java/com/example/myapplication/viewmodel/RoutinesViewModel.kt b/app/src/main/java/com/example/myapplication/viewmodel/RoutinesViewModel.kt
+--- a/app/src/main/java/com/example/myapplication/viewmodel/RoutinesViewModel.kt	(revision ef2d9a2af494b7bc258a1a1ecd7350bc9f35ac9c)
++++ b/app/src/main/java/com/example/myapplication/viewmodel/RoutinesViewModel.kt	(date 1668117926484)
+@@ -14,11 +14,11 @@
+ class RoutinesViewModel : ViewModel() {
+ 
+     private val _routinesState = MutableStateFlow(RoutinesState())
+-    private val routinesState: StateFlow<RoutinesState> = _routinesState.asStateFlow()
++    //private val routinesState: StateFlow<RoutinesState> = _routinesState.asStateFlow()
+ 
+     fun getRoutines(routineCard: RoutineCard): MutableList<Routines> {
+-        return if(routineCard == RoutineCard.ExploreRoutine) routinesState.value.exploreRoutines
+-        else routinesState.value.userRoutines
++        return if(routineCard == RoutineCard.ExploreRoutine) _routinesState.value.exploreRoutines
++        else _routinesState.value.userRoutines
+     }
+ 
+     fun routine(id: Int): Routines? {
+@@ -27,23 +27,23 @@
+ 
+     fun sortRoutinesDate(screen: NavBarScreen) {
+         if(screen == NavBarScreen.Explore)
+-            routinesState.value.exploreRoutines.sortBy { routines: Routines -> routines.id }
++            _routinesState.value.exploreRoutines.sortBy { routines: Routines -> routines.id }
+         else
+-            routinesState.value.userRoutines.sortBy { routines: Routines -> routines.id }
++            _routinesState.value.userRoutines.sortBy { routines: Routines -> routines.id }
+     }
+ 
+     fun sortRoutinesFavourite(screen: NavBarScreen) {
+         if(screen == NavBarScreen.Explore)
+-            routinesState.value.exploreRoutines.sortBy { routines: Routines -> routines.favourite}
++            _routinesState.value.exploreRoutines.sortBy { routines: Routines -> routines.favourite}
+         else
+-            routinesState.value.userRoutines.sortBy { routines: Routines -> routines.favourite }
++            _routinesState.value.userRoutines.sortBy { routines: Routines -> routines.favourite }
+     }
+ 
+     fun sortRoutinesPoints(screen: NavBarScreen) {
+         if(screen == NavBarScreen.Explore)
+-            routinesState.value.exploreRoutines.sortBy { routines: Routines -> routines.points}
++            _routinesState.value.exploreRoutines.sortBy { routines: Routines -> routines.points}
+         else
+-            routinesState.value.userRoutines.sortBy { routines: Routines -> routines.points}
++            _routinesState.value.userRoutines.sortBy { routines: Routines -> routines.points}
+     }
+ 
+     fun clickedIcon(id: Int, routineCard: RoutineCard) {

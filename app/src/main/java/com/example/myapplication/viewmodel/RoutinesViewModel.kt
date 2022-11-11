@@ -15,11 +15,11 @@ import kotlinx.coroutines.flow.update
 class RoutinesViewModel : ViewModel() {
 
     private val _routinesState = MutableStateFlow(RoutinesState())
-    private val routinesState: StateFlow<RoutinesState> = _routinesState.asStateFlow()
+    //private val routinesState: StateFlow<RoutinesState> = _routinesState.asStateFlow()
 
     fun getRoutines(routineCard: RoutineCard): MutableList<Routines> {
-        return if(routineCard == RoutineCard.ExploreRoutine) routinesState.value.exploreRoutines
-        else routinesState.value.userRoutines
+        return if(routineCard == RoutineCard.ExploreRoutine) _routinesState.value.exploreRoutines
+        else _routinesState.value.userRoutines
     }
 
     fun routine(id: Int): Routines? {
@@ -28,23 +28,23 @@ class RoutinesViewModel : ViewModel() {
 
     fun sortRoutinesDate(screen: NavBarScreen) {
         if(screen == NavBarScreen.Explore)
-            routinesState.value.exploreRoutines.sortBy { routines: Routines -> routines.id }
+            _routinesState.value.exploreRoutines.sortBy { routines: Routines -> routines.id }
         else
-            routinesState.value.userRoutines.sortBy { routines: Routines -> routines.id }
+            _routinesState.value.userRoutines.sortBy { routines: Routines -> routines.id }
     }
 
     fun sortRoutinesFavourite(screen: NavBarScreen) {
         if(screen == NavBarScreen.Explore)
-            routinesState.value.exploreRoutines.sortBy { routines: Routines -> routines.favourite}
+            _routinesState.value.exploreRoutines.sortBy { routines: Routines -> routines.favourite}
         else
-            routinesState.value.userRoutines.sortBy { routines: Routines -> routines.favourite }
+            _routinesState.value.userRoutines.sortBy { routines: Routines -> routines.favourite }
     }
 
     fun sortRoutinesPoints(screen: NavBarScreen) {
         if(screen == NavBarScreen.Explore)
-            routinesState.value.exploreRoutines.sortBy { routines: Routines -> routines.points}
+            _routinesState.value.exploreRoutines.sortBy { routines: Routines -> routines.points}
         else
-            routinesState.value.userRoutines.sortBy { routines: Routines -> routines.points}
+            _routinesState.value.userRoutines.sortBy { routines: Routines -> routines.points}
     }
 
     fun clickedIcon(id: Int, routineCard: RoutineCard) {

@@ -20,7 +20,7 @@ import com.example.myapplication.viewmodel.RoutinesViewModel
 fun NavGraph(navController: NavHostController, viewModel: RoutinesViewModel) {
     NavHost(
         navController = navController,
-        startDestination = Screen.Landing.route
+        startDestination = NavBarScreen.Routines.route
     ) {
         composable(NavBarScreen.Routines.route) {
             RoutinesScreen(viewModel = viewModel,
@@ -36,20 +36,11 @@ fun NavGraph(navController: NavHostController, viewModel: RoutinesViewModel) {
         composable(NavBarScreen.QR.route) {
             QRScreen(viewModel = viewModel)
         }
-        composable(Screen.Login.route) {
-            LogIn(viewModel = viewModel, actionRedirect = {viewModel.login("", "");
-                navController.navigate(NavBarScreen.Routines.route)},
-                backButton = {navController.popBackStack()})
-        }
         composable(Screen.RoutineDescriptionScreen.route) {backStackEntry ->
             RoutineDescriptionScreen(viewModel = viewModel, backStackEntry.arguments?.getString("routineId"),starRoutineHanlder = {navController.navigate(Screen.Execute.route + backStackEntry.arguments?.getString("routineId")?.substringAfter('}')?.toInt() )},backHandler = {  navController.popBackStack() })
         }
         composable(Screen.Execute.route){ backStackEntry ->
             ExerciseExecScreen(viewModel = viewModel, order = 0, backStackEntry.arguments?.getString("routineId"), handlerBack = {navController.popBackStack()},handlerFinishRoutine = {navController.navigate(Screen.ProgressDetail.route + backStackEntry.arguments?.getString("routineId")?.substringAfter('}')?.toInt())})
-        }
-        composable(Screen.Landing.route) {
-            LandingScreen(loginHandler = {navController.navigate(Screen.Login.route)},
-                            tryOutHandler = {navController.navigate(NavBarScreen.Routines.route)})
         }
         composable(Screen.ProgressDetail.route) {backStackEntry ->
             ProgressDetailScreen(viewModel = viewModel,

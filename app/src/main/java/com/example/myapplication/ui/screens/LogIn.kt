@@ -53,7 +53,7 @@ import com.example.myapplication.viewmodel.RoutinesViewModel
 
 
 @Composable
-fun LogIn(viewModel: RoutinesViewModel,actionRedirect: () -> Unit,backButton : () -> Unit){
+fun LogIn(actionRedirect: () -> Unit,backButton : () -> Unit){
     var passWord by remember { mutableStateOf(TextFieldValue("")) }
     val configuration = LocalConfiguration.current
     val focusManager = LocalFocusManager.current
