@@ -77,44 +77,8 @@ class RoutinesViewModel : ViewModel() {
         screenWidth = width;
     }
 
-    private fun setNewExercise(oldExercise: MutableState<Exercise>,newExercise: Exercise){
-        oldExercise.value.id = newExercise.id
-        oldExercise.value.order = newExercise.order
-        oldExercise.value.name = newExercise.name
-        oldExercise.value.weight = newExercise.weight
-        oldExercise.value.repetitions = newExercise.repetitions
-        oldExercise.value.duration = newExercise.duration
-        oldExercise.value.detail = newExercise.detail
-    }
 
-    fun setNextExercise(id: Int,order : Int){
-      var aux = _routinesState.value.userRoutines.find { routine ->routine.value.id == id }!!.value.exercises.warmUpExercises.find { it.order == order }
-        if(aux != null)
-            setNewExercise(_routinesState.value.actualExercise,aux)
-      aux =    _routinesState.value.userRoutines.find { routine ->routine.value.id == id }!!.value.exercises.coolDownExercises.find { it.order == order }
-        if(aux != null)
-            setNewExercise(_routinesState.value.actualExercise,aux)
 
-       aux = _routinesState.value.userRoutines.find { routine ->routine.value.id == id }!!.value.exercises.mainSetExercises.find { it.order == order }!!
-        setNewExercise(_routinesState.value.actualExercise,aux)
-    }
-
-    fun hasNext(id: Int,order : Int): Boolean{
-        var aux = _routinesState.value.userRoutines.find { routine ->routine.value.id == id }!!.value.exercises.warmUpExercises.find { it.order == order }
-        if(aux != null)
-            return true
-        aux =    _routinesState.value.userRoutines.find { routine ->routine.value.id == id }!!.value.exercises.coolDownExercises.find { it.order == order }
-        if(aux != null)
-            return true
-        aux = _routinesState.value.userRoutines.find { routine ->routine.value.id == id }!!.value.exercises.mainSetExercises.find { it.order == order }
-       if (aux != null)
-           return true
-       return false
-    }
-
-    fun getCurrentExercise() : MutableState<Exercise>{
-        return _routinesState.value.actualExercise
-    }
     fun getRoutineWarmUpExercises(id:Int) : List<Exercise>{
         return   _routinesState.value.userRoutines.find { routine ->routine.value.id == id }!!.value.exercises.warmUpExercises
     }

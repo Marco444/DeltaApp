@@ -42,5 +42,5 @@ data class Routines (
     var points: Int = 0,
     var changed: MutableStateFlow<Boolean> = MutableStateFlow(false),
     val routineProgress: RoutineProgress = RoutineProgress(0, 80f),
-    val exercises: RoutineExercises = RoutineExercises(mutableListOf(Exercise(0,0,15,15,1,"Pecho","aaa")),mutableListOf(Exercise(0,0,15,15,1,"Pecho","aaa")),mutableListOf(Exercise(0,0,15,15,1,"Pecho","aaa")))
+    val exercises: RoutineExercises = RoutineExercises(mutableListOf(Exercise(0,0,15,15,1,"Pecho","aaa")),mutableListOf(Exercise(0,1,15,15,1,"Pecho","aaa")),mutableListOf(Exercise(0,2,15,15,1,"Pecho","aaa")))
 )
