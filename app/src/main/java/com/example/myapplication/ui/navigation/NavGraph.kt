@@ -42,7 +42,10 @@ fun NavGraph(navController: NavHostController, viewModel: RoutinesViewModel) {
                 backButton = {navController.popBackStack()})
         }
         composable(Screen.RoutineDescriptionScreen.route) {backStackEntry ->
-            RoutineDescriptionScreen(viewModel = viewModel, backStackEntry.arguments?.getString("routineId"),starRoutineHanlder = {},backHandler = {  navController.popBackStack() })
+            RoutineDescriptionScreen(viewModel = viewModel, backStackEntry.arguments?.getString("routineId"),starRoutineHanlder = {navController.navigate(Screen.Execute.route + backStackEntry.arguments?.getString("routineId")?.substringAfter('}')?.toInt() )},backHandler = {  navController.popBackStack() })
+        }
+        composable(Screen.Execute.route){ backStackEntry ->
+            ExerciseExecScreen(viewModel = viewModel, order = 0, backStackEntry.arguments?.getString("routineId"), handlerBack = {navController.popBackStack()},handlerFinishRoutine = {navController.navigate(Screen.ProgressDetail.route + backStackEntry.arguments?.getString("routineId")?.substringAfter('}')?.toInt())})
         }
         composable(Screen.Landing.route) {
             LandingScreen(loginHandler = {navController.navigate(Screen.Login.route)},

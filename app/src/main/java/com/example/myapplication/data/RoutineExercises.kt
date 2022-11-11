@@ -9,11 +9,11 @@ data class RoutineExercises (
 )
 
 data class Exercise(
-    val duration: Int,
-    val order: Int,
-    val weight : Int,
-    val repetitions : Int,
-    val id: Int,
-    val name: String,
-    val detail : String
+    var duration: Int,
+    var order: Int,
+    var weight : Int,
+    var repetitions : Int,
+    var id: Int,
+    var name: String,
+    var detail : String
 )
