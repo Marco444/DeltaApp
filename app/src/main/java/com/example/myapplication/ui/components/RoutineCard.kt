@@ -94,7 +94,7 @@ fun RoutineCard(routine: Routines, iconId: Int, clickedIcon: () -> Unit = {}, ac
         ) {
 
             RoutineCardTitle(
-                title = viewModel.getRoutines(routineCard).find { it.value.id == routine.id }!!.value.title,
+                title = routine.title,
                 iconId = iconId,
                 clickedIcon = {clickedIcon()}
             )

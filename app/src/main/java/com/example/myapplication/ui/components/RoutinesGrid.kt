@@ -19,8 +19,6 @@ import kotlinx.coroutines.flow.asStateFlow
 fun RoutinesGrid(viewModel: RoutinesViewModel, actionRedirect: (Int) -> Unit, routineCard: RoutineCard) {
     LazyVerticalGrid(
         cells = GridCells.Adaptive(ROUTINE_CARD_WIDTH.dp)) {
-
-
         items(viewModel.getRoutines(routineCard)) { routineState ->
             Box(
                 modifier= Modifier
