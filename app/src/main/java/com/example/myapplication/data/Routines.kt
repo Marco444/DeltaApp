@@ -13,9 +13,10 @@ class RoutineProgress (
     val agreggatePerformance: Float
 ) {
     fun progressTile(): String {
-        return if(agreggatePerformance < 50) "Let's go!"
+        return if(sessions == 0) "No information"
+        else if(agreggatePerformance < 50) "Let's go!"
         else if (agreggatePerformance < 70) "Well done!"
-        else "Excellent job!"
+        else "Great job!"
     }
 
     fun progressDescription(): String {
@@ -26,7 +27,8 @@ class RoutineProgress (
     }
 
     fun color(): Color {
-       return if(agreggatePerformance < 50) Red
+       return if(sessions == 0) Color.Gray
+       else if(agreggatePerformance < 50) Red
        else if(agreggatePerformance < 60) Yellow
        else GreenSuccess
     }
