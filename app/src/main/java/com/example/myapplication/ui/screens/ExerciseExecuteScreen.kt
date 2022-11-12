@@ -1,5 +1,6 @@
 package com.example.myapplication.ui.screens
 
+import androidx.lifecycle.viewmodel.compose.viewModel
 import android.annotation.SuppressLint
 import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.*
@@ -20,6 +21,7 @@ import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import androidx.compose.ui.window.Popup
 import androidx.compose.ui.window.PopupProperties
+import androidx.lifecycle.ViewModel
 import com.example.myapplication.ui.components.Button1
 import com.example.myapplication.ui.components.ExPreviewCard
 import com.example.myapplication.ui.components.ExerciseExecCard
@@ -28,13 +30,17 @@ import com.example.myapplication.ui.theme.GreenTransparency
 import com.example.myapplication.viewmodel.ExecuteRoutineViewModel
 import com.example.myapplication.viewmodel.RoutinesViewModel
 
-@SuppressLint("SuspiciousIndentation")
 @Composable
-fun ExerciseExecScreen(viewModel: ExecuteRoutineViewModel = ExecuteRoutineViewModel(), order:Int, routineId : String?, handlerBack : () ->Unit, handlerFinishRoutine: ()->Unit){
-    var popupControl by remember { mutableStateOf(true) }
-    var propierties = PopupProperties(focusable = true, dismissOnBackPress = true)
-    val id = routineId?.substringAfter('}')?.toInt() ?: -1
-    var oderExer = order
+fun ExerciseExecScreen(viewModel: ExecuteRoutineViewModel = viewModel(),
+                       order:Int,
+                       routineId : String?,
+                       handlerBack : () ->Unit,
+                       handlerFinishRoutine: ()->Unit){
+//    var popupControl by remember { mutableStateOf(true) }
+//    var propierties = PopupProperties(focusable = true, dismissOnBackPress = true)
+   // val id = routineId?.substringAfter('}')?.toInt() ?: -1
+   // var oderExer = order
+
     val exercise by viewModel.actualExercise.collectAsState()
 
     Box(modifier = Modifier.background(Color(0xFF1E1E1E))) {
@@ -58,15 +64,20 @@ fun ExerciseExecScreen(viewModel: ExecuteRoutineViewModel = ExecuteRoutineViewMo
             }
             Spacer(modifier = Modifier.height(20.dp))
             Column(modifier = Modifier.fillMaxSize(), horizontalAlignment = Alignment.CenterHorizontally) {
-                ExerciseExecCard(viewModel = viewModel,nombre = exercise.name)
-                Spacer(modifier = Modifier.height(20.dp))
-                Row(verticalAlignment = Alignment.CenterVertically, horizontalArrangement = Arrangement.SpaceEvenly, modifier = Modifier.width(300.dp)) {
-                    Button1(fontSize = 13, text = "Previous", handler = {
-                        if (oderExer != 0)
-                            viewModel.nextExercise()
-                        handlerFinishRoutine()
 
-                    })
+                ExerciseExecCard(actualExercise = viewModel.actualExercise ,viewModel = viewModel)
+
+                Text(text = exercise.name)
+
+                Spacer(modifier = Modifier.height(20.dp))
+
+                Row(verticalAlignment = Alignment.CenterVertically, horizontalArrangement = Arrangement.SpaceEvenly, modifier = Modifier.width(300.dp)) {
+//                    Button1(fontSize = 13, text = "Previous", handler = {
+//                        if (oderExer != 0)
+//                            viewModel.nextExercise()
+//                        handlerFinishRoutine()
+//
+//                    })
                     Button1(fontSize = 13, text = "Next", handler = {
                         if(viewModel.hasNext())
                             viewModel.nextExercise()
@@ -75,48 +86,45 @@ fun ExerciseExecScreen(viewModel: ExecuteRoutineViewModel = ExecuteRoutineViewMo
                     })
 
                 }
-                if (popupControl) {
-                    Popup(
-                        alignment = Alignment.BottomEnd,
-                        properties = propierties
-
-                    ) {
-                        Card(backgroundColor = GreenTransparency, modifier = Modifier
-                            .fillMaxWidth()
-                            .fillMaxHeight(0.3F)) {
-
-                            Column(horizontalAlignment = Alignment.End) {
-                                Button(
-                                    onClick = {popupControl = false },
-                                    shape = CircleShape,
-                                    colors = ButtonDefaults.buttonColors(backgroundColor = GreenTransparency),
-
-                                    elevation = elevation(
-                                        defaultElevation = 0.dp,
-                                        pressedElevation = 0.dp
-                                    )
-
-                                )
-                                {
-                                    Icon(
-                                        Icons.Default.Close,
-                                        contentDescription = "content description",
-                                        tint = Color.Black
-                                    )
-                                }
-                                Spacer(modifier = Modifier.height(30.dp))
-                                Text(text = "To continue with the next exercise click or swipe from the right.", fontSize = 25.sp, textAlign = TextAlign.Center,modifier = Modifier.align(CenterHorizontally))
-
-                            }
-                        }
-
-
-                    }
+//                if (popupControl) {
+//                    Popup(
+//                        alignment = Alignment.BottomEnd,
+//                        properties = propierties
+//
+//                    ) {
+//                        Card(backgroundColor = GreenTransparency, modifier = Modifier
+//                            .fillMaxWidth()
+//                            .fillMaxHeight(0.3F)) {
+//
+//                            Column(horizontalAlignment = Alignment.End) {
+//                                Button(
+//                                    onClick = {popupControl = false },
+//                                    shape = CircleShape,
+//                                    colors = ButtonDefaults.buttonColors(backgroundColor = GreenTransparency),
+//
+//                                    elevation = elevation(
+//                                        defaultElevation = 0.dp,
+//                                        pressedElevation = 0.dp
+//                                    )
+//
+//                                )
+//                                {
+//                                    Icon(
+//                                        Icons.Default.Close,
+//                                        contentDescription = "content description",
+//                                        tint = Color.Black
+//                                    )
+//                                }
+//                                Spacer(modifier = Modifier.height(30.dp))
+//                                Text(text = "To continue with the next exercise click or swipe from the right.", fontSize = 25.sp, textAlign = TextAlign.Center,modifier = Modifier.align(CenterHorizontally))
+//
+//                            }
+//                        }
+//
+//}
+//                    }
                 }
             }
         }
     }
 
-
-
-}

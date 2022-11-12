@@ -16,6 +16,7 @@ import androidx.compose.ui.graphics.Color.Companion.Gray
 import androidx.compose.ui.graphics.Color.Companion.White
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
+import com.example.myapplication.ui.navigation.NavBarScreen
 import com.example.myapplication.viewmodel.RoutinesViewModel
 
 enum class SortOption {
@@ -24,10 +25,12 @@ enum class SortOption {
     fun color(selected: SortOption): Color {
         return if(selected.name == this.name) Black else Gray
     }
+
+
 }
 
 @Composable
-fun RoutineCardSortButton(viewModel: RoutinesViewModel) {
+fun RoutineCardSortButton(viewModel: RoutinesViewModel, screen: NavBarScreen) {
 
     val selected by viewModel.getSortState().collectAsState()
 
@@ -37,11 +40,12 @@ fun RoutineCardSortButton(viewModel: RoutinesViewModel) {
             .background(Gray)
             .padding(5.dp),
         ){
-        SortButton(onClick = {viewModel.setSortState(SortOption.FAVOURITE)}, txt = SortOption.FAVOURITE.name, color = SortOption.FAVOURITE.color(selected))
-        Delimiter()
-        SortButton(onClick = {viewModel.setSortState(SortOption.DATE)}, txt = SortOption.DATE.name, color = SortOption.DATE.color(selected))
-        Delimiter()
-        SortButton(onClick = {viewModel.setSortState(SortOption.POINTS)}, txt = SortOption.POINTS.name, color = SortOption.POINTS.color(selected))
+
+        for (sortOption in SortOption.values()) {
+            SortButton(onClick = {viewModel.setSortState(sortOption, screen)}, txt = sortOption.name, color = sortOption.color(selected) )
+            if(sortOption != SortOption.POINTS) Delimiter()
+        }
+
     }
 }
 

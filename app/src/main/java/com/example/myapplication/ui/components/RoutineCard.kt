@@ -43,13 +43,13 @@ fun RoutineCardDetails(description: String) {
 }
 
 @Composable
-fun RoutineCardTitle(title: String, iconId: Int, clickedIcon: () -> Unit = {}) {
+fun RoutineCardTitle(title: String, iconId: Int, clickedIcon: () -> Unit = {}, id: Int) {
     Row ( horizontalArrangement  =  Arrangement.SpaceBetween, verticalAlignment = Alignment.CenterVertically) {
         Text(
             text = title,
             fontSize = 50.sp,
             color = Color.White,
-            modifier = Modifier,
+            modifier = Modifier.padding((id % 2).dp),
             textAlign = TextAlign.Start,
         )
         Spacer(modifier = Modifier.width(10.dp))
@@ -96,7 +96,8 @@ fun RoutineCard(routine: Routines, iconId: Int, clickedIcon: () -> Unit = {}, ac
             RoutineCardTitle(
                 title = routine.title,
                 iconId = iconId,
-                clickedIcon = {clickedIcon()}
+                clickedIcon = {clickedIcon()},
+                id = routine.id
             )
             if (expanded) {
                     RoutineCardDetails(description = routine.description)

@@ -29,6 +29,7 @@ fun DeltaApp(
     modifier: Modifier = Modifier,
     viewModel: RoutinesViewModel = viewModel(),
     navController: NavHostController = rememberNavController(),
+    executeRedirect: () -> Unit
 ) {
     viewModel.setWidth(windowSize)
 
@@ -51,7 +52,7 @@ fun DeltaApp(
                         bottom = it.calculateBottomPadding(),
                     )
             ) {
-                NavGraph(navController = navController, viewModel = viewModel, scaffoldState)
+                NavGraph(navController = navController, viewModel = viewModel, executeRedirect = executeRedirect, scaffoldState = scaffoldState)
             }
         }
     } else {
@@ -68,7 +69,7 @@ fun DeltaApp(
                         start = it.calculateLeftPadding(LayoutDirection.Rtl),
                     )
             ) {
-                NavGraph(navController = navController, viewModel = viewModel, scaffoldState)
+                NavGraph(navController = navController, viewModel = viewModel, scaffoldState = scaffoldState, executeRedirect = executeRedirect)
             }
         }
     }

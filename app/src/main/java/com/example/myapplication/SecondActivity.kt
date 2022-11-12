@@ -1,5 +1,6 @@
 package com.example.myapplication
 
+import android.content.Intent
 import android.os.Bundle
 import androidx.activity.ComponentActivity
 import androidx.activity.compose.setContent
@@ -17,8 +18,10 @@ class SecondActivity : ComponentActivity() {
                 val systemUiController = rememberSystemUiController()
                 systemUiController.setSystemBarsColor(color = androidx.compose.ui.graphics.Color.Black )
 
+                val navigate = Intent(this@SecondActivity, ThirdActivity::class.java)
+
                 val windowSize = calculateWindowSizeClass(this)
-                DeltaApp(windowSize = windowSize.widthSizeClass)
+                DeltaApp(windowSize = windowSize.widthSizeClass, executeRedirect = {startActivity(navigate)})
 
             }
         }
