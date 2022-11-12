@@ -1,5 +1,9 @@
 package com.example.myapplication.ui.components
 
+import android.annotation.SuppressLint
+import androidx.compose.foundation.interaction.MutableInteractionSource
+import androidx.compose.foundation.interaction.collectIsDraggedAsState
+import androidx.compose.foundation.interaction.collectIsPressedAsState
 import androidx.compose.foundation.layout.*
 import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.material.Card
@@ -31,37 +35,56 @@ fun ExerciseExecCard(viewModel: ExecuteRoutineViewModel, actualExercise: Mutable
 
     val exercise by actualExercise.collectAsState()
 
-    Card(backgroundColor = if(exercise.order % 2 == 0) Green else Gray,shape = RoundedCornerShape(30.dp)) {
+    Card(backgroundColor = Gray,shape = RoundedCornerShape(30.dp)) {
         Column(horizontalAlignment = Alignment.CenterHorizontally, modifier = Modifier
             .fillMaxWidth(0.8F)
             .fillMaxHeight(0.8F), verticalArrangement = Arrangement.SpaceEvenly){
             RecomposingTitle(exercise = actualExercise)
             Row(verticalAlignment = Alignment.CenterVertically) {
-                VariantCards(name = "Reps",
-                    { exercise.weight }, handler = {viewModel.setWeight(it)})
+                RepsCards(name = "Reps",
+                    actualExercise = actualExercise , viewModel = viewModel)
                 Spacer(modifier = Modifier.width(30.dp))
-                VariantCards(name = "Weight",
-                    { exercise.repetitions },handler = {viewModel.setReps(it)})
+                WeightCards(name = "Weight",
+                    actualExercise = actualExercise , viewModel = viewModel)
             }
 
         }
 
     }
 }
+@SuppressLint("UnrememberedMutableState")
 @Composable
-fun VariantCards(name : String,handlerGetValue : ()->Int,handler : (Float) -> Unit){
-    var value by remember { mutableStateOf(30f) }
-    println(value)
+fun WeightCards(name : String,  actualExercise: MutableStateFlow<Exercise>,viewModel: ExecuteRoutineViewModel){
+    val exercise by actualExercise.collectAsState()
+    var sliderValueRaw by remember { mutableStateOf(exercise.weight) }
+    val interactionSource = remember { MutableInteractionSource() }
+    val isPressed by interactionSource.collectIsPressedAsState()
+    val isDragged by interactionSource.collectIsDraggedAsState()
+    val isInteracting = isPressed || isDragged
+    val sliderValue by derivedStateOf {
+        if (isInteracting) {
+            sliderValueRaw
+        } else {
+            exercise.weight
+        }
+    }
+
     Card(backgroundColor = Color.LightGray, elevation = 6.dp, modifier = Modifier
         .width(120.dp)
         .fillMaxHeight(0.4F),shape = RoundedCornerShape(20.dp)) {
         Column(horizontalAlignment = Alignment.CenterHorizontally, verticalArrangement = Arrangement.SpaceEvenly) {
             Text(text = name, fontSize = 25.sp)
-            Text(text = handlerGetValue().toString(), fontSize = 20.sp)
+            Text(text = sliderValue.toInt().toString(), fontSize = 20.sp)
             Slider(
-                value =handlerGetValue().toFloat(),
-                steps = 0,
-                valueRange = 0f..10000f,
+                value = sliderValue, // using calculated sliderValue here from above
+                onValueChange = {
+                    sliderValueRaw = it
+                },
+                onValueChangeFinished = {
+                    viewModel.setWeight(sliderValue)
+                },
+                interactionSource = interactionSource,
+                valueRange = 0f..300f,
                 colors = SliderDefaults.colors(
                     activeTickColor = Green,
                     inactiveTickColor = Green,
@@ -69,8 +92,56 @@ fun VariantCards(name : String,handlerGetValue : ()->Int,handler : (Float) -> Un
                     activeTrackColor = Green,
                     thumbColor = Green
                 ),
-                onValueChange = handler
             )
+
+
+        }
+
+
+    }
+}
+@SuppressLint("UnrememberedMutableState")
+@Composable
+fun RepsCards(name : String,  actualExercise: MutableStateFlow<Exercise>,viewModel: ExecuteRoutineViewModel){
+    val exercise by actualExercise.collectAsState()
+    var sliderValueRaw by remember { mutableStateOf(exercise.repetitions) }
+    val interactionSource = remember { MutableInteractionSource() }
+    val isPressed by interactionSource.collectIsPressedAsState()
+    val isDragged by interactionSource.collectIsDraggedAsState()
+    val isInteracting = isPressed || isDragged
+    val sliderValue by derivedStateOf {
+        if (isInteracting) {
+            sliderValueRaw
+        } else {
+            exercise.repetitions
+        }
+    }
+
+    Card(backgroundColor = Color.LightGray, elevation = 6.dp, modifier = Modifier
+        .width(120.dp)
+        .fillMaxHeight(0.4F),shape = RoundedCornerShape(20.dp)) {
+        Column(horizontalAlignment = Alignment.CenterHorizontally, verticalArrangement = Arrangement.SpaceEvenly) {
+            Text(text = name, fontSize = 25.sp)
+            Text(text = sliderValue.toInt().toString(), fontSize = 20.sp)
+            Slider(
+                value = sliderValue, // using calculated sliderValue here from above
+                onValueChange = {
+                    sliderValueRaw = it
+                },
+                onValueChangeFinished = {
+                    viewModel.setReps(sliderValue)
+                },
+                interactionSource = interactionSource,
+                valueRange = 0f..300f,
+                colors = SliderDefaults.colors(
+                    activeTickColor = Green,
+                    inactiveTickColor = Green,
+                    inactiveTrackColor = Color.DarkGray,
+                    activeTrackColor = Green,
+                    thumbColor = Green
+                ),
+            )
+
 
         }
 

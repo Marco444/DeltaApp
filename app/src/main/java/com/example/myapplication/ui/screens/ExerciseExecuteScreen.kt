@@ -36,13 +36,8 @@ fun ExerciseExecScreen(viewModel: ExecuteRoutineViewModel = viewModel(),
                        routineId : String?,
                        handlerBack : () ->Unit,
                        handlerFinishRoutine: ()->Unit){
-//    var popupControl by remember { mutableStateOf(true) }
-//    var propierties = PopupProperties(focusable = true, dismissOnBackPress = true)
-   // val id = routineId?.substringAfter('}')?.toInt() ?: -1
-   // var oderExer = order
-    val count : MutableState<Int> = remember {
-        mutableStateOf(0)
-    }
+
+
     val exercise by viewModel.actualExercise.collectAsState()
 
     Box(modifier = Modifier.background(Color(0xFF1E1E1E))) {
@@ -65,7 +60,6 @@ fun ExerciseExecScreen(viewModel: ExecuteRoutineViewModel = viewModel(),
                 }
             }
             Spacer(modifier = Modifier.height(20.dp))
-            Text(text = "${count.value}")
             Column(modifier = Modifier.fillMaxSize(), horizontalAlignment = Alignment.CenterHorizontally) {
 
                 ExerciseExecCard(actualExercise = viewModel.actualExercise ,viewModel = viewModel)
@@ -75,18 +69,16 @@ fun ExerciseExecScreen(viewModel: ExecuteRoutineViewModel = viewModel(),
                 Spacer(modifier = Modifier.height(20.dp))
 
                 Row(verticalAlignment = Alignment.CenterVertically, horizontalArrangement = Arrangement.SpaceEvenly, modifier = Modifier.width(300.dp)) {
-//                    Button1(fontSize = 13, text = "Previous", handler = {
-//                        if (oderExer != 0)
-//                            viewModel.nextExercise()
-//                        handlerFinishRoutine()
-//
-//                    })
+                    Button1(fontSize = 13, text = "Previous", handler = {
+                        viewModel.previusExercise()
+                    })
                     Button1(fontSize = 13, text = "Next", handler = {
-                        count.value ++;
                         if(viewModel.hasNext())
                             viewModel.nextExercise()
-                        else
+                        else {
+
                             handlerFinishRoutine()
+                        }
                     })
 
                 }
