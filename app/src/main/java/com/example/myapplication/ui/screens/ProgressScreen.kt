@@ -51,7 +51,6 @@ fun ProgressScreen(viewModel: RoutinesViewModel, actionRedirect: (Int) -> Unit){
           viewModel = viewModel
         )
 
-
         Spacer(modifier = Modifier.height(20.dp))
 
         RoutinesGrid(viewModel = viewModel, actionRedirect = actionRedirect, routineCard = RoutineCard.Progress)

@@ -9,11 +9,11 @@ data class RoutineExercises (
 )
 
 data class Exercise(
-    var duration: Int,
-    var order: Int,
-    var weight : Int,
-    var repetitions : Int,
-    var id: Int,
-    var name: String,
-    var detail : String
+    var duration: Int =0,
+    var order: Int = 0,
+    var weight : Int = 0,
+    var repetitions : Int = 0,
+    var id: Int = 0,
+    var name: String = "",
+    var detail : String = ""
 )
