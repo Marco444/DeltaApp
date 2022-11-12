@@ -1,5 +1,6 @@
 package com.example.myapplication.ui.navigation
 
+import androidx.compose.material.ScaffoldState
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.State
 import androidx.compose.ui.Modifier
@@ -20,21 +21,21 @@ import com.example.myapplication.viewmodel.RoutinesViewModel
 * que va a llevar, y de esa manera hacer que esa accion se manje direction directamente y
 * unicamente desde aca
 * */
-fun NavGraph(navController: NavHostController, viewModel: RoutinesViewModel) {
+fun NavGraph(navController: NavHostController, viewModel: RoutinesViewModel, scaffoldState: ScaffoldState) {
     NavHost(
         navController = navController,
         startDestination = NavBarScreen.Routines.route,
     ) {
         composable(NavBarScreen.Routines.route) {
             RoutinesScreen(viewModel = viewModel,
-                actionRedirect = { navController.navigate(Screen.RoutineDescriptionScreen.route + it) })
+                actionRedirect = { navController.navigate(Screen.RoutineDescriptionScreen.route + it) }, scaffoldState)
         }
         composable(NavBarScreen.Progress.route) {
             ProgressScreen(viewModel = viewModel,
-            actionRedirect = {navController.navigate(Screen.ProgressDetail.route + it  )})
+            actionRedirect = {navController.navigate(Screen.ProgressDetail.route + it  )}, scaffoldState)
         }
         composable(NavBarScreen.Explore.route) {
-            ExploreScreen(viewModel = viewModel)
+            ExploreScreen(viewModel = viewModel, scaffoldState)
         }
         composable(NavBarScreen.QR.route) {
             QRScreen(viewModel = viewModel)

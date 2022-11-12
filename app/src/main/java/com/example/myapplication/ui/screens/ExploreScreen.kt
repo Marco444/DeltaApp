@@ -34,6 +34,7 @@ import com.example.myapplication.ui.components.RoutineCard
 import com.example.myapplication.ui.components.RoutinesGrid
 import com.example.myapplication.ui.navigation.NavBarScreen
 import com.example.myapplication.viewmodel.RoutinesViewModel
+import kotlinx.coroutines.launch
 
 
 @Composable
@@ -97,7 +98,8 @@ fun SearchAndFilter(viewModel: RoutinesViewModel) {
 }
 
 @Composable
-fun ExploreScreen(viewModel: RoutinesViewModel){
+fun ExploreScreen(viewModel: RoutinesViewModel, scaffoldState: ScaffoldState){
+    val coroutineScope = rememberCoroutineScope()
     Column (
         modifier = Modifier
             .fillMaxWidth()
@@ -108,7 +110,14 @@ fun ExploreScreen(viewModel: RoutinesViewModel){
 
         Spacer(modifier = Modifier.height(20.dp))
         Row (horizontalArrangement = Arrangement.spacedBy(10.dp)){
-            HamburgerButton(modifier = Modifier.align(Alignment.CenterVertically))
+            HamburgerButton(
+                modifier = Modifier.align(Alignment.CenterVertically),
+                onClick = {
+                    coroutineScope.launch {
+                        scaffoldState.drawerState.open()
+                    }
+                }
+        )
             Text(
                 text = stringResource(R.string.explore_title),
                 style = MaterialTheme.typography.h1

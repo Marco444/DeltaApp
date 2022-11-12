@@ -8,8 +8,10 @@ import androidx.compose.foundation.lazy.LazyColumn
 import androidx.compose.foundation.lazy.LazyVerticalGrid
 import androidx.compose.foundation.lazy.items
 import androidx.compose.material.MaterialTheme
+import androidx.compose.material.ScaffoldState
 import androidx.compose.material.Text
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.rememberCoroutineScope
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
@@ -17,20 +19,21 @@ import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.unit.dp
 import com.example.myapplication.R
 import com.example.myapplication.data.Routines
-import com.example.myapplication.ui.components.ROUTINE_CARD_WIDTH
-import com.example.myapplication.ui.components.RoutineCard
-import com.example.myapplication.ui.components.RoutineCardSortButton
-import com.example.myapplication.ui.components.RoutinesGrid
+import com.example.myapplication.ui.components.*
 import com.example.myapplication.ui.navigation.NavBarScreen
 import com.example.myapplication.ui.navigation.Screen
 import com.example.myapplication.viewmodel.RoutinesViewModel
+import kotlinx.coroutines.launch
 
 fun comparebyFavourite(routine1: Routines, routine2: Routines): Int {
     return routine1.id - routine2.id
 }
 
 @Composable
-fun ProgressScreen(viewModel: RoutinesViewModel, actionRedirect: (Int) -> Unit){
+fun ProgressScreen(viewModel: RoutinesViewModel, actionRedirect: (Int) -> Unit, scaffoldState: ScaffoldState){
+
+    val coroutineScope = rememberCoroutineScope()
+
     Column (
         modifier = Modifier
             .fillMaxWidth()
@@ -40,10 +43,20 @@ fun ProgressScreen(viewModel: RoutinesViewModel, actionRedirect: (Int) -> Unit){
     ){
 
         Spacer(modifier = Modifier.height(20.dp))
-        Text(
-            text = stringResource(R.string.progress_title),
-            style = MaterialTheme.typography.h1,
-        )
+        Row (horizontalArrangement = Arrangement.spacedBy(10.dp)){
+            HamburgerButton(
+                modifier = Modifier.align(Alignment.CenterVertically),
+                onClick = {
+                            coroutineScope.launch {
+                                scaffoldState.drawerState.open()
+                            }
+                }
+            )
+            Text(
+                text = stringResource(R.string.progress_title),
+                style = MaterialTheme.typography.h1
+            )
+        }
 
         Spacer(modifier = Modifier.height(10.dp))
 

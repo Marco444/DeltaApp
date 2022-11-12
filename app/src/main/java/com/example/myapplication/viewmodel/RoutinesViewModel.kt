@@ -1,7 +1,11 @@
 package com.example.myapplication.viewmodel
 
+import androidx.compose.material.ScaffoldState
+import androidx.compose.material.rememberScaffoldState
 import androidx.compose.material3.windowsizeclass.WindowWidthSizeClass
 import androidx.compose.runtime.MutableState
+import androidx.compose.runtime.rememberCoroutineScope
+import androidx.lifecycle.LifecycleCoroutineScope
 import androidx.lifecycle.ViewModel
 import com.example.myapplication.data.Exercise
 import com.example.myapplication.data.Routines
@@ -12,7 +16,6 @@ import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.update
 
 class RoutinesViewModel : ViewModel() {
-
     private val _sortState = MutableStateFlow(SortOption.POINTS)
 
     private val _routinesState = MutableStateFlow(RoutinesState())
