@@ -27,14 +27,15 @@ import com.example.myapplication.ui.components.RoutineCard
 import com.example.myapplication.ui.navigation.Screen
 import com.example.myapplication.ui.theme.Green
 import com.example.myapplication.ui.theme.MyApplicationTheme
+import com.example.myapplication.viewmodel.ExecuteRoutine
+import com.example.myapplication.viewmodel.ExecuteRoutineViewModel
 import com.example.myapplication.viewmodel.RoutinesViewModel
 
 @Composable
-fun RoutineDescriptionScreen(viewModel: RoutinesViewModel, routineId: String?,backHandler : () -> Unit,starRoutineHanlder : ()->Unit){
+fun RoutineDescriptionScreen(viewModel: ExecuteRoutineViewModel = ExecuteRoutineViewModel(), routineId: String,backHandler : () -> Unit,starRoutineHanlder : ()->Unit){
 
-    val id = routineId?.substringAfter('}')?.toInt() ?: -1
 
-    val routine: Routines? = viewModel.routine(id)
+    val routine: Routines = viewModel.routine(routineId.toInt())
 
     Box(modifier = Modifier.background(Color(0xFF1E1E1E))) {
      Column(verticalArrangement = Arrangement.SpaceEvenly) {
@@ -57,9 +58,9 @@ fun RoutineDescriptionScreen(viewModel: RoutinesViewModel, routineId: String?,ba
          }
          Spacer(modifier = Modifier.height(20.dp))
          Column(modifier = Modifier.fillMaxSize(), horizontalAlignment = Alignment.CenterHorizontally) {
-             ExPreviewCard(routine?.title ?: "",30,routine?.description ?: "")
+             ExPreviewCard(routine.title ?: "",30,routine.description ?: "")
              Spacer(modifier = Modifier.height(40.dp))
-             ListOfExercises(viewModel,id)
+             ListOfExercises(viewModel)
              Spacer(modifier = Modifier.height(10.dp))
              Button1(fontSize = 20, text = "Start Routine", handler = starRoutineHanlder)
          }
@@ -69,13 +70,13 @@ fun RoutineDescriptionScreen(viewModel: RoutinesViewModel, routineId: String?,ba
 }
 
 @Composable
-fun ListOfExercises(viewModel: RoutinesViewModel,id : Int){
+fun ListOfExercises(viewModel: ExecuteRoutineViewModel){
     LazyColumn( horizontalAlignment = Alignment.CenterHorizontally){
         item {
             Text(text = "WarmUp", fontSize = 30.sp, color = Green)
 
         }
-        items(viewModel.getRoutineWarmUpExercises(id)) { item ->
+        items(viewModel.getRoutineWarmUpExercises()) { item ->
                    Text(text = item.name, fontSize = 30.sp, color = Color.White)
                     Spacer(modifier = Modifier.height(1.dp))
             }
@@ -83,7 +84,7 @@ fun ListOfExercises(viewModel: RoutinesViewModel,id : Int){
             Text(text = "mainSet", fontSize = 30.sp, color = Green)
 
         }
-        items(viewModel.getRoutineMainSetExercises(id)){ item ->
+        items(viewModel.getRoutineMainSetExercises()){ item ->
                 Text(text = item.name, fontSize = 30.sp, color = Color.White)
                 Spacer(modifier = Modifier.height(1.dp))
             }
@@ -91,7 +92,7 @@ fun ListOfExercises(viewModel: RoutinesViewModel,id : Int){
             Text(text = "CoolDown", fontSize = 30.sp, color = Green)
 
         }
-        items(viewModel.getRoutineCoolDownExercises(id)){ item ->
+        items(viewModel.getRoutineCoolDownExercises()){ item ->
             Text(text = item.name, fontSize = 30.sp, color = Color.White)
             Spacer(modifier = Modifier.height(1.dp))
         }

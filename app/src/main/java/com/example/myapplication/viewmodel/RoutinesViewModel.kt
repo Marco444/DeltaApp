@@ -98,16 +98,6 @@ class RoutinesViewModel : ViewModel() {
     }
 
 
-    fun getRoutineWarmUpExercises(id:Int) : List<Exercise>{
-        return   _routinesState.value.userRoutines.find { routine ->routine.value.id == id }!!.value.exercises.warmUpExercises
-    }
-    fun getRoutineCoolDownExercises(id:Int) : List<Exercise>{
-        return   _routinesState.value.userRoutines.find { routine ->routine.value.id == id }!!.value.exercises.coolDownExercises
-    }
-    fun getRoutineMainSetExercises(id:Int) : List<Exercise>{
-        return   _routinesState.value.userRoutines.find { routine ->routine.value.id == id }!!.value.exercises.mainSetExercises
-    }
-
     private var actualOpinion: Int = 2
 
     fun getActualOpinion(): Int {
@@ -123,5 +113,6 @@ class RoutinesViewModel : ViewModel() {
         if(actualOpinion > 0)
             actualOpinion--
     }
+
 
 }
