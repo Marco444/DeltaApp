@@ -23,14 +23,14 @@ import com.example.myapplication.viewmodel.RoutinesViewModel
 * que va a llevar, y de esa manera hacer que esa accion se manje direction directamente y
 * unicamente desde aca
 * */
-fun NavGraph(navController: NavHostController, viewModel: RoutinesViewModel, executeRedirect: () -> Unit, scaffoldState: ScaffoldState) {
+fun NavGraph(navController: NavHostController, viewModel: RoutinesViewModel, executeRedirect: (Int) -> Unit, scaffoldState: ScaffoldState) {
     NavHost(
         navController = navController,
         startDestination = NavBarScreen.Routines.route,
     ) {
         composable(NavBarScreen.Routines.route) {
             RoutinesScreen(viewModel = viewModel,
-                actionRedirect = { navController.navigate(Screen.RoutineDescriptionScreen.route + it) }, scaffoldState)
+                actionRedirect = executeRedirect, scaffoldState)
         }
         composable(NavBarScreen.Progress.route) {
             ProgressScreen(viewModel = viewModel,
@@ -41,12 +41,6 @@ fun NavGraph(navController: NavHostController, viewModel: RoutinesViewModel, exe
         }
         composable(NavBarScreen.QR.route) {
             QRScreen(viewModel = viewModel)
-        }
-        composable(Screen.RoutineDescriptionScreen.route) {backStackEntry ->
-            //RoutineDescriptionScreen(viewModel = viewModel, backStackEntry.arguments?.getString("routineId"),starRoutineHanlder = executeRedirect,backHandler = {  navController.popBackStack() })
-        }
-        composable(Screen.Execute.route){ backStackEntry ->
-            ExerciseExecScreen( order = 0, routineId = backStackEntry.arguments?.getString("routineId"), handlerBack = {navController.popBackStack()},handlerFinishRoutine = {navController.navigate(Screen.ProgressDetail.route + backStackEntry.arguments?.getString("routineId")?.substringAfter('}')?.toInt())})
         }
         composable(Screen.ProgressDetail.route) {backStackEntry ->
             ProgressDetailScreen(viewModel = viewModel,

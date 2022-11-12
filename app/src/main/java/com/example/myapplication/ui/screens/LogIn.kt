@@ -50,7 +50,7 @@ import com.example.myapplication.viewmodel.UserViewModel
 
 
 @Composable
-fun LogIn(viewModel: UserViewModel, actionRedirect: () -> Unit, backButton: () -> Unit){
+fun LogIn(viewModel: UserViewModel = androidx.lifecycle.viewmodel.compose.viewModel(), actionRedirect: () -> Unit, backButton: () -> Unit){
 
     var passWord by remember { mutableStateOf(TextFieldValue("")) }
     var snackbar by remember { mutableStateOf(false) }

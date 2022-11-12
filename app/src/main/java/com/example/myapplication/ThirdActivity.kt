@@ -11,6 +11,10 @@ import androidx.compose.material.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.tooling.preview.Preview
+import androidx.navigation.compose.NavHost
+import androidx.navigation.compose.composable
+import androidx.navigation.compose.rememberNavController
+import com.example.myapplication.ui.navigation.Screen
 import com.example.myapplication.ui.screens.ExerciseExecScreen
 import com.example.myapplication.ui.screens.RoutineDescriptionScreen
 import com.example.myapplication.ui.theme.MyApplicationTheme
@@ -24,18 +28,16 @@ class ThirdActivity : ComponentActivity() {
         setContent {
             MyApplicationTheme {
 
-                val saved: String? = intent.getStringExtra("routineId")
+                val saved: String? = intent.extras!!.getString("routineId")
+                val navigate: Intent = Intent(this@ThirdActivity, SecondActivity::class.java)
 
                 if(saved != null) {
                     Text(text = saved)
+                   DeltaAppExecute(saved = saved, redirectHandler = {startActivity(navigate)})
+                } else {
+                    Text(text = "no entre")
                 }
-
-                val systemUiController = rememberSystemUiController()
-                systemUiController.setSystemBarsColor(color = androidx.compose.ui.graphics.Color.Black )
-
-                val navigate = Intent(this@ThirdActivity, SecondActivity::class.java)
-                if(saved != null)
-                    RoutineDescriptionScreen(routineId = saved, backHandler = {startActivity(navigate)}, starRoutineHanlder = {})
+                
             }
         }
     }

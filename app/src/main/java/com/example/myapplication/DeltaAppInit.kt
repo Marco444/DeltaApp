@@ -21,21 +21,5 @@ fun DeltaAppInit(
     viewModel: UserViewModel = viewModel(),
     initialisedHandler: () -> Unit,
 ) {
-    val navController = rememberNavController()
-    NavHost(navController = navController, startDestination = "home") {
-        composable("home") {
-            LandingScreen(
-                loginHandler = { navController.navigate("login") },
-                tryOutHandler = initialisedHandler)
-        }
-        composable("login",
-            deepLinks = listOf(
-                navDeepLink {
-                    uriPattern = "http://pl-coding.com"
-                }
-            )) {
-            LogIn(viewModel = viewModel, actionRedirect = initialisedHandler,
-                 backButton = {navController.navigate("home")} )
-        }
-    }
+
 }
