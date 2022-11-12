@@ -3,7 +3,6 @@ package com.example.myapplication.viewmodel
 import androidx.compose.runtime.MutableState
 import androidx.lifecycle.ViewModel
 import com.example.myapplication.data.Exercise
-import com.example.myapplication.data.Routines
 import kotlinx.coroutines.flow.MutableStateFlow
 
 class ExecuteRoutineViewModel : ViewModel(){

@@ -1,7 +1,9 @@
 package com.example.myapplication.viewmodel
 
 
+import androidx.compose.runtime.getValue
 import androidx.compose.runtime.mutableStateOf
+import androidx.compose.runtime.setValue
 import com.example.myapplication.R
 import com.example.myapplication.data.Exercise
 import com.example.myapplication.data.RoutineExercises
@@ -11,7 +13,16 @@ import kotlinx.coroutines.flow.MutableStateFlow
 class RoutinesState {
 
 
-    var userRoutines = mutableListOf<MutableStateFlow<Routines>>()
+    var userRoutines by mutableStateOf(listOf(
+        MutableStateFlow(Routines(8, R.drawable.registration_background,
+            "This is a sample routine text", "MY PUSH 8", false, points = 3)),
+        MutableStateFlow(Routines(9, R.drawable.registration_background,
+            "This is a sample routine text", "MY PULL 9", false, points = 10)),
+        MutableStateFlow(Routines(10, R.drawable.registration_background,
+            "This is a sample routine text", "MY PUSH 10", false, points = 1)),
+        MutableStateFlow(Routines(11, R.drawable.registration_background,
+            "This is a sample routine text", "MY PULL 11", false))
+    ))
     var exploreRoutines = mutableListOf<MutableStateFlow<Routines>>()
 
     var actualExercise = mutableStateOf(Exercise(0,0,0,0,0,"AA","AAA"))
@@ -34,13 +45,7 @@ class RoutinesState {
         exploreRoutines.add( MutableStateFlow(Routines(7, R.drawable.registration_background,
             "This is a sample routine text", "PULL 7", false, points = 10)))
 
-        userRoutines.add( MutableStateFlow(Routines(8, R.drawable.registration_background,
-            "This is a sample routine text", "MY PUSH 8", false, points = 3)))
-        userRoutines.add( MutableStateFlow(Routines(9, R.drawable.registration_background,
-            "This is a sample routine text", "MY PULL 9", false, points = 10)))
-        userRoutines.add( MutableStateFlow(Routines(10, R.drawable.registration_background,
-            "This is a sample routine text", "MY PUSH 10", false, points = 1)))
-      userRoutines.add( MutableStateFlow(Routines(11, R.drawable.registration_background,
-            "This is a sample routine text", "MY PULL 11", false)))
+
+
     }
 }

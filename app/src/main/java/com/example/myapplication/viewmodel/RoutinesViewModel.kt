@@ -22,11 +22,14 @@ class RoutinesViewModel : ViewModel() {
         return _sortState
     }
 
-    fun setSortState(option: SortOption, ) {
+    fun setSortState(option: SortOption) {
         _sortState.value = option
+        if(option == SortOption.POINTS) sortRoutinesPoints(NavBarScreen.Routines)
+        if(option == SortOption.FAVOURITE) sortRoutinesFavourite(NavBarScreen.Routines)
+        if(option == SortOption.DATE) sortRoutinesDate(NavBarScreen.Routines)
     }
 
-    fun getRoutines(routineCard: RoutineCard): MutableList<MutableStateFlow<Routines>> {
+    fun getRoutines(routineCard: RoutineCard): List<MutableStateFlow<Routines>> {
         return if(routineCard == RoutineCard.ExploreRoutine) _routinesState.value.exploreRoutines
         else _routinesState.value.userRoutines
     }
@@ -39,28 +42,28 @@ class RoutinesViewModel : ViewModel() {
         if(screen == NavBarScreen.Explore)
             _routinesState.value.exploreRoutines.sortBy { routine -> routine.value.id }
         else
-            _routinesState.value.userRoutines.sortBy { routine -> routine.value.id }
+            _routinesState.value.userRoutines = _routinesState.value.userRoutines.sortedBy { routine -> routine.value.id }
     }
 
     fun sortRoutinesFavourite(screen: NavBarScreen) {
         if(screen == NavBarScreen.Explore)
             _routinesState.value.exploreRoutines.sortBy { routine -> routine.value.favourite}
         else
-            _routinesState.value.userRoutines.sortBy { routine -> routine.value.favourite }
+            _routinesState.value.userRoutines = _routinesState.value.userRoutines.sortedBy { routine -> routine.value.favourite }
     }
 
     fun sortRoutinesPoints(screen: NavBarScreen) {
         if(screen == NavBarScreen.Explore)
             _routinesState.value.exploreRoutines.sortBy { routine -> routine.value.points}
         else
-            _routinesState.value.userRoutines.sortBy { routine -> routine.value.points}
+            _routinesState.value.userRoutines =  _routinesState.value.userRoutines.sortedBy { routine -> routine.value.points}
     }
 
     fun clickedIcon(id: Int, routineCard: RoutineCard) {
         if(RoutineCard.ExploreRoutine == routineCard) {
            val routine = _routinesState.value.exploreRoutines.find { routine ->routine.value.id == id }!!
            routine.update { it.copy(added = !it.added) }
-            _routinesState.value.userRoutines.add(routine)
+            _routinesState.value.userRoutines =  _routinesState.value.userRoutines + routine
         }else {
             val routine = _routinesState.value.userRoutines.find { routine ->routine.value.id == id }!!
             routine.update { it.copy(favourite = !it.favourite) }
@@ -87,7 +90,6 @@ class RoutinesViewModel : ViewModel() {
     }
 
 
-
     fun getRoutineWarmUpExercises(id:Int) : List<Exercise>{
         return   _routinesState.value.userRoutines.find { routine ->routine.value.id == id }!!.value.exercises.warmUpExercises
     }
@@ -97,18 +99,4 @@ class RoutinesViewModel : ViewModel() {
     fun getRoutineMainSetExercises(id:Int) : List<Exercise>{
         return   _routinesState.value.userRoutines.find { routine ->routine.value.id == id }!!.value.exercises.mainSetExercises
     }
-//    private var _exploreRoutines = mutableListOf<MutableStateFlow<RoutinesT>>()
-//
-//    fun getExploreRoutines(): List<RoutinesT> {
-//        return _exploreRoutines.map{it.asStateFlow().value}
-//    }
-//
-//    fun addedRoutineFromExplore(id: Int) {
-//        _exploreRoutines[id].value.added = true;
-//    }
-//
-//    fun isAddedRoutine(id: Int): Boolean {
-//        return  _exploreRoutines[id].value.added;
-//    }
-
 }

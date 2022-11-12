@@ -60,7 +60,7 @@ fun ExerciseExecScreen(viewModel: ExecuteRoutineViewModel = ExecuteRoutineViewMo
                     Button1(fontSize = 13, text = "Previous", handler = {
                         if (oderExer != 0)
                             viewModel.nextExercise()
-                            handlerFinishRoutine()
+                        handlerFinishRoutine()
 
                     })
                     Button1(fontSize = 13, text = "Next", handler = {
@@ -81,37 +81,37 @@ fun ExerciseExecScreen(viewModel: ExecuteRoutineViewModel = ExecuteRoutineViewMo
                             .fillMaxWidth()
                             .fillMaxHeight(0.3F)) {
 
-                                Column(horizontalAlignment = Alignment.End) {
-                                    Button(
-                                        onClick = {popupControl = false },
-                                        shape = CircleShape,
-                                        colors = ButtonDefaults.buttonColors(backgroundColor = GreenTransparency),
+                            Column(horizontalAlignment = Alignment.End) {
+                                Button(
+                                    onClick = {popupControl = false },
+                                    shape = CircleShape,
+                                    colors = ButtonDefaults.buttonColors(backgroundColor = GreenTransparency),
 
-                                        elevation = elevation(
-                                            defaultElevation = 0.dp,
-                                            pressedElevation = 0.dp
-                                        )
-
+                                    elevation = elevation(
+                                        defaultElevation = 0.dp,
+                                        pressedElevation = 0.dp
                                     )
-                                    {
-                                        Icon(
-                                            Icons.Default.Close,
-                                            contentDescription = "content description",
-                                            tint = Color.Black
-                                        )
-                                    }
-                                    Spacer(modifier = Modifier.height(30.dp))
-                                    Text(text = "To continue with the next exercise click or swipe from the right.", fontSize = 25.sp, textAlign = TextAlign.Center,modifier = Modifier.align(CenterHorizontally))
 
+                                )
+                                {
+                                    Icon(
+                                        Icons.Default.Close,
+                                        contentDescription = "content description",
+                                        tint = Color.Black
+                                    )
                                 }
+                                Spacer(modifier = Modifier.height(30.dp))
+                                Text(text = "To continue with the next exercise click or swipe from the right.", fontSize = 25.sp, textAlign = TextAlign.Center,modifier = Modifier.align(CenterHorizontally))
+
                             }
-
-
                         }
+
+
                     }
                 }
             }
         }
+    }
 
 
 
