@@ -11,9 +11,11 @@ import androidx.compose.ui.Modifier
 import androidx.compose.foundation.Canvas
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.fillMaxSize
+import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.size
 import androidx.compose.material.*
 import androidx.compose.runtime.*
+import androidx.compose.runtime.saveable.rememberSaveable
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.geometry.Offset
 import androidx.compose.ui.geometry.Size
@@ -35,7 +37,8 @@ import kotlin.math.sin
 @Composable
 fun ToPreview(){
     Box(
-        contentAlignment = Alignment.Center
+        contentAlignment = Alignment.Center,
+        modifier = Modifier.padding(30.dp)
     ) {
         // call the function Timer
         // and pass the values
@@ -75,15 +78,15 @@ fun Timer(
         mutableStateOf(IntSize.Zero)
     }
     // create variable for value
-    var value by remember {
+    var value by rememberSaveable {
         mutableStateOf(initialValue)
     }
     // create variable for current time
-    var currentTime by remember {
+    var currentTime by rememberSaveable {
         mutableStateOf(totalTime)
     }
     // create variable for isTimerRunning
-    var isTimerRunning by remember {
+    var isTimerRunning by rememberSaveable {
         mutableStateOf(false)
     }
     LaunchedEffect(key1 = currentTime, key2 = isTimerRunning) {
