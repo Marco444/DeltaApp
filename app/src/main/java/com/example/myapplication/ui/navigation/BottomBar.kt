@@ -11,6 +11,7 @@ import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.unit.dp
 import androidx.navigation.NavController
 import androidx.navigation.compose.currentBackStackEntryAsState
+import com.example.myapplication.ui.theme.Gray
 import com.example.myapplication.ui.theme.Green
 
 
@@ -23,13 +24,13 @@ fun BottomBar(navController: NavController) {
         NavBarScreen.QR
     )
 
-    BottomNavigation (backgroundColor = Green, contentColor = MaterialTheme.colors.onPrimary) {
+    BottomNavigation (backgroundColor = Gray, contentColor = Green) {
         val navBackStackEntry by navController.currentBackStackEntryAsState()
         val currentRoute = navBackStackEntry?.destination?.route
         items.forEach { item ->
             BottomNavigationItem(
                 icon = { Icon(imageVector = item.icon, contentDescription = item.title) },
-                label = { Text(text = item.title, color = Color.Black) },
+                label = { Text(text = item.title, color = Green) },
                 alwaysShowLabel = false,
                 unselectedContentColor = Color.Gray,
                 selected = currentRoute == item.route,
