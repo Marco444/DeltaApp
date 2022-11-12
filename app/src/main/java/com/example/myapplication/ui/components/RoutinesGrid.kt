@@ -2,8 +2,9 @@ package com.example.myapplication.ui.components
 
 import androidx.compose.foundation.ExperimentalFoundationApi
 import androidx.compose.foundation.layout.*
-import androidx.compose.foundation.lazy.GridCells
-import androidx.compose.foundation.lazy.LazyVerticalGrid
+import androidx.compose.foundation.lazy.grid.GridCells
+import androidx.compose.foundation.lazy.grid.LazyVerticalGrid
+import androidx.compose.foundation.lazy.grid.items
 import androidx.compose.foundation.lazy.items
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.collectAsState
@@ -18,7 +19,7 @@ import kotlinx.coroutines.flow.asStateFlow
 @Composable
 fun RoutinesGrid(viewModel: RoutinesViewModel, actionRedirect: (Int) -> Unit, routineCard: RoutineCard) {
     LazyVerticalGrid(
-        cells = GridCells.Adaptive(ROUTINE_CARD_WIDTH.dp)) {
+        GridCells.Adaptive(ROUTINE_CARD_WIDTH.dp)) {
         items(viewModel.getRoutines(routineCard)) { routineState ->
             Box(
                 modifier= Modifier
