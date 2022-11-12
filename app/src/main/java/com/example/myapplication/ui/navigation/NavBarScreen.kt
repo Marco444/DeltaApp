@@ -10,6 +10,7 @@ sealed class Screen(val route: String) {
     object Execute: Screen( "execute_screen/{routineId}")
     object RoutineDescriptionScreen: Screen( "routine_description_screen/{routineId}")
     object ProgressDetail: Screen( "progress_detail_screen/{routineId}")
+    object RoutineFinish : Screen("routineFinish")
 }
 
 sealed class NavBarScreen(val title: String, val icon: ImageVector, private val route_: String): Screen(route = route_) {

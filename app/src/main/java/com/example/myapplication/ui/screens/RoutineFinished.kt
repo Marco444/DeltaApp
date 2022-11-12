@@ -22,14 +22,16 @@ import androidx.compose.ui.unit.sp
 import com.example.myapplication.ui.components.BackButton
 import com.example.myapplication.ui.components.Button1
 import com.example.myapplication.ui.theme.*
+import com.example.myapplication.viewmodel.ExecuteRoutineViewModel
 import com.example.myapplication.viewmodel.RoutinesViewModel
 
 @Composable
 fun RoutineFinished(
-    viewModel: RoutinesViewModel,
+    viewModel: ExecuteRoutineViewModel,
     viewRoutineHandler: () -> Unit,
     routineId: String?,
-    backButtonHandler: () -> Unit
+    backButtonHandler: () -> Unit,
+    nextHandler : () -> Unit
 ){
     var actual: Int = 2
     val opinions: List<String> = listOf("Aweful", "Bad", "Regular", "Good", "Excelent")
@@ -91,7 +93,7 @@ fun RoutineFinished(
 
                     ){
                         Button(
-                            onClick = { viewModel.downOpinion() },
+                            onClick = { /*viewModel.downOpinion()*/ },
                             shape = CircleShape,
                             colors = ButtonDefaults.buttonColors(backgroundColor = Color.Transparent),
                             elevation = ButtonDefaults.elevation(0.dp),
@@ -103,14 +105,14 @@ fun RoutineFinished(
                             )
                         }
                         Text(
-                            text = opinions[viewModel.getActualOpinion()],
+                            text = opinions[0],
                             fontFamily = NormalFont,
                             fontSize = 20.sp,
                             color = Color.White,
                             modifier = Modifier.padding(top = 20.dp)
                         )
                         Button(
-                            onClick = { viewModel.upOpinion() },
+                            onClick = { /*viewModel.upOpinion() */},
                             shape = CircleShape,
                             colors = ButtonDefaults.buttonColors(backgroundColor = Color.Transparent),
                             elevation = ButtonDefaults.elevation(0.dp),
@@ -124,17 +126,11 @@ fun RoutineFinished(
                     }
 
                     Spacer(modifier = Modifier.height(20.dp))
-                    Button1(fontSize = 13, text = "Next", handler = {})
+                    Button1(fontSize = 13, text = "Next", handler = nextHandler)
                     Spacer(modifier = Modifier.height(20.dp))
                 }
             }
         }
     }
 
-}
-
-@Preview
-@Composable
-fun tryFinished(){
-    RoutineFinished(viewModel = RoutinesViewModel(), viewRoutineHandler = { /*TODO*/ }, backButtonHandler = {}, routineId = "as")
 }

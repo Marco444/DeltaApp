@@ -32,8 +32,6 @@ import com.example.myapplication.viewmodel.RoutinesViewModel
 
 @Composable
 fun ExerciseExecScreen(viewModel: ExecuteRoutineViewModel = viewModel(),
-                       order:Int,
-                       routineId : String?,
                        handlerBack : () ->Unit,
                        handlerFinishRoutine: ()->Unit){
 
@@ -61,7 +59,7 @@ fun ExerciseExecScreen(viewModel: ExecuteRoutineViewModel = viewModel(),
             Column(modifier = Modifier.fillMaxSize(), horizontalAlignment = Alignment.CenterHorizontally) {
 
                 ExerciseExecCard(actualExercise = viewModel.actualExercise ,viewModel = viewModel)
-
+    
                 Spacer(modifier = Modifier.height(20.dp))
 
                 Row(verticalAlignment = Alignment.CenterVertically, horizontalArrangement = Arrangement.SpaceEvenly, modifier = Modifier.width(300.dp)) {
@@ -72,7 +70,6 @@ fun ExerciseExecScreen(viewModel: ExecuteRoutineViewModel = viewModel(),
                         if(viewModel.hasNext())
                             viewModel.nextExercise()
                         else {
-
                             handlerFinishRoutine()
                         }
                     })

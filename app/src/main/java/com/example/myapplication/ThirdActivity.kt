@@ -11,6 +11,7 @@ import androidx.compose.material.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.tooling.preview.Preview
+import androidx.lifecycle.viewmodel.compose.viewModel
 import androidx.navigation.compose.NavHost
 import androidx.navigation.compose.composable
 import androidx.navigation.compose.rememberNavController
@@ -33,7 +34,7 @@ class ThirdActivity : ComponentActivity() {
 
                 if(saved != null) {
                     Text(text = saved)
-                   DeltaAppExecute(saved = saved, redirectHandler = {startActivity(navigate)})
+                   DeltaAppExecute(saved = saved, redirectHandler = {startActivity(navigate)}, viewModel = ExecuteRoutineViewModel(saved.toInt()))
                 } else {
                     Text(text = "no entre")
                 }

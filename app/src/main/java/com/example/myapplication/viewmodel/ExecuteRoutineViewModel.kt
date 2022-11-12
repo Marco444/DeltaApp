@@ -10,12 +10,14 @@ import kotlinx.coroutines.flow.asStateFlow
 import kotlinx.coroutines.flow.update
 import kotlin.math.roundToInt
 
-class ExecuteRoutineViewModel : ViewModel() {
+class ExecuteRoutineViewModel(id : Int) : ViewModel() {
 
     private val _execRoutineState = MutableStateFlow(ExecuteRoutine())
+
     var actualExercise = MutableStateFlow(Exercise(name = "pecho 0"))
         private set
     init {
+        _execRoutineState.value.routineId = id
         if(hasNext())
             nextExercise()
     }

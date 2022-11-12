@@ -32,7 +32,7 @@ import com.example.myapplication.viewmodel.ExecuteRoutineViewModel
 import com.example.myapplication.viewmodel.RoutinesViewModel
 
 @Composable
-fun RoutineDescriptionScreen(viewModel: ExecuteRoutineViewModel = ExecuteRoutineViewModel(), routineId: String,backHandler : () -> Unit,starRoutineHanlder : ()->Unit){
+fun RoutineDescriptionScreen(viewModel: ExecuteRoutineViewModel, routineId: String,backHandler : () -> Unit,starRoutineHanlder : ()->Unit){
 
 
     val routine: Routines = viewModel.routine(routineId.toInt())
