@@ -2,6 +2,7 @@ package com.example.myapplication.ui.navigation
 
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.State
+import androidx.compose.ui.Modifier
 import androidx.lifecycle.ViewModel
 import androidx.navigation.NavHostController
 import androidx.navigation.compose.NavHost
@@ -22,7 +23,7 @@ import com.example.myapplication.viewmodel.RoutinesViewModel
 fun NavGraph(navController: NavHostController, viewModel: RoutinesViewModel) {
     NavHost(
         navController = navController,
-        startDestination = NavBarScreen.Routines.route
+        startDestination = NavBarScreen.Routines.route,
     ) {
         composable(NavBarScreen.Routines.route) {
             RoutinesScreen(viewModel = viewModel,

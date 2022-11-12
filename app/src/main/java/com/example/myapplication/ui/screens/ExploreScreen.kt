@@ -28,6 +28,7 @@ import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import androidx.compose.ui.window.Dialog
 import com.example.myapplication.R
+import com.example.myapplication.ui.components.HamburgerButton
 import com.example.myapplication.ui.components.ROUTINE_CARD_WIDTH
 import com.example.myapplication.ui.components.RoutineCard
 import com.example.myapplication.ui.components.RoutinesGrid
@@ -68,9 +69,11 @@ fun FilterButton(viewModel: RoutinesViewModel) {
             Icon(Icons.Filled.Sort, contentDescription = null)
         }
 
-        DropdownMenu(expanded = expanded, onDismissRequest = { expanded = false }, modifier =  Modifier.background(
-            Color.White
-        ).clip(RoundedCornerShape(8.dp))) {
+        DropdownMenu(expanded = expanded, onDismissRequest = { expanded = false }, modifier = Modifier
+            .background(
+                Color.White
+            )
+            .clip(RoundedCornerShape(8.dp))) {
            DropdownMenuItem(onClick = { viewModel.sortRoutinesFavourite(NavBarScreen.Explore); expanded = false}) {
                 Text(text = "favourite")
            }
@@ -104,12 +107,13 @@ fun ExploreScreen(viewModel: RoutinesViewModel){
     ){
 
         Spacer(modifier = Modifier.height(20.dp))
-
-        Text(
-            text = stringResource(R.string.explore_title),
-            style = MaterialTheme.typography.h1
-        )
-
+        Row (horizontalArrangement = Arrangement.spacedBy(10.dp)){
+            HamburgerButton(modifier = Modifier.align(Alignment.CenterVertically))
+            Text(
+                text = stringResource(R.string.explore_title),
+                style = MaterialTheme.typography.h1
+            )
+        }
         Spacer(modifier = Modifier.height(10.dp))
 
         SearchAndFilter(viewModel = viewModel);
