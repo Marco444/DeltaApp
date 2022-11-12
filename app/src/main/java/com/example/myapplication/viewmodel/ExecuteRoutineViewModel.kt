@@ -5,11 +5,15 @@ import androidx.lifecycle.ViewModel
 import com.example.myapplication.data.Exercise
 import com.example.myapplication.data.Routines
 import kotlinx.coroutines.flow.MutableStateFlow
+import kotlinx.coroutines.flow.StateFlow
+import kotlinx.coroutines.flow.update
+import kotlin.math.roundToInt
 
 class ExecuteRoutineViewModel : ViewModel(){
-    private val _execRoutineState = MutableStateFlow(ExecuteRoutine())
+     val _execRoutineState = MutableStateFlow(ExecuteRoutine())
+    val actualExercise = MutableStateFlow(Exercise())
 
-    private fun setNewExercise(oldExercise: MutableState<Exercise>, newExercise: Exercise){
+    private fun setNewExercise(oldExercise: MutableStateFlow<Exercise>, newExercise: Exercise){
         oldExercise.value.id = newExercise.id
         oldExercise.value.order = newExercise.order
         oldExercise.value.name = newExercise.name
@@ -17,23 +21,25 @@ class ExecuteRoutineViewModel : ViewModel(){
         oldExercise.value.repetitions = newExercise.repetitions
         oldExercise.value.duration = newExercise.duration
         oldExercise.value.detail = newExercise.detail
+        println(actualExercise.value.name)
+
     }
     fun nextExercise(){
         var aux = _execRoutineState.value.exercises.warmUpExercises.find { it.order ==  _execRoutineState.value.actualOrder.value }
         if(aux != null) {
-            setNewExercise(_execRoutineState.value.actualExercise, aux)
+            setNewExercise(actualExercise, aux)
             _execRoutineState.value.actualOrder.value += 1
             return
         }
          aux = _execRoutineState.value.exercises.mainSetExercises.find { it.order ==  _execRoutineState.value.actualOrder.value }
         if(aux != null) {
-            setNewExercise(_execRoutineState.value.actualExercise, aux)
+            setNewExercise(actualExercise, aux)
             _execRoutineState.value.actualOrder.value += 1
             return
         }
          aux = _execRoutineState.value.exercises.coolDownExercises.find { it.order ==  _execRoutineState.value.actualOrder.value }
         if(aux != null)
-            setNewExercise(_execRoutineState.value.actualExercise,aux)
+            setNewExercise(actualExercise,aux)
         _execRoutineState.value.actualOrder.value += 1
 
     }
@@ -49,8 +55,13 @@ class ExecuteRoutineViewModel : ViewModel(){
             return true
         return false
     }
-    fun getCurrentExercise() : MutableState<Exercise>{
-        return _execRoutineState.value.actualExercise
+    fun getActual():Exercise{
+        return _execRoutineState.value.exercises.warmUpExercises.find { it.order ==  _execRoutineState.value.actualOrder.value }!!
     }
-
+    fun setReps(reps : Float){
+        _execRoutineState.value.actualExercise.value.repetitions = reps.roundToInt()
+    }
+    fun setWeight(weight : Float){
+        _execRoutineState.value.actualExercise.value.weight = weight.roundToInt()
+    }
 }

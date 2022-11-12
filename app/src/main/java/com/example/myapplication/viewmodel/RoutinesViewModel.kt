@@ -87,7 +87,6 @@ class RoutinesViewModel : ViewModel() {
     }
 
 
-
     fun getRoutineWarmUpExercises(id:Int) : List<Exercise>{
         return   _routinesState.value.userRoutines.find { routine ->routine.value.id == id }!!.value.exercises.warmUpExercises
     }

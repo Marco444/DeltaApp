@@ -14,9 +14,15 @@ class RoutinesState {
     var userRoutines = mutableListOf<MutableStateFlow<Routines>>()
     var exploreRoutines = mutableListOf<MutableStateFlow<Routines>>()
 
-    var actualExercise = mutableStateOf(Exercise(0,0,0,0,0,"AA","AAA"))
 
+    var actualRoutineId = mutableStateOf(8)
+    var exercises: RoutineExercises = RoutineExercises(mutableListOf(Exercise(0,0,15,15,1,"Pecho1","aaa")),mutableListOf(
+        Exercise(0,1,15,15,1,"Pecho2","aaa")
+    ),mutableListOf(Exercise(0,2,15,15,1,"Pecho3","aaa")))
+    var actualOrder = MutableStateFlow(0)
+    var actualExercise = MutableStateFlow(Exercise(0,0,0,0,0,"AA","AAA"))
     init {
+        actualExercise.value = exercises.warmUpExercises.find { it.order == 0 }!!
         exploreRoutines.add( MutableStateFlow(Routines(0, R.drawable.registration_background,
             "This is a sample routine text", "PUSH", false)))
         exploreRoutines.add( MutableStateFlow(Routines(1, R.drawable.registration_background,
