@@ -27,14 +27,12 @@ fun HamburgerButton(modifier: Modifier, onClick: () -> Unit){
     Button(onClick = onClick,
         shape = CircleShape,
         colors = ButtonDefaults.buttonColors(backgroundColor = Color.Transparent),
-        modifier = modifier,
-        elevation = ButtonDefaults.elevation(0.dp)
-
+        modifier = modifier.padding(0.dp),
     )
     {
         Icon(
             Icons.Default.Menu,
-            contentDescription = "content description",
+            contentDescription = "hamburger icon",
             tint= Green,
             modifier = Modifier.scale(2F)
         )
