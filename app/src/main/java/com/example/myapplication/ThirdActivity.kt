@@ -27,9 +27,7 @@ class ThirdActivity : ComponentActivity() {
 
                 val navigate = Intent(this@ThirdActivity, SecondActivity::class.java)
 
-                ExerciseExecScreen(order = 1, routineId = "", handlerBack = { startActivity(navigate) }) {
-
-                }
+                ExerciseExecScreen(order = 1, routineId = "", handlerBack = { startActivity(navigate) }, handlerFinishRoutine = {startActivity(navigate)})
             }
         }
     }

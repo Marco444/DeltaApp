@@ -14,30 +14,44 @@ class ExecuteRoutineViewModel : ViewModel() {
     private val _execRoutineState = MutableStateFlow(ExecuteRoutine())
     var actualExercise = MutableStateFlow(Exercise(name = "pecho 0"))
         private set
-
+    init {
+        if(hasNext())
+            nextExercise()
+    }
     val state: StateFlow<Exercise>
         get() = actualExercise.asStateFlow()
    var next = 0
-
     fun nextExercise(){
-        println(actualExercise.value)
-//        for(cycle in _execRoutineState.value.exercises)
-        var aux = _execRoutineState.value.exercises.warmUpExercises.find { it.order == next }
-        if(aux != null) {
-            actualExercise.update { aux!! }
-            next++
-            return
-        }
-         aux = _execRoutineState.value.exercises.mainSetExercises.find { it.order == next }
-        if(aux != null) {
-            actualExercise.update { aux!! }
-            next++
-            return
-        }
-         aux = _execRoutineState.value.exercises.coolDownExercises.find { it.order == next }
-        if(aux != null)
-            actualExercise.update { aux }
+        setExercise(next, next - 1)
         next++
+    }
+    fun previusExercise(){
+        if(next != 1) {
+            setExercise(next - 2, next - 1)
+            next--
+        }
+    }
+    private fun setExercise(newOrder: Int,previousOrder : Int){
+        var aux = _execRoutineState.value.exercises.warmUpExercises.find { it.order == newOrder }
+        if(aux != null) {
+            val changeValue = _execRoutineState.value.exercises.warmUpExercises.find { it.order == previousOrder }
+            changeValue?.weight = actualExercise.value.weight
+            actualExercise.update { aux!! }
+            return
+        }
+         aux = _execRoutineState.value.exercises.mainSetExercises.find { it.order == newOrder }
+        if(aux != null) {
+            val changeValue = _execRoutineState.value.exercises.warmUpExercises.find { it.order == previousOrder }
+            changeValue?.weight = actualExercise.value.weight
+            actualExercise.update { aux!! }
+            return
+        }
+         aux = _execRoutineState.value.exercises.coolDownExercises.find { it.order == newOrder }
+        if(aux != null) {
+            val changeValue = _execRoutineState.value.exercises.warmUpExercises.find { it.order == previousOrder }
+            changeValue?.weight = actualExercise.value.weight
+            actualExercise.update { aux }
+        }
     }
 
     fun hasNext(): Boolean{
@@ -54,9 +68,16 @@ class ExecuteRoutineViewModel : ViewModel() {
     }
 
     fun setReps(reps : Float){
-        actualExercise.value.repetitions = reps.roundToInt()
+        actualExercise.update {oldExercise ->
+            oldExercise.repetitions  = reps.roundToInt().toFloat()
+            oldExercise
+        }
+        println(actualExercise.value.repetitions)
     }
     fun setWeight(weight : Float){
-        actualExercise.value.weight = weight.roundToInt()
+        actualExercise.update {oldExercise ->
+            oldExercise.weight  = weight
+            oldExercise
+        }
     }
 }
