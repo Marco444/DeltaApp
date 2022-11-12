@@ -19,7 +19,7 @@ import com.example.myapplication.viewmodel.RoutinesViewModel
 * que va a llevar, y de esa manera hacer que esa accion se manje direction directamente y
 * unicamente desde aca
 * */
-fun NavGraph(navController: NavHostController, viewModel: RoutinesViewModel) {
+fun NavGraph(navController: NavHostController, viewModel: RoutinesViewModel, executeRedirect: () -> Unit) {
     NavHost(
         navController = navController,
         startDestination = NavBarScreen.Routines.route
@@ -39,7 +39,7 @@ fun NavGraph(navController: NavHostController, viewModel: RoutinesViewModel) {
             QRScreen(viewModel = viewModel)
         }
         composable(Screen.RoutineDescriptionScreen.route) {backStackEntry ->
-            RoutineDescriptionScreen(viewModel = viewModel, backStackEntry.arguments?.getString("routineId"),starRoutineHanlder = {navController.navigate(Screen.Execute.route + backStackEntry.arguments?.getString("routineId")?.substringAfter('}')?.toInt() )},backHandler = {  navController.popBackStack() })
+            RoutineDescriptionScreen(viewModel = viewModel, backStackEntry.arguments?.getString("routineId"),starRoutineHanlder = executeRedirect,backHandler = {  navController.popBackStack() })
         }
         composable(Screen.Execute.route){ backStackEntry ->
             ExerciseExecScreen( order = 0, routineId = backStackEntry.arguments?.getString("routineId"), handlerBack = {navController.popBackStack()},handlerFinishRoutine = {navController.navigate(Screen.ProgressDetail.route + backStackEntry.arguments?.getString("routineId")?.substringAfter('}')?.toInt())})

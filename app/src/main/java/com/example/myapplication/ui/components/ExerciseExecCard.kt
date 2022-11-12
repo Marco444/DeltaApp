@@ -11,24 +11,37 @@ import androidx.compose.runtime.saveable.rememberSaveable
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
+import androidx.compose.ui.graphics.Color.Companion.Gray
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
+import com.example.myapplication.data.Exercise
 import com.example.myapplication.ui.theme.Green
 import com.example.myapplication.viewmodel.ExecuteRoutineViewModel
+import kotlinx.coroutines.flow.MutableStateFlow
+
 
 @Composable
-fun ExerciseExecCard(viewModel: ExecuteRoutineViewModel,nombre : String){
-    Card(backgroundColor = Color.LightGray,shape = RoundedCornerShape(30.dp)) {
+fun RecomposingTitle(exercise: MutableStateFlow<Exercise>) {
+    val text by exercise.collectAsState()
+    Text(text = text.name, modifier = Modifier.padding((text.order % 2).dp))
+}
+
+@Composable
+fun ExerciseExecCard(viewModel: ExecuteRoutineViewModel, actualExercise: MutableStateFlow<Exercise>){
+
+    val exercise by actualExercise.collectAsState()
+
+    Card(backgroundColor = if(exercise.order % 2 == 0) Green else Gray,shape = RoundedCornerShape(30.dp)) {
         Column(horizontalAlignment = Alignment.CenterHorizontally, modifier = Modifier
             .fillMaxWidth(0.8F)
             .fillMaxHeight(0.8F), verticalArrangement = Arrangement.SpaceEvenly){
-            Text(text = nombre, fontSize = 40.sp)
+            RecomposingTitle(exercise = actualExercise)
             Row(verticalAlignment = Alignment.CenterVertically) {
                 VariantCards(name = "Reps",
-                    { viewModel.getActual().weight }, handler = {viewModel.setWeight(it)})
+                    { exercise.weight }, handler = {viewModel.setWeight(it)})
                 Spacer(modifier = Modifier.width(30.dp))
                 VariantCards(name = "Weight",
-                    { viewModel.getActual().repetitions },handler = {viewModel.setReps(it)})
+                    { exercise.repetitions },handler = {viewModel.setReps(it)})
             }
 
         }

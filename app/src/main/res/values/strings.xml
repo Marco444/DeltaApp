@@ -12,4 +12,5 @@
     <string name="date">Date</string>
     <string name="points">Points</string>
     <string name="title_activity_main2">MainActivity2</string>
+    <string name="title_activity_third">ThirdActivity</string>
 </resources>

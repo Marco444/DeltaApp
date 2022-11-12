@@ -8,59 +8,52 @@ import kotlinx.coroutines.flow.StateFlow
 import kotlinx.coroutines.flow.update
 import kotlin.math.roundToInt
 
-class ExecuteRoutineViewModel : ViewModel(){
-     val _execRoutineState = MutableStateFlow(ExecuteRoutine())
-    val actualExercise = MutableStateFlow(Exercise())
+class ExecuteRoutineViewModel : ViewModel() {
 
-    private fun setNewExercise(oldExercise: MutableStateFlow<Exercise>, newExercise: Exercise){
-        oldExercise.value.id = newExercise.id
-        oldExercise.value.order = newExercise.order
-        oldExercise.value.name = newExercise.name
-        oldExercise.value.weight = newExercise.weight
-        oldExercise.value.repetitions = newExercise.repetitions
-        oldExercise.value.duration = newExercise.duration
-        oldExercise.value.detail = newExercise.detail
-        println(actualExercise.value.name)
+    private val _execRoutineState = MutableStateFlow(ExecuteRoutine())
+    var actualExercise = MutableStateFlow(Exercise(name = "pecho 0"))
+        private set
 
-    }
+   var next = 0
+
     fun nextExercise(){
-        var aux = _execRoutineState.value.exercises.warmUpExercises.find { it.order ==  _execRoutineState.value.actualOrder.value }
+        println(actualExercise.value)
+//        for(cycle in _execRoutineState.value.exercises)
+        var aux = _execRoutineState.value.exercises.warmUpExercises.find { it.order == next }
         if(aux != null) {
-            setNewExercise(actualExercise, aux)
-            _execRoutineState.value.actualOrder.value += 1
+            actualExercise.update { aux!! }
+            next++
             return
         }
-         aux = _execRoutineState.value.exercises.mainSetExercises.find { it.order ==  _execRoutineState.value.actualOrder.value }
+         aux = _execRoutineState.value.exercises.mainSetExercises.find { it.order == next }
         if(aux != null) {
-            setNewExercise(actualExercise, aux)
-            _execRoutineState.value.actualOrder.value += 1
+            actualExercise.update { aux!! }
+            next++
             return
         }
-         aux = _execRoutineState.value.exercises.coolDownExercises.find { it.order ==  _execRoutineState.value.actualOrder.value }
+         aux = _execRoutineState.value.exercises.coolDownExercises.find { it.order == next }
         if(aux != null)
-            setNewExercise(actualExercise,aux)
-        _execRoutineState.value.actualOrder.value += 1
-
+            actualExercise.update { aux }
+        next++
     }
+
     fun hasNext(): Boolean{
-        var aux = _execRoutineState.value.exercises.warmUpExercises.find { it.order ==  _execRoutineState.value.actualOrder.value }
+        var aux = _execRoutineState.value.exercises.warmUpExercises.find { it.order == next }
         if(aux != null)
             return true
-        aux =   _execRoutineState.value.exercises.mainSetExercises.find { it.order ==  _execRoutineState.value.actualOrder.value }
+        aux =   _execRoutineState.value.exercises.mainSetExercises.find { it.order ==  next }
         if(aux != null)
             return true
-        aux = _execRoutineState.value.exercises.coolDownExercises.find { it.order ==  _execRoutineState.value.actualOrder.value }
+        aux = _execRoutineState.value.exercises.coolDownExercises.find { it.order ==  next }
         if (aux != null)
             return true
         return false
     }
-    fun getActual():Exercise{
-        return _execRoutineState.value.exercises.warmUpExercises.find { it.order ==  _execRoutineState.value.actualOrder.value }!!
-    }
+
     fun setReps(reps : Float){
-        _execRoutineState.value.actualExercise.value.repetitions = reps.roundToInt()
+        actualExercise.value.repetitions = reps.roundToInt()
     }
     fun setWeight(weight : Float){
-        _execRoutineState.value.actualExercise.value.weight = weight.roundToInt()
+        actualExercise.value.weight = weight.roundToInt()
     }
 }
