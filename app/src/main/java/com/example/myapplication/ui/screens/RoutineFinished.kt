@@ -1,5 +1,6 @@
 package com.example.myapplication.ui.screens
 
+import android.annotation.SuppressLint
 import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.*
 import androidx.compose.foundation.shape.CircleShape
@@ -10,6 +11,8 @@ import androidx.compose.material.icons.filled.Add
 import androidx.compose.material.icons.filled.Close
 import androidx.compose.material.icons.filled.Remove
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.collectAsState
+import androidx.compose.runtime.getValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Alignment.Companion.CenterHorizontally
 import androidx.compose.ui.Alignment.Companion.CenterVertically
@@ -25,6 +28,7 @@ import com.example.myapplication.ui.theme.*
 import com.example.myapplication.viewmodel.ExecuteRoutineViewModel
 import com.example.myapplication.viewmodel.RoutinesViewModel
 
+
 @Composable
 fun RoutineFinished(
     viewModel: ExecuteRoutineViewModel,
@@ -33,8 +37,8 @@ fun RoutineFinished(
     backButtonHandler: () -> Unit,
     nextHandler : () -> Unit
 ){
-    var actual: Int = 2
-    val opinions: List<String> = listOf("Aweful", "Bad", "Regular", "Good", "Excelent")
+    val opinion by viewModel.opinion.collectAsState()
+
     Column(horizontalAlignment = Alignment.CenterHorizontally,
         modifier = Modifier
             .fillMaxWidth()
@@ -93,7 +97,7 @@ fun RoutineFinished(
 
                     ){
                         Button(
-                            onClick = { /*viewModel.downOpinion()*/ },
+                            onClick = { viewModel.downOpinion() },
                             shape = CircleShape,
                             colors = ButtonDefaults.buttonColors(backgroundColor = Color.Transparent),
                             elevation = ButtonDefaults.elevation(0.dp),
@@ -105,14 +109,14 @@ fun RoutineFinished(
                             )
                         }
                         Text(
-                            text = opinions[0],
+                            text = opinion,
                             fontFamily = NormalFont,
                             fontSize = 20.sp,
                             color = Color.White,
                             modifier = Modifier.padding(top = 20.dp)
                         )
                         Button(
-                            onClick = { /*viewModel.upOpinion() */},
+                            onClick = { viewModel.upOpinion() },
                             shape = CircleShape,
                             colors = ButtonDefaults.buttonColors(backgroundColor = Color.Transparent),
                             elevation = ButtonDefaults.elevation(0.dp),
