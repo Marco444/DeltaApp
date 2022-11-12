@@ -14,16 +14,24 @@ class ExecuteRoutineViewModel(id : Int) : ViewModel() {
 
     private val _execRoutineState = MutableStateFlow(ExecuteRoutine())
 
+    var exerciseCount = 0
+
     var actualExercise = MutableStateFlow(Exercise(name = "pecho 0"))
         private set
+
     init {
         _execRoutineState.value.routineId = id
         if(hasNext())
             nextExercise()
+        exerciseCount = _execRoutineState.value.exercises.warmUpExercises.count() +
+                        _execRoutineState.value.exercises.mainSetExercises.count() +
+                        _execRoutineState.value.exercises.coolDownExercises.count()
     }
     val state: StateFlow<Exercise>
         get() = actualExercise.asStateFlow()
+
    var next = 0
+
     fun routine(id:Int) : Routines {
        return _execRoutineState.value.currentRoutine
     }

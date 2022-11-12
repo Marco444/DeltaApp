@@ -29,12 +29,12 @@ import com.example.myapplication.ui.theme.Green
 import com.example.myapplication.ui.theme.GreenTransparency
 import com.example.myapplication.viewmodel.ExecuteRoutineViewModel
 import com.example.myapplication.viewmodel.RoutinesViewModel
+import java.lang.Float
 
 @Composable
 fun ExerciseExecScreen(viewModel: ExecuteRoutineViewModel = viewModel(),
                        handlerBack : () ->Unit,
                        handlerFinishRoutine: ()->Unit){
-
 
     Box(modifier = Modifier.background(Color(0xFF1E1E1E))) {
         Column(verticalArrangement = Arrangement.SpaceEvenly) {
@@ -57,6 +57,9 @@ fun ExerciseExecScreen(viewModel: ExecuteRoutineViewModel = viewModel(),
             }
             Spacer(modifier = Modifier.height(20.dp))
             Column(modifier = Modifier.fillMaxSize(), horizontalAlignment = Alignment.CenterHorizontally) {
+
+               // val exerciseIdx by viewModel.next.collectAsState()
+                LinearProgressIndicator(progress = 0.5f, modifier = Modifier.padding(30.dp))
 
                 ExerciseExecCard(actualExercise = viewModel.actualExercise ,viewModel = viewModel)
     
