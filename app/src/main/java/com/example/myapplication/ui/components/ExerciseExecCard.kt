@@ -27,7 +27,7 @@ import kotlinx.coroutines.flow.MutableStateFlow
 @Composable
 fun RecomposingTitle(exercise: MutableStateFlow<Exercise>) {
     val text by exercise.collectAsState()
-    Text(text = text.name)
+    Text(text = text.name, fontSize = 30.sp)
 }
 
 @Composable
@@ -41,11 +41,25 @@ fun ExerciseExecCard(viewModel: ExecuteRoutineViewModel, actualExercise: Mutable
             .fillMaxHeight(0.8F), verticalArrangement = Arrangement.SpaceEvenly){
             RecomposingTitle(exercise = actualExercise)
             Row(verticalAlignment = Alignment.CenterVertically) {
-                RepsCards(name = "Reps",
-                    actualExercise = actualExercise , viewModel = viewModel)
-                Spacer(modifier = Modifier.width(30.dp))
-                WeightCards(name = "Weight",
-                    actualExercise = actualExercise , viewModel = viewModel)
+                if(exercise.isExercise) {
+                    RepsCards(
+                        name = "Reps",
+                        actualExercise = actualExercise, viewModel = viewModel
+                    )
+                    Spacer(modifier = Modifier.width(30.dp))
+                    WeightCards(
+                        name = "Weight",
+                        actualExercise = actualExercise, viewModel = viewModel
+                    )
+                }else{
+                    Timer(
+                        totalTime = 100L * 1000L,
+                        handleColor = Green,
+                        inactiveBarColor = Color.DarkGray,
+                        activeBarColor = Green,
+                        modifier = Modifier.size(200.dp)
+                    )
+                }
             }
 
         }

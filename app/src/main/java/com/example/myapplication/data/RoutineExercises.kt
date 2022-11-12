@@ -15,5 +15,6 @@ data class Exercise(
     var repetitions : Float = 0f,
     var id: Int = 0,
     var name: String = "",
-    var detail : String = ""
+    var detail : String = "",
+    var isExercise : Boolean = true
 )

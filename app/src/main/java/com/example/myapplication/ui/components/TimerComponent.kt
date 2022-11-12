@@ -29,6 +29,7 @@ import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.Dp
 import androidx.compose.ui.unit.IntSize
 import androidx.compose.ui.unit.sp
+import com.example.myapplication.ui.theme.Green
 import kotlinx.coroutines.delay
 import kotlin.math.PI
 import kotlin.math.cos
@@ -45,9 +46,9 @@ fun ToPreview(){
         // it is defined below.
         Timer(
             totalTime = 100L * 1000L,
-            handleColor = Color.Green,
-            inactiveBarColor = Color.DarkGray,
-            activeBarColor = Color(0xFF37B900),
+            handleColor = Green,
+            inactiveBarColor = Color.Red,
+            activeBarColor = Green,
             modifier = Modifier.size(200.dp)
         )
     }
@@ -164,7 +165,7 @@ fun Timer(
             // change button color
             colors = ButtonDefaults.buttonColors(
                 backgroundColor = if (!isTimerRunning || currentTime <= 0L) {
-                    Color.Green
+                    Green
                 } else {
                     Color.Red
                 }
@@ -180,8 +181,3 @@ fun Timer(
     }
 }
 
-@Preview
-@Composable
-fun prev() {
-    ToPreview()
-}
