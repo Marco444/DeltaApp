@@ -5,6 +5,7 @@ import androidx.lifecycle.ViewModel
 import com.example.myapplication.data.Exercise
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.StateFlow
+import kotlinx.coroutines.flow.asStateFlow
 import kotlinx.coroutines.flow.update
 import kotlin.math.roundToInt
 
@@ -14,6 +15,8 @@ class ExecuteRoutineViewModel : ViewModel() {
     var actualExercise = MutableStateFlow(Exercise(name = "pecho 0"))
         private set
 
+    val state: StateFlow<Exercise>
+        get() = actualExercise.asStateFlow()
    var next = 0
 
     fun nextExercise(){

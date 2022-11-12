@@ -23,7 +23,7 @@ import kotlinx.coroutines.flow.MutableStateFlow
 @Composable
 fun RecomposingTitle(exercise: MutableStateFlow<Exercise>) {
     val text by exercise.collectAsState()
-    Text(text = text.name, modifier = Modifier.padding((text.order % 2).dp))
+    Text(text = text.name)
 }
 
 @Composable
