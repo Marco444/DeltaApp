@@ -50,15 +50,11 @@ fun RoutineCardDetails(description: String) {
 }
 
 
-/**
- * Creates an intent to share order details
- */
-private fun shareOrder(context: Context, subject: String, summary: String) {
-    // Create an ACTION_SEND implicit intent with order details in the intent extras
+private fun shareRoutine(context: Context, title: String) {
     val intent = Intent(Intent.ACTION_SEND).apply {
         type = "text/plain"
-        putExtra(Intent.EXTRA_SUBJECT, subject)
-        putExtra(Intent.EXTRA_TEXT, "myapplication://explore")
+        putExtra(Intent.EXTRA_SUBJECT, "Routine")
+        putExtra(Intent.EXTRA_TEXT, context.getString(R.string.share_msg) + "http://deltapp.com")
     }
     context.startActivity(
         Intent.createChooser(
@@ -78,7 +74,6 @@ fun RoutineCardTitle(title: String, iconId: Int, clickedIcon: () -> Unit = {}, i
             text = title,
             fontSize = 50.sp,
             color = Color.White,
-            modifier = Modifier.padding((id % 2).dp),
             textAlign = TextAlign.Start,
         )
         Spacer(modifier = Modifier.width(10.dp))
@@ -89,7 +84,7 @@ fun RoutineCardTitle(title: String, iconId: Int, clickedIcon: () -> Unit = {}, i
                 .scale(1.5F)
                 .clickable(onClick = clickedIcon)
         )
-        IconButton(onClick = { shareOrder(context, "Routine", title ) }) {
+        IconButton(onClick = { shareRoutine(context, title) }) {
             Icon(Icons.Default.Share, contentDescription = "share icon", tint = Color.White)
         }
 

@@ -29,7 +29,7 @@ fun DeltaApp(
     modifier: Modifier = Modifier,
     viewModel: RoutinesViewModel = viewModel(),
     navController: NavHostController = rememberNavController(),
-    executeRedirect: () -> Unit
+    executeRedirect: (Int) -> Unit
 ) {
     viewModel.setWidth(windowSize)
 
