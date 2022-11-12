@@ -10,6 +10,7 @@ import androidx.compose.material.Text
 import androidx.compose.runtime.*
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.clip
+import androidx.compose.ui.draw.shadow
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.graphics.Color.Companion.Black
 import androidx.compose.ui.graphics.Color.Companion.Gray
@@ -67,6 +68,7 @@ fun SortButton(onClick: () -> Unit, txt: String, color: Color) {
             .clip(RoundedCornerShape(17.dp))
             .background(color)
             .padding(10.dp)
+
     ) {
         Text(
             text = txt,

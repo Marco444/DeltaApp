@@ -1,10 +1,16 @@
 package com.example.myapplication.ui.components
 
+import android.content.Context
+import android.content.Intent
 import androidx.compose.foundation.Image
 import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.*
 import androidx.compose.foundation.shape.RoundedCornerShape
+import androidx.compose.material.Icon
+import androidx.compose.material.IconButton
 import androidx.compose.material.Text
+import androidx.compose.material.icons.Icons
+import androidx.compose.material.icons.filled.Share
 import androidx.compose.runtime.*
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
@@ -12,6 +18,7 @@ import androidx.compose.ui.draw.clip
 import androidx.compose.ui.draw.scale
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.layout.ContentScale
+import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.unit.dp
@@ -42,8 +49,30 @@ fun RoutineCardDetails(description: String) {
     )
 }
 
+
+/**
+ * Creates an intent to share order details
+ */
+private fun shareOrder(context: Context, subject: String, summary: String) {
+    // Create an ACTION_SEND implicit intent with order details in the intent extras
+    val intent = Intent(Intent.ACTION_SEND).apply {
+        type = "text/plain"
+        putExtra(Intent.EXTRA_SUBJECT, subject)
+        putExtra(Intent.EXTRA_TEXT, summary)
+    }
+    context.startActivity(
+        Intent.createChooser(
+            intent,
+            "Share routine"
+        )
+    )
+}
+
 @Composable
 fun RoutineCardTitle(title: String, iconId: Int, clickedIcon: () -> Unit = {}, id: Int) {
+
+    val context = LocalContext.current
+
     Row ( horizontalArrangement  =  Arrangement.SpaceBetween, verticalAlignment = Alignment.CenterVertically) {
         Text(
             text = title,
@@ -60,6 +89,10 @@ fun RoutineCardTitle(title: String, iconId: Int, clickedIcon: () -> Unit = {}, i
                 .scale(1.5F)
                 .clickable(onClick = clickedIcon)
         )
+        IconButton(onClick = { shareOrder(context, "Routine", title ) }) {
+            Icon(Icons.Default.Share, contentDescription = "share icon", tint = Color.White)
+        }
+
     }
 }
 
