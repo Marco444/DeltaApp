@@ -58,7 +58,7 @@ private fun shareOrder(context: Context, subject: String, summary: String) {
     val intent = Intent(Intent.ACTION_SEND).apply {
         type = "text/plain"
         putExtra(Intent.EXTRA_SUBJECT, subject)
-        putExtra(Intent.EXTRA_TEXT, summary)
+        putExtra(Intent.EXTRA_TEXT, "myapplication://explore")
     }
     context.startActivity(
         Intent.createChooser(
