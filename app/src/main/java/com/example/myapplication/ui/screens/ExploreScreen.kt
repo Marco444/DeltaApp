@@ -28,10 +28,7 @@ import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import androidx.compose.ui.window.Dialog
 import com.example.myapplication.R
-import com.example.myapplication.ui.components.HamburgerButton
-import com.example.myapplication.ui.components.ROUTINE_CARD_WIDTH
-import com.example.myapplication.ui.components.RoutineCard
-import com.example.myapplication.ui.components.RoutinesGrid
+import com.example.myapplication.ui.components.*
 import com.example.myapplication.ui.navigation.NavBarScreen
 import com.example.myapplication.viewmodel.RoutinesViewModel
 
@@ -74,14 +71,10 @@ fun FilterButton(viewModel: RoutinesViewModel) {
                 Color.White
             )
             .clip(RoundedCornerShape(8.dp))) {
-           DropdownMenuItem(onClick = { viewModel.sortRoutinesFavourite(NavBarScreen.Explore); expanded = false}) {
-                Text(text = "favourite")
-           }
-            DropdownMenuItem(onClick = { viewModel.sortRoutinesDate(NavBarScreen.Explore) ; expanded = false}) {
-                Text(text = "date")
-            }
-            DropdownMenuItem(onClick = { viewModel.sortRoutinesPoints(NavBarScreen.Explore); expanded = false }) {
-                Text(text = "points")
+            for(sortOption in SortOption.values()) {
+                DropdownMenuItem(onClick = { viewModel.sortRoutines(sortOption, NavBarScreen.Explore) ; expanded = false }) {
+                    Text(text = sortOption.name)
+                }
             }
         }
     }}

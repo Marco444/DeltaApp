@@ -31,7 +31,7 @@ fun RoutinesScreen(viewModel: RoutinesViewModel,
 ){
     Column (
         modifier = Modifier.background(Color.Black).fillMaxWidth().fillMaxHeight(),
-    horizontalAlignment = Alignment.CenterHorizontally,
+        horizontalAlignment = Alignment.CenterHorizontally,
     ){
 
         Spacer(modifier = Modifier.height(20.dp))
@@ -41,9 +41,7 @@ fun RoutinesScreen(viewModel: RoutinesViewModel,
         )
 
         Spacer(modifier = Modifier.height(10.dp))
-
-
-        RoutineCardSortButton(viewModel = viewModel)
+        RoutineCardSortButton(viewModel = viewModel, screen = NavBarScreen.Routines)
         Spacer(modifier = Modifier.height(20.dp))
 
         RoutinesGrid(viewModel = viewModel, actionRedirect = actionRedirect, routineCard = RoutineCard.MyRoutine)

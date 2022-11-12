@@ -47,9 +47,7 @@ fun ProgressScreen(viewModel: RoutinesViewModel, actionRedirect: (Int) -> Unit){
 
         Spacer(modifier = Modifier.height(10.dp))
 
-        RoutineCardSortButton(
-          viewModel = viewModel
-        )
+        RoutineCardSortButton(viewModel = viewModel, NavBarScreen.Progress)
 
         Spacer(modifier = Modifier.height(20.dp))
 
