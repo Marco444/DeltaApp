@@ -98,13 +98,5 @@ class RoutinesViewModel : ViewModel() {
     }
 
 
-    fun getRoutineWarmUpExercises(id:Int) : List<Exercise>{
-        return   _routinesState.value.userRoutines.find { routine ->routine.value.id == id }!!.value.exercises.warmUpExercises
-    }
-    fun getRoutineCoolDownExercises(id:Int) : List<Exercise>{
-        return   _routinesState.value.userRoutines.find { routine ->routine.value.id == id }!!.value.exercises.coolDownExercises
-    }
-    fun getRoutineMainSetExercises(id:Int) : List<Exercise>{
-        return   _routinesState.value.userRoutines.find { routine ->routine.value.id == id }!!.value.exercises.mainSetExercises
-    }
+
 }

@@ -43,7 +43,7 @@ fun NavGraph(navController: NavHostController, viewModel: RoutinesViewModel, exe
             QRScreen(viewModel = viewModel)
         }
         composable(Screen.RoutineDescriptionScreen.route) {backStackEntry ->
-            RoutineDescriptionScreen(viewModel = viewModel, backStackEntry.arguments?.getString("routineId"),starRoutineHanlder = executeRedirect,backHandler = {  navController.popBackStack() })
+            //RoutineDescriptionScreen(viewModel = viewModel, backStackEntry.arguments?.getString("routineId"),starRoutineHanlder = executeRedirect,backHandler = {  navController.popBackStack() })
         }
         composable(Screen.Execute.route){ backStackEntry ->
             ExerciseExecScreen( order = 0, routineId = backStackEntry.arguments?.getString("routineId"), handlerBack = {navController.popBackStack()},handlerFinishRoutine = {navController.navigate(Screen.ProgressDetail.route + backStackEntry.arguments?.getString("routineId")?.substringAfter('}')?.toInt())})

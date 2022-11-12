@@ -3,6 +3,7 @@ package com.example.myapplication.viewmodel
 import androidx.compose.runtime.MutableState
 import androidx.lifecycle.ViewModel
 import com.example.myapplication.data.Exercise
+import com.example.myapplication.data.Routines
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.StateFlow
 import kotlinx.coroutines.flow.asStateFlow
@@ -21,6 +22,9 @@ class ExecuteRoutineViewModel : ViewModel() {
     val state: StateFlow<Exercise>
         get() = actualExercise.asStateFlow()
    var next = 0
+    fun routine(id:Int) : Routines {
+       return _execRoutineState.value.currentRoutine
+    }
     fun nextExercise(){
         setExercise(next, next - 1)
         next++
@@ -79,5 +83,14 @@ class ExecuteRoutineViewModel : ViewModel() {
             oldExercise.weight  = weight
             oldExercise
         }
+    }
+    fun getRoutineWarmUpExercises() : List<Exercise>{
+        return   _execRoutineState.value.exercises.warmUpExercises
+    }
+    fun getRoutineCoolDownExercises() : List<Exercise>{
+        return   _execRoutineState.value.exercises.coolDownExercises
+    }
+    fun getRoutineMainSetExercises() : List<Exercise>{
+        return   _execRoutineState.value.exercises.mainSetExercises
     }
 }
