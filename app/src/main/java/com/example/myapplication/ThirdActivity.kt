@@ -22,12 +22,19 @@ class ThirdActivity : ComponentActivity() {
         super.onCreate(savedInstanceState)
         setContent {
             MyApplicationTheme {
+
+                val saved: String? = intent.getStringExtra("routineId")
+
+                if(saved != null) {
+                    Text(text = saved)
+                }
+
                 val systemUiController = rememberSystemUiController()
                 systemUiController.setSystemBarsColor(color = androidx.compose.ui.graphics.Color.Black )
 
                 val navigate = Intent(this@ThirdActivity, SecondActivity::class.java)
 
-                ExerciseExecScreen(order = 1, routineId = "", handlerBack = { startActivity(navigate) }, handlerFinishRoutine = {startActivity(navigate)})
+               // ExerciseExecScreen(order = 1, routineId = "", handlerBack = { startActivity(navigate) }, handlerFinishRoutine = {startActivity(navigate)})
             }
         }
     }

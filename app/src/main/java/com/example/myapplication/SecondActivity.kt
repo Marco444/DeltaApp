@@ -9,16 +9,20 @@ import androidx.compose.material3.windowsizeclass.calculateWindowSizeClass
 import com.example.myapplication.ui.theme.MyApplicationTheme
 import com.google.accompanist.systemuicontroller.rememberSystemUiController
 
+
+
 class SecondActivity : ComponentActivity() {
     @OptIn(ExperimentalMaterial3WindowSizeClassApi::class)
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContent {
             MyApplicationTheme {
+
                 val systemUiController = rememberSystemUiController()
                 systemUiController.setSystemBarsColor(color = androidx.compose.ui.graphics.Color.Black )
 
                 val navigate = Intent(this@SecondActivity, ThirdActivity::class.java)
+                navigate.putExtra("routineId", "dfd")
 
                 val windowSize = calculateWindowSizeClass(this)
                 DeltaApp(windowSize = windowSize.widthSizeClass, executeRedirect = {startActivity(navigate)})

@@ -38,8 +38,6 @@ fun ExerciseExecScreen(viewModel: ExecuteRoutineViewModel = viewModel(),
                        handlerFinishRoutine: ()->Unit){
 
 
-    val exercise by viewModel.actualExercise.collectAsState()
-
     Box(modifier = Modifier.background(Color(0xFF1E1E1E))) {
         Column(verticalArrangement = Arrangement.SpaceEvenly) {
             Column(modifier = Modifier.fillMaxWidth()) {
@@ -63,8 +61,6 @@ fun ExerciseExecScreen(viewModel: ExecuteRoutineViewModel = viewModel(),
             Column(modifier = Modifier.fillMaxSize(), horizontalAlignment = Alignment.CenterHorizontally) {
 
                 ExerciseExecCard(actualExercise = viewModel.actualExercise ,viewModel = viewModel)
-
-                Text(text = exercise.name)
 
                 Spacer(modifier = Modifier.height(20.dp))
 

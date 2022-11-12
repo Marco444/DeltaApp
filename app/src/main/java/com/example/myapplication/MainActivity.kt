@@ -17,6 +17,7 @@ class MainActivity : ComponentActivity() {
 
                 val navigate = Intent(this@MainActivity, SecondActivity::class.java)
 
+
                 DeltaAppInit(initialisedHandler = {startActivity(navigate)})
             }
         }
