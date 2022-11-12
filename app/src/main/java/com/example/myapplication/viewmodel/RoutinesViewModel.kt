@@ -1,7 +1,11 @@
 package com.example.myapplication.viewmodel
 
+import androidx.compose.material.ScaffoldState
+import androidx.compose.material.rememberScaffoldState
 import androidx.compose.material3.windowsizeclass.WindowWidthSizeClass
 import androidx.compose.runtime.MutableState
+import androidx.compose.runtime.rememberCoroutineScope
+import androidx.lifecycle.LifecycleCoroutineScope
 import androidx.lifecycle.ViewModel
 import com.example.myapplication.data.Exercise
 import com.example.myapplication.data.Routines
@@ -12,21 +16,25 @@ import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.update
 
 class RoutinesViewModel : ViewModel() {
-
     private val _sortState = MutableStateFlow(SortOption.POINTS)
 
     private val _routinesState = MutableStateFlow(RoutinesState())
-    //private val routinesState: StateFlow<RoutinesState> = _routinesState.asStateFlow()
 
     fun getSortState(): MutableStateFlow<SortOption> {
         return _sortState
     }
-
-    fun setSortState(option: SortOption) {
+    fun setSortState(option: SortOption, screen: NavBarScreen) {
         _sortState.value = option
-        if(option == SortOption.POINTS) sortRoutinesPoints(NavBarScreen.Routines)
-        if(option == SortOption.FAVOURITE) sortRoutinesFavourite(NavBarScreen.Routines)
-        if(option == SortOption.DATE) sortRoutinesDate(NavBarScreen.Routines)
+        sortRoutines(option, screen)
+
+    }
+    fun sortRoutines(option: SortOption, screen: NavBarScreen) {
+        if(option == SortOption.POINTS)
+            sortRoutinesPoints(screen)
+        if(option == SortOption.FAVOURITE)
+            sortRoutinesFavourite(screen)
+        if(option == SortOption.DATE)
+            sortRoutinesDate(screen)
     }
 
     fun getRoutines(routineCard: RoutineCard): List<MutableStateFlow<Routines>> {
@@ -40,21 +48,21 @@ class RoutinesViewModel : ViewModel() {
 
     fun sortRoutinesDate(screen: NavBarScreen) {
         if(screen == NavBarScreen.Explore)
-            _routinesState.value.exploreRoutines.sortBy { routine -> routine.value.id }
+            _routinesState.value.exploreRoutines = _routinesState.value.exploreRoutines.sortedBy { routine -> routine.value.id }
         else
             _routinesState.value.userRoutines = _routinesState.value.userRoutines.sortedBy { routine -> routine.value.id }
     }
 
     fun sortRoutinesFavourite(screen: NavBarScreen) {
         if(screen == NavBarScreen.Explore)
-            _routinesState.value.exploreRoutines.sortBy { routine -> routine.value.favourite}
+            _routinesState.value.exploreRoutines =  _routinesState.value.exploreRoutines.sortedBy { routine -> routine.value.favourite}
         else
             _routinesState.value.userRoutines = _routinesState.value.userRoutines.sortedBy { routine -> routine.value.favourite }
     }
 
     fun sortRoutinesPoints(screen: NavBarScreen) {
         if(screen == NavBarScreen.Explore)
-            _routinesState.value.exploreRoutines.sortBy { routine -> routine.value.points}
+            _routinesState.value.exploreRoutines =  _routinesState.value.exploreRoutines.sortedBy { routine -> routine.value.points}
         else
             _routinesState.value.userRoutines =  _routinesState.value.userRoutines.sortedBy { routine -> routine.value.points}
     }
@@ -64,7 +72,7 @@ class RoutinesViewModel : ViewModel() {
            val routine = _routinesState.value.exploreRoutines.find { routine ->routine.value.id == id }!!
            routine.update { it.copy(added = !it.added) }
             _routinesState.value.userRoutines =  _routinesState.value.userRoutines + routine
-        }else {
+        } else {
             val routine = _routinesState.value.userRoutines.find { routine ->routine.value.id == id }!!
             routine.update { it.copy(favourite = !it.favourite) }
         }

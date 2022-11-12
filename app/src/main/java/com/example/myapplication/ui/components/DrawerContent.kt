@@ -27,9 +27,9 @@ fun DrawerContent(
 ){
     Box(
         modifier = Modifier
-            .fillMaxWidth(0.7F)
+            .fillMaxWidth()
             .fillMaxHeight()
-            .background(Color(0xFF1F1F1F))
+            .background(Color(0xAF1F1F1F))
     ) {
         Column() {
             Spacer(modifier = Modifier.height(70.dp))

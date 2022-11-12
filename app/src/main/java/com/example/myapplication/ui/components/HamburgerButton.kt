@@ -3,6 +3,7 @@ package com.example.myapplication.ui.components
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.size
 import androidx.compose.foundation.shape.CircleShape
+import androidx.compose.material.BackdropScaffoldState
 import androidx.compose.material.Button
 import androidx.compose.material.ButtonDefaults
 import androidx.compose.material.Icon
@@ -21,9 +22,9 @@ import com.example.myapplication.ui.theme.Green
 
 
 @Composable
-fun HamburgerButton(modifier: Modifier){
+fun HamburgerButton(modifier: Modifier, onClick: () -> Unit){
 
-    Button(onClick = { } ,
+    Button(onClick = onClick,
         shape = CircleShape,
         colors = ButtonDefaults.buttonColors(backgroundColor = Color.Transparent),
         modifier = modifier,

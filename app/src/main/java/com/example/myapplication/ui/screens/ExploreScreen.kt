@@ -26,12 +26,10 @@ import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import androidx.compose.ui.window.Dialog
 import com.example.myapplication.R
-import com.example.myapplication.ui.components.HamburgerButton
-import com.example.myapplication.ui.components.ROUTINE_CARD_WIDTH
-import com.example.myapplication.ui.components.RoutineCard
-import com.example.myapplication.ui.components.RoutinesGrid
+import com.example.myapplication.ui.components.*
 import com.example.myapplication.ui.navigation.NavBarScreen
 import com.example.myapplication.viewmodel.RoutinesViewModel
+import kotlinx.coroutines.launch
 
 
 @Composable
@@ -72,14 +70,10 @@ fun FilterButton(viewModel: RoutinesViewModel) {
                 Color.White
             )
             .clip(RoundedCornerShape(8.dp))) {
-           DropdownMenuItem(onClick = { viewModel.sortRoutinesFavourite(NavBarScreen.Explore); expanded = false}) {
-                Text(text = "favourite")
-           }
-            DropdownMenuItem(onClick = { viewModel.sortRoutinesDate(NavBarScreen.Explore) ; expanded = false}) {
-                Text(text = "date")
-            }
-            DropdownMenuItem(onClick = { viewModel.sortRoutinesPoints(NavBarScreen.Explore); expanded = false }) {
-                Text(text = "points")
+            for(sortOption in SortOption.values()) {
+                DropdownMenuItem(onClick = { viewModel.sortRoutines(sortOption, NavBarScreen.Explore) ; expanded = false }) {
+                    Text(text = sortOption.name)
+                }
             }
         }
     }}
@@ -95,7 +89,8 @@ fun SearchAndFilter(viewModel: RoutinesViewModel) {
 }
 
 @Composable
-fun ExploreScreen(viewModel: RoutinesViewModel){
+fun ExploreScreen(viewModel: RoutinesViewModel, scaffoldState: ScaffoldState){
+    val coroutineScope = rememberCoroutineScope()
     Column (
         modifier = Modifier
             .fillMaxWidth()
@@ -106,7 +101,14 @@ fun ExploreScreen(viewModel: RoutinesViewModel){
 
         Spacer(modifier = Modifier.height(20.dp))
         Row (horizontalArrangement = Arrangement.spacedBy(10.dp)){
-            HamburgerButton(modifier = Modifier.align(Alignment.CenterVertically))
+            HamburgerButton(
+                modifier = Modifier.align(Alignment.CenterVertically),
+                onClick = {
+                    coroutineScope.launch {
+                        scaffoldState.drawerState.open()
+                    }
+                }
+        )
             Text(
                 text = stringResource(R.string.explore_title),
                 style = MaterialTheme.typography.h1
