@@ -1,5 +1,6 @@
 package com.example.myapplication.ui.navigation
 
+import android.content.Intent
 import androidx.compose.material.ScaffoldState
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.State
@@ -8,6 +9,7 @@ import androidx.lifecycle.ViewModel
 import androidx.navigation.NavHostController
 import androidx.navigation.compose.NavHost
 import androidx.navigation.compose.composable
+import androidx.navigation.navDeepLink
 import com.example.myapplication.LogIn
 import com.example.myapplication.ui.screens.*
 import com.example.myapplication.viewmodel.ExecuteRoutineViewModel

@@ -5,6 +5,8 @@ import androidx.compose.ui.graphics.Color
 val Green = Color(0xFFCFFFB3)
 val GreenTransparency = Color(0xDDCFFFB3)
 
+val Gray = Color(0xFF4B4B4B)
+
 val Red = Color(0xFFEB8080)
 val Yellow = Color(0xFFF1D47E)
 val GreenSuccess = Color(0xFF00E009)

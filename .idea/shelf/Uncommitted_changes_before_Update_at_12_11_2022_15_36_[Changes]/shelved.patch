@@ -1,0 +1,178 @@
+Index: app/src/main/AndroidManifest.xml
+IDEA additional info:
+Subsystem: com.intellij.openapi.diff.impl.patch.BaseRevisionTextPatchEP
+<+><?xml version=\"1.0\" encoding=\"utf-8\"?>\n<manifest xmlns:android=\"http://schemas.android.com/apk/res/android\"\n    xmlns:tools=\"http://schemas.android.com/tools\">\n\n    <application\n        android:allowBackup=\"true\"\n        android:dataExtractionRules=\"@xml/data_extraction_rules\"\n        android:fullBackupContent=\"@xml/backup_rules\"\n        android:icon=\"@drawable/delta_logo\"\n        android:label=\"@string/app_name\"\n        android:roundIcon=\"@drawable/delta_logo\"\n        android:supportsRtl=\"true\"\n        android:theme=\"@style/Theme.MyApplication\"\n        tools:targetApi=\"31\">\n        <activity\n            android:name=\".ThirdActivity\"\n            android:exported=\"false\"\n            android:label=\"@string/title_activity_third\"\n            android:theme=\"@style/Theme.MyApplication\">\n            <meta-data\n                android:name=\"android.app.lib_name\"\n                android:value=\"\" />\n        </activity>\n        <activity\n            android:name=\".SecondActivity\"\n            android:exported=\"false\"\n            android:label=\"@string/title_activity_main2\"\n            android:theme=\"@style/Theme.MyApplication\">\n            <meta-data\n                android:name=\"android.app.lib_name\"\n                android:value=\"\" />\n        </activity>\n        <activity\n            android:name=\".MainActivity\"\n            android:exported=\"true\"\n            android:theme=\"@style/Theme.MyApplication\">\n            <intent-filter>\n                <action android:name=\"android.intent.action.MAIN\" />\n\n                <category android:name=\"android.intent.category.LAUNCHER\" />\n            </intent-filter>\n\n            <meta-data\n                android:name=\"android.app.lib_name\"\n                android:value=\"\" />\n        </activity>\n    </application>\n\n</manifest>
+Subsystem: com.intellij.openapi.diff.impl.patch.CharsetEP
+<+>UTF-8
+===================================================================
+diff --git a/app/src/main/AndroidManifest.xml b/app/src/main/AndroidManifest.xml
+--- a/app/src/main/AndroidManifest.xml	(revision a926a450f9921830ce9a8c6b804a7c534e521dbb)
++++ b/app/src/main/AndroidManifest.xml	(date 1668277820543)
+@@ -36,10 +36,18 @@
+             android:theme="@style/Theme.MyApplication">
+             <intent-filter>
+                 <action android:name="android.intent.action.MAIN" />
+-
+                 <category android:name="android.intent.category.LAUNCHER" />
+             </intent-filter>
+ 
++            <intent-filter>
++                <data android:host="pl-coding.com"
++                    android:scheme="http" />
++                <category android:name="android.intent.category.DEFAULT" />
++                <category android:name="android.intent.category.BROWSABLE" />
++                <action android:name="android.intent.action.VIEW" />
++            </intent-filter>
++
++
+             <meta-data
+                 android:name="android.app.lib_name"
+                 android:value="" />
+Index: app/src/main/java/com/example/myapplication/DeltaAppInit.kt
+IDEA additional info:
+Subsystem: com.intellij.openapi.diff.impl.patch.BaseRevisionTextPatchEP
+<+>package com.example.myapplication\n\nimport androidx.compose.runtime.Composable\nimport androidx.compose.runtime.getValue\nimport androidx.compose.runtime.mutableStateOf\nimport androidx.compose.runtime.saveable.rememberSaveable\nimport androidx.compose.runtime.setValue\nimport com.example.myapplication.LogIn\nimport com.example.myapplication.ui.screens.LandingScreen\nimport com.example.myapplication.viewmodel.UserViewModel\nimport androidx.lifecycle.viewmodel.compose.viewModel\n\n@Composable\nfun DeltaAppInit(\n    viewModel: UserViewModel = viewModel(),\n    initialisedHandler: () -> Unit,\n) {\n\n    //podria hacerse un NavHost y NavGraph pero no nos parecio la pena para\n    //unicamente dos pantallas muy simples\n    var loginScreen by rememberSaveable { mutableStateOf(false) }\n\n    if(!loginScreen) {\n        LandingScreen(\n            loginHandler = { loginScreen = true },\n            tryOutHandler = initialisedHandler)\n    } else {\n        LogIn(viewModel = viewModel, actionRedirect = initialisedHandler) { loginScreen = false }\n    }\n\n}
+Subsystem: com.intellij.openapi.diff.impl.patch.CharsetEP
+<+>UTF-8
+===================================================================
+diff --git a/app/src/main/java/com/example/myapplication/DeltaAppInit.kt b/app/src/main/java/com/example/myapplication/DeltaAppInit.kt
+--- a/app/src/main/java/com/example/myapplication/DeltaAppInit.kt	(revision a926a450f9921830ce9a8c6b804a7c534e521dbb)
++++ b/app/src/main/java/com/example/myapplication/DeltaAppInit.kt	(date 1668277855237)
+@@ -1,5 +1,7 @@
+ package com.example.myapplication
+ 
++import android.content.Intent
++import androidx.compose.foundation.layout.Box
+ import androidx.compose.runtime.Composable
+ import androidx.compose.runtime.getValue
+ import androidx.compose.runtime.mutableStateOf
+@@ -9,23 +11,31 @@
+ import com.example.myapplication.ui.screens.LandingScreen
+ import com.example.myapplication.viewmodel.UserViewModel
+ import androidx.lifecycle.viewmodel.compose.viewModel
++import androidx.navigation.compose.NavHost
++import androidx.navigation.compose.composable
++import androidx.navigation.compose.rememberNavController
++import androidx.navigation.navDeepLink
+ 
+ @Composable
+ fun DeltaAppInit(
+     viewModel: UserViewModel = viewModel(),
+     initialisedHandler: () -> Unit,
+ ) {
+-
+-    //podria hacerse un NavHost y NavGraph pero no nos parecio la pena para
+-    //unicamente dos pantallas muy simples
+-    var loginScreen by rememberSaveable { mutableStateOf(false) }
+-
+-    if(!loginScreen) {
+-        LandingScreen(
+-            loginHandler = { loginScreen = true },
+-            tryOutHandler = initialisedHandler)
+-    } else {
+-        LogIn(viewModel = viewModel, actionRedirect = initialisedHandler) { loginScreen = false }
++    val navController = rememberNavController()
++    NavHost(navController = navController, startDestination = "home") {
++        composable("home") {
++            LandingScreen(
++                loginHandler = { navController.navigate("login") },
++                tryOutHandler = initialisedHandler)
++        }
++        composable("login",
++            deepLinks = listOf(
++                navDeepLink {
++                    uriPattern = "http://pl-coding.com"
++                }
++            )) {
++            LogIn(viewModel = viewModel, actionRedirect = initialisedHandler,
++                 backButton = {navController.navigate("home")} )
++        }
+     }
+-
+ }
+\ No newline at end of file
+Index: app/src/main/java/com/example/myapplication/ui/components/RoutineCard.kt
+IDEA additional info:
+Subsystem: com.intellij.openapi.diff.impl.patch.BaseRevisionTextPatchEP
+<+>package com.example.myapplication.ui.components\n\nimport android.content.Context\nimport android.content.Intent\nimport androidx.compose.foundation.Image\nimport androidx.compose.foundation.clickable\nimport androidx.compose.foundation.layout.*\nimport androidx.compose.foundation.shape.RoundedCornerShape\nimport androidx.compose.material.Icon\nimport androidx.compose.material.IconButton\nimport androidx.compose.material.Text\nimport androidx.compose.material.icons.Icons\nimport androidx.compose.material.icons.filled.Share\nimport androidx.compose.runtime.*\nimport androidx.compose.ui.Alignment\nimport androidx.compose.ui.Modifier\nimport androidx.compose.ui.draw.clip\nimport androidx.compose.ui.draw.scale\nimport androidx.compose.ui.graphics.Color\nimport androidx.compose.ui.layout.ContentScale\nimport androidx.compose.ui.platform.LocalContext\nimport androidx.compose.ui.res.painterResource\nimport androidx.compose.ui.text.style.TextAlign\nimport androidx.compose.ui.unit.dp\nimport androidx.compose.ui.unit.sp\nimport com.example.myapplication.R\nimport com.example.myapplication.data.Routines\nimport com.example.myapplication.ui.theme.Green\nimport com.example.myapplication.viewmodel.RoutinesViewModel\nimport kotlinx.coroutines.flow.MutableStateFlow\nimport kotlinx.coroutines.flow.StateFlow\n\n\nconst val ROUTINE_CARD_WIDTH = 370;\n\nsealed class RoutineCard(val iconClicked: Int, val iconUnClicked: Int, val description: String) {\n    object MyRoutine: RoutineCard ( R.drawable.star_rate_white_24dp, R.drawable.star_border_white_24dp, \"Go\")\n    object Progress: RoutineCard ( R.drawable.star_rate_white_24dp, R.drawable.star_border_white_24dp, \"See Progress\")\n    object ExploreRoutine: RoutineCard ( R.drawable.check_circle_white_24dp, R.drawable.add_white_24dp, \"Share\")\n}\n\n@Composable\nfun RoutineCardDetails(description: String) {\n    Text(\n        text = description,\n        fontSize = 25.sp,\n        color = Green,\n        modifier = Modifier\n    )\n}\n\n\n/**\n * Creates an intent to share order details\n */\nprivate fun shareOrder(context: Context, subject: String, summary: String) {\n    // Create an ACTION_SEND implicit intent with order details in the intent extras\n    val intent = Intent(Intent.ACTION_SEND).apply {\n        type = \"text/plain\"\n        putExtra(Intent.EXTRA_SUBJECT, subject)\n        putExtra(Intent.EXTRA_TEXT, summary)\n    }\n    context.startActivity(\n        Intent.createChooser(\n            intent,\n            \"Share routine\"\n        )\n    )\n}\n\n@Composable\nfun RoutineCardTitle(title: String, iconId: Int, clickedIcon: () -> Unit = {}, id: Int) {\n\n    val context = LocalContext.current\n\n    Row ( horizontalArrangement  =  Arrangement.SpaceBetween, verticalAlignment = Alignment.CenterVertically) {\n        Text(\n            text = title,\n            fontSize = 50.sp,\n            color = Color.White,\n            modifier = Modifier.padding((id % 2).dp),\n            textAlign = TextAlign.Start,\n        )\n        Spacer(modifier = Modifier.width(10.dp))\n        Image(\n            painter = painterResource(iconId),\n            contentDescription = null,\n            modifier = Modifier\n                .scale(1.5F)\n                .clickable(onClick = clickedIcon)\n        )\n        IconButton(onClick = { shareOrder(context, \"Routine\", title ) }) {\n            Icon(Icons.Default.Share, contentDescription = \"share icon\", tint = Color.White)\n        }\n\n    }\n}\n\n\n@Composable\nfun RoutineCard(routine: Routines, iconId: Int, clickedIcon: () -> Unit = {}, actionHandler: () -> Unit = {}, routineCard: RoutineCard, viewModel: RoutinesViewModel) {\n\n    var expanded by remember { mutableStateOf(!viewModel.cardsExpandable()) }\n    var imageHeight by remember { mutableStateOf(if(!viewModel.cardsExpandable()) 200.dp else 70.dp ) }\n\n\n    Box (\n        Modifier\n            .width(ROUTINE_CARD_WIDTH.dp)\n            .clickable {\n                expanded = if (viewModel.cardsExpandable()) !expanded else true\n                imageHeight = if (expanded) 200.dp else 70.dp\n            },\n        contentAlignment = Alignment.Center\n    ){\n        Image(\n            painter = painterResource(routine.img),\n            contentDescription = null,\n            modifier = Modifier\n                .width(ROUTINE_CARD_WIDTH.dp)\n                .clip(RoundedCornerShape(20.dp))\n                .height(imageHeight),\n            contentScale = ContentScale.Crop,\n        )\n        Column (\n            horizontalAlignment = Alignment.CenterHorizontally\n        ) {\n\n            RoutineCardTitle(\n                title = routine.title,\n                iconId = iconId,\n                clickedIcon = {clickedIcon()},\n                id = routine.id\n            )\n            if (expanded) {\n                    RoutineCardDetails(description = routine.description)\n                    Button1(fontSize = 16, text = routineCard.description, handler = actionHandler)\n            }\n        }\n\n    }\n\n    Spacer(modifier = Modifier.height(30.dp))\n\n\n}\n
+Subsystem: com.intellij.openapi.diff.impl.patch.CharsetEP
+<+>UTF-8
+===================================================================
+diff --git a/app/src/main/java/com/example/myapplication/ui/components/RoutineCard.kt b/app/src/main/java/com/example/myapplication/ui/components/RoutineCard.kt
+--- a/app/src/main/java/com/example/myapplication/ui/components/RoutineCard.kt	(revision a926a450f9921830ce9a8c6b804a7c534e521dbb)
++++ b/app/src/main/java/com/example/myapplication/ui/components/RoutineCard.kt	(date 1668274558276)
+@@ -58,7 +58,7 @@
+     val intent = Intent(Intent.ACTION_SEND).apply {
+         type = "text/plain"
+         putExtra(Intent.EXTRA_SUBJECT, subject)
+-        putExtra(Intent.EXTRA_TEXT, summary)
++        putExtra(Intent.EXTRA_TEXT, "myapplication://explore")
+     }
+     context.startActivity(
+         Intent.createChooser(
+Index: app/src/main/java/com/example/myapplication/ui/navigation/NavGraph.kt
+IDEA additional info:
+Subsystem: com.intellij.openapi.diff.impl.patch.BaseRevisionTextPatchEP
+<+>package com.example.myapplication.ui.navigation\n\nimport androidx.compose.material.ScaffoldState\nimport androidx.compose.runtime.Composable\nimport androidx.compose.runtime.State\nimport androidx.compose.ui.Modifier\nimport androidx.lifecycle.ViewModel\nimport androidx.navigation.NavHostController\nimport androidx.navigation.compose.NavHost\nimport androidx.navigation.compose.composable\nimport com.example.myapplication.LogIn\nimport com.example.myapplication.ui.screens.*\nimport com.example.myapplication.viewmodel.ExecuteRoutineViewModel\nimport com.example.myapplication.viewmodel.RoutinesState\nimport com.example.myapplication.viewmodel.RoutinesViewModel\n\n@Composable\n\n/*\n* La clave del disenio de navegacion es que cada pantalla tenga una accion principal a la\n* que va a llevar, y de esa manera hacer que esa accion se manje direction directamente y\n* unicamente desde aca\n* */\nfun NavGraph(navController: NavHostController, viewModel: RoutinesViewModel, executeRedirect: () -> Unit, scaffoldState: ScaffoldState) {\n    NavHost(\n        navController = navController,\n        startDestination = NavBarScreen.Routines.route,\n    ) {\n        composable(NavBarScreen.Routines.route) {\n            RoutinesScreen(viewModel = viewModel,\n                actionRedirect = { navController.navigate(Screen.RoutineDescriptionScreen.route + it) }, scaffoldState)\n        }\n        composable(NavBarScreen.Progress.route) {\n            ProgressScreen(viewModel = viewModel,\n            actionRedirect = {navController.navigate(Screen.ProgressDetail.route + it  )}, scaffoldState)\n        }\n        composable(NavBarScreen.Explore.route) {\n            ExploreScreen(viewModel = viewModel, scaffoldState)\n        }\n        composable(NavBarScreen.QR.route) {\n            QRScreen(viewModel = viewModel)\n        }\n        composable(Screen.RoutineDescriptionScreen.route) {backStackEntry ->\n            RoutineDescriptionScreen(viewModel = viewModel, backStackEntry.arguments?.getString(\"routineId\"),starRoutineHanlder = executeRedirect,backHandler = {  navController.popBackStack() })\n        }\n        composable(Screen.Execute.route){ backStackEntry ->\n            ExerciseExecScreen( order = 0, routineId = backStackEntry.arguments?.getString(\"routineId\"), handlerBack = {navController.popBackStack()},handlerFinishRoutine = {navController.navigate(Screen.ProgressDetail.route + backStackEntry.arguments?.getString(\"routineId\")?.substringAfter('}')?.toInt())})\n        }\n        composable(Screen.ProgressDetail.route) {backStackEntry ->\n            ProgressDetailScreen(viewModel = viewModel,\n                                 viewRoutineHandler = {navController.navigate(Screen.Execute.route)},\n                backButtonHandler = {navController.popBackStack()},\n                                 routineId = backStackEntry.arguments?.getString(\"routineId\") )\n        }\n\n    }\n}
+Subsystem: com.intellij.openapi.diff.impl.patch.CharsetEP
+<+>UTF-8
+===================================================================
+diff --git a/app/src/main/java/com/example/myapplication/ui/navigation/NavGraph.kt b/app/src/main/java/com/example/myapplication/ui/navigation/NavGraph.kt
+--- a/app/src/main/java/com/example/myapplication/ui/navigation/NavGraph.kt	(revision a926a450f9921830ce9a8c6b804a7c534e521dbb)
++++ b/app/src/main/java/com/example/myapplication/ui/navigation/NavGraph.kt	(date 1668276893200)
+@@ -1,5 +1,6 @@
+ package com.example.myapplication.ui.navigation
+ 
++import android.content.Intent
+ import androidx.compose.material.ScaffoldState
+ import androidx.compose.runtime.Composable
+ import androidx.compose.runtime.State
+@@ -8,6 +9,7 @@
+ import androidx.navigation.NavHostController
+ import androidx.navigation.compose.NavHost
+ import androidx.navigation.compose.composable
++import androidx.navigation.navDeepLink
+ import com.example.myapplication.LogIn
+ import com.example.myapplication.ui.screens.*
+ import com.example.myapplication.viewmodel.ExecuteRoutineViewModel
+Index: local.properties
+IDEA additional info:
+Subsystem: com.intellij.openapi.diff.impl.patch.BaseRevisionTextPatchEP
+<+>## This file must *NOT* be checked into Version Control Systems,\n# as it contains information specific to your local configuration.\n#\n# Location of the SDK. This is only used by Gradle.\n# For customization when using a Version Control System, please read the\n# header note.\n#Wed Nov 09 12:00:25 ART 2022\nsdk.dir=C\\:\\\\Users\\\\lauti\\\\AppData\\\\Local\\\\Android\\\\Sdk\n\n
+Subsystem: com.intellij.openapi.diff.impl.patch.CharsetEP
+<+>ISO-8859-1
+===================================================================
+diff --git a/local.properties b/local.properties
+--- a/local.properties	(revision a926a450f9921830ce9a8c6b804a7c534e521dbb)
++++ b/local.properties	(date 1668273632366)
+@@ -4,6 +4,5 @@
+ # Location of the SDK. This is only used by Gradle.
+ # For customization when using a Version Control System, please read the
+ # header note.
+-#Wed Nov 09 12:00:25 ART 2022
+-sdk.dir=C\:\\Users\\lauti\\AppData\\Local\\Android\\Sdk
+-
++#Sat Nov 12 14:20:32 ART 2022
++sdk.dir=/Users/marcoscilipoti/Library/Android/sdk
+Index: app/src/main/java/com/example/myapplication/viewmodel/RoutinesViewModel.kt
+IDEA additional info:
+Subsystem: com.intellij.openapi.diff.impl.patch.BaseRevisionTextPatchEP
+<+>package com.example.myapplication.viewmodel\n\nimport androidx.compose.material.ScaffoldState\nimport androidx.compose.material.rememberScaffoldState\nimport androidx.compose.material3.windowsizeclass.WindowWidthSizeClass\nimport androidx.compose.runtime.MutableState\nimport androidx.compose.runtime.rememberCoroutineScope\nimport androidx.lifecycle.LifecycleCoroutineScope\nimport androidx.lifecycle.ViewModel\nimport com.example.myapplication.data.Exercise\nimport com.example.myapplication.data.Routines\nimport com.example.myapplication.ui.components.RoutineCard\nimport com.example.myapplication.ui.components.SortOption\nimport com.example.myapplication.ui.navigation.NavBarScreen\nimport kotlinx.coroutines.flow.MutableStateFlow\nimport kotlinx.coroutines.flow.update\n\nclass RoutinesViewModel : ViewModel() {\n    private val _sortState = MutableStateFlow(SortOption.POINTS)\n\n    private val _routinesState = MutableStateFlow(RoutinesState())\n\n    fun getSortState(): MutableStateFlow<SortOption> {\n        return _sortState\n    }\n    fun setSortState(option: SortOption, screen: NavBarScreen) {\n        _sortState.value = option\n        sortRoutines(option, screen)\n\n    }\n    fun sortRoutines(option: SortOption, screen: NavBarScreen) {\n        if(option == SortOption.POINTS)\n            sortRoutinesPoints(screen)\n        if(option == SortOption.FAVOURITE)\n            sortRoutinesFavourite(screen)\n        if(option == SortOption.DATE)\n            sortRoutinesDate(screen)\n    }\n\n    fun getRoutines(routineCard: RoutineCard): List<MutableStateFlow<Routines>> {\n        return if(routineCard == RoutineCard.ExploreRoutine) _routinesState.value.exploreRoutines\n        else _routinesState.value.userRoutines\n    }\n\n    fun routine(id: Int): Routines {\n        return _routinesState.value.userRoutines.find { routine ->routine.value.id == id }!!.value\n    }\n\n    fun sortRoutinesDate(screen: NavBarScreen) {\n        if(screen == NavBarScreen.Explore)\n            _routinesState.value.exploreRoutines = _routinesState.value.exploreRoutines.sortedBy { routine -> routine.value.id }\n        else\n            _routinesState.value.userRoutines = _routinesState.value.userRoutines.sortedBy { routine -> routine.value.id }\n    }\n\n    fun sortRoutinesFavourite(screen: NavBarScreen) {\n        if(screen == NavBarScreen.Explore)\n            _routinesState.value.exploreRoutines =  _routinesState.value.exploreRoutines.sortedBy { routine -> routine.value.favourite}\n        else\n            _routinesState.value.userRoutines = _routinesState.value.userRoutines.sortedBy { routine -> routine.value.favourite }\n    }\n\n    fun sortRoutinesPoints(screen: NavBarScreen) {\n        if(screen == NavBarScreen.Explore)\n            _routinesState.value.exploreRoutines =  _routinesState.value.exploreRoutines.sortedBy { routine -> routine.value.points}\n        else\n            _routinesState.value.userRoutines =  _routinesState.value.userRoutines.sortedBy { routine -> routine.value.points}\n    }\n\n    fun clickedIcon(id: Int, routineCard: RoutineCard) {\n        if(RoutineCard.ExploreRoutine == routineCard) {\n           val routine = _routinesState.value.exploreRoutines.find { routine ->routine.value.id == id }!!\n           routine.update { it.copy(added = !it.added) }\n            _routinesState.value.userRoutines =  _routinesState.value.userRoutines + routine\n        } else {\n            val routine = _routinesState.value.userRoutines.find { routine ->routine.value.id == id }!!\n            routine.update { it.copy(favourite = !it.favourite) }\n        }\n\n    }\n\n    fun isSelected(id: Int, routineCard: RoutineCard): Boolean {\n        return if(RoutineCard.ExploreRoutine == routineCard)\n            _routinesState.value.exploreRoutines.find { routine ->routine.value.id == id }!!.value.added\n        else\n            _routinesState.value.userRoutines.find { routine ->routine.value.id == id }!!.value.favourite\n    }\n\n\n    private var screenWidth: WindowWidthSizeClass = WindowWidthSizeClass.Compact\n\n    fun cardsExpandable(): Boolean {\n        return screenWidth != WindowWidthSizeClass.Expanded\n    }\n\n    fun setWidth(width: WindowWidthSizeClass) {\n        screenWidth = width;\n    }\n\n\n    fun getRoutineWarmUpExercises(id:Int) : List<Exercise>{\n        return   _routinesState.value.userRoutines.find { routine ->routine.value.id == id }!!.value.exercises.warmUpExercises\n    }\n    fun getRoutineCoolDownExercises(id:Int) : List<Exercise>{\n        return   _routinesState.value.userRoutines.find { routine ->routine.value.id == id }!!.value.exercises.coolDownExercises\n    }\n    fun getRoutineMainSetExercises(id:Int) : List<Exercise>{\n        return   _routinesState.value.userRoutines.find { routine ->routine.value.id == id }!!.value.exercises.mainSetExercises\n    }\n}
+Subsystem: com.intellij.openapi.diff.impl.patch.CharsetEP
+<+>UTF-8
+===================================================================
+diff --git a/app/src/main/java/com/example/myapplication/viewmodel/RoutinesViewModel.kt b/app/src/main/java/com/example/myapplication/viewmodel/RoutinesViewModel.kt
+--- a/app/src/main/java/com/example/myapplication/viewmodel/RoutinesViewModel.kt	(revision a926a450f9921830ce9a8c6b804a7c534e521dbb)
++++ b/app/src/main/java/com/example/myapplication/viewmodel/RoutinesViewModel.kt	(date 1668273949725)
+@@ -55,9 +55,9 @@
+ 
+     fun sortRoutinesFavourite(screen: NavBarScreen) {
+         if(screen == NavBarScreen.Explore)
+-            _routinesState.value.exploreRoutines =  _routinesState.value.exploreRoutines.sortedBy { routine -> routine.value.favourite}
++            _routinesState.value.exploreRoutines =  _routinesState.value.exploreRoutines.sortedBy { routine -> !routine.value.favourite}
+         else
+-            _routinesState.value.userRoutines = _routinesState.value.userRoutines.sortedBy { routine -> routine.value.favourite }
++            _routinesState.value.userRoutines = _routinesState.value.userRoutines.sortedBy { routine -> !routine.value.favourite }
+     }
+ 
+     fun sortRoutinesPoints(screen: NavBarScreen) {
