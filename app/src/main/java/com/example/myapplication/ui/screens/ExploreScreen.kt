@@ -28,7 +28,7 @@ import androidx.compose.ui.window.Dialog
 import com.example.myapplication.R
 import com.example.myapplication.ui.components.*
 import com.example.myapplication.ui.navigation.NavBarScreen
-import com.example.myapplication.viewmodel.RoutinesViewModel
+import com.example.myapplication.ui.viewmodel.RoutinesViewModel
 import kotlinx.coroutines.launch
 
 

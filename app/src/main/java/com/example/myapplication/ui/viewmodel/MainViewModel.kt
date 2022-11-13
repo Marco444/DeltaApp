@@ -1,4 +1,4 @@
-package com.example.myapplication.viewmodel
+package com.example.myapplication.ui.viewmodel
 
 import androidx.compose.runtime.getValue
 import androidx.compose.runtime.mutableStateOf
@@ -19,7 +19,6 @@ class MainViewModel(
 
     private var uiState by mutableStateOf(MainUiState(isAuthenticated = sessionManager.loadAuthToken() != null))
         private set
-    var lastGetSportsTimestamp = 0
 
     fun login(username: String, password: String) = viewModelScope.launch {
         uiState = uiState.copy(

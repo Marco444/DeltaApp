@@ -27,8 +27,8 @@ import com.example.myapplication.ui.components.ExPreviewCard
 import com.example.myapplication.ui.components.ExerciseExecCard
 import com.example.myapplication.ui.theme.Green
 import com.example.myapplication.ui.theme.GreenTransparency
-import com.example.myapplication.viewmodel.ExecuteRoutineViewModel
-import com.example.myapplication.viewmodel.RoutinesViewModel
+import com.example.myapplication.ui.viewmodel.ExecuteRoutineViewModel
+import com.example.myapplication.ui.viewmodel.RoutinesViewModel
 import java.lang.Float
 
 @Composable

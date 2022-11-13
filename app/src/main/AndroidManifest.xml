@@ -13,7 +13,7 @@
         android:theme="@style/Theme.MyApplication"
         tools:targetApi="31">
         <activity
-            android:name=".ThirdActivity"
+            android:name=".ui.ThirdActivity"
             android:exported="false"
             android:label="@string/title_activity_third"
             android:theme="@style/Theme.MyApplication">
@@ -22,7 +22,7 @@
                 android:value="" />
         </activity>
         <activity
-            android:name=".SecondActivity"
+            android:name=".ui.SecondActivity"
             android:exported="false"
             android:label="@string/title_activity_main2"
             android:theme="@style/Theme.MyApplication">
@@ -31,7 +31,7 @@
                 android:value="" />
         </activity>
         <activity
-            android:name=".MainActivity"
+            android:name=".ui.MainActivity"
             android:exported="true"
             android:theme="@style/Theme.MyApplication">
             <intent-filter>

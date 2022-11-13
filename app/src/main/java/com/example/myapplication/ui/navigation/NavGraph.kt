@@ -12,9 +12,9 @@ import androidx.navigation.compose.composable
 import androidx.navigation.navDeepLink
 import com.example.myapplication.LogIn
 import com.example.myapplication.ui.screens.*
-import com.example.myapplication.viewmodel.ExecuteRoutineViewModel
-import com.example.myapplication.viewmodel.RoutinesState
-import com.example.myapplication.viewmodel.RoutinesViewModel
+import com.example.myapplication.ui.viewmodel.ExecuteRoutineViewModel
+import com.example.myapplication.ui.viewmodel.RoutinesState
+import com.example.myapplication.ui.viewmodel.RoutinesViewModel
 
 @Composable
 

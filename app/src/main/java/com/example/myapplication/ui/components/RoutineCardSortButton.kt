@@ -18,7 +18,7 @@ import androidx.compose.ui.graphics.Color.Companion.White
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import com.example.myapplication.ui.navigation.NavBarScreen
-import com.example.myapplication.viewmodel.RoutinesViewModel
+import com.example.myapplication.ui.viewmodel.RoutinesViewModel
 
 enum class SortOption {
     FAVOURITE, DATE, POINTS;

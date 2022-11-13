@@ -27,12 +27,12 @@ import com.example.myapplication.ui.components.RoutineCard
 import com.example.myapplication.ui.navigation.Screen
 import com.example.myapplication.ui.theme.Green
 import com.example.myapplication.ui.theme.MyApplicationTheme
-import com.example.myapplication.viewmodel.ExecuteRoutine
-import com.example.myapplication.viewmodel.ExecuteRoutineViewModel
-import com.example.myapplication.viewmodel.RoutinesViewModel
+import com.example.myapplication.ui.viewmodel.ExecuteRoutine
+import com.example.myapplication.ui.viewmodel.ExecuteRoutineViewModel
+import com.example.myapplication.ui.viewmodel.RoutinesViewModel
 
 @Composable
-fun RoutineDescriptionScreen(viewModel: ExecuteRoutineViewModel, routineId: String,backHandler : () -> Unit,starRoutineHanlder : ()->Unit){
+fun RoutineDescriptionScreen(viewModel: ExecuteRoutineViewModel, routineId: String, backHandler : () -> Unit, starRoutineHanlder : ()->Unit){
 
 
     val routine: Routines = viewModel.routine(routineId.toInt())

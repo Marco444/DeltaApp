@@ -1,4 +1,4 @@
-package com.example.myapplication
+package com.example.myapplication.ui
 
 import android.annotation.SuppressLint
 import androidx.compose.foundation.layout.Box
@@ -15,7 +15,7 @@ import androidx.navigation.NavHostController
 import androidx.navigation.compose.rememberNavController
 import com.example.myapplication.ui.navigation.BottomBar
 import com.example.myapplication.ui.navigation.NavGraph
-import com.example.myapplication.viewmodel.RoutinesViewModel
+import com.example.myapplication.ui.viewmodel.RoutinesViewModel
 import androidx.lifecycle.viewmodel.compose.viewModel
 import com.example.myapplication.ui.components.DrawerContent
 import com.example.myapplication.ui.navigation.SideBar

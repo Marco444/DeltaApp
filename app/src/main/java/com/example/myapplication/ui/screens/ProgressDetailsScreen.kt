@@ -22,7 +22,7 @@ import com.example.myapplication.ui.components.BackButton
 import com.example.myapplication.ui.components.Button1
 import com.example.myapplication.ui.theme.GrayTransparency
 import com.example.myapplication.ui.theme.Green
-import com.example.myapplication.viewmodel.RoutinesViewModel
+import com.example.myapplication.ui.viewmodel.RoutinesViewModel
 
 
 @Composable

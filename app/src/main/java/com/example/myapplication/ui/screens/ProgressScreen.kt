@@ -20,7 +20,7 @@ import com.example.myapplication.data.Routines
 import com.example.myapplication.ui.components.*
 import com.example.myapplication.ui.navigation.NavBarScreen
 import com.example.myapplication.ui.navigation.Screen
-import com.example.myapplication.viewmodel.RoutinesViewModel
+import com.example.myapplication.ui.viewmodel.RoutinesViewModel
 import kotlinx.coroutines.launch
 
 fun comparebyFavourite(routine1: Routines, routine2: Routines): Int {

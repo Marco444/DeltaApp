@@ -45,8 +45,8 @@ import com.example.myapplication.ui.screens.BackgroundImage
 import com.example.myapplication.ui.theme.Black
 import com.example.myapplication.ui.theme.Green
 import com.example.myapplication.ui.theme.Purple500
-import com.example.myapplication.viewmodel.RoutinesViewModel
-import com.example.myapplication.viewmodel.UserViewModel
+import com.example.myapplication.ui.viewmodel.RoutinesViewModel
+import com.example.myapplication.ui.viewmodel.UserViewModel
 
 
 @Composable

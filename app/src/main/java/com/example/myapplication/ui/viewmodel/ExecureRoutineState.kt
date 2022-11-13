@@ -1,4 +1,4 @@
-package com.example.myapplication.viewmodel
+package com.example.myapplication.ui.viewmodel
 
 import androidx.compose.runtime.mutableStateOf
 import com.example.myapplication.data.Exercise

@@ -1,4 +1,4 @@
-package com.example.myapplication.viewmodel
+package com.example.myapplication.ui.viewmodel
 
 import com.example.myapplication.data.model.Sport
 import com.example.myapplication.data.model.User

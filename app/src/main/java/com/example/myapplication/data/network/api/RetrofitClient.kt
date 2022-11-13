@@ -4,6 +4,7 @@ import android.content.Context
 import ar.edu.itba.example.api.data.network.api.ApiDateTypeAdapter
 import ar.edu.itba.example.api.data.network.api.ApiSportService
 import ar.edu.itba.example.api.data.network.api.ApiUserService
+import com.example.myapplication.BuildConfig
 import com.google.gson.GsonBuilder
 import okhttp3.OkHttpClient
 import okhttp3.logging.HttpLoggingInterceptor
@@ -35,7 +36,7 @@ object RetrofitClient {
             .create()
 
         return Retrofit.Builder()
-            .baseUrl("url")
+            .baseUrl(BuildConfig.API_BASE_URL)
             .addConverterFactory(GsonConverterFactory.create(gson))
             .client(okHttpClient)
             .build()

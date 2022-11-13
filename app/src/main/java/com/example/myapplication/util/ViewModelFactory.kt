@@ -8,7 +8,7 @@ import androidx.savedstate.SavedStateRegistryOwner
 import com.example.myapplication.data.repository.SportRepository
 import com.example.myapplication.data.repository.UserRepository
 import com.example.myapplication.util.SessionManager
-import com.example.myapplication.viewmodel.MainViewModel
+import com.example.myapplication.ui.viewmodel.MainViewModel
 
 class ViewModelFactory constructor(
     private val sessionManager: SessionManager,

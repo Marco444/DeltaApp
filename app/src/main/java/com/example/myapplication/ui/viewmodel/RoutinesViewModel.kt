@@ -1,4 +1,4 @@
-package com.example.myapplication.viewmodel
+package com.example.myapplication.ui.viewmodel
 
 import androidx.compose.material.ScaffoldState
 import androidx.compose.material.rememberScaffoldState

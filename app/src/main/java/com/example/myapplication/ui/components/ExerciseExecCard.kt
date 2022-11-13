@@ -20,7 +20,7 @@ import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import com.example.myapplication.data.Exercise
 import com.example.myapplication.ui.theme.Green
-import com.example.myapplication.viewmodel.ExecuteRoutineViewModel
+import com.example.myapplication.ui.viewmodel.ExecuteRoutineViewModel
 import kotlinx.coroutines.flow.MutableStateFlow
 
 

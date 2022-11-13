@@ -1,4 +1,4 @@
-package com.example.myapplication.viewmodel
+package com.example.myapplication.ui.viewmodel
 
 import kotlinx.coroutines.flow.MutableStateFlow
 import java.util.concurrent.Flow
