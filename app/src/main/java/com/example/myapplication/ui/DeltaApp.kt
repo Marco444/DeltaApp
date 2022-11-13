@@ -19,6 +19,7 @@ import com.example.myapplication.ui.viewmodel.RoutinesViewModel
 import androidx.lifecycle.viewmodel.compose.viewModel
 import com.example.myapplication.ui.components.DrawerContent
 import com.example.myapplication.ui.navigation.SideBar
+import com.example.myapplication.util.getViewModelFactory
 import kotlinx.coroutines.launch
 
 

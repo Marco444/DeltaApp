@@ -1,6 +1,6 @@
 package com.example.myapplication.data.network
 
-import ar.edu.itba.example.api.data.network.api.ApiUserService
+import com.example.myapplication.data.network.api.ApiUserService
 import com.example.myapplication.data.network.model.NetworkCredentials
 import com.example.myapplication.util.SessionManager
 import com.example.myapplication.data.network.model.NetworkUser

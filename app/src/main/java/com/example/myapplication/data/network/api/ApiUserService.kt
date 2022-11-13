@@ -1,4 +1,4 @@
-package ar.edu.itba.example.api.data.network.api
+package com.example.myapplication.data.network.api
 
 import com.example.myapplication.data.network.model.NetworkCredentials
 import ar.edu.itba.example.api.data.network.model.NetworkToken

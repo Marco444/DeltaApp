@@ -3,7 +3,6 @@ package com.example.myapplication.data.network.api
 import android.content.Context
 import ar.edu.itba.example.api.data.network.api.ApiDateTypeAdapter
 import ar.edu.itba.example.api.data.network.api.ApiSportService
-import ar.edu.itba.example.api.data.network.api.ApiUserService
 import com.example.myapplication.BuildConfig
 import com.google.gson.GsonBuilder
 import okhttp3.OkHttpClient

@@ -17,7 +17,7 @@ class MainViewModel(
     private val sportRepository: SportRepository
     ) : ViewModel() {
 
-    private var uiState by mutableStateOf(MainUiState(isAuthenticated = sessionManager.loadAuthToken() != null))
+     var uiState by mutableStateOf(MainUiState(isAuthenticated = sessionManager.loadAuthToken() != null))
         private set
 
     fun login(username: String, password: String) = viewModelScope.launch {

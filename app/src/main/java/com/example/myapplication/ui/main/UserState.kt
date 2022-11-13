@@ -1,7 +1,6 @@
-package com.example.myapplication.ui.viewmodel
+package com.example.myapplication.ui.main
 
 import kotlinx.coroutines.flow.MutableStateFlow
-import java.util.concurrent.Flow
 
 data class User(
     val username: String = "",

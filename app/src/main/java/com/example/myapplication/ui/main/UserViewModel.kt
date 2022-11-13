@@ -1,10 +1,8 @@
-package com.example.myapplication.ui.viewmodel
+package com.example.myapplication.ui.main
 
 import androidx.lifecycle.ViewModel
+import com.example.myapplication.ui.main.UserState
 import kotlinx.coroutines.flow.MutableStateFlow
-import kotlinx.coroutines.flow.StateFlow
-import kotlinx.coroutines.flow.asStateFlow
-import kotlinx.coroutines.flow.update
 
 class UserViewModel : ViewModel() {
 

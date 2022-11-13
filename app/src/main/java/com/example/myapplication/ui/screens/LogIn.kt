@@ -1,9 +1,8 @@
-package com.example.myapplication
+package com.example.myapplication.ui.screens
 
 import android.app.Activity
 import android.content.Context
 import android.content.ContextWrapper
-import android.content.Intent
 import android.view.KeyEvent
 import androidx.compose.foundation.Image
 import androidx.compose.foundation.clickable
@@ -23,7 +22,6 @@ import androidx.compose.ui.Alignment.Companion.CenterHorizontally
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.scale
 import androidx.compose.ui.graphics.Color
-import androidx.compose.ui.graphics.Shape
 import androidx.compose.ui.input.key.onKeyEvent
 import androidx.compose.ui.platform.LocalConfiguration
 import androidx.compose.ui.platform.LocalContext
@@ -37,20 +35,15 @@ import androidx.compose.ui.text.input.PasswordVisualTransformation
 import androidx.compose.ui.text.input.TextFieldValue
 import androidx.compose.ui.text.input.VisualTransformation
 import androidx.compose.ui.text.style.TextDecoration
-import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
+import com.example.myapplication.R
 import com.example.myapplication.ui.components.Button1
-import com.example.myapplication.ui.screens.BackgroundImage
-import com.example.myapplication.ui.theme.Black
 import com.example.myapplication.ui.theme.Green
-import com.example.myapplication.ui.theme.Purple500
-import com.example.myapplication.ui.viewmodel.RoutinesViewModel
-import com.example.myapplication.ui.viewmodel.UserViewModel
 
 
 @Composable
-fun LogIn(viewModel: UserViewModel = androidx.lifecycle.viewmodel.compose.viewModel(), actionRedirect: () -> Unit, backButton: () -> Unit){
+fun LogIn(actionRedirect: () -> Unit, backButton: () -> Unit){
 
     var passWord by remember { mutableStateOf(TextFieldValue("")) }
     var snackbar by remember { mutableStateOf(false) }
@@ -109,7 +102,9 @@ fun LogIn(viewModel: UserViewModel = androidx.lifecycle.viewmodel.compose.viewMo
             Button1(
                 fontSize = 23,
                 text = "Log In",
-                handler = {if(viewModel.loginAttempt("", "")) actionRedirect() else snackbar = true},
+                handler = {//viewModel.login("johnDoe1", "1234");
+                          // if(viewModel.uiState.isAuthenticated)
+                               actionRedirect()},
                 modifier = Modifier.align(CenterHorizontally)
             )
 

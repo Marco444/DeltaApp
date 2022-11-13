@@ -1,4 +1,4 @@
-package ar.edu.itba.example.api.util
+package com.example.myapplication.util
 
 import android.os.Bundle
 import androidx.lifecycle.AbstractSavedStateViewModelFactory
@@ -7,7 +7,6 @@ import androidx.lifecycle.ViewModel
 import androidx.savedstate.SavedStateRegistryOwner
 import com.example.myapplication.data.repository.SportRepository
 import com.example.myapplication.data.repository.UserRepository
-import com.example.myapplication.util.SessionManager
 import com.example.myapplication.ui.viewmodel.MainViewModel
 
 class ViewModelFactory constructor(

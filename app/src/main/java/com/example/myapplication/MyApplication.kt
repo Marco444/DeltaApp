@@ -1,4 +1,4 @@
-package com.example.myapplication.ui
+package com.example.myapplication
 
 import android.app.Application
 import com.example.myapplication.data.repository.SportRepository
