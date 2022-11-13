@@ -24,8 +24,22 @@ android {
         release {
             minifyEnabled false
             proguardFiles getDefaultProguardFile('proguard-android-optimize.txt'), 'proguard-rules.pro'
+            // No usar localhost o la IP 127.0.0.1 porque es la interfaz de loopback
+            // del emulador. La forma de salir del emulador para acceder al localhost
+            // de host del mismo es usando la IP 10.0.2.2.
+            buildConfigField "String", "API_BASE_URL",
+                    "\"http://10.0.2.2:8080/api/\""
+        }
+        debug {
+            // No usar localhost o la IP 127.0.0.1 porque es la interfaz de loopback
+            // del emulador. La forma de salir del emulador para acceder al localhost
+            // de host del mismo es usando la IP 10.0.2.2.
+            buildConfigField "String", "API_BASE_URL",
+                    "\"http://10.0.2.2:8080/api/\""
         }
     }
+
+
     compileOptions {
         sourceCompatibility JavaVersion.VERSION_1_8
         targetCompatibility JavaVersion.VERSION_1_8
@@ -47,6 +61,10 @@ android {
 }
 
 dependencies {
+    implementation 'com.google.code.gson:gson:2.10'
+    implementation "com.squareup.retrofit2:converter-gson:$retrofit_version"
+    implementation "com.squareup.retrofit2:retrofit:$retrofit_version"
+    implementation 'com.squareup.okhttp3:logging-interceptor:4.10.0'
     implementation "androidx.compose.material:material-icons-extended:1.3.1"
     implementation "androidx.compose.material3:material3-window-size-class:1.1.0-alpha02"
     implementation "com.google.accompanist:accompanist-systemuicontroller:0.27.0"
