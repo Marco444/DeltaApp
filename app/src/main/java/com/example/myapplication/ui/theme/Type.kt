@@ -27,6 +27,11 @@ val Typography = Typography(
         fontSize = 70.sp,
         color = Green,
     ),
+    h3 = TextStyle(
+        fontSize = 50.sp,
+        fontFamily = FontFamily(Font(R.font.roboto_regular, FontWeight.Normal)),
+        color = Green,
+    ),
     /* Other default text styles to override
     button = TextStyle(
         fontFamily = FontFamily.Default,

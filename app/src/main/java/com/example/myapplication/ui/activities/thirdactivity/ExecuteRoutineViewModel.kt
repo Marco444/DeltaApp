@@ -9,7 +9,7 @@ import kotlinx.coroutines.flow.asStateFlow
 import kotlinx.coroutines.flow.update
 import kotlin.math.roundToInt
 
-class ExecuteRoutineViewModel(id : Int) : ViewModel() {
+class ExecuteRoutineViewModel() : ViewModel() {
 
     private val _execRoutineState = MutableStateFlow(ExecuteRoutine())
 
@@ -19,7 +19,6 @@ class ExecuteRoutineViewModel(id : Int) : ViewModel() {
         private set
 
     init {
-        _execRoutineState.value.routineId = id
         if(hasNext())
             nextExercise()
         exerciseCount = _execRoutineState.value.exercises.warmUpExercises.count() +
