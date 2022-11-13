@@ -98,21 +98,4 @@ class RoutinesViewModel : ViewModel() {
     }
 
 
-    private var actualOpinion: Int = 2
-
-    fun getActualOpinion(): Int {
-        return actualOpinion
-    }
-
-    fun upOpinion() {
-        if(actualOpinion < 4)
-            actualOpinion++
-    }
-
-    fun downOpinion() {
-        if(actualOpinion > 0)
-            actualOpinion--
-    }
-
-
 }

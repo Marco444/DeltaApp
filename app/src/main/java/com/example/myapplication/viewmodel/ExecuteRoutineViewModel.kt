@@ -103,4 +103,25 @@ class ExecuteRoutineViewModel(id : Int) : ViewModel() {
     fun getRoutineMainSetExercises() : List<Exercise>{
         return   _execRoutineState.value.exercises.mainSetExercises
     }
+
+    private var opinions: List<String> = listOf("Aweful", "Bad", "Regular", "Good", "Excelent")
+    private var actualOpinion: Int = 2
+
+    var opinion = MutableStateFlow("")
+
+    fun upOpinion() {
+        if(actualOpinion < 4) {
+            actualOpinion += 1
+            opinion.update { opinions[actualOpinion] }
+        }
+    }
+
+    fun downOpinion() {
+        if(actualOpinion > 0) {
+            actualOpinion -= 1
+            opinion.update { opinions[actualOpinion] }
+        }
+    }
+
+
 }
