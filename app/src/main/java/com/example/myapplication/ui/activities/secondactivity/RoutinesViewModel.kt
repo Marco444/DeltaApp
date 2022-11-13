@@ -40,21 +40,21 @@ class RoutinesViewModel : ViewModel() {
         return _routinesState.value.userRoutines.find { routine ->routine.value.id == id }!!.value
     }
 
-    fun sortRoutinesDate(screen: NavBarScreen) {
+    private fun sortRoutinesDate(screen: NavBarScreen) {
         if(screen == NavBarScreen.Explore)
             _routinesState.value.exploreRoutines = _routinesState.value.exploreRoutines.sortedBy { routine -> routine.value.id }
         else
             _routinesState.value.userRoutines = _routinesState.value.userRoutines.sortedBy { routine -> routine.value.id }
     }
 
-    fun sortRoutinesFavourite(screen: NavBarScreen) {
+    private fun sortRoutinesFavourite(screen: NavBarScreen) {
         if(screen == NavBarScreen.Explore)
             _routinesState.value.exploreRoutines =  _routinesState.value.exploreRoutines.sortedBy { routine -> !routine.value.favourite}
         else
             _routinesState.value.userRoutines = _routinesState.value.userRoutines.sortedBy { routine -> !routine.value.favourite }
     }
 
-    fun sortRoutinesPoints(screen: NavBarScreen) {
+    private fun sortRoutinesPoints(screen: NavBarScreen) {
         if(screen == NavBarScreen.Explore)
             _routinesState.value.exploreRoutines =  _routinesState.value.exploreRoutines.sortedBy { routine -> routine.value.points}
         else

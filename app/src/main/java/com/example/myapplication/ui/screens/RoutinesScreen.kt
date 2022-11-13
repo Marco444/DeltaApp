@@ -26,12 +26,13 @@ fun RoutinesScreen(viewModel: RoutinesViewModel,
 ){
     val coroutineScope = rememberCoroutineScope()
     Column (
-        modifier = Modifier.background(Color.Black).fillMaxWidth().fillMaxHeight(),
-        horizontalAlignment = Alignment.CenterHorizontally,
+        modifier = Modifier
+            .fillMaxWidth()
+            .fillMaxHeight()
+            .background(Color.Black),
     ){
 
-        Spacer(modifier = Modifier.height(20.dp))
-        Row (horizontalArrangement = Arrangement.spacedBy(10.dp)){
+        Row (modifier = Modifier.padding(top = 10.dp, start = 10.dp)) {
             HamburgerButton(
                 modifier = Modifier.align(Alignment.CenterVertically),
                 onClick = {
@@ -40,16 +41,28 @@ fun RoutinesScreen(viewModel: RoutinesViewModel,
                     }
                 }
             )
-            Text(
-                text = stringResource(R.string.routines_title),
-                style = MaterialTheme.typography.h1
-            )
         }
+        Row {
+            Column(
+                horizontalAlignment = Alignment.CenterHorizontally
+            ) {
 
-        Spacer(modifier = Modifier.height(10.dp))
-        RoutineCardSortButton(viewModel = viewModel, screen = NavBarScreen.Routines)
-        Spacer(modifier = Modifier.height(20.dp))
+                Text(
+                    text = stringResource(R.string.routines_title),
+                    style = MaterialTheme.typography.h1
+                )
 
-        RoutinesGrid(viewModel = viewModel, actionRedirect = actionRedirect, routineCard = RoutineCard.MyRoutine)
+
+                Spacer(modifier = Modifier.height(10.dp))
+                RoutineCardSortButton(viewModel = viewModel, screen = NavBarScreen.Routines)
+                Spacer(modifier = Modifier.height(20.dp))
+
+                RoutinesGrid(
+                    viewModel = viewModel,
+                    actionRedirect = actionRedirect,
+                    routineCard = RoutineCard.MyRoutine
+                )
+            }
+        }
     }
 }

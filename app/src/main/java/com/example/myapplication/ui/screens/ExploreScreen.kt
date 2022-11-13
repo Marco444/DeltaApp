@@ -39,7 +39,7 @@ fun SearchField() {
         },
         colors = TextFieldDefaults.textFieldColors(
             backgroundColor = White,
-        focusedIndicatorColor =  Color.Transparent),
+            focusedIndicatorColor =  Color.Transparent),
         textStyle = TextStyle.Default.copy(fontSize = 15.sp)
     )
 }
@@ -74,10 +74,10 @@ fun FilterButton(viewModel: RoutinesViewModel) {
 @Composable
 fun SearchAndFilter(viewModel: RoutinesViewModel) {
 
-        Row(verticalAlignment = Alignment.CenterVertically) {
-            SearchField()
-            Spacer(Modifier.width(10.dp))
-            FilterButton(viewModel = viewModel)
+    Row(verticalAlignment = Alignment.CenterVertically) {
+        SearchField()
+        Spacer(Modifier.width(10.dp))
+        FilterButton(viewModel = viewModel)
     }
 }
 
@@ -89,11 +89,9 @@ fun ExploreScreen(viewModel: RoutinesViewModel, scaffoldState: ScaffoldState){
             .fillMaxWidth()
             .fillMaxHeight()
             .background(Color.Black),
-        horizontalAlignment = Alignment.CenterHorizontally
     ){
 
-        Spacer(modifier = Modifier.height(20.dp))
-        Row (horizontalArrangement = Arrangement.spacedBy(10.dp)){
+        Row (modifier = Modifier.padding(top = 10.dp, start = 10.dp)) {
             HamburgerButton(
                 modifier = Modifier.align(Alignment.CenterVertically),
                 onClick = {
@@ -101,18 +99,30 @@ fun ExploreScreen(viewModel: RoutinesViewModel, scaffoldState: ScaffoldState){
                         scaffoldState.drawerState.open()
                     }
                 }
-        )
-            Text(
-                text = stringResource(R.string.explore_title),
-                style = MaterialTheme.typography.h1
             )
         }
-        Spacer(modifier = Modifier.height(10.dp))
+        Row {
+            Column(
+                horizontalAlignment = Alignment.CenterHorizontally
+            ) {
+                Text(
+                    text = stringResource(R.string.explore_title),
+                    style = MaterialTheme.typography.h1
+                )
 
-        SearchAndFilter(viewModel = viewModel);
+                Spacer(modifier = Modifier.height(10.dp))
 
-        Spacer(modifier = Modifier.height(20.dp))
+                SearchAndFilter(viewModel = viewModel);
 
-       RoutinesGrid(viewModel = viewModel, actionRedirect = { }, routineCard = RoutineCard.ExploreRoutine)
+                Spacer(modifier = Modifier.height(20.dp))
+
+                RoutinesGrid(
+                    viewModel = viewModel,
+                    actionRedirect = { },
+                    routineCard = RoutineCard.ExploreRoutine
+                )
+            }
+
+        }
     }
 }

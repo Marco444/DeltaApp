@@ -27,37 +27,46 @@ fun comparebyFavourite(routine1: Routines, routine2: Routines): Int {
 fun ProgressScreen(viewModel: RoutinesViewModel, actionRedirect: (Int) -> Unit, scaffoldState: ScaffoldState){
 
     val coroutineScope = rememberCoroutineScope()
-
     Column (
         modifier = Modifier
             .fillMaxWidth()
             .fillMaxHeight()
             .background(Color.Black),
-        horizontalAlignment = Alignment.CenterHorizontally
     ){
 
-        Spacer(modifier = Modifier.height(20.dp))
-        Row (horizontalArrangement = Arrangement.spacedBy(10.dp)){
+        Row (modifier = Modifier.padding(top = 10.dp, start = 10.dp)) {
             HamburgerButton(
                 modifier = Modifier.align(Alignment.CenterVertically),
                 onClick = {
-                            coroutineScope.launch {
-                                scaffoldState.drawerState.open()
-                            }
+                    coroutineScope.launch {
+                        scaffoldState.drawerState.open()
+                    }
                 }
             )
-            Text(
-                text = stringResource(R.string.progress_title),
-                style = MaterialTheme.typography.h1
-            )
         }
+        Row {
+            Column(
+                horizontalAlignment = Alignment.CenterHorizontally
+            ) {
 
-        Spacer(modifier = Modifier.height(10.dp))
+                Text(
+                    text = stringResource(R.string.progress_title),
+                    style = MaterialTheme.typography.h1
+                )
 
-        RoutineCardSortButton(viewModel = viewModel, NavBarScreen.Progress)
 
-        Spacer(modifier = Modifier.height(20.dp))
+                Spacer(modifier = Modifier.height(10.dp))
 
-        RoutinesGrid(viewModel = viewModel, actionRedirect = actionRedirect, routineCard = RoutineCard.Progress)
+                RoutineCardSortButton(viewModel = viewModel, NavBarScreen.Progress)
+
+                Spacer(modifier = Modifier.height(20.dp))
+
+                RoutinesGrid(
+                    viewModel = viewModel,
+                    actionRedirect = actionRedirect,
+                    routineCard = RoutineCard.Progress
+                )
+            }
+        }
     }
 }
