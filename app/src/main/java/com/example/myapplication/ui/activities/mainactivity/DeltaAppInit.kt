@@ -8,21 +8,22 @@ import androidx.navigation.NavHostController
 import androidx.navigation.compose.NavHost
 import androidx.navigation.compose.composable
 import androidx.navigation.compose.rememberNavController
+import com.example.myapplication.ui.navigation.Screen
 
 @Composable
 fun DeltaAppInit(
     viewModel: UserViewModel = viewModel(),
-    //mainViewModel: MainViewModel,
     navController: NavHostController = rememberNavController(),
     initialisedHandler: () -> Unit,
 ) {
-    NavHost(navController = navController, startDestination = "home") {
-        composable("home") {
+    NavHost(navController = navController, startDestination = Screen.Home.route) {
+        composable(Screen.Home.route) {
             LandingScreen(
-                loginHandler = { navController.navigate("login2") },
-                tryOutHandler = initialisedHandler)
+                loginHandler = { navController.navigate(Screen.Login.route) },
+                tryOutHandler = initialisedHandler
+            )
         }
-        composable("login2",
+        composable(Screen.Login.route,
 //            deepLinks = listOf(
 //                navDeepLink {
 //                    uriPattern = "http://test.com"
@@ -30,7 +31,7 @@ fun DeltaAppInit(
 //            )
         ) {
             LogIn(actionRedirect = initialisedHandler,
-                backButton = {navController.navigate("home")} )
+                backButton = {navController.popBackStack()},viewModel = viewModel )
         }
     }
 }

@@ -88,7 +88,7 @@ fun ExploreScreen(viewModel: RoutinesViewModel, scaffoldState: ScaffoldState){
         modifier = Modifier
             .fillMaxWidth()
             .fillMaxHeight()
-            .background(Color.Black),
+            .background(MaterialTheme.colors.background),
     ){
 
         Row (modifier = Modifier.padding(top = 10.dp, start = 10.dp)) {

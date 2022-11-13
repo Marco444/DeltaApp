@@ -23,7 +23,8 @@ class ThirdActivity : ComponentActivity() {
 
                 if(saved != null) {
                     Text(text = saved)
-                   DeltaAppExecute(saved = saved, redirectHandler = {startActivity(navigate)}, viewModel = viewModel())
+                   DeltaAppExecute(saved = saved, redirectHandler = {
+                       startActivity(navigate)}, viewModel = viewModel())
                 } else {
                     Text(text = "no entre")
                 }

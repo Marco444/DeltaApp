@@ -10,7 +10,7 @@ val Gray = Color(0xFF4B4B4B)
 val Red = Color(0xFFEB8080)
 val Yellow = Color(0xFFF1D47E)
 val GreenSuccess = Color(0xFF00E009)
-
+val backGround = Color(0xFF1E1E1E)
 val GrayTransparency = Color(0x44A8A8A8)
 val cardBackgroundColor = Color(0xFFD9D9D9)
 val Black = Color(0x1f1f1f1f)

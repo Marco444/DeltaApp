@@ -23,17 +23,8 @@ class MainActivity : ComponentActivity() {
 
                 val navController = rememberNavController()
 
-                //Main()
-
                 DeltaAppInit(initialisedHandler = {startActivity(navigate)})
             }
         }
     }
 }
-//
-//@Composable
-//fun Main(
-//    viewModel: MainViewModel = viewModel(factory = getViewModelFactory())
-//) {
-//    Text(text = "hellow")
-//}

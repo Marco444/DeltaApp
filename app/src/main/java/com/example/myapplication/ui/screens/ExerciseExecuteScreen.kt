@@ -22,7 +22,7 @@ fun ExerciseExecScreen(viewModel: ExecuteRoutineViewModel = viewModel(),
                        handlerBack : () ->Unit,
                        handlerFinishRoutine: ()->Unit){
 
-    Box(modifier = Modifier.background(Color(0xFF1E1E1E))) {
+    Box(modifier = Modifier.background(MaterialTheme.colors.background)) {
         Column(verticalArrangement = Arrangement.SpaceEvenly) {
             Column(modifier = Modifier.fillMaxWidth()) {
                 Button(

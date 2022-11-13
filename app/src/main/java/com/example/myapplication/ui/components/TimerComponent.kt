@@ -30,24 +30,6 @@ import kotlin.math.cos
 import kotlin.math.sin
 
 @Composable
-fun ToPreview(){
-    Box(
-        contentAlignment = Alignment.Center,
-        modifier = Modifier.padding(30.dp)
-    ) {
-        // call the function Timer
-        // and pass the values
-        // it is defined below.
-        Timer(
-            totalTime = 100L * 1000L,
-            handleColor = Green,
-            inactiveBarColor = Color.Red,
-            activeBarColor = Green,
-            modifier = Modifier.size(200.dp)
-        )
-    }
-}
-@Composable
 fun Timer(
 
     // total time of the timer

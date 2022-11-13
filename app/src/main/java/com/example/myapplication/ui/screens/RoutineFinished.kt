@@ -38,7 +38,7 @@ fun RoutineFinished(
         modifier = Modifier
             .fillMaxWidth()
             .fillMaxHeight()
-            .background(Color.Black),
+            .background(MaterialTheme.colors.background),
     ) {
         Row(verticalAlignment = Alignment.CenterVertically) {
 

@@ -37,15 +37,19 @@ import androidx.compose.ui.text.input.VisualTransformation
 import androidx.compose.ui.text.style.TextDecoration
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
+import androidx.lifecycle.ViewModel
 import com.example.myapplication.R
+import com.example.myapplication.ui.activities.mainactivity.UserViewModel
 import com.example.myapplication.ui.components.Button1
 import com.example.myapplication.ui.theme.Green
 
 
 @Composable
-fun LogIn(actionRedirect: () -> Unit, backButton: () -> Unit){
+fun LogIn(actionRedirect: () -> Unit, backButton: () -> Unit,viewModel: UserViewModel){
 
     var passWord by remember { mutableStateOf(TextFieldValue("")) }
+    var email by remember { mutableStateOf(TextFieldValue("")) }
+
     var snackbar by remember { mutableStateOf(false) }
     val configuration = LocalConfiguration.current
     val focusManager = LocalFocusManager.current
@@ -92,18 +96,21 @@ fun LogIn(actionRedirect: () -> Unit, backButton: () -> Unit){
                     .align(CenterHorizontally)
             )
             EmailTextField(
-                onTextChange = {/*TODO AGREGAR EL MODIFICADOR DEL STORE*/ },
-                modifier = Modifier.align(CenterHorizontally)
+                onTextChange = {email = it },
+                modifier = Modifier.align(CenterHorizontally),
+                email = email
             )
             PasswordTextField(
-                onTextChange = {},
-                modifier = Modifier.align(CenterHorizontally)
+                onTextChange = {passWord = it},
+                modifier = Modifier.align(CenterHorizontally),
+                password = passWord
             )
             Button1(
                 fontSize = 23,
                 text = "Log In",
-                handler = {//viewModel.login("johnDoe1", "1234");
-                          // if(viewModel.uiState.isAuthenticated)
+                handler = {
+                    viewModel.loginAttempt(email.text, passWord.text );
+                           if(viewModel.uiState.value.loggedIn.value)
                                actionRedirect()},
                 modifier = Modifier.align(CenterHorizontally)
             )
@@ -118,16 +125,12 @@ fun LogIn(actionRedirect: () -> Unit, backButton: () -> Unit){
 
 }
 @Composable
-fun EmailTextField(onTextChange :(TextFieldValue) -> Unit,modifier: Modifier = Modifier){
-    var email by remember { mutableStateOf(TextFieldValue("")) }
+fun EmailTextField(onTextChange :(TextFieldValue) -> Unit,modifier: Modifier = Modifier,email:TextFieldValue){
     TextField( value = email,
-        onValueChange = { newText ->
-            email = newText
-            onTextChange(newText);
-        },
+        onValueChange = onTextChange,
         shape = RoundedCornerShape(8.dp),
         colors = TextFieldDefaults.textFieldColors(
-            backgroundColor = MaterialTheme.colors.background,
+            backgroundColor = MaterialTheme.colors.surface,
             focusedIndicatorColor =  Color.Transparent),
         label = {
             Text(text = "Email")
@@ -142,17 +145,13 @@ fun EmailTextField(onTextChange :(TextFieldValue) -> Unit,modifier: Modifier = M
     )
 }
 @Composable
-fun PasswordTextField(onTextChange :(TextFieldValue) -> Unit,modifier: Modifier = Modifier){
-    var email by remember { mutableStateOf(TextFieldValue("")) }
+fun PasswordTextField(onTextChange :(TextFieldValue) -> Unit,modifier: Modifier = Modifier,password:TextFieldValue){
     var passwordVisible by remember { mutableStateOf(false) }
-    TextField( value = email,
-        onValueChange = { newText ->
-            email = newText
-            onTextChange(newText);
-        },
+    TextField( value = password,
+        onValueChange = onTextChange,
         shape = RoundedCornerShape(8.dp),
         colors = TextFieldDefaults.textFieldColors(
-            backgroundColor = MaterialTheme.colors.background,
+            backgroundColor = MaterialTheme.colors.surface,
             focusedIndicatorColor =  Color.Transparent),
         label = {
             Text(text = "Password")
