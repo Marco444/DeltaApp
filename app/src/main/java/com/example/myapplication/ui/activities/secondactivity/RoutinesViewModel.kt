@@ -23,6 +23,7 @@ class RoutinesViewModel : ViewModel() {
 
     }
     fun sortRoutines(option: SortOption, screen: NavBarScreen) {
+        println("sorting with ")
         if(option == SortOption.POINTS)
             sortRoutinesPoints(screen)
         if(option == SortOption.FAVOURITE)

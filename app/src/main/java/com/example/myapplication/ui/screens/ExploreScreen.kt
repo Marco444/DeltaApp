@@ -112,7 +112,7 @@ fun ExploreScreen(viewModel: RoutinesViewModel, scaffoldState: ScaffoldState){
 
                 Spacer(modifier = Modifier.height(10.dp))
 
-                SearchAndFilter(viewModel = viewModel);
+                SearchAndFilter(viewModel = viewModel)
 
                 Spacer(modifier = Modifier.height(20.dp))
 

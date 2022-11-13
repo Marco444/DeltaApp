@@ -3,6 +3,7 @@ package com.example.myapplication.ui.screens
 import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.*
 import androidx.compose.foundation.shape.RoundedCornerShape
+import androidx.compose.material.MaterialTheme
 import androidx.compose.material.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Alignment
@@ -28,9 +29,7 @@ fun QRScreen(viewModel: RoutinesViewModel) {
         Spacer(modifier = Modifier.height(100.dp))
         Text(
             text = "Scan a Routine",
-            fontFamily = H1Font,
-            fontSize = 50.sp,
-            color = Green,
+            style = MaterialTheme.typography.h3,
             modifier = Modifier.align(Alignment.CenterHorizontally)
         )
         Spacer(modifier = Modifier.height(100.dp))
