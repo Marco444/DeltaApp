@@ -18,6 +18,11 @@ class ExecuteRoutineViewModel() : ViewModel() {
     var actualExercise = MutableStateFlow(Exercise(name = "pecho 0"))
         private set
 
+    private var opinions: List<String> = listOf("Aweful", "Bad", "Regular", "Good", "Excelent")
+    private var actualOpinion: Int = 2
+
+    var opinion = MutableStateFlow("Regular")
+
     init {
         if(hasNext())
             nextExercise()
@@ -101,11 +106,6 @@ class ExecuteRoutineViewModel() : ViewModel() {
     fun getRoutineMainSetExercises() : List<Exercise>{
         return   _execRoutineState.value.exercises.mainSetExercises
     }
-
-    private var opinions: List<String> = listOf("Aweful", "Bad", "Regular", "Good", "Excelent")
-    private var actualOpinion: Int = 2
-
-    var opinion = MutableStateFlow("")
 
     fun upOpinion() {
         if(actualOpinion < 4) {
