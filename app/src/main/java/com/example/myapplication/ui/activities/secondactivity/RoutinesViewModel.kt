@@ -1,13 +1,7 @@
-package com.example.myapplication.ui.viewmodel
+package com.example.myapplication.ui.activities.secondactivity
 
-import androidx.compose.material.ScaffoldState
-import androidx.compose.material.rememberScaffoldState
 import androidx.compose.material3.windowsizeclass.WindowWidthSizeClass
-import androidx.compose.runtime.MutableState
-import androidx.compose.runtime.rememberCoroutineScope
-import androidx.lifecycle.LifecycleCoroutineScope
 import androidx.lifecycle.ViewModel
-import com.example.myapplication.data.Exercise
 import com.example.myapplication.data.Routines
 import com.example.myapplication.ui.components.RoutineCard
 import com.example.myapplication.ui.components.SortOption

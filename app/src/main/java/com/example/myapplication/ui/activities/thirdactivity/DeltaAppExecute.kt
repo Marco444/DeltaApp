@@ -1,7 +1,6 @@
-package com.example.myapplication.ui
+package com.example.myapplication.ui.activities.thirdactivity
 
 import androidx.compose.runtime.Composable
-import androidx.lifecycle.viewmodel.compose.viewModel
 import androidx.navigation.NavHostController
 import androidx.navigation.compose.NavHost
 import androidx.navigation.compose.composable
@@ -10,7 +9,6 @@ import com.example.myapplication.ui.navigation.Screen
 import com.example.myapplication.ui.screens.ExerciseExecScreen
 import com.example.myapplication.ui.screens.RoutineDescriptionScreen
 import com.example.myapplication.ui.screens.RoutineFinished
-import com.example.myapplication.ui.viewmodel.ExecuteRoutineViewModel
 
 class DeltaAppExecute {
 }

@@ -1,6 +1,5 @@
 package com.example.myapplication.ui.screens
 
-import android.annotation.SuppressLint
 import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.*
 import androidx.compose.foundation.shape.CircleShape
@@ -8,7 +7,6 @@ import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.material.*
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.filled.Add
-import androidx.compose.material.icons.filled.Close
 import androidx.compose.material.icons.filled.Remove
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.collectAsState
@@ -19,14 +17,11 @@ import androidx.compose.ui.Alignment.Companion.CenterVertically
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.clip
 import androidx.compose.ui.graphics.Color
-import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
-import com.example.myapplication.ui.components.BackButton
 import com.example.myapplication.ui.components.Button1
 import com.example.myapplication.ui.theme.*
-import com.example.myapplication.ui.viewmodel.ExecuteRoutineViewModel
-import com.example.myapplication.ui.viewmodel.RoutinesViewModel
+import com.example.myapplication.ui.activities.thirdactivity.ExecuteRoutineViewModel
 
 
 @Composable

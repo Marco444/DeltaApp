@@ -1,6 +1,5 @@
-package com.example.myapplication.ui.viewmodel
+package com.example.myapplication.ui.activities.thirdactivity
 
-import androidx.compose.runtime.MutableState
 import androidx.lifecycle.ViewModel
 import com.example.myapplication.data.Exercise
 import com.example.myapplication.data.Routines

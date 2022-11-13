@@ -1,6 +1,5 @@
 package com.example.myapplication.ui.screens
 
-import androidx.compose.foundation.ExperimentalFoundationApi
 import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.*
 import androidx.compose.foundation.lazy.LazyColumn
@@ -8,28 +7,18 @@ import androidx.compose.foundation.lazy.items
 import androidx.compose.foundation.shape.CircleShape
 import androidx.compose.material.*
 import androidx.compose.material.icons.Icons
-import androidx.compose.material.icons.filled.ArrowBack
 import androidx.compose.material.icons.filled.Close
-import androidx.compose.material.icons.filled.CropSquare
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
-import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
-import com.example.myapplication.data.RoutineProgress
 import com.example.myapplication.data.Routines
 import com.example.myapplication.ui.components.Button1
 import com.example.myapplication.ui.components.ExPreviewCard
-import com.example.myapplication.ui.components.ROUTINE_CARD_WIDTH
-import com.example.myapplication.ui.components.RoutineCard
-import com.example.myapplication.ui.navigation.Screen
 import com.example.myapplication.ui.theme.Green
-import com.example.myapplication.ui.theme.MyApplicationTheme
-import com.example.myapplication.ui.viewmodel.ExecuteRoutine
-import com.example.myapplication.ui.viewmodel.ExecuteRoutineViewModel
-import com.example.myapplication.ui.viewmodel.RoutinesViewModel
+import com.example.myapplication.ui.activities.thirdactivity.ExecuteRoutineViewModel
 
 @Composable
 fun RoutineDescriptionScreen(viewModel: ExecuteRoutineViewModel, routineId: String, backHandler : () -> Unit, starRoutineHanlder : ()->Unit){

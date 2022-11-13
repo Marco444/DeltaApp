@@ -3,7 +3,6 @@ package com.example.myapplication.ui.navigation
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.filled.*
 import androidx.compose.ui.graphics.vector.ImageVector
-import com.example.myapplication.R
 
 
 sealed class Screen(val route: String) {

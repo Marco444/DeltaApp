@@ -1,12 +1,10 @@
-package com.example.myapplication.ui.viewmodel
+package com.example.myapplication.ui.activities.secondactivity
 
 
 import androidx.compose.runtime.getValue
 import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.setValue
 import com.example.myapplication.R
-import com.example.myapplication.data.Exercise
-import com.example.myapplication.data.RoutineExercises
 import com.example.myapplication.data.Routines
 import kotlinx.coroutines.flow.MutableStateFlow
 

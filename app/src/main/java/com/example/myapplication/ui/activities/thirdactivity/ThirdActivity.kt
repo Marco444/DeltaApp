@@ -1,12 +1,12 @@
-package com.example.myapplication.ui
+package com.example.myapplication.ui.activities.thirdactivity
 
 import android.content.Intent
 import android.os.Bundle
 import androidx.activity.ComponentActivity
 import androidx.activity.compose.setContent
 import androidx.compose.material.Text
+import com.example.myapplication.ui.activities.secondactivity.SecondActivity
 import com.example.myapplication.ui.theme.MyApplicationTheme
-import com.example.myapplication.ui.viewmodel.ExecuteRoutineViewModel
 
 class ThirdActivity : ComponentActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {

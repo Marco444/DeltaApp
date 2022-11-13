@@ -11,7 +11,6 @@ import androidx.compose.material.Slider
 import androidx.compose.material.SliderDefaults
 import androidx.compose.material.Text
 import androidx.compose.runtime.*
-import androidx.compose.runtime.saveable.rememberSaveable
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
@@ -20,7 +19,7 @@ import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import com.example.myapplication.data.Exercise
 import com.example.myapplication.ui.theme.Green
-import com.example.myapplication.ui.viewmodel.ExecuteRoutineViewModel
+import com.example.myapplication.ui.activities.thirdactivity.ExecuteRoutineViewModel
 import kotlinx.coroutines.flow.MutableStateFlow
 
 

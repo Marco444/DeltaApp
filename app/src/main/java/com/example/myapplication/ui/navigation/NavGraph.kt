@@ -6,7 +6,7 @@ import androidx.navigation.NavHostController
 import androidx.navigation.compose.NavHost
 import androidx.navigation.compose.composable
 import com.example.myapplication.ui.screens.*
-import com.example.myapplication.ui.viewmodel.RoutinesViewModel
+import com.example.myapplication.ui.activities.secondactivity.RoutinesViewModel
 
 @Composable
 

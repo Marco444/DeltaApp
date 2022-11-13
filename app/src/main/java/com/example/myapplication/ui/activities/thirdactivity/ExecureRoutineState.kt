@@ -1,10 +1,8 @@
-package com.example.myapplication.ui.viewmodel
+package com.example.myapplication.ui.activities.thirdactivity
 
-import androidx.compose.runtime.mutableStateOf
 import com.example.myapplication.data.Exercise
 import com.example.myapplication.data.RoutineExercises
 import com.example.myapplication.data.Routines
-import kotlinx.coroutines.flow.MutableStateFlow
 
 class ExecuteRoutine{
 

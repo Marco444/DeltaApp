@@ -1,35 +1,21 @@
 package com.example.myapplication.ui.screens
 
 import androidx.lifecycle.viewmodel.compose.viewModel
-import android.annotation.SuppressLint
 import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.*
 import androidx.compose.foundation.shape.CircleShape
 import androidx.compose.material.*
-import androidx.compose.material.ButtonDefaults.elevation
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.filled.Close
 import androidx.compose.runtime.*
 import androidx.compose.ui.Alignment
-import androidx.compose.ui.Alignment.Companion.CenterHorizontally
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
-import androidx.compose.ui.text.style.TextAlign
-import androidx.compose.ui.tooling.preview.Preview
-import androidx.compose.ui.unit.IntOffset
 import androidx.compose.ui.unit.dp
-import androidx.compose.ui.unit.sp
-import androidx.compose.ui.window.Popup
-import androidx.compose.ui.window.PopupProperties
-import androidx.lifecycle.ViewModel
 import com.example.myapplication.ui.components.Button1
-import com.example.myapplication.ui.components.ExPreviewCard
 import com.example.myapplication.ui.components.ExerciseExecCard
 import com.example.myapplication.ui.theme.Green
-import com.example.myapplication.ui.theme.GreenTransparency
-import com.example.myapplication.ui.viewmodel.ExecuteRoutineViewModel
-import com.example.myapplication.ui.viewmodel.RoutinesViewModel
-import java.lang.Float
+import com.example.myapplication.ui.activities.thirdactivity.ExecuteRoutineViewModel
 
 @Composable
 fun ExerciseExecScreen(viewModel: ExecuteRoutineViewModel = viewModel(),

@@ -18,15 +18,13 @@ import androidx.compose.ui.draw.clip
 import androidx.compose.ui.draw.scale
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.res.painterResource
-import androidx.compose.ui.res.stringResource
-import androidx.compose.ui.text.font.FontFamily
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import com.example.myapplication.R
 import com.example.myapplication.ui.theme.Green
 import com.example.myapplication.ui.theme.H1Font
-import com.example.myapplication.ui.viewmodel.RoutinesViewModel
+import com.example.myapplication.ui.activities.secondactivity.RoutinesViewModel
 
 
 @Composable

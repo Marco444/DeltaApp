@@ -1,8 +1,6 @@
 package com.example.myapplication.data
 
-import androidx.compose.material.MaterialTheme
 import androidx.compose.ui.graphics.Color
-import com.example.myapplication.ui.theme.Green
 import com.example.myapplication.ui.theme.GreenSuccess
 import com.example.myapplication.ui.theme.Red
 import com.example.myapplication.ui.theme.Yellow

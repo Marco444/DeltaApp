@@ -26,9 +26,7 @@ import androidx.compose.ui.unit.sp
 import com.example.myapplication.R
 import com.example.myapplication.data.Routines
 import com.example.myapplication.ui.theme.Green
-import com.example.myapplication.ui.viewmodel.RoutinesViewModel
-import kotlinx.coroutines.flow.MutableStateFlow
-import kotlinx.coroutines.flow.StateFlow
+import com.example.myapplication.ui.activities.secondactivity.RoutinesViewModel
 
 
 const val ROUTINE_CARD_WIDTH = 370;

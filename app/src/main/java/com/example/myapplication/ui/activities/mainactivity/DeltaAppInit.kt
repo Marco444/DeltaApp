@@ -1,4 +1,4 @@
-package com.example.myapplication.ui.main
+package com.example.myapplication.ui.activities.mainactivity
 
 import androidx.compose.runtime.Composable
 import com.example.myapplication.ui.screens.LogIn

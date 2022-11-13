@@ -1,4 +1,4 @@
-package com.example.myapplication.ui.main
+package com.example.myapplication.ui.activities.mainactivity
 
 import kotlinx.coroutines.flow.MutableStateFlow
 

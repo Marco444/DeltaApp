@@ -1,10 +1,7 @@
 package com.example.myapplication.ui.screens
 
-import androidx.compose.foundation.ExperimentalFoundationApi
 import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.*
-import androidx.compose.foundation.lazy.LazyColumn
-import androidx.compose.foundation.lazy.items
 import androidx.compose.material.MaterialTheme
 import androidx.compose.material.ScaffoldState
 import androidx.compose.material.Text
@@ -19,8 +16,7 @@ import com.example.myapplication.R
 import com.example.myapplication.data.Routines
 import com.example.myapplication.ui.components.*
 import com.example.myapplication.ui.navigation.NavBarScreen
-import com.example.myapplication.ui.navigation.Screen
-import com.example.myapplication.ui.viewmodel.RoutinesViewModel
+import com.example.myapplication.ui.activities.secondactivity.RoutinesViewModel
 import kotlinx.coroutines.launch
 
 fun comparebyFavourite(routine1: Routines, routine2: Routines): Int {
