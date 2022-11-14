@@ -6,6 +6,7 @@ import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import com.example.myapplication.data.Routines
 import com.example.myapplication.data.repository.RoutinesRepository
+import com.example.myapplication.data.repository.UserRepository
 import com.example.myapplication.ui.components.RoutineCard
 import com.example.myapplication.ui.components.SortOption
 import com.example.myapplication.ui.navigation.NavBarScreen
@@ -14,13 +15,20 @@ import kotlinx.coroutines.flow.update
 import kotlinx.coroutines.launch
 
 class RoutinesViewModel(
-    routinesRepository: RoutinesRepository
+    routinesRepository: RoutinesRepository,
+    userRepository: UserRepository
 ) : ViewModel() {
     private val _sortState = MutableStateFlow(SortOption.POINTS)
 
     private val _routinesState = MutableStateFlow(RoutinesState())
 
     init {
+        viewModelScope.launch {
+          val aux = userRepository.getCurrentUser(false)
+           if(aux != null)
+               aux.id?.let {
+                  _routinesState.value.userRoutines = userRepository.getUserRoutine(true, it).map {routine -> MutableStateFlow(routine) } }
+        }
         viewModelScope.launch {
             _routinesState.value.exploreRoutines =
                 routinesRepository.getRoutines(true).map { MutableStateFlow(it) }
@@ -47,6 +55,8 @@ class RoutinesViewModel(
     fun getRoutines(routineCard: RoutineCard): List<MutableStateFlow<Routines>> {
         return if(routineCard == RoutineCard.ExploreRoutine) _routinesState.value.exploreRoutines
         else _routinesState.value.userRoutines
+
+
     }
 
     fun routine(id: Int): Routines {
@@ -89,8 +99,14 @@ class RoutinesViewModel(
     fun isSelected(id: Int, routineCard: RoutineCard): Boolean {
         return if(RoutineCard.ExploreRoutine == routineCard)
             _routinesState.value.exploreRoutines.find { routine ->routine.value.id == id }!!.value.added
-        else
-            _routinesState.value.userRoutines.find { routine ->routine.value.id == id }!!.value.favourite
+        else {
+            if(_routinesState.value.userRoutines.isNotEmpty()) {
+                //_routinesState.value.userRoutines.find { routine -> routine.value.id == id }!!.value.favourite
+                return false
+            }else
+                return false
+        }
+
     }
 
 

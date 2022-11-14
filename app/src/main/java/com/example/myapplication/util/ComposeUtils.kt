@@ -19,5 +19,7 @@ fun getViewModelFactory(defaultArgs: Bundle? = null): ViewModelFactory {
 fun getRoutineViewModelFactory(defaultArgs: Bundle? = null) : RoutineViewModelFactory{
     val application: MyApplication = LocalContext.current.applicationContext as MyApplication
     val routinesRepository = application.routinesRepository
-    return RoutineViewModelFactory( routinesRepository, LocalSavedStateRegistryOwner.current, defaultArgs)
+    val userRepository = application.userRepository
+
+    return RoutineViewModelFactory( routinesRepository,userRepository, LocalSavedStateRegistryOwner.current, defaultArgs)
 }

@@ -12,6 +12,8 @@ import com.example.myapplication.ui.activities.secondactivity.RoutinesViewModel
 
 class RoutineViewModelFactory constructor(
     private val routinesRepository: RoutinesRepository,
+    private val userRepository: UserRepository,
+
     owner: SavedStateRegistryOwner,
     defaultArgs: Bundle? = null
 ) : AbstractSavedStateViewModelFactory(owner, defaultArgs) {
@@ -23,7 +25,7 @@ class RoutineViewModelFactory constructor(
     ) = with(modelClass) {
         when {
             isAssignableFrom(RoutinesViewModel::class.java) ->
-                RoutinesViewModel(routinesRepository)
+                RoutinesViewModel(routinesRepository,userRepository)
             else ->
                 throw IllegalArgumentException("Unknown ViewModel class: ${modelClass.name}")
         }
