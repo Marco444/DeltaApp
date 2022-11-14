@@ -14,13 +14,14 @@ import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.StateFlow
 import kotlinx.coroutines.flow.asStateFlow
 import kotlinx.coroutines.launch
+import okhttp3.internal.wait
 
 class UserViewModel(
     private val sessionManager: SessionManager,
     private val userRepository: UserRepository,
 ) : ViewModel() {
 
-    var uiState by mutableStateOf(MainUiState(isAuthenticated = sessionManager.loadAuthToken() != null))
+    var uiState by mutableStateOf(MainUiState())
         private set
 
     fun login(username: String, password: String) = viewModelScope.launch {

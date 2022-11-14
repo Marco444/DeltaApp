@@ -42,6 +42,8 @@ import com.example.myapplication.R
 import com.example.myapplication.ui.activities.mainactivity.UserViewModel
 import com.example.myapplication.ui.components.Button1
 import com.example.myapplication.ui.theme.Green
+import kotlinx.coroutines.joinAll
+import okhttp3.internal.wait
 
 
 @Composable
@@ -110,8 +112,8 @@ fun LogIn(actionRedirect: () -> Unit, backButton: () -> Unit,viewModel: UserView
                 text = "Log In",
                 handler = {
                     viewModel.login(email.text, passWord.text )
-                    if(uiState.isAuthenticated)
-                        actionRedirect()
+
+
 
                     },
                 modifier = Modifier.align(CenterHorizontally)
@@ -120,6 +122,10 @@ fun LogIn(actionRedirect: () -> Unit, backButton: () -> Unit,viewModel: UserView
                 handler = {/*TODO AGREGAR EL MODIFICADOR DEL STORE*/ },
                 modifier = Modifier.align(CenterHorizontally)
             )
+            LaunchedEffect(key1 = uiState.isAuthenticated){
+                if(uiState.isAuthenticated)
+                    actionRedirect()
+            }
 
         }
     }

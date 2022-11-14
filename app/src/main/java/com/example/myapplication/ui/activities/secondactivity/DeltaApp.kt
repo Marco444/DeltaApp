@@ -16,8 +16,10 @@ import com.example.myapplication.ui.navigation.BottomBar
 import com.example.myapplication.ui.navigation.NavGraph
 import com.example.myapplication.ui.activities.secondactivity.RoutinesViewModel
 import androidx.lifecycle.viewmodel.compose.viewModel
+import com.example.myapplication.ui.activities.mainactivity.UserViewModel
 import com.example.myapplication.ui.components.DrawerContent
 import com.example.myapplication.ui.navigation.SideBar
+import com.example.myapplication.util.getViewModelFactory
 
 
 @SuppressLint("CoroutineCreationDuringComposition")
@@ -27,7 +29,8 @@ fun DeltaApp(
     modifier: Modifier = Modifier,
     viewModel: RoutinesViewModel = viewModel(),
     navController: NavHostController = rememberNavController(),
-    executeRedirect: (Int) -> Unit
+    executeRedirect: (Int) -> Unit,
+    userViewModel: UserViewModel = viewModel(factory = getViewModelFactory())
 ) {
     viewModel.setWidth(windowSize)
 
@@ -40,7 +43,7 @@ fun DeltaApp(
             bottomBar = {
                 BottomBar(navController = navController)
             },
-            drawerContent = { DrawerContent() },
+            drawerContent = { DrawerContent(userViewModel) },
             scaffoldState = scaffoldState
         ) {
             Box(
