@@ -28,7 +28,7 @@ fun DeltaAppExecute(
             RoutineDescriptionScreen(
                 viewModel =viewModel,
                 routineId = saved,
-                backHandler = redirectHandler,
+                backHandler = { redirectHandler().also { navController.popBackStack() } },
                 starRoutineHanlder = { navController.navigate(Screen.Execute.route) })
         }
         composable(Screen.Execute.route) { backStackEntry ->

@@ -18,6 +18,7 @@ object RetrofitClient {
 
     private fun getInstance(context: Context) : Retrofit =
         instance ?: synchronized(this) {
+            // Aca hacemos un lock por si vienen mas de una corrutina a preguntar si es null
             instance ?: buildRetrofit(context).also { instance = it}
         }
 

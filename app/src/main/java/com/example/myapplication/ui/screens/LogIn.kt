@@ -49,10 +49,10 @@ fun LogIn(actionRedirect: () -> Unit, backButton: () -> Unit,viewModel: UserView
 
     var passWord by remember { mutableStateOf(TextFieldValue("")) }
     var email by remember { mutableStateOf(TextFieldValue("")) }
-
     var snackbar by remember { mutableStateOf(false) }
     val configuration = LocalConfiguration.current
     val focusManager = LocalFocusManager.current
+    val uiState = viewModel.uiState
 
     //LockScreenOrientation(ActivityInfo.SCREEN_ORIENTATION_PORTRAIT)
     BackgroundImage(painter = painterResource(id = R.drawable.log_in_photo))
@@ -109,12 +109,13 @@ fun LogIn(actionRedirect: () -> Unit, backButton: () -> Unit,viewModel: UserView
                 fontSize = 23,
                 text = "Log In",
                 handler = {
-                    viewModel.loginAttempt(email.text, passWord.text );
-                           if(viewModel.uiState.value.loggedIn.value)
-                               actionRedirect()},
+                    viewModel.login(email.text, passWord.text )
+                    if(uiState.isAuthenticated)
+                        actionRedirect()
+
+                    },
                 modifier = Modifier.align(CenterHorizontally)
             )
-
             LinkedText(
                 handler = {/*TODO AGREGAR EL MODIFICADOR DEL STORE*/ },
                 modifier = Modifier.align(CenterHorizontally)
