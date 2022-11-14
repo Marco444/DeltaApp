@@ -18,9 +18,17 @@ import com.example.myapplication.ui.theme.Green
 import com.example.myapplication.ui.activities.thirdactivity.ExecuteRoutineViewModel
 
 @Composable
+fun ProgressIndicator(value: State<Int>) {
+
+}
+
+@Composable
 fun ExerciseExecScreen(viewModel: ExecuteRoutineViewModel = viewModel(),
                        handlerBack : () ->Unit,
                        handlerFinishRoutine: ()->Unit){
+
+
+    //val value by viewModel.next.collectAsState()
 
     Box(modifier = Modifier.background(MaterialTheme.colors.background)) {
         Column(verticalArrangement = Arrangement.SpaceEvenly) {
@@ -44,8 +52,9 @@ fun ExerciseExecScreen(viewModel: ExecuteRoutineViewModel = viewModel(),
             Spacer(modifier = Modifier.height(20.dp))
             Column(modifier = Modifier.fillMaxSize(), horizontalAlignment = Alignment.CenterHorizontally) {
 
-               // val exerciseIdx by viewModel.next.collectAsState()
-                LinearProgressIndicator(progress = 0.5f, modifier = Modifier.padding(30.dp))
+
+
+
 
                 ExerciseExecCard(actualExercise = viewModel.actualExercise ,viewModel = viewModel)
     

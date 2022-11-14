@@ -6,10 +6,7 @@ import androidx.compose.foundation.interaction.collectIsDraggedAsState
 import androidx.compose.foundation.interaction.collectIsPressedAsState
 import androidx.compose.foundation.layout.*
 import androidx.compose.foundation.shape.RoundedCornerShape
-import androidx.compose.material.Card
-import androidx.compose.material.Slider
-import androidx.compose.material.SliderDefaults
-import androidx.compose.material.Text
+import androidx.compose.material.*
 import androidx.compose.runtime.*
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
@@ -33,6 +30,11 @@ fun RecomposingTitle(exercise: MutableStateFlow<Exercise>) {
 fun ExerciseExecCard(viewModel: ExecuteRoutineViewModel, actualExercise: MutableStateFlow<Exercise>){
 
     val exercise by actualExercise.collectAsState()
+
+    LinearProgressIndicator(
+        progress =  exercise.order / (viewModel.exerciseCount * 1f),
+        modifier = Modifier.padding(30.dp)
+    )
 
     Card(backgroundColor = Gray,shape = RoundedCornerShape(30.dp)) {
         Column(horizontalAlignment = Alignment.CenterHorizontally, modifier = Modifier
