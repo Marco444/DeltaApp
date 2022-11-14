@@ -23,25 +23,30 @@ fun comparebyFavourite(routine1: Routines, routine2: Routines): Int {
 }
 
 @Composable
-fun ProgressScreen(viewModel: RoutinesViewModel, actionRedirect: (Int) -> Unit, scaffoldState: ScaffoldState){
+fun ProgressScreen(viewModel: RoutinesViewModel, actionRedirect: (Int) -> Unit, scaffoldState: ScaffoldState) {
 
     val coroutineScope = rememberCoroutineScope()
-    Column (
+    Column(
         modifier = Modifier
             .fillMaxWidth()
             .fillMaxHeight()
             .background(MaterialTheme.colors.background),
-    ){
 
-        Row (modifier = Modifier.padding(top = 10.dp, start = 10.dp)) {
-            HamburgerButton(
-                modifier = Modifier.align(Alignment.CenterVertically),
-                onClick = {
-                    coroutineScope.launch {
-                        scaffoldState.drawerState.open()
+        horizontalAlignment = Alignment.CenterHorizontally
+    ) {
+        Column(modifier = Modifier.align(Alignment.Start)) {
+
+            Row(modifier = Modifier.padding(top = 10.dp, start = 10.dp)) {
+                HamburgerButton(
+                    modifier = Modifier.align(Alignment.CenterVertically),
+                    onClick = {
+                        coroutineScope.launch {
+                            scaffoldState.drawerState.open()
+                        }
                     }
-                }
-            )
+
+                )
+            }
         }
         Row {
             Column(

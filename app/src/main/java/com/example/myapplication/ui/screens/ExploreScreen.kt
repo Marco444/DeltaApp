@@ -82,24 +82,27 @@ fun SearchAndFilter(viewModel: RoutinesViewModel) {
 }
 
 @Composable
-fun ExploreScreen(viewModel: RoutinesViewModel, scaffoldState: ScaffoldState){
+fun ExploreScreen(viewModel: RoutinesViewModel, scaffoldState: ScaffoldState) {
     val coroutineScope = rememberCoroutineScope()
-    Column (
+    Column(
         modifier = Modifier
             .fillMaxWidth()
             .fillMaxHeight()
             .background(MaterialTheme.colors.background),
-    ){
+        horizontalAlignment = Alignment.CenterHorizontally
+    ) {
 
-        Row (modifier = Modifier.padding(top = 10.dp, start = 10.dp)) {
-            HamburgerButton(
-                modifier = Modifier.align(Alignment.CenterVertically),
-                onClick = {
-                    coroutineScope.launch {
-                        scaffoldState.drawerState.open()
+        Column(modifier = Modifier.align(Alignment.Start)) {
+            Row(modifier = Modifier.padding(top = 10.dp, start = 10.dp)) {
+                HamburgerButton(
+                    modifier = Modifier.align(Alignment.CenterVertically),
+                    onClick = {
+                        coroutineScope.launch {
+                            scaffoldState.drawerState.open()
+                        }
                     }
-                }
-            )
+                )
+            }
         }
         Row {
             Column(
@@ -126,3 +129,4 @@ fun ExploreScreen(viewModel: RoutinesViewModel, scaffoldState: ScaffoldState){
         }
     }
 }
+
