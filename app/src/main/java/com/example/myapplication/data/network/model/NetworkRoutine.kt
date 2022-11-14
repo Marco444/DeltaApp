@@ -1,9 +1,6 @@
 package com.example.myapplication.data.network.model
 
-import com.example.myapplication.data.Routines
-import com.example.myapplication.data.model.Sport
-import com.example.myapplication.data.model.User
-import com.example.myapplication.ui.navigation.NavBarScreen
+import com.example.myapplication.ui.classes.Routines
 import com.google.gson.annotations.SerializedName
 import java.util.*
 
@@ -39,10 +36,10 @@ data class NetworkRoutine (
     @SerializedName("metadata")
     var metadata: NetworkRoutineMetadata
 ){
-    fun asModel() : Routines{
+    fun asModel() : Routines {
         return Routines(
             id = id,
-           // img = metadata.img?:"",
+            img = metadata.img ?: "",
             description = detail,
             title = name,
             points = score

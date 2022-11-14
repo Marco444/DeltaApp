@@ -14,7 +14,7 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
-import com.example.myapplication.data.Routines
+import com.example.myapplication.ui.classes.Routines
 import com.example.myapplication.ui.components.Button1
 import com.example.myapplication.ui.components.ExPreviewCard
 import com.example.myapplication.ui.theme.Green

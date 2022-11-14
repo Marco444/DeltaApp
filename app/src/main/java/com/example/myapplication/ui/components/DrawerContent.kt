@@ -1,6 +1,7 @@
 package com.example.myapplication.ui.components
 
-import android.graphics.Bitmap
+import Base64BitMap
+import Base64Image
 import android.graphics.BitmapFactory
 import androidx.compose.foundation.Image
 import androidx.compose.foundation.background
@@ -17,7 +18,6 @@ import androidx.compose.runtime.getValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.clip
-import androidx.compose.ui.draw.scale
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.graphics.asImageBitmap
 import androidx.compose.ui.unit.dp
@@ -25,19 +25,8 @@ import com.example.myapplication.ui.activities.mainactivity.UserViewModel
 import java.util.*
 
 
-@Composable
-fun ProfileImage(avatarUrl: String) {
 
-    val pureBase64Encoded = avatarUrl.substringAfter(",")
-    val decodedBytes = Base64.getDecoder().decode(pureBase64Encoded)
-    val decodedBitmap = BitmapFactory.decodeByteArray(decodedBytes, 0, decodedBytes.size)
 
-    Image(
-        bitmap = decodedBitmap.asImageBitmap(),
-        contentDescription = "Profile Picture",
-        modifier = Modifier.clip(RoundedCornerShape(percent = 100))
-    )
-}
 
 @Composable
 fun LoginButton(text: String, handler: () -> Unit) {
@@ -59,6 +48,19 @@ fun LoginButton(text: String, handler: () -> Unit) {
 }
 
 @Composable
+fun ProfilePicture(avatarUrl: String?) {
+    if(avatarUrl != null) {
+        val bitmap = Base64BitMap(avatarUrl)
+        if(bitmap != null)
+            Image(
+                bitmap = bitmap.asImageBitmap(),
+                contentDescription = "Profile Picture",
+                modifier = Modifier.clip(CircleShape)
+            )
+    }
+}
+
+@Composable
 fun DrawerContent(
     userViewModel : UserViewModel,
     logoutRedirect: () -> Unit
@@ -76,8 +78,7 @@ fun DrawerContent(
         verticalArrangement = Arrangement.SpaceEvenly
     ) {
 
-        if(userState.currentUser?.avatarUrl != null)
-            ProfileImage(userState.currentUser!!.avatarUrl!!)
+        ProfilePicture(userState.currentUser?.avatarUrl)
 
         Text(
             text = userState.currentUser?.username ?: "Not logged in",

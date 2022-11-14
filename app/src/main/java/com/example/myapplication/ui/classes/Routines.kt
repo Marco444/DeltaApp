@@ -1,9 +1,6 @@
-package com.example.myapplication.data
+package com.example.myapplication.ui.classes
 
 import androidx.compose.ui.graphics.Color
-import com.example.myapplication.R
-import com.example.myapplication.ui.classes.Exercise
-import com.example.myapplication.ui.classes.RoutineExercises
 import com.example.myapplication.ui.theme.GreenSuccess
 import com.example.myapplication.ui.theme.Red
 import com.example.myapplication.ui.theme.Yellow
@@ -37,7 +34,7 @@ class RoutineProgress (
 
 data class Routines (
     val id: Int,
-    val img: Int = R.drawable.registration_background,
+    val img: String,
     val description: String,
     val title: String,
     var added: Boolean = false,

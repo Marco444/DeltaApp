@@ -11,8 +11,8 @@ import androidx.compose.ui.draw.clip
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
-import com.example.myapplication.data.RoutineProgress
-import com.example.myapplication.data.Routines
+import com.example.myapplication.ui.classes.RoutineProgress
+import com.example.myapplication.ui.classes.Routines
 import com.example.myapplication.ui.components.BackButton
 import com.example.myapplication.ui.theme.GrayTransparency
 import com.example.myapplication.ui.theme.Green

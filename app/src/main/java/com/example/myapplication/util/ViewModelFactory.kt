@@ -25,7 +25,7 @@ class ViewModelFactory constructor(
                 UserViewModel(userRepository)
             //aca agregar por cada viewModel
             /*
-            *  isAssignableFrom(UserViewModel::class.java) ->
+            isAssignableFrom(UserViewModel::class.java) ->
                 UserViewModel(userRepository)
             * */
             else ->
