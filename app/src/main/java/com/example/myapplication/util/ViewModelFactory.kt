@@ -23,6 +23,11 @@ class ViewModelFactory constructor(
         when {
             isAssignableFrom(UserViewModel::class.java) ->
                 UserViewModel(userRepository)
+            //aca agregar por cada viewModel
+            /*
+            *  isAssignableFrom(UserViewModel::class.java) ->
+                UserViewModel(userRepository)
+            * */
             else ->
                 throw IllegalArgumentException("Unknown ViewModel class: ${modelClass.name}")
         }
