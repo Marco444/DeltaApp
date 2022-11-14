@@ -21,13 +21,14 @@ class UserViewModel(
     private val userRepository: UserRepository,
 ) : ViewModel() {
 
-    var uiState by mutableStateOf(MainUiState())
+    var uiState by mutableStateOf(MainUiState(/*isAuthenticated = sessionManager.loadAuthToken() != null*/))
         private set
-
+  
     fun login(username: String, password: String) = viewModelScope.launch {
         uiState = uiState.copy(
             isFetching = true,
-            message = null
+            message = null,
+            errorBoolean = false,
         )
         runCatching {
             userRepository.login(username, password)
@@ -35,11 +36,13 @@ class UserViewModel(
             uiState = uiState.copy(
                 isFetching = false,
                 isAuthenticated = true
+
             )
         }.onFailure { e ->
             // Handle the error and notify the UI when appropriate.
             uiState = uiState.copy(
                 message = e.message,
+                errorBoolean = true,
                 isFetching = false)
         }
     }

@@ -59,13 +59,6 @@ fun LogIn(actionRedirect: () -> Unit, backButton: () -> Unit,viewModel: UserView
     // For the snackbar
     val (snackbarVisibleState, setSnackBarState) = remember { mutableStateOf(false) }
 
-    Button(onClick = { setSnackBarState(!snackbarVisibleState) }) {
-        if (snackbarVisibleState) {
-            Text("Hide Snackbar")
-        } else {
-            Text("Show Snackbar")
-        }
-    }
 
     //LockScreenOrientation(ActivityInfo.SCREEN_ORIENTATION_PORTRAIT)
     BackgroundImage(painter = painterResource(id = R.drawable.log_in_photo))
@@ -135,12 +128,12 @@ fun LogIn(actionRedirect: () -> Unit, backButton: () -> Unit,viewModel: UserView
                 if(uiState.isAuthenticated)
                     actionRedirect()
             }
-            LaunchedEffect(key1 = uiState.message != null){
-                setSnackBarState(!snackbarVisibleState)
-            }
+
         }
     }
-
+    LaunchedEffect(key1 = uiState.errorBoolean){
+        setSnackBarState(!snackbarVisibleState)
+    }
     // The Snackbar
     if (snackbarVisibleState) {
         Snackbar(
