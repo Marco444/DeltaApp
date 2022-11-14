@@ -47,8 +47,3 @@ fun QRScreen(viewModel: RoutinesViewModel) {
     }
 }
 
-@Preview
-@Composable
-fun runQR(){
-    QRScreen(viewModel = RoutinesViewModel())
-}

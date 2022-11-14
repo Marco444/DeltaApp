@@ -21,7 +21,7 @@ class UserViewModel(
     private val userRepository: UserRepository,
 ) : ViewModel() {
 
-    var uiState by mutableStateOf(MainUiState(/*isAuthenticated = sessionManager.loadAuthToken() != null*/))
+    var uiState by mutableStateOf(MainUiState(isAuthenticated = sessionManager.loadAuthToken() != null))
         private set
   
     fun login(username: String, password: String) = viewModelScope.launch {

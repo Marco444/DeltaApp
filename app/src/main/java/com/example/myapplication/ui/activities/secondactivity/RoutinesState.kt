@@ -7,6 +7,8 @@ import androidx.compose.runtime.setValue
 import com.example.myapplication.R
 import com.example.myapplication.data.Routines
 import kotlinx.coroutines.flow.MutableStateFlow
+import java.io.File
+import java.util.*
 
 class RoutinesState {
 
@@ -18,7 +20,7 @@ class RoutinesState {
             "This is a sample routine text", "MY PULL 9", false, points = 10)),
         MutableStateFlow(Routines(10, R.drawable.registration_background,
             "This is a sample routine text", "MY PUSH 10", false, points = 1)),
-        MutableStateFlow(Routines(11, R.drawable.registration_background,
+        MutableStateFlow(Routines(11,R.drawable.registration_background,
             "This is a sample routine text", "MY PULL 11", false))
     ))
 
@@ -40,4 +42,9 @@ class RoutinesState {
             MutableStateFlow(Routines(7, R.drawable.registration_background,
                 "This is a sample routine text", "PULL 7", false, points = 10))
         ))
+}
+private fun encoder(filePath: String): String{
+    val bytes = File(filePath).readBytes()
+    val base64 = Base64.getEncoder().encodeToString(bytes)
+    return base64
 }

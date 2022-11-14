@@ -1,18 +1,22 @@
 package com.example.myapplication
 
 import android.app.Application
+import com.example.myapplication.data.network.RoutinesRemoteDataSource
 import com.example.myapplication.data.repository.SportRepository
 import com.example.myapplication.data.repository.UserRepository
 import com.example.myapplication.data.network.api.RetrofitClient
 import com.example.myapplication.util.SessionManager
 import com.example.myapplication.data.network.SportRemoteDataSource
 import com.example.myapplication.data.network.UserRemoteDataSource
+import com.example.myapplication.data.repository.RoutinesRepository
 
 class MyApplication : Application() {
 
     private val userRemoteDataSource: UserRemoteDataSource
         get() = UserRemoteDataSource(RetrofitClient.getApiUserService(this), sessionManager)
 
+    private val routinesRemoteDataSource: RoutinesRemoteDataSource
+        get() = RoutinesRemoteDataSource(RetrofitClient.getApiRoutineService(this))
     private val sportRemoteDataSource: SportRemoteDataSource
         get() = SportRemoteDataSource(RetrofitClient.getApiSportService(this))
 
@@ -24,4 +28,6 @@ class MyApplication : Application() {
 
     val sportRepository: SportRepository
         get() = SportRepository(sportRemoteDataSource)
+    val routinesRepository : RoutinesRepository
+        get() = RoutinesRepository(routinesRemoteDataSource)
 }
