@@ -1,16 +1,12 @@
 package com.example.myapplication.ui.activities.mainactivity
 
-import kotlinx.coroutines.flow.MutableStateFlow
+import com.example.myapplication.data.model.User
 
-data class User(
-    val username: String = "",
-    val password: String = ""
+
+data class UserState(
+    val isAuthenticated: Boolean = false,
+    val isFetching: Boolean = false,
+    val currentUser: User? = null,
+    val message: String? = null,
+    val errorBoolean:Boolean? = false
 )
-
-class UserState {
-    val user: User = User()
-
-    //la idea de hacerlo un mutableState flow tambien es para ver si asi
-    //se propaga bien, podria ser booleano y ya esta
-    var loggedIn: MutableStateFlow<Boolean> = MutableStateFlow(false)
-}

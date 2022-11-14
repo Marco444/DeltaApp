@@ -31,12 +31,14 @@ import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import androidx.lifecycle.viewmodel.compose.viewModel
 import com.example.myapplication.R
-import com.example.myapplication.data.Exercise
 import com.example.myapplication.ui.activities.thirdactivity.ExecuteRoutineViewModel
+import com.example.myapplication.ui.classes.Exercise
 import com.example.myapplication.ui.components.*
 import com.example.myapplication.ui.navigation.NavBarScreen
 import com.example.myapplication.ui.theme.*
 import kotlinx.coroutines.flow.MutableStateFlow
+import kotlinx.coroutines.flow.update
+import kotlin.math.exp
 
 @Composable
 fun ExerciseExecuteScreenAlternative(
@@ -76,7 +78,7 @@ fun ExerciseExecuteScreenAlternative(
 
 
                 val exer: List<Exercise> = viewModel.getExercises()
-
+                val actual = remember { MutableStateFlow(0) }
                 LazyColumn(
                     modifier = Modifier
                         .fillMaxHeight(0.85F)
@@ -87,7 +89,9 @@ fun ExerciseExecuteScreenAlternative(
                     items(exer) {exer ->
                         ExerciseCard(
                             exercise = exer,
-                            viewModel = viewModel
+                            viewModel = viewModel,
+                            Actual = actual,
+                            numberOfExercise = exer.order
                         )
                     }
                 }
@@ -96,21 +100,50 @@ fun ExerciseExecuteScreenAlternative(
                 ) {
 
                     Row(
-                        modifier = Modifier.fillMaxHeight().fillMaxWidth(),
+                        modifier = Modifier
+                            .fillMaxHeight()
+                            .fillMaxWidth(),
                         horizontalArrangement = Arrangement.Center
                     ) {
                         Button1(
-                            fontSize = 15,
+                            fontSize = 10,
                             text = "Previous",
-                            modifier = Modifier.align(CenterVertically)
-                                .padding(10.dp)
+                            modifier = Modifier
+                                .align(CenterVertically)
+                                .padding(10.dp),
+                            handler = {
+                                if(actual.value > 0)
+                                    actual.update { actual.value - 1 }
+                            }
                         )
-                        Button1(
-                            fontSize = 15,
-                            text = "Next",
-                            modifier = Modifier.align(CenterVertically)
-                                .padding(10.dp)
-                        )
+                        val actualV by actual.collectAsState()
+                        if(actualV != exer.size - 1)
+                            Button1(
+                                fontSize = 10,
+                                text = "Next",
+                                modifier = Modifier
+                                    .align(CenterVertically)
+                                    .padding(10.dp),
+                                handler = {
+                                    if(actual.value < exer.size - 1)
+                                        actual.update { actual.value + 1 }
+                                }
+                            )
+                        else
+                            Button(
+                                modifier = Modifier
+                                    .align(CenterVertically)
+                                    .padding(10.dp),
+                                colors = ButtonDefaults.buttonColors(backgroundColor = Green),
+                                onClick = {}
+                        ){
+                                Text(
+                                    fontSize = 10.sp,
+                                    text = "Finish",
+                                    color = backGround
+                                )
+                            }
+
                     }
 
                 }
@@ -145,9 +178,12 @@ fun RoutineInfo(title : String, time: Int, description: String){
 @Composable
 fun ExerciseCard(
     viewModel: ExecuteRoutineViewModel = viewModel(),
-    exercise: Exercise
+    exercise: Exercise,
+    numberOfExercise: Int,
+    Actual: MutableStateFlow<Int>
 ){
-    var expanded by remember { mutableStateOf(!viewModel.cardsExpandable()) }
+    //var expanded by remember { mutableStateOf(!viewModel.cardsExpandable()) }
+    val actual by Actual.collectAsState()
     //val exercise by actualExercise.collectAsState()
 
     Box (
@@ -155,9 +191,13 @@ fun ExerciseCard(
             //.width(ROUTINE_CARD_WIDTH.dp)
             .fillMaxWidth(0.9F)
             .background(Gray)
-            .border(4.dp, if (expanded) Green else Gray, shape = RoundedCornerShape(10.dp))
+            .border(
+                4.dp,
+                if (numberOfExercise == actual) Green else Gray,
+                shape = RoundedCornerShape(10.dp)
+            )
             .clickable {
-                expanded = if (viewModel.cardsExpandable()) !expanded else true
+                //expanded = if (viewModel.cardsExpandable()) !expanded else true
             }
             .clip(RoundedCornerShape(10.dp)),
     ){
@@ -170,7 +210,7 @@ fun ExerciseCard(
                 color = Color.White,
                 modifier = Modifier.padding(start = 20.dp, top = 10.dp, bottom = 10.dp, end = 20.dp)
             )
-            if (expanded) {
+            if (numberOfExercise == actual) {
                 Text(
                     text = exercise.detail,
                     fontSize = 15.sp,

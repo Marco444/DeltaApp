@@ -5,10 +5,8 @@ import androidx.lifecycle.AbstractSavedStateViewModelFactory
 import androidx.lifecycle.SavedStateHandle
 import androidx.lifecycle.ViewModel
 import androidx.savedstate.SavedStateRegistryOwner
-import com.example.myapplication.data.repository.SportRepository
 import com.example.myapplication.data.repository.UserRepository
 import com.example.myapplication.ui.activities.mainactivity.UserViewModel
-import com.example.myapplication.ui.viewmodel.MainViewModel
 
 class ViewModelFactory constructor(
     private val sessionManager: SessionManager,
@@ -24,7 +22,12 @@ class ViewModelFactory constructor(
     ) = with(modelClass) {
         when {
             isAssignableFrom(UserViewModel::class.java) ->
-                UserViewModel(sessionManager, userRepository)
+                UserViewModel(userRepository)
+            //aca agregar por cada viewModel
+            /*
+            *  isAssignableFrom(UserViewModel::class.java) ->
+                UserViewModel(userRepository)
+            * */
             else ->
                 throw IllegalArgumentException("Unknown ViewModel class: ${modelClass.name}")
         }

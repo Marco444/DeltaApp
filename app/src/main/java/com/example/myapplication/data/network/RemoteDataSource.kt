@@ -6,6 +6,7 @@ import com.google.gson.reflect.TypeToken
 import retrofit2.Response
 import java.io.IOException
 
+//Clase abstracta muy piola que maneja los errores de las responses que me da la api
 abstract class RemoteDataSource {
 
     suspend fun <T : Any> handleApiResponse(

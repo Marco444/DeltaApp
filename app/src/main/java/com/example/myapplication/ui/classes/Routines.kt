@@ -2,6 +2,8 @@ package com.example.myapplication.data
 
 import androidx.compose.ui.graphics.Color
 import com.example.myapplication.R
+import com.example.myapplication.ui.classes.Exercise
+import com.example.myapplication.ui.classes.RoutineExercises
 import com.example.myapplication.ui.theme.GreenSuccess
 import com.example.myapplication.ui.theme.Red
 import com.example.myapplication.ui.theme.Yellow
@@ -43,5 +45,7 @@ data class Routines (
     var points: Int = 0,
     var changed: MutableStateFlow<Boolean> = MutableStateFlow(false),
     val routineProgress: RoutineProgress = RoutineProgress(0, 80f),
-    val exercises: RoutineExercises = RoutineExercises(mutableListOf(Exercise(0,0,15f,15f,1,"Pecho","aaa")),mutableListOf(Exercise(0,1,15f,15f,1,"Pecho","aaa")),mutableListOf(Exercise(0,2,15f,15f,1,"Pecho","aaa")))
+    val exercises: RoutineExercises = RoutineExercises(mutableListOf(Exercise(0,0,15f,15f,1,"Pecho","aaa")),mutableListOf(
+        Exercise(0,1,15f,15f,1,"Pecho","aaa")
+    ),mutableListOf(Exercise(0,2,15f,15f,1,"Pecho","aaa")))
 )

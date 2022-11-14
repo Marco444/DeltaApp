@@ -1,8 +1,7 @@
 package com.example.myapplication.ui.activities.thirdactivity
 
-import androidx.compose.material3.windowsizeclass.WindowWidthSizeClass
 import androidx.lifecycle.ViewModel
-import com.example.myapplication.data.Exercise
+import com.example.myapplication.ui.classes.Exercise
 import com.example.myapplication.data.Routines
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.StateFlow
@@ -109,7 +108,7 @@ class ExecuteRoutineViewModel() : ViewModel() {
     }
 
     fun getExercises() : List<Exercise>{
-        return getRoutineWarmUpExercises() + getRoutineCoolDownExercises() + getRoutineMainSetExercises()
+        return getRoutineWarmUpExercises() + getRoutineMainSetExercises() + getRoutineCoolDownExercises()
     }
 
     fun upOpinion() {
