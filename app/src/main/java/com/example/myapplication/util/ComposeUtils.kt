@@ -15,3 +15,9 @@ fun getViewModelFactory(defaultArgs: Bundle? = null): ViewModelFactory {
     return ViewModelFactory(sessionManager, userRepository, LocalSavedStateRegistryOwner.current, defaultArgs)
 }
 
+@Composable
+fun getRoutineViewModelFactory(defaultArgs: Bundle? = null) : RoutineViewModelFactory{
+    val application: MyApplication = LocalContext.current.applicationContext as MyApplication
+    val routinesRepository = application.routinesRepository
+    return RoutineViewModelFactory( routinesRepository, LocalSavedStateRegistryOwner.current, defaultArgs)
+}

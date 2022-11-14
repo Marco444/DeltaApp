@@ -49,4 +49,7 @@ object RetrofitClient {
     fun getApiSportService(context: Context) : ApiSportService {
         return getInstance(context).create(ApiSportService::class.java)
     }
+    fun getApiRoutineService(context: Context) : ApiRoutinService {
+        return getInstance(context).create(ApiRoutinService::class.java)
+    }
 }

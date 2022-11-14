@@ -1,6 +1,7 @@
 package com.example.myapplication.data
 
 import androidx.compose.ui.graphics.Color
+import com.example.myapplication.R
 import com.example.myapplication.ui.theme.GreenSuccess
 import com.example.myapplication.ui.theme.Red
 import com.example.myapplication.ui.theme.Yellow
@@ -34,10 +35,10 @@ class RoutineProgress (
 
 data class Routines (
     val id: Int,
-    val img: Int,
+    val img: Int = R.drawable.registration_background,
     val description: String,
     val title: String,
-    var added: Boolean,
+    var added: Boolean = false,
     var favourite: Boolean = false,
     var points: Int = 0,
     var changed: MutableStateFlow<Boolean> = MutableStateFlow(false),

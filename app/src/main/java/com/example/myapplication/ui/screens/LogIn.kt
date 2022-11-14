@@ -35,15 +35,10 @@ import androidx.compose.ui.text.input.VisualTransformation
 import androidx.compose.ui.text.style.TextDecoration
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
-import androidx.lifecycle.ViewModel
 import com.example.myapplication.R
 import com.example.myapplication.ui.activities.mainactivity.UserViewModel
 import com.example.myapplication.ui.components.Button1
-import com.example.myapplication.ui.theme.Gray
 import com.example.myapplication.ui.theme.Green
-import com.example.myapplication.ui.theme.Red
-import kotlinx.coroutines.joinAll
-import okhttp3.internal.wait
 
 
 @Composable
@@ -54,7 +49,7 @@ fun LogIn(actionRedirect: () -> Unit, backButton: () -> Unit,viewModel: UserView
     var snackbar by remember { mutableStateOf(false) }
     val configuration = LocalConfiguration.current
     val focusManager = LocalFocusManager.current
-    val uiState = viewModel.uiState
+    val uiState by viewModel.userState.collectAsState()
 
     // For the snackbar
     val (snackbarVisibleState, setSnackBarState) = remember { mutableStateOf(false) }
