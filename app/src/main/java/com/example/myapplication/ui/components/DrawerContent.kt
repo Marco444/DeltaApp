@@ -20,6 +20,7 @@ import androidx.compose.ui.graphics.Color.Companion.White
 import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
+import coil.compose.rememberAsyncImagePainter
 import com.example.myapplication.R
 import com.example.myapplication.ui.activities.mainactivity.UserViewModel
 import com.example.myapplication.ui.theme.H1Font
@@ -64,7 +65,7 @@ fun DrawerContent(
             modifier = Modifier.fillMaxWidth(0.4F)
         ) {
             Image(
-                painter = painterResource(id = R.drawable.lionel_messi_20180626),
+                painter = rememberAsyncImagePainter("https://media.geeksforgeeks.org/wp-content/uploads/20210101144014/gfglogo.png"),
                 contentDescription = "Profile Picture",
                 modifier = Modifier
                     .scale(0.9F)
