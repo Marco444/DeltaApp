@@ -108,6 +108,10 @@ class ExecuteRoutineViewModel() : ViewModel() {
         return   _execRoutineState.value.exercises.mainSetExercises
     }
 
+    fun getExercises() : List<Exercise>{
+        return getRoutineWarmUpExercises() + getRoutineCoolDownExercises() + getRoutineMainSetExercises()
+    }
+
     fun upOpinion() {
         if(actualOpinion < 4) {
             actualOpinion += 1

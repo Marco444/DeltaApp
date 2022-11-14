@@ -115,8 +115,3 @@ fun ProfileScreen(viewModel: RoutinesViewModel){
     }
 }
 
-@Preview
-@Composable
-fun RunProfileScreen(){
-    ProfileScreen(viewModel = RoutinesViewModel())
-}

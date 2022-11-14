@@ -1,19 +1,31 @@
 package com.example.myapplication.ui.activities.secondactivity
 
 import androidx.compose.material3.windowsizeclass.WindowWidthSizeClass
+import androidx.compose.runtime.mutableStateOf
 import androidx.lifecycle.ViewModel
+import androidx.lifecycle.viewModelScope
 import com.example.myapplication.data.Routines
+import com.example.myapplication.data.repository.RoutinesRepository
 import com.example.myapplication.ui.components.RoutineCard
 import com.example.myapplication.ui.components.SortOption
 import com.example.myapplication.ui.navigation.NavBarScreen
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.update
+import kotlinx.coroutines.launch
 
-class RoutinesViewModel : ViewModel() {
+class RoutinesViewModel(
+    routinesRepository: RoutinesRepository
+) : ViewModel() {
     private val _sortState = MutableStateFlow(SortOption.POINTS)
 
     private val _routinesState = MutableStateFlow(RoutinesState())
 
+    init {
+        viewModelScope.launch {
+            _routinesState.value.exploreRoutines =
+                routinesRepository.getRoutines(true).map { MutableStateFlow(it) }
+        }
+    }
     fun getSortState(): MutableStateFlow<SortOption> {
         return _sortState
     }

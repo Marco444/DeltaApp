@@ -7,6 +7,7 @@ import androidx.compose.foundation.border
 import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.*
 import androidx.compose.foundation.lazy.LazyColumn
+import androidx.compose.foundation.lazy.items
 import androidx.compose.foundation.shape.CircleShape
 import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.material.*
@@ -15,6 +16,7 @@ import androidx.compose.material.icons.filled.Close
 import androidx.compose.runtime.*
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Alignment.Companion.CenterHorizontally
+import androidx.compose.ui.Alignment.Companion.CenterVertically
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.clip
 import androidx.compose.ui.graphics.Color
@@ -62,46 +64,56 @@ fun ExerciseExecuteScreenAlternative(
                 }
 
                 Text(
-                    text = "Hola",
+                    text = viewModel.routine(0).title,
                     style = MaterialTheme.typography.h1,
                     fontFamily = H1Font,
                     color = Green,
-                    modifier = Modifier.align(Alignment.CenterHorizontally)
+                    modifier = Modifier.align(CenterHorizontally)
                 )
 
 
                 Spacer(modifier = Modifier.height(10.dp))
 
+
+                val exer: List<Exercise> = viewModel.getExercises()
+
+                LazyColumn(
+                    modifier = Modifier
+                        .fillMaxHeight(0.85F)
+                        .align(CenterHorizontally)
+                        .padding(top = 0.dp),
+                    //horizontalAlignment = CenterHorizontally
+                ){
+                    items(exer) {exer ->
+                        ExerciseCard(
+                            exercise = exer,
+                            viewModel = viewModel
+                        )
+                    }
+                }
                 Column(
-                    modifier = Modifier.fillMaxWidth(),
-                    horizontalAlignment = Alignment.CenterHorizontally
+                    modifier = Modifier.fillMaxHeight(),
                 ) {
 
-                    ExerciseCard(
-                        actualExercise = viewModel.actualExercise,
-                        viewModel = viewModel
-                    )
-                    //Spacer(modifier = Modifier.height(5.dp))
-                    ExerciseCard(
-                        actualExercise = viewModel.actualExercise,
-                        viewModel = viewModel
-                    )
+                    Row(
+                        modifier = Modifier.fillMaxHeight().fillMaxWidth(),
+                        horizontalArrangement = Arrangement.Center
+                    ) {
+                        Button1(
+                            fontSize = 15,
+                            text = "Previous",
+                            modifier = Modifier.align(CenterVertically)
+                                .padding(10.dp)
+                        )
+                        Button1(
+                            fontSize = 15,
+                            text = "Next",
+                            modifier = Modifier.align(CenterVertically)
+                                .padding(10.dp)
+                        )
+                    }
 
                 }
-
-
-                LazyColumn(modifier = Modifier.fillMaxHeight()){
-
-                }
-
-
-//                        RoutinesGrid(
-//                            viewModel = viewModel,
-//                            actionRedirect = actionRedirect,
-//                            routineCard = RoutineCard.MyRoutine
-//                        )
-
-
 
             }
         }
@@ -120,7 +132,7 @@ fun TryALternative(){
 @Composable
 fun RoutineInfo(title : String, time: Int, description: String){
     Card(modifier = Modifier.width(300.dp),shape = RoundedCornerShape(20.dp), backgroundColor = Color.DarkGray){
-        Column(horizontalAlignment = Alignment.CenterHorizontally) {
+        Column(horizontalAlignment = CenterHorizontally) {
             Text(text = title, color = Green, fontSize = 25.sp)
             TimeComp(time)
             Text(text = description, color = Color.White, fontSize = 13.sp,textAlign = TextAlign.Center,
@@ -133,10 +145,10 @@ fun RoutineInfo(title : String, time: Int, description: String){
 @Composable
 fun ExerciseCard(
     viewModel: ExecuteRoutineViewModel = viewModel(),
-    actualExercise: MutableStateFlow<Exercise>
+    exercise: Exercise
 ){
     var expanded by remember { mutableStateOf(!viewModel.cardsExpandable()) }
-    val exercise by actualExercise.collectAsState()
+    //val exercise by actualExercise.collectAsState()
 
     Box (
         Modifier

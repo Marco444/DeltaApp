@@ -19,6 +19,7 @@ import androidx.lifecycle.viewmodel.compose.viewModel
 import com.example.myapplication.ui.activities.mainactivity.UserViewModel
 import com.example.myapplication.ui.components.DrawerContent
 import com.example.myapplication.ui.navigation.SideBar
+import com.example.myapplication.util.getRoutineViewModelFactory
 import com.example.myapplication.util.getViewModelFactory
 
 
@@ -27,7 +28,7 @@ import com.example.myapplication.util.getViewModelFactory
 fun DeltaApp(
     windowSize: WindowWidthSizeClass,
     modifier: Modifier = Modifier,
-    viewModel: RoutinesViewModel = viewModel(),
+    viewModel: RoutinesViewModel = viewModel(factory = getRoutineViewModelFactory()),
     navController: NavHostController = rememberNavController(),
     executeRedirect: (Int) -> Unit,
     logoutRedirect: () -> Unit,
