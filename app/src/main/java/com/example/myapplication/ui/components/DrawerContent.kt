@@ -1,6 +1,5 @@
 package com.example.myapplication.ui.components
 
-import android.content.Intent
 import androidx.compose.foundation.Image
 import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.*
@@ -15,115 +14,64 @@ import androidx.compose.ui.draw.clip
 import androidx.compose.ui.draw.scale
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.res.painterResource
-import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import com.example.myapplication.R
-import com.example.myapplication.ui.activities.mainactivity.MainActivity
 import com.example.myapplication.ui.activities.mainactivity.UserViewModel
-import com.example.myapplication.ui.activities.secondactivity.SecondActivity
 import com.example.myapplication.ui.theme.H1Font
 
 @Composable
+fun LoginButton(text: String, handler: () -> Unit) {
+    Button(
+        onClick = handler,
+        shape = RoundedCornerShape(10.dp),
+        colors = ButtonDefaults.buttonColors(backgroundColor = Color(0xFF4B4B4B)),
+        modifier = Modifier
+            .width(220.dp)
+            .height(60.dp)
+    )
+    {
+        Text(
+            text = text,
+            color = Color(0xFFFFFFFF),
+            modifier = Modifier.padding(5.dp)
+        )
+    }
+}
+
+@Composable
 fun DrawerContent(
-    userViewModel : UserViewModel
+    userViewModel : UserViewModel,
+    logoutRedirect: () -> Unit
 ){
-    Box(
+    Column (
         modifier = Modifier
             .fillMaxWidth()
             .fillMaxHeight()
-            .background(Color(0xAF1F1F1F))
+            .background(Color(0xAF1F1F1F)),
+        horizontalAlignment = Alignment.CenterHorizontally,
+        verticalArrangement = Arrangement.SpaceEvenly
     ) {
-        Column() {
-            Spacer(modifier = Modifier.height(70.dp))
-            Row(
+        Box(
+            modifier = Modifier.fillMaxWidth(0.4F)
+        ) {
+            Image(
+                painter = painterResource(id = R.drawable.lionel_messi_20180626),
+                contentDescription = "Profile Picture",
                 modifier = Modifier
-                    .fillMaxWidth()
-                    .padding(horizontal = 10.dp, vertical = 10.dp),
-                verticalAlignment = Alignment.CenterVertically,
-            ) {
-                Box(
-                    modifier = Modifier.fillMaxWidth(0.4F)
-                ) {
-                    Image(
-                        painter = painterResource(id = R.drawable.lionel_messi_20180626),
-                        contentDescription = "Profile Picture",
-                        modifier = Modifier
-                            .scale(0.9F)
-                            .clip(RoundedCornerShape(100.dp))
-                    )
-                }
-                Spacer(modifier = Modifier.width(10.dp))
-                Text(
-                    text = "Lionel Messi",
-                    color = Color(0xFFCFFFB3),
-                    fontSize = 30.sp,
-                    fontFamily = H1Font
-                )
-            }
-
-            Spacer(modifier = Modifier.height(70.dp))
-            Button(
-                //onClick = backButton,
-                onClick = {},
-                shape = RoundedCornerShape(10.dp),
-                colors = ButtonDefaults.buttonColors(backgroundColor = Color(0xFF4B4B4B)),
-                modifier = Modifier
-                    .align(Alignment.CenterHorizontally)
-                    .width(220.dp)
-                    .height(60.dp)
-                    .padding(5.dp)
+                    .scale(0.9F)
+                    .clip(RoundedCornerShape(100.dp))
             )
-            {
-                Text(
-                    text = "My Profile",
-                    color = Color(0xFFFFFFFF),
-                    modifier = Modifier.padding(5.dp)
-                )
-            }
-            Spacer(modifier = Modifier.height(10.dp))
-            Button(
-                //onClick = backButton,
-                onClick = {},
-                shape = RoundedCornerShape(10.dp),
-                colors = ButtonDefaults.buttonColors(backgroundColor = Color(0xFF4B4B4B)),
-                modifier = Modifier
-                    .align(Alignment.CenterHorizontally)
-                    .width(220.dp)
-                    .height(60.dp)
-                    .padding(5.dp)
-            )
-            {
-                Text(
-                    text = "Settings",
-                    color = Color(0xFFFFFFFF),
-                    modifier = Modifier.padding(5.dp)
-                )
-            }
-            Spacer(modifier = Modifier.height(10.dp))
-
-            Button(
-                //onClick = backButton,
-                onClick = {
-                    userViewModel.logout()
-                    println("Logged Out")
-                          },
-                shape = RoundedCornerShape(10.dp),
-                colors = ButtonDefaults.buttonColors(backgroundColor = Color(0xFF4B4B4B)),
-                modifier = Modifier
-                    .align(Alignment.CenterHorizontally)
-                    .width(220.dp)
-                    .height(60.dp)
-                    .padding(5.dp)
-            )
-            {
-                Text(
-                    text = "Log Out",
-                    color = Color(0xFFFFFFFF),
-                    modifier = Modifier.padding(5.dp)
-                )
-            }
-
         }
+        Text(
+            text = "Lionel Messi",
+            color = Color(0xFFCFFFB3),
+            fontSize = 30.sp,
+            fontFamily = H1Font
+        )
+
+        LoginButton(text = "My profile", handler = {})
+        LoginButton(text = "Logout", handler = logoutRedirect)
+
     }
 }

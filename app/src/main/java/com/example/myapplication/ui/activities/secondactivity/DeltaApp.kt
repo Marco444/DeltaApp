@@ -31,6 +31,7 @@ fun DeltaApp(
     viewModel: RoutinesViewModel = viewModel(factory = getRoutineViewModelFactory()),
     navController: NavHostController = rememberNavController(),
     executeRedirect: (Int) -> Unit,
+    logoutRedirect: () -> Unit,
     userViewModel: UserViewModel = viewModel(factory = getViewModelFactory())
 ) {
     viewModel.setWidth(windowSize)
@@ -44,7 +45,11 @@ fun DeltaApp(
             bottomBar = {
                 BottomBar(navController = navController)
             },
-            drawerContent = { DrawerContent(userViewModel) },
+            drawerContent = {
+                DrawerContent(
+                    userViewModel,
+                    logoutRedirect = { logoutRedirect(); userViewModel.logout() })
+            },
             scaffoldState = scaffoldState
         ) {
             Box(
@@ -54,7 +59,12 @@ fun DeltaApp(
                         bottom = it.calculateBottomPadding(),
                     )
             ) {
-                NavGraph(navController = navController, viewModel = viewModel, executeRedirect = executeRedirect, scaffoldState = scaffoldState)
+                NavGraph(
+                    navController = navController,
+                    viewModel = viewModel,
+                    executeRedirect = executeRedirect,
+                    scaffoldState = scaffoldState
+                )
             }
         }
     } else {
@@ -71,11 +81,14 @@ fun DeltaApp(
                         start = it.calculateLeftPadding(LayoutDirection.Rtl),
                     )
             ) {
-                NavGraph(navController = navController, viewModel = viewModel, scaffoldState = scaffoldState, executeRedirect = executeRedirect)
+                NavGraph(
+                    navController = navController,
+                    viewModel = viewModel,
+                    scaffoldState = scaffoldState,
+                    executeRedirect = executeRedirect
+                )
             }
         }
     }
-
-
 }
 

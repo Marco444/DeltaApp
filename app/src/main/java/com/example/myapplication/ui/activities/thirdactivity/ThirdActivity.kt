@@ -19,14 +19,14 @@ class ThirdActivity : ComponentActivity() {
                 systemUiController.setSystemBarsColor(color = androidx.compose.ui.graphics.Color.Black )
 
                 val saved: String? = intent.extras!!.getString("routineId")
-                val navigate: Intent = Intent(this@ThirdActivity, SecondActivity::class.java)
+                val navigate = Intent(this@ThirdActivity, SecondActivity::class.java)
 
                 if(saved != null) {
-                    Text(text = saved)
-                   DeltaAppExecute(saved = saved, redirectHandler = {
-                       startActivity(navigate)}, viewModel = viewModel())
-                } else {
-                    Text(text = "no entre")
+                   DeltaAppExecute(
+                       saved = saved,
+                       redirectHandler = { startActivity(navigate); finish()},
+                       viewModel = viewModel()
+                   )
                 }
                 
             }

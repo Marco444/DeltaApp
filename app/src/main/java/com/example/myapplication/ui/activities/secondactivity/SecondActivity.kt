@@ -6,6 +6,7 @@ import androidx.activity.ComponentActivity
 import androidx.activity.compose.setContent
 import androidx.compose.material3.windowsizeclass.ExperimentalMaterial3WindowSizeClassApi
 import androidx.compose.material3.windowsizeclass.calculateWindowSizeClass
+import com.example.myapplication.ui.activities.mainactivity.MainActivity
 import com.example.myapplication.ui.activities.thirdactivity.ThirdActivity
 import com.example.myapplication.ui.theme.MyApplicationTheme
 import com.google.accompanist.systemuicontroller.rememberSystemUiController
@@ -22,15 +23,17 @@ class SecondActivity : ComponentActivity() {
                 systemUiController.setSystemBarsColor(color = androidx.compose.ui.graphics.Color.Black )
 
                 val navigate = Intent(this@SecondActivity, ThirdActivity::class.java)
+                val logoutIntent = Intent(this@SecondActivity, MainActivity::class.java)
 
-                val windowSize = calculateWindowSizeClass(this)
-                DeltaApp(windowSize = windowSize.widthSizeClass, executeRedirect = {
-                    val args = Bundle()
-                    args.putString("routineId", it.toString())
-                    navigate.putExtras(args)
-                    startActivity(navigate)
-                })
-
+                DeltaApp(
+                    windowSize = calculateWindowSizeClass(this).widthSizeClass,
+                    executeRedirect = {
+                        val args = Bundle()
+                        args.putString("routineId", it.toString())
+                        navigate.putExtras(args)
+                        startActivity(navigate)
+                    },
+                    logoutRedirect = {startActivity(logoutIntent); finish();})
             }
         }
     }
