@@ -109,7 +109,7 @@ class ExecuteRoutineViewModel() : ViewModel() {
     }
 
     fun getExercises() : List<Exercise>{
-        return getRoutineWarmUpExercises() + getRoutineCoolDownExercises() + getRoutineMainSetExercises()
+        return getRoutineWarmUpExercises() + getRoutineMainSetExercises() + getRoutineCoolDownExercises()
     }
 
     fun upOpinion() {
