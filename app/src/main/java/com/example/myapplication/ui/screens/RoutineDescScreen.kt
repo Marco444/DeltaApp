@@ -55,8 +55,22 @@ fun RoutineDescriptionScreen(viewModel: ExecuteRoutineViewModel,
              Spacer(modifier = Modifier.height(40.dp))
              ListOfExercises(viewModel)
              Spacer(modifier = Modifier.height(10.dp))
-             Button1(fontSize = 20, text = "Start Routine", handler = starRoutineHanlder)
-             Button1(fontSize = 20, text = "Start Routine Lite", handler = starRoutineLiteHandler)
+             Row(
+                 verticalAlignment = Alignment.CenterVertically,
+                 modifier = Modifier.align(Alignment.CenterHorizontally)
+             ) {
+                 Button1(
+                     fontSize = 20,
+                     text = "Start Routine",
+                     handler = starRoutineHanlder
+                 )
+                 Spacer(modifier = Modifier.width(20.dp))
+                 Button1(
+                     fontSize = 20,
+                     text = "Start Routine Lite",
+                     handler = starRoutineLiteHandler
+                 )
+             }
          }
      }
 

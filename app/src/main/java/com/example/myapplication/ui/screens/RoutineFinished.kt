@@ -87,9 +87,8 @@ fun RoutineFinished(
                     Spacer(modifier = Modifier.height(5.dp))
 
                     Row(
-                        modifier = Modifier.align(CenterHorizontally),
-                        verticalAlignment = CenterVertically
-
+                        verticalAlignment = Alignment.CenterVertically,
+                        modifier = Modifier.align(Alignment.CenterHorizontally)
                     ){
                         Button(
                             onClick = { viewModel.downOpinion() },

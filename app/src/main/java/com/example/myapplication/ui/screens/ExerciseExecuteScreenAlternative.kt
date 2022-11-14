@@ -190,11 +190,12 @@ fun ExerciseCard(
         Modifier
             //.width(ROUTINE_CARD_WIDTH.dp)
             .fillMaxWidth(0.9F)
-            .clip(RoundedCornerShape(40.dp))
+            .clip(RoundedCornerShape(20.dp))
             .background(Gray)
             .border(
                 4.dp,
                 if (numberOfExercise == actual) Green else Gray,
+                RoundedCornerShape(20.dp)
             )
             .clickable {
                 //expanded = if (viewModel.cardsExpandable()) !expanded else true

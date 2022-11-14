@@ -4,6 +4,7 @@ import androidx.compose.foundation.Image
 import Base64BitMap
 import android.content.Context
 import android.content.Intent
+import androidx.compose.foundation.background
 import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.*
 import androidx.compose.foundation.shape.RoundedCornerShape
@@ -17,6 +18,7 @@ import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.clip
 import androidx.compose.ui.draw.scale
+import androidx.compose.ui.graphics.Brush
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.graphics.asImageBitmap
 import androidx.compose.ui.layout.ContentScale
@@ -120,22 +122,21 @@ fun RoutineCard(routine: Routines, iconId: Int, clickedIcon: () -> Unit = {}, ac
                     .height(imageHeight),
             )
         }
-
-        Column (
-            horizontalAlignment = Alignment.CenterHorizontally
+        Column(
+            horizontalAlignment = Alignment.CenterHorizontally,
         ) {
-
             RoutineCardTitle(
                 title = routine.title,
                 iconId = iconId,
-                clickedIcon = {clickedIcon()},
+                clickedIcon = { clickedIcon() },
                 id = routine.id
             )
             if (expanded) {
-                    RoutineCardDetails(description = routine.description)
-                    Button1(fontSize = 16, text = routineCard.description, handler = actionHandler)
+                RoutineCardDetails(description = routine.description)
+                Button1(fontSize = 16, text = routineCard.description, handler = actionHandler)
             }
         }
+
 
     }
 
