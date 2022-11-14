@@ -1,8 +1,11 @@
 package com.example.myapplication.ui.components
 
+import android.graphics.Bitmap
+import android.graphics.BitmapFactory
 import androidx.compose.foundation.Image
 import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.*
+import androidx.compose.foundation.shape.CircleShape
 import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.material.Button
 import androidx.compose.material.ButtonDefaults
@@ -16,14 +19,25 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.clip
 import androidx.compose.ui.draw.scale
 import androidx.compose.ui.graphics.Color
-import androidx.compose.ui.graphics.Color.Companion.White
-import androidx.compose.ui.res.painterResource
+import androidx.compose.ui.graphics.asImageBitmap
 import androidx.compose.ui.unit.dp
-import androidx.compose.ui.unit.sp
-import coil.compose.rememberAsyncImagePainter
-import com.example.myapplication.R
 import com.example.myapplication.ui.activities.mainactivity.UserViewModel
-import com.example.myapplication.ui.theme.H1Font
+import java.util.*
+
+
+@Composable
+fun ProfileImage(avatarUrl: String) {
+
+    val pureBase64Encoded = avatarUrl.substringAfter(",")
+    val decodedBytes = Base64.getDecoder().decode(pureBase64Encoded)
+    val decodedBitmap = BitmapFactory.decodeByteArray(decodedBytes, 0, decodedBytes.size)
+
+    Image(
+        bitmap = decodedBitmap.asImageBitmap(),
+        contentDescription = "Profile Picture",
+        modifier = Modifier.clip(RoundedCornerShape(percent = 100))
+    )
+}
 
 @Composable
 fun LoginButton(text: String, handler: () -> Unit) {
@@ -48,43 +62,34 @@ fun LoginButton(text: String, handler: () -> Unit) {
 fun DrawerContent(
     userViewModel : UserViewModel,
     logoutRedirect: () -> Unit
-){
+) {
 
     userViewModel.getCurrentUser()
 
-    val userState by  userViewModel.userState.collectAsState()
+    val userState by userViewModel.userState.collectAsState()
 
-    Column (
+    Column(
         modifier = Modifier
             .fillMaxSize()
             .background(MaterialTheme.colors.background),
         horizontalAlignment = Alignment.CenterHorizontally,
         verticalArrangement = Arrangement.SpaceEvenly
     ) {
-        Box(
-            modifier = Modifier.fillMaxWidth(0.4F)
-        ) {
-            Image(
-                painter = rememberAsyncImagePainter("https://media.geeksforgeeks.org/wp-content/uploads/20210101144014/gfglogo.png"),
-                contentDescription = "Profile Picture",
-                modifier = Modifier
-                    .scale(0.9F)
-                    .clip(RoundedCornerShape(100.dp))
-            )
-        }
+
+        if(userState.currentUser?.avatarUrl != null)
+            ProfileImage(userState.currentUser!!.avatarUrl!!)
+
         Text(
             text = userState.currentUser?.username ?: "Not logged in",
             style = MaterialTheme.typography.h2
         )
 
-        if(userState.currentUser != null) {
-            Text(text = "Last activity \n" + userState.currentUser!!.lastActivity.toString(),
-                style = MaterialTheme.typography.body2, modifier = Modifier.align(Alignment.CenterHorizontally))
-//            Text(text = userState.currentUser!!.email, style = MaterialTheme.typography.body2)
-//            Row {
-//                Text(text = userState.currentUser!!.firstName, style = MaterialTheme.typography.body2)
-//                Text(text = userState.currentUser!!.lastName, style = MaterialTheme.typography.body2)
-//            }
+        if (userState.currentUser != null) {
+            Text(
+                text = "Last activity \n" + userState.currentUser!!.lastActivity.toString(),
+                style = MaterialTheme.typography.body2,
+                modifier = Modifier.align(Alignment.CenterHorizontally)
+            )
         }
 
         LoginButton(text = "Logout", handler = logoutRedirect)
