@@ -1,13 +1,14 @@
 package com.example.myapplication.ui.activities.thirdactivity
 
-import com.example.myapplication.data.Exercise
-import com.example.myapplication.data.RoutineExercises
 import com.example.myapplication.data.Routines
+import com.example.myapplication.ui.classes.Exercise
+import com.example.myapplication.ui.classes.RoutineExercises
 
 class ExecuteRoutine{
 
     var exercises: RoutineExercises = RoutineExercises(
-        mutableListOf(Exercise(0,0,15f,15f,1,"Warmup1","Trote moderado para entrar en calor"),
+        mutableListOf(
+            Exercise(0,0,15f,15f,1,"Warmup1","Trote moderado para entrar en calor"),
             Exercise(0,1,15f,15f,1,"Warmup2","Sentate y hace fierros qcyo hermano"),
             Exercise(0,2,15f,15f,1,"Warmup3","Algo mas por aca"),
             Exercise(0,3,15f,15f,1,"Warmup4","Guarda con los hombros")
