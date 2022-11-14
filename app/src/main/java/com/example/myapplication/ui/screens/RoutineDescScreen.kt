@@ -21,7 +21,11 @@ import com.example.myapplication.ui.theme.Green
 import com.example.myapplication.ui.activities.thirdactivity.ExecuteRoutineViewModel
 
 @Composable
-fun RoutineDescriptionScreen(viewModel: ExecuteRoutineViewModel, routineId: String, backHandler : () -> Unit, starRoutineHanlder : ()->Unit){
+fun RoutineDescriptionScreen(viewModel: ExecuteRoutineViewModel,
+                             routineId: String,
+                             backHandler : () -> Unit,
+                             starRoutineHanlder : () -> Unit,
+                             starRoutineLiteHandler: () -> Unit){
 
 
     val routine: Routines = viewModel.routine(routineId.toInt())
@@ -52,6 +56,7 @@ fun RoutineDescriptionScreen(viewModel: ExecuteRoutineViewModel, routineId: Stri
              ListOfExercises(viewModel)
              Spacer(modifier = Modifier.height(10.dp))
              Button1(fontSize = 20, text = "Start Routine", handler = starRoutineHanlder)
+             Button1(fontSize = 20, text = "Start Routine Lite", handler = starRoutineLiteHandler)
          }
      }
 

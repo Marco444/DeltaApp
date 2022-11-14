@@ -42,9 +42,9 @@ import kotlin.math.exp
 
 @Composable
 fun ExerciseExecuteScreenAlternative(
-    viewModel: ExecuteRoutineViewModel = viewModel(),
-    handlerBack : () ->Unit,
-    handlerFinishRoutine: ()->Unit
+    viewModel: ExecuteRoutineViewModel,
+    handlerBack : () -> Unit,
+    handlerFinishRoutine: ()-> Unit
 ){
     Box(modifier = Modifier.background(backGround)) {
         Column(verticalArrangement = Arrangement.SpaceEvenly) {
@@ -135,7 +135,7 @@ fun ExerciseExecuteScreenAlternative(
                                     .align(CenterVertically)
                                     .padding(10.dp),
                                 colors = ButtonDefaults.buttonColors(backgroundColor = Green),
-                                onClick = {}
+                                onClick = handlerFinishRoutine
                         ){
                                 Text(
                                     fontSize = 10.sp,
@@ -154,13 +154,13 @@ fun ExerciseExecuteScreenAlternative(
     }
 }
 
-@Preview
-@Composable
-fun TryALternative(){
-    ExerciseExecuteScreenAlternative(handlerBack = {}) {
-
-    }
-}
+//@Preview
+//@Composable
+//fun TryALternative(){
+//    ExerciseExecuteScreenAlternative(handlerBack = {}) {
+//
+//    }
+//}
 
 @Composable
 fun RoutineInfo(title : String, time: Int, description: String){
@@ -177,7 +177,7 @@ fun RoutineInfo(title : String, time: Int, description: String){
 
 @Composable
 fun ExerciseCard(
-    viewModel: ExecuteRoutineViewModel = viewModel(),
+    viewModel: ExecuteRoutineViewModel,
     exercise: Exercise,
     numberOfExercise: Int,
     Actual: MutableStateFlow<Int>
@@ -190,16 +190,15 @@ fun ExerciseCard(
         Modifier
             //.width(ROUTINE_CARD_WIDTH.dp)
             .fillMaxWidth(0.9F)
+            .clip(RoundedCornerShape(40.dp))
             .background(Gray)
             .border(
                 4.dp,
                 if (numberOfExercise == actual) Green else Gray,
-                shape = RoundedCornerShape(10.dp)
             )
             .clickable {
                 //expanded = if (viewModel.cardsExpandable()) !expanded else true
             }
-            .clip(RoundedCornerShape(10.dp)),
     ){
 
         Column () {

@@ -7,6 +7,7 @@ import androidx.navigation.compose.composable
 import androidx.navigation.compose.rememberNavController
 import com.example.myapplication.ui.navigation.Screen
 import com.example.myapplication.ui.screens.ExerciseExecScreen
+import com.example.myapplication.ui.screens.ExerciseExecuteScreenAlternative
 import com.example.myapplication.ui.screens.RoutineDescriptionScreen
 import com.example.myapplication.ui.screens.RoutineFinished
 
@@ -29,10 +30,20 @@ fun DeltaAppExecute(
                 viewModel =viewModel,
                 routineId = saved,
                 backHandler = { redirectHandler().also { navController.popBackStack() } },
-                starRoutineHanlder = { navController.navigate(Screen.Execute.route) })
+                starRoutineHanlder = { navController.navigate(Screen.Execute.route) },
+                starRoutineLiteHandler = {navController.navigate(Screen.ExecuteLite.route)})
         }
         composable(Screen.Execute.route) { backStackEntry ->
             ExerciseExecScreen(
+                viewModel =  viewModel,
+                handlerBack = { navController.popBackStack() },
+                handlerFinishRoutine = {
+                    navController.navigate(
+                        Screen.RoutineFinish.route)
+                })
+        }
+        composable(Screen.ExecuteLite.route) { backStackEntry ->
+           ExerciseExecuteScreenAlternative(
                 viewModel =  viewModel,
                 handlerBack = { navController.popBackStack() },
                 handlerFinishRoutine = {
