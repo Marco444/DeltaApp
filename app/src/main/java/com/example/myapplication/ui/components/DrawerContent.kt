@@ -6,13 +6,17 @@ import androidx.compose.foundation.layout.*
 import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.material.Button
 import androidx.compose.material.ButtonDefaults
+import androidx.compose.material.MaterialTheme
 import androidx.compose.material.Text
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.collectAsState
+import androidx.compose.runtime.getValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.clip
 import androidx.compose.ui.draw.scale
 import androidx.compose.ui.graphics.Color
+import androidx.compose.ui.graphics.Color.Companion.White
 import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
@@ -44,11 +48,15 @@ fun DrawerContent(
     userViewModel : UserViewModel,
     logoutRedirect: () -> Unit
 ){
+
+    userViewModel.getCurrentUser()
+
+    val userState by  userViewModel.userState.collectAsState()
+
     Column (
         modifier = Modifier
-            .fillMaxWidth()
-            .fillMaxHeight()
-            .background(Color(0xAF1F1F1F)),
+            .fillMaxSize()
+            .background(MaterialTheme.colors.background),
         horizontalAlignment = Alignment.CenterHorizontally,
         verticalArrangement = Arrangement.SpaceEvenly
     ) {
@@ -64,14 +72,20 @@ fun DrawerContent(
             )
         }
         Text(
-            text = "Lionel Messi",
-            color = Color(0xFFCFFFB3),
-            fontSize = 30.sp,
-            fontFamily = H1Font
+            text = userState.currentUser?.username ?: "Not logged in",
+            style = MaterialTheme.typography.h2
         )
 
-        LoginButton(text = "My profile", handler = {})
-        LoginButton(text = "Logout", handler = logoutRedirect)
+        if(userState.currentUser != null) {
+            Text(text = "Last activity \n" + userState.currentUser!!.lastActivity.toString(),
+                style = MaterialTheme.typography.body2, modifier = Modifier.align(Alignment.CenterHorizontally))
+//            Text(text = userState.currentUser!!.email, style = MaterialTheme.typography.body2)
+//            Row {
+//                Text(text = userState.currentUser!!.firstName, style = MaterialTheme.typography.body2)
+//                Text(text = userState.currentUser!!.lastName, style = MaterialTheme.typography.body2)
+//            }
+        }
 
+        LoginButton(text = "Logout", handler = logoutRedirect)
     }
 }
