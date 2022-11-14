@@ -32,7 +32,8 @@ fun DeltaAppInit(
 //            )
         ) {
             LogIn(actionRedirect = initialisedHandler,
-                backButton = {navController.popBackStack()},viewModel = viewModel )
+                backButton = {navController.popBackStack()},
+                viewModel = viewModel )
         }
     }
 }

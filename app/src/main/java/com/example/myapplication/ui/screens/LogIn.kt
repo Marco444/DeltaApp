@@ -125,15 +125,18 @@ fun LogIn(actionRedirect: () -> Unit, backButton: () -> Unit,viewModel: UserView
                 modifier = Modifier.align(CenterHorizontally)
             )
             LaunchedEffect(key1 = uiState.isAuthenticated){
-                if(uiState.isAuthenticated)
+                if(uiState.isAuthenticated) {
+                    setSnackBarState(false)
                     actionRedirect()
+                }
             }
-
+            LaunchedEffect(key1 = uiState.errorBoolean){
+                if(uiState.errorBoolean == true)
+                    setSnackBarState(true)
+            }
         }
     }
-    LaunchedEffect(key1 = uiState.errorBoolean){
-        setSnackBarState(!snackbarVisibleState)
-    }
+
     // The Snackbar
     if (snackbarVisibleState) {
         Snackbar(

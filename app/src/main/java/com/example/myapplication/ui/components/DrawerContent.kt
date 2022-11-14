@@ -1,5 +1,6 @@
 package com.example.myapplication.ui.components
 
+import android.content.Intent
 import androidx.compose.foundation.Image
 import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.*
@@ -18,7 +19,9 @@ import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import com.example.myapplication.R
+import com.example.myapplication.ui.activities.mainactivity.MainActivity
 import com.example.myapplication.ui.activities.mainactivity.UserViewModel
+import com.example.myapplication.ui.activities.secondactivity.SecondActivity
 import com.example.myapplication.ui.theme.H1Font
 
 @Composable
@@ -98,10 +101,13 @@ fun DrawerContent(
                 )
             }
             Spacer(modifier = Modifier.height(10.dp))
+
             Button(
                 //onClick = backButton,
                 onClick = {
-                    userViewModel.logout()},
+                    userViewModel.logout()
+                    println("Logged Out")
+                          },
                 shape = RoundedCornerShape(10.dp),
                 colors = ButtonDefaults.buttonColors(backgroundColor = Color(0xFF4B4B4B)),
                 modifier = Modifier

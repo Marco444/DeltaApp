@@ -30,13 +30,16 @@ class MainViewModel(
         }.onSuccess { response ->
             uiState = uiState.copy(
                 isFetching = false,
-                isAuthenticated = true
+                isAuthenticated = true,
+                errorBoolean = false
             )
         }.onFailure { e ->
             // Handle the error and notify the UI when appropriate.
             uiState = uiState.copy(
                 message = e.message,
-                isFetching = false)
+                isFetching = false,
+                errorBoolean = true
+            )
         }
     }
 
