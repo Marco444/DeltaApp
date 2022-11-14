@@ -14,4 +14,5 @@
     <string name="title_activity_main2">MainActivity2</string>
     <string name="title_activity_third">ThirdActivity</string>
     <string name="share_msg">Check out the routine! </string>
+    <string name="login_failed">Invalid Username or Password</string>
 </resources>

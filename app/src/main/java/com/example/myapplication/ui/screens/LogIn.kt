@@ -4,16 +4,13 @@ import android.app.Activity
 import android.content.Context
 import android.content.ContextWrapper
 import android.view.KeyEvent
-import androidx.compose.foundation.Image
-import androidx.compose.foundation.clickable
+import androidx.compose.foundation.*
 import androidx.compose.foundation.layout.*
-import androidx.compose.foundation.rememberScrollState
 
 import androidx.compose.foundation.shape.CircleShape
 import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.foundation.text.ClickableText
 import androidx.compose.foundation.text.KeyboardOptions
-import androidx.compose.foundation.verticalScroll
 import androidx.compose.material.*
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.filled.*
@@ -27,6 +24,7 @@ import androidx.compose.ui.platform.LocalConfiguration
 import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.platform.LocalFocusManager
 import androidx.compose.ui.res.painterResource
+import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.text.SpanStyle
 import androidx.compose.ui.text.TextStyle
 import androidx.compose.ui.text.buildAnnotatedString
@@ -41,7 +39,9 @@ import androidx.lifecycle.ViewModel
 import com.example.myapplication.R
 import com.example.myapplication.ui.activities.mainactivity.UserViewModel
 import com.example.myapplication.ui.components.Button1
+import com.example.myapplication.ui.theme.Gray
 import com.example.myapplication.ui.theme.Green
+import com.example.myapplication.ui.theme.Red
 import kotlinx.coroutines.joinAll
 import okhttp3.internal.wait
 
@@ -55,6 +55,17 @@ fun LogIn(actionRedirect: () -> Unit, backButton: () -> Unit,viewModel: UserView
     val configuration = LocalConfiguration.current
     val focusManager = LocalFocusManager.current
     val uiState = viewModel.uiState
+
+    // For the snackbar
+    val (snackbarVisibleState, setSnackBarState) = remember { mutableStateOf(false) }
+
+    Button(onClick = { setSnackBarState(!snackbarVisibleState) }) {
+        if (snackbarVisibleState) {
+            Text("Hide Snackbar")
+        } else {
+            Text("Show Snackbar")
+        }
+    }
 
     //LockScreenOrientation(ActivityInfo.SCREEN_ORIENTATION_PORTRAIT)
     BackgroundImage(painter = painterResource(id = R.drawable.log_in_photo))
@@ -113,8 +124,6 @@ fun LogIn(actionRedirect: () -> Unit, backButton: () -> Unit,viewModel: UserView
                 handler = {
                     viewModel.login(email.text, passWord.text )
 
-
-
                     },
                 modifier = Modifier.align(CenterHorizontally)
             )
@@ -126,8 +135,25 @@ fun LogIn(actionRedirect: () -> Unit, backButton: () -> Unit,viewModel: UserView
                 if(uiState.isAuthenticated)
                     actionRedirect()
             }
-
+            LaunchedEffect(key1 = uiState.message != null){
+                setSnackBarState(!snackbarVisibleState)
+            }
         }
+    }
+
+    // The Snackbar
+    if (snackbarVisibleState) {
+        Snackbar(
+            action = {
+                Button(
+                    onClick = {setSnackBarState(!snackbarVisibleState)},
+                ) {
+                    Text(text = "Dismiss")
+                }
+            },
+            modifier = Modifier.padding(8.dp)
+
+        ) { Text(text = stringResource(id = R.string.login_failed)) }
     }
 
 }
