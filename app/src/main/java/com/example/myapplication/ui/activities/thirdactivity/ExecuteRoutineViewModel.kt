@@ -1,5 +1,6 @@
 package com.example.myapplication.ui.activities.thirdactivity
 
+import androidx.compose.material3.windowsizeclass.WindowWidthSizeClass
 import androidx.lifecycle.ViewModel
 import com.example.myapplication.data.Exercise
 import com.example.myapplication.data.Routines
@@ -121,5 +122,9 @@ class ExecuteRoutineViewModel() : ViewModel() {
         }
     }
 
+    fun cardsExpandable(): Boolean {
+        //return screenWidth != WindowWidthSizeClass.Expanded
+        return true
+    }
 
 }
