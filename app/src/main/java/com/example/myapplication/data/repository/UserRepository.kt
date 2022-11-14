@@ -22,6 +22,7 @@ class UserRepository(
         remoteDataSource.logout()
     }
 
+    //Esto es para no ir a pedir el usuario cada vez que hacemos currentUser
     suspend fun getCurrentUser(refresh: Boolean) : User? {
         if (refresh || currentUser == null) {
             val result = remoteDataSource.getCurrentUser()

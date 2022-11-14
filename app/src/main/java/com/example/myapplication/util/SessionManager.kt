@@ -6,10 +6,11 @@ import com.example.myapplication.R
 
 class SessionManager (context: Context) {
     private var preferences: SharedPreferences =
-        context.getSharedPreferences(context.getString(R.string.app_name), Context.MODE_PRIVATE)
+        context.getSharedPreferences(PREFERENCES_NAME, Context.MODE_PRIVATE)
 
     companion object {
         const val AUTH_TOKEN = "auth_token"
+        const val PREFERENCES_NAME = "preferences"
     }
 
     fun loadAuthToken(): String? {

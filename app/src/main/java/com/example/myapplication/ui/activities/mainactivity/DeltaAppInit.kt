@@ -9,10 +9,11 @@ import androidx.navigation.compose.NavHost
 import androidx.navigation.compose.composable
 import androidx.navigation.compose.rememberNavController
 import com.example.myapplication.ui.navigation.Screen
+import com.example.myapplication.util.getViewModelFactory
 
 @Composable
 fun DeltaAppInit(
-    viewModel: UserViewModel = viewModel(),
+    viewModel: UserViewModel = viewModel(factory = getViewModelFactory()),
     navController: NavHostController = rememberNavController(),
     initialisedHandler: () -> Unit,
 ) {
