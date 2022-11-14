@@ -101,8 +101,7 @@ class RoutinesViewModel(
             _routinesState.value.exploreRoutines.find { routine ->routine.value.id == id }!!.value.added
         else {
             if(_routinesState.value.userRoutines.isNotEmpty()) {
-                //_routinesState.value.userRoutines.find { routine -> routine.value.id == id }!!.value.favourite
-                return false
+                _routinesState.value.userRoutines.find { routine -> routine.value.id == id }!!.value.favourite
             }else
                 return false
         }

@@ -13,16 +13,8 @@ import java.util.*
 class RoutinesState {
 
 
-    var userRoutines by mutableStateOf(listOf(
-        MutableStateFlow(Routines(8, R.drawable.registration_background,
-            "This is a sample routine text", "MY PUSH 8", false, points = 3)),
-        MutableStateFlow(Routines(9, R.drawable.registration_background,
-            "This is a sample routine text", "MY PULL 9", false, points = 10)),
-        MutableStateFlow(Routines(10, R.drawable.registration_background,
-            "This is a sample routine text", "MY PUSH 10", false, points = 1)),
-        MutableStateFlow(Routines(11,R.drawable.registration_background,
-            "This is a sample routine text", "MY PULL 11", false))
-    ))
+    var userRoutines by mutableStateOf(emptyList<MutableStateFlow<Routines>>())
+
 
     var exploreRoutines by mutableStateOf(listOf(
             MutableStateFlow(Routines(0, R.drawable.registration_background,
