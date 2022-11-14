@@ -1,0 +1,137 @@
+Index: app/src/main/java/com/example/myapplication/ui/screens/LogIn.kt
+IDEA additional info:
+Subsystem: com.intellij.openapi.diff.impl.patch.BaseRevisionTextPatchEP
+<+>package com.example.myapplication.ui.screens\r\n\r\nimport android.app.Activity\r\nimport android.content.Context\r\nimport android.content.ContextWrapper\r\nimport android.view.KeyEvent\r\nimport androidx.compose.foundation.Image\r\nimport androidx.compose.foundation.clickable\r\nimport androidx.compose.foundation.layout.*\r\nimport androidx.compose.foundation.rememberScrollState\r\n\r\nimport androidx.compose.foundation.shape.CircleShape\r\nimport androidx.compose.foundation.shape.RoundedCornerShape\r\nimport androidx.compose.foundation.text.ClickableText\r\nimport androidx.compose.foundation.text.KeyboardOptions\r\nimport androidx.compose.foundation.verticalScroll\r\nimport androidx.compose.material.*\r\nimport androidx.compose.material.icons.Icons\r\nimport androidx.compose.material.icons.filled.*\r\nimport androidx.compose.runtime.*\r\nimport androidx.compose.ui.Alignment.Companion.CenterHorizontally\r\nimport androidx.compose.ui.Modifier\r\nimport androidx.compose.ui.draw.scale\r\nimport androidx.compose.ui.graphics.Color\r\nimport androidx.compose.ui.input.key.onKeyEvent\r\nimport androidx.compose.ui.platform.LocalConfiguration\r\nimport androidx.compose.ui.platform.LocalContext\r\nimport androidx.compose.ui.platform.LocalFocusManager\r\nimport androidx.compose.ui.res.painterResource\r\nimport androidx.compose.ui.text.SpanStyle\r\nimport androidx.compose.ui.text.TextStyle\r\nimport androidx.compose.ui.text.buildAnnotatedString\r\nimport androidx.compose.ui.text.input.KeyboardType\r\nimport androidx.compose.ui.text.input.PasswordVisualTransformation\r\nimport androidx.compose.ui.text.input.TextFieldValue\r\nimport androidx.compose.ui.text.input.VisualTransformation\r\nimport androidx.compose.ui.text.style.TextDecoration\r\nimport androidx.compose.ui.unit.dp\r\nimport androidx.compose.ui.unit.sp\r\nimport androidx.lifecycle.ViewModel\r\nimport com.example.myapplication.R\r\nimport com.example.myapplication.ui.activities.mainactivity.UserViewModel\r\nimport com.example.myapplication.ui.components.Button1\r\nimport com.example.myapplication.ui.theme.Green\r\n\r\n\r\n@Composable\r\nfun LogIn(actionRedirect: () -> Unit, backButton: () -> Unit,viewModel: UserViewModel){\r\n\r\n    var passWord by remember { mutableStateOf(TextFieldValue(\"\")) }\r\n    var email by remember { mutableStateOf(TextFieldValue(\"\")) }\r\n    var snackbar by remember { mutableStateOf(false) }\r\n    val configuration = LocalConfiguration.current\r\n    val focusManager = LocalFocusManager.current\r\n    val uiState = viewModel.uiState\r\n\r\n    //LockScreenOrientation(ActivityInfo.SCREEN_ORIENTATION_PORTRAIT)\r\n    BackgroundImage(painter = painterResource(id = R.drawable.log_in_photo))\r\n    Column(verticalArrangement = Arrangement.SpaceEvenly) {\r\n        Column(modifier = Modifier\r\n            .fillMaxWidth()\r\n            .verticalScroll(rememberScrollState()))\r\n        {\r\n            Button(\r\n                onClick = backButton,\r\n                shape = CircleShape,\r\n                colors = ButtonDefaults.buttonColors(backgroundColor = Green),\r\n                modifier = Modifier\r\n                    .padding(start = 18.dp, top = 15.dp)\r\n                    .size(55.dp)\r\n            )\r\n            {\r\n                Icon(\r\n                    Icons.Default.ArrowBack,\r\n                    contentDescription = \"content description\",\r\n                    tint = Color.Black\r\n                )\r\n            }\r\n\r\n\r\n        }\r\n        Column(\r\n            modifier = Modifier\r\n                .height(500.dp)\r\n                .fillMaxWidth()\r\n                .clickable { focusManager.clearFocus() }\r\n            ,\r\n            verticalArrangement = Arrangement.SpaceEvenly\r\n        ) {\r\n            Image(\r\n\r\n                painter = painterResource(R.drawable.delta_logo),\r\n                contentDescription = null,\r\n                modifier = Modifier\r\n                    .scale(1.5F)\r\n                    .align(CenterHorizontally)\r\n            )\r\n            EmailTextField(\r\n                onTextChange = {email = it },\r\n                modifier = Modifier.align(CenterHorizontally),\r\n                email = email\r\n            )\r\n            PasswordTextField(\r\n                onTextChange = {passWord = it},\r\n                modifier = Modifier.align(CenterHorizontally),\r\n                password = passWord\r\n            )\r\n            Button1(\r\n                fontSize = 23,\r\n                text = \"Log In\",\r\n                handler = {\r\n                    viewModel.login(email.text, passWord.text )\r\n                    if(uiState.isAuthenticated)\r\n                        actionRedirect()\r\n\r\n                    },\r\n                modifier = Modifier.align(CenterHorizontally)\r\n            )\r\n            LinkedText(\r\n                handler = {/*TODO AGREGAR EL MODIFICADOR DEL STORE*/ },\r\n                modifier = Modifier.align(CenterHorizontally)\r\n            )\r\n\r\n        }\r\n    }\r\n\r\n}\r\n@Composable\r\nfun EmailTextField(onTextChange :(TextFieldValue) -> Unit,modifier: Modifier = Modifier,email:TextFieldValue){\r\n    TextField( value = email,\r\n        onValueChange = onTextChange,\r\n        shape = RoundedCornerShape(8.dp),\r\n        colors = TextFieldDefaults.textFieldColors(\r\n            backgroundColor = MaterialTheme.colors.surface,\r\n            focusedIndicatorColor =  Color.Transparent),\r\n        label = {\r\n            Text(text = \"Email\")\r\n        },\r\n        modifier = modifier.onKeyEvent {\r\n            if (it.nativeKeyEvent.keyCode == KeyEvent.KEYCODE_ENTER){\r\n                true\r\n            }\r\n            false\r\n        },\r\n        textStyle = TextStyle.Default.copy(fontSize = 15.sp)\r\n    )\r\n}\r\n@Composable\r\nfun PasswordTextField(onTextChange :(TextFieldValue) -> Unit,modifier: Modifier = Modifier,password:TextFieldValue){\r\n    var passwordVisible by remember { mutableStateOf(false) }\r\n    TextField( value = password,\r\n        onValueChange = onTextChange,\r\n        shape = RoundedCornerShape(8.dp),\r\n        colors = TextFieldDefaults.textFieldColors(\r\n            backgroundColor = MaterialTheme.colors.surface,\r\n            focusedIndicatorColor =  Color.Transparent),\r\n        label = {\r\n            Text(text = \"Password\")\r\n        },\r\n        visualTransformation = if (passwordVisible) VisualTransformation.None else PasswordVisualTransformation(),\r\n        keyboardOptions = KeyboardOptions(keyboardType = KeyboardType.Password),\r\n        trailingIcon = {\r\n            val image = if (passwordVisible)\r\n                Icons.Filled.Visibility\r\n            else Icons.Filled.VisibilityOff\r\n            val description = if (passwordVisible) \"Hide password\" else \"Show password\"\r\n            IconButton(onClick = {passwordVisible = !passwordVisible}){\r\n                Icon(imageVector  = image, description)\r\n            }\r\n        },\r\n        modifier = modifier,\r\n        textStyle = TextStyle.Default.copy(fontSize = 15.sp)\r\n    )\r\n}\r\n@Composable\r\nfun LinkedText(handler : (Int) -> Unit,modifier: Modifier = Modifier){\r\n    val mAnnotatedLinkString = buildAnnotatedString {\r\n        // creating a string to display in the Text\r\n        val mStr = \"Forgot password?\"\r\n        append(mStr)\r\n        addStyle(\r\n            style = SpanStyle(\r\n                color = Color.White,\r\n                textDecoration = TextDecoration.Underline\r\n            ), start = 0, end = mStr.length\r\n        )\r\n\r\n    }\r\n    ClickableText(text = mAnnotatedLinkString, onClick = handler,modifier = modifier)\r\n\r\n}\r\n@Composable\r\nfun LockScreenOrientation(orientation: Int) {\r\n    val context = LocalContext.current\r\n    DisposableEffect(Unit) {\r\n        val activity = context.findActivity() ?: return@DisposableEffect onDispose {}\r\n        val originalOrientation = activity.requestedOrientation\r\n        activity.requestedOrientation = orientation\r\n        onDispose {\r\n            // restore original orientation when view disappears\r\n            activity.requestedOrientation = originalOrientation\r\n        }\r\n    }\r\n}\r\n\r\nfun Context.findActivity(): Activity? = when (this) {\r\n    is Activity -> this\r\n    is ContextWrapper -> baseContext.findActivity()\r\n    else -> null\r\n}\r\n\r\n
+Subsystem: com.intellij.openapi.diff.impl.patch.CharsetEP
+<+>UTF-8
+===================================================================
+diff --git a/app/src/main/java/com/example/myapplication/ui/screens/LogIn.kt b/app/src/main/java/com/example/myapplication/ui/screens/LogIn.kt
+--- a/app/src/main/java/com/example/myapplication/ui/screens/LogIn.kt	(revision e6dcd26d35d9a0b0f7200b4472053557824f3ed9)
++++ b/app/src/main/java/com/example/myapplication/ui/screens/LogIn.kt	(date 1668393803657)
+@@ -4,16 +4,13 @@
+ import android.content.Context
+ import android.content.ContextWrapper
+ import android.view.KeyEvent
+-import androidx.compose.foundation.Image
+-import androidx.compose.foundation.clickable
++import androidx.compose.foundation.*
+ import androidx.compose.foundation.layout.*
+-import androidx.compose.foundation.rememberScrollState
+ 
+ import androidx.compose.foundation.shape.CircleShape
+ import androidx.compose.foundation.shape.RoundedCornerShape
+ import androidx.compose.foundation.text.ClickableText
+ import androidx.compose.foundation.text.KeyboardOptions
+-import androidx.compose.foundation.verticalScroll
+ import androidx.compose.material.*
+ import androidx.compose.material.icons.Icons
+ import androidx.compose.material.icons.filled.*
+@@ -27,6 +24,7 @@
+ import androidx.compose.ui.platform.LocalContext
+ import androidx.compose.ui.platform.LocalFocusManager
+ import androidx.compose.ui.res.painterResource
++import androidx.compose.ui.res.stringResource
+ import androidx.compose.ui.text.SpanStyle
+ import androidx.compose.ui.text.TextStyle
+ import androidx.compose.ui.text.buildAnnotatedString
+@@ -41,7 +39,9 @@
+ import com.example.myapplication.R
+ import com.example.myapplication.ui.activities.mainactivity.UserViewModel
+ import com.example.myapplication.ui.components.Button1
++import com.example.myapplication.ui.theme.Gray
+ import com.example.myapplication.ui.theme.Green
++import com.example.myapplication.ui.theme.Red
+ 
+ 
+ @Composable
+@@ -54,6 +54,17 @@
+     val focusManager = LocalFocusManager.current
+     val uiState = viewModel.uiState
+ 
++    // For the snackbar
++    val (snackbarVisibleState, setSnackBarState) = remember { mutableStateOf(false) }
++
++    Button(onClick = { setSnackBarState(!snackbarVisibleState) }) {
++        if (snackbarVisibleState) {
++            Text("Hide Snackbar")
++        } else {
++            Text("Show Snackbar")
++        }
++    }
++
+     //LockScreenOrientation(ActivityInfo.SCREEN_ORIENTATION_PORTRAIT)
+     BackgroundImage(painter = painterResource(id = R.drawable.log_in_photo))
+     Column(verticalArrangement = Arrangement.SpaceEvenly) {
+@@ -92,7 +103,7 @@
+                 painter = painterResource(R.drawable.delta_logo),
+                 contentDescription = null,
+                 modifier = Modifier
+-                    .scale(1.5F)
++                    .fillMaxWidth(0.2F)
+                     .align(CenterHorizontally)
+             )
+             EmailTextField(
+@@ -112,7 +123,8 @@
+                     viewModel.login(email.text, passWord.text )
+                     if(uiState.isAuthenticated)
+                         actionRedirect()
+-
++                    else
++                        setSnackBarState(!snackbarVisibleState)
+                     },
+                 modifier = Modifier.align(CenterHorizontally)
+             )
+@@ -124,6 +136,21 @@
+         }
+     }
+ 
++    // The Snackbar
++    if (snackbarVisibleState) {
++        Snackbar(
++            action = {
++                Button(
++                    onClick = {setSnackBarState(!snackbarVisibleState)},
++                ) {
++                    Text(text = "Dismiss")
++                }
++            },
++            modifier = Modifier.padding(8.dp)
++
++        ) { Text(text = stringResource(id = R.string.login_failed)) }
++    }
++
+ }
+ @Composable
+ fun EmailTextField(onTextChange :(TextFieldValue) -> Unit,modifier: Modifier = Modifier,email:TextFieldValue){
+@@ -209,3 +236,13 @@
+     else -> null
+ }
+ 
++
++@Composable
++fun SnackbarDemo() {
++    Column {
++
++        val (snackbarVisibleState, setSnackBarState) = remember { mutableStateOf(false) }
++
++
++    }
++}
+\ No newline at end of file
+Index: app/src/main/res/values/strings.xml
+IDEA additional info:
+Subsystem: com.intellij.openapi.diff.impl.patch.BaseRevisionTextPatchEP
+<+><resources>\r\n    <string name=\"app_name\">Delta</string>\r\n    <string name=\"try_out\">Try Out</string>\r\n    <string name=\"login\">Log In</string>\r\n    <string name=\"sing_up\">Sign Up</string>\r\n    <string name=\"my_routines\">My Routines</string>\r\n    <string name=\"progress_title\">Progress</string>\r\n    <string name=\"routines_title\">Routines</string>\r\n    <string name=\"explore_title\">Explore</string>\r\n    <string name=\"see_routine_details\">See routine details</string>\r\n    <string name=\"favourite\">Favourite</string>\r\n    <string name=\"date\">Date</string>\r\n    <string name=\"points\">Points</string>\r\n    <string name=\"title_activity_main2\">MainActivity2</string>\r\n    <string name=\"title_activity_third\">ThirdActivity</string>\r\n    <string name=\"share_msg\">Check out the routine! </string>\r\n</resources>
+Subsystem: com.intellij.openapi.diff.impl.patch.CharsetEP
+<+>UTF-8
+===================================================================
+diff --git a/app/src/main/res/values/strings.xml b/app/src/main/res/values/strings.xml
+--- a/app/src/main/res/values/strings.xml	(revision e6dcd26d35d9a0b0f7200b4472053557824f3ed9)
++++ b/app/src/main/res/values/strings.xml	(date 1668392567206)
+@@ -14,4 +14,5 @@
+     <string name="title_activity_main2">MainActivity2</string>
+     <string name="title_activity_third">ThirdActivity</string>
+     <string name="share_msg">Check out the routine! </string>
++    <string name="login_failed">Invalid Username or Password</string>
+ </resources>
+\ No newline at end of file

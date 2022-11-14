@@ -1,0 +1,65 @@
+Index: app/src/main/java/com/example/myapplication/ui/screens/RoutineDescScreen.kt
+IDEA additional info:
+Subsystem: com.intellij.openapi.diff.impl.patch.BaseRevisionTextPatchEP
+<+>package com.example.myapplication.ui.screens\r\n\r\nimport androidx.compose.foundation.background\r\nimport androidx.compose.foundation.layout.*\r\nimport androidx.compose.foundation.lazy.LazyColumn\r\nimport androidx.compose.foundation.lazy.items\r\nimport androidx.compose.foundation.shape.CircleShape\r\nimport androidx.compose.material.*\r\nimport androidx.compose.material.icons.Icons\r\nimport androidx.compose.material.icons.filled.Close\r\nimport androidx.compose.runtime.Composable\r\nimport androidx.compose.ui.Alignment\r\nimport androidx.compose.ui.Modifier\r\nimport androidx.compose.ui.graphics.Color\r\nimport androidx.compose.ui.unit.dp\r\nimport androidx.compose.ui.unit.sp\r\nimport com.example.myapplication.data.Routines\r\nimport com.example.myapplication.ui.components.Button1\r\nimport com.example.myapplication.ui.components.ExPreviewCard\r\nimport com.example.myapplication.ui.theme.Green\r\nimport com.example.myapplication.ui.activities.thirdactivity.ExecuteRoutineViewModel\r\n\r\n@Composable\r\nfun RoutineDescriptionScreen(viewModel: ExecuteRoutineViewModel, routineId: String, backHandler : () -> Unit, starRoutineHanlder : ()->Unit){\r\n\r\n\r\n    val routine: Routines = viewModel.routine(routineId.toInt())\r\n\r\n    Box(modifier = Modifier.background(Color(0xFF1E1E1E))) {\r\n     Column(verticalArrangement = Arrangement.SpaceEvenly) {\r\n         Column(modifier = Modifier.fillMaxWidth()) {\r\n             Button(\r\n                 onClick = backHandler ,\r\n                 shape = CircleShape,\r\n                 colors = ButtonDefaults.buttonColors(backgroundColor = Green),\r\n                 modifier = Modifier\r\n                     .padding(start = 18.dp, top = 15.dp)\r\n                     .size(55.dp)\r\n             )\r\n             {\r\n                 Icon(\r\n                     Icons.Default.Close,\r\n                     contentDescription = \"content description\",\r\n                     tint = Color.Black\r\n                 )\r\n             }\r\n         }\r\n         Spacer(modifier = Modifier.height(20.dp))\r\n         Column(modifier = Modifier.fillMaxSize(), horizontalAlignment = Alignment.CenterHorizontally) {\r\n             ExPreviewCard(routine.title ?: \"\",30,routine.description ?: \"\")\r\n             Spacer(modifier = Modifier.height(40.dp))\r\n             ListOfExercises(viewModel)\r\n             Spacer(modifier = Modifier.height(10.dp))\r\n             Button1(fontSize = 20, text = \"Start Routine\", handler = starRoutineHanlder)\r\n         }\r\n     }\r\n\r\n    }\r\n}\r\n\r\n@Composable\r\nfun ListOfExercises(viewModel: ExecuteRoutineViewModel){\r\n    LazyColumn( horizontalAlignment = Alignment.CenterHorizontally){\r\n        item {\r\n            Text(text = \"WarmUp\", fontSize = 30.sp, color = Green)\r\n\r\n        }\r\n        items(viewModel.getRoutineWarmUpExercises()) { item ->\r\n                   Text(text = item.name, fontSize = 30.sp, color = Color.White)\r\n                    Spacer(modifier = Modifier.height(1.dp))\r\n            }\r\n        item {\r\n            Text(text = \"mainSet\", fontSize = 30.sp, color = Green)\r\n\r\n        }\r\n        items(viewModel.getRoutineMainSetExercises()){ item ->\r\n                Text(text = item.name, fontSize = 30.sp, color = Color.White)\r\n                Spacer(modifier = Modifier.height(1.dp))\r\n            }\r\n        item {\r\n            Text(text = \"CoolDown\", fontSize = 30.sp, color = Green)\r\n\r\n        }\r\n        items(viewModel.getRoutineCoolDownExercises()){ item ->\r\n            Text(text = item.name, fontSize = 30.sp, color = Color.White)\r\n            Spacer(modifier = Modifier.height(1.dp))\r\n        }\r\n        }\r\n}\r\n\r\n
+Subsystem: com.intellij.openapi.diff.impl.patch.CharsetEP
+<+>UTF-8
+===================================================================
+diff --git a/app/src/main/java/com/example/myapplication/ui/screens/RoutineDescScreen.kt b/app/src/main/java/com/example/myapplication/ui/screens/RoutineDescScreen.kt
+--- a/app/src/main/java/com/example/myapplication/ui/screens/RoutineDescScreen.kt	(revision 1c20faabe296e54ca13a2931cf7fe3f47d204f98)
++++ b/app/src/main/java/com/example/myapplication/ui/screens/RoutineDescScreen.kt	(date 1668448546954)
+@@ -60,7 +60,10 @@
+ 
+ @Composable
+ fun ListOfExercises(viewModel: ExecuteRoutineViewModel){
+-    LazyColumn( horizontalAlignment = Alignment.CenterHorizontally){
++    LazyColumn(
++        horizontalAlignment = Alignment.CenterHorizontally,
++        modifier = Modifier.fillMaxHeight(0.8F)
++    ){
+         item {
+             Text(text = "WarmUp", fontSize = 30.sp, color = Green)
+ 
+Index: .idea/deploymentTargetDropDown.xml
+===================================================================
+diff --git a/.idea/deploymentTargetDropDown.xml b/.idea/deploymentTargetDropDown.xml
+deleted file mode 100644
+--- a/.idea/deploymentTargetDropDown.xml	(revision 1c20faabe296e54ca13a2931cf7fe3f47d204f98)
++++ /dev/null	(revision 1c20faabe296e54ca13a2931cf7fe3f47d204f98)
+@@ -1,17 +0,0 @@
+-<?xml version="1.0" encoding="UTF-8"?>
+-<project version="4">
+-  <component name="deploymentTargetDropDown">
+-    <targetSelectedWithDropDown>
+-      <Target>
+-        <type value="QUICK_BOOT_TARGET" />
+-        <deviceKey>
+-          <Key>
+-            <type value="VIRTUAL_DEVICE_PATH" />
+-            <value value="C:\Users\lautarohernando\.android\avd\Pixel_3a_API_33_x86_64.avd" />
+-          </Key>
+-        </deviceKey>
+-      </Target>
+-    </targetSelectedWithDropDown>
+-    <timeTargetWasSelectedWithDropDown value="2022-11-14T12:18:41.961566800Z" />
+-  </component>
+-</project>
+\ No newline at end of file
+Index: local.properties
+IDEA additional info:
+Subsystem: com.intellij.openapi.diff.impl.patch.BaseRevisionTextPatchEP
+<+>## This file must *NOT* be checked into Version Control Systems,\r\n# as it contains information specific to your local configuration.\r\n#\r\n# Location of the SDK. This is only used by Gradle.\r\n# For customization when using a Version Control System, please read the\r\n# header note.\r\n#Mon Nov 14 11:47:10 ART 2022\r\nsdk.dir=C\\:\\\\Users\\\\lautarohernando\\\\AppData\\\\Local\\\\Android\\\\Sdk\r\n
+Subsystem: com.intellij.openapi.diff.impl.patch.CharsetEP
+<+>ISO-8859-1
+===================================================================
+diff --git a/local.properties b/local.properties
+--- a/local.properties	(revision 1c20faabe296e54ca13a2931cf7fe3f47d204f98)
++++ b/local.properties	(date 1668448265292)
+@@ -4,5 +4,5 @@
+ # Location of the SDK. This is only used by Gradle.
+ # For customization when using a Version Control System, please read the
+ # header note.
+-#Mon Nov 14 11:47:10 ART 2022
+-sdk.dir=C\:\\Users\\lautarohernando\\AppData\\Local\\Android\\Sdk
++#Sun Nov 13 23:47:40 ART 2022
++sdk.dir=C\:\\Users\\marti\\AppData\\Local\\Android\\Sdk

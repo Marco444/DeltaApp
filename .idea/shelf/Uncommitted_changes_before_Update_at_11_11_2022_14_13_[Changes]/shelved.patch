@@ -1,0 +1,75 @@
+Index: .idea/deploymentTargetDropDown.xml
+===================================================================
+diff --git a/.idea/deploymentTargetDropDown.xml b/.idea/deploymentTargetDropDown.xml
+deleted file mode 100644
+--- a/.idea/deploymentTargetDropDown.xml	(revision fc37b40ea0bb8f5d59f4d809a6988c36ff9c018e)
++++ /dev/null	(revision fc37b40ea0bb8f5d59f4d809a6988c36ff9c018e)
+@@ -1,17 +0,0 @@
+-<?xml version="1.0" encoding="UTF-8"?>
+-<project version="4">
+-  <component name="deploymentTargetDropDown">
+-    <targetSelectedWithDropDown>
+-      <Target>
+-        <type value="QUICK_BOOT_TARGET" />
+-        <deviceKey>
+-          <Key>
+-            <type value="VIRTUAL_DEVICE_PATH" />
+-            <value value="C:\Users\lautarohernando\.android\avd\Pixel_3a_API_33_x86_64.avd" />
+-          </Key>
+-        </deviceKey>
+-      </Target>
+-    </targetSelectedWithDropDown>
+-    <timeTargetWasSelectedWithDropDown value="2022-11-10T18:27:22.006530Z" />
+-  </component>
+-</project>
+\ No newline at end of file
+Index: app/src/main/java/com/example/myapplication/ui/screens/ProfileScreen.kt
+IDEA additional info:
+Subsystem: com.intellij.openapi.diff.impl.patch.CharsetEP
+<+>UTF-8
+===================================================================
+diff --git a/app/src/main/java/com/example/myapplication/ui/screens/ProfileScreen.kt b/app/src/main/java/com/example/myapplication/ui/screens/ProfileScreen.kt
+new file mode 100644
+--- /dev/null	(date 1668121798323)
++++ b/app/src/main/java/com/example/myapplication/ui/screens/ProfileScreen.kt	(date 1668121798323)
+@@ -0,0 +1,21 @@
++package com.example.myapplication.ui.screens
++
++import androidx.compose.foundation.Image
++import androidx.compose.foundation.layout.Column
++import androidx.compose.runtime.Composable
++import androidx.compose.ui.res.painterResource
++import androidx.compose.ui.res.stringResource
++import com.example.myapplication.R
++import com.example.myapplication.viewmodel.RoutinesViewModel
++
++@Composable
++fun ProfileScreen(viewModel: RoutinesViewModel){
++    Column(
++        
++    ) {
++        Image(
++            painter = painterResource(id = R.drawable.delta_logo),
++            contentDescription = "Profile Picture"
++        )
++    }
++}
+\ No newline at end of file
+Index: local.properties
+IDEA additional info:
+Subsystem: com.intellij.openapi.diff.impl.patch.BaseRevisionTextPatchEP
+<+>## This file must *NOT* be checked into Version Control Systems,\r\n# as it contains information specific to your local configuration.\r\n#\r\n# Location of the SDK. This is only used by Gradle.\r\n# For customization when using a Version Control System, please read the\r\n# header note.\r\n#Thu Nov 10 16:41:49 ART 2022\r\nsdk.dir=C\\:\\\\Users\\\\lautarohernando\\\\AppData\\\\Local\\\\Android\\\\Sdk\r\n
+Subsystem: com.intellij.openapi.diff.impl.patch.CharsetEP
+<+>ISO-8859-1
+===================================================================
+diff --git a/local.properties b/local.properties
+--- a/local.properties	(revision fc37b40ea0bb8f5d59f4d809a6988c36ff9c018e)
++++ b/local.properties	(date 1668121831679)
+@@ -4,5 +4,5 @@
+ # Location of the SDK. This is only used by Gradle.
+ # For customization when using a Version Control System, please read the
+ # header note.
+-#Thu Nov 10 16:41:49 ART 2022
+-sdk.dir=C\:\\Users\\lautarohernando\\AppData\\Local\\Android\\Sdk
++#Wed Nov 09 16:31:38 ART 2022
++sdk.dir=C\:\\Users\\marti\\AppData\\Local\\Android\\Sdk

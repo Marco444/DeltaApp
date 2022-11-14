@@ -60,7 +60,10 @@ fun RoutineDescriptionScreen(viewModel: ExecuteRoutineViewModel, routineId: Stri
 
 @Composable
 fun ListOfExercises(viewModel: ExecuteRoutineViewModel){
-    LazyColumn( horizontalAlignment = Alignment.CenterHorizontally){
+    LazyColumn(
+        horizontalAlignment = Alignment.CenterHorizontally,
+        modifier = Modifier.fillMaxHeight(0.8F)
+    ){
         item {
             Text(text = "WarmUp", fontSize = 30.sp, color = Green)
 

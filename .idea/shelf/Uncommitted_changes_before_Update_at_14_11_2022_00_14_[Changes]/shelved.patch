@@ -1,0 +1,43 @@
+Index: local.properties
+IDEA additional info:
+Subsystem: com.intellij.openapi.diff.impl.patch.BaseRevisionTextPatchEP
+<+>## This file must *NOT* be checked into Version Control Systems,\r\n# as it contains information specific to your local configuration.\r\n#\r\n# Location of the SDK. This is only used by Gradle.\r\n# For customization when using a Version Control System, please read the\r\n# header note.\r\n#Sun Nov 13 23:03:35 ART 2022\r\nsdk.dir=C\\:\\\\Users\\\\lautarohernando\\\\AppData\\\\Local\\\\Android\\\\Sdk\r\n
+Subsystem: com.intellij.openapi.diff.impl.patch.CharsetEP
+<+>ISO-8859-1
+===================================================================
+diff --git a/local.properties b/local.properties
+--- a/local.properties	(revision 7793d9ba5a873f8dad09df926fb35378015c426c)
++++ b/local.properties	(date 1668394060754)
+@@ -4,5 +4,5 @@
+ # Location of the SDK. This is only used by Gradle.
+ # For customization when using a Version Control System, please read the
+ # header note.
+-#Sun Nov 13 23:03:35 ART 2022
+-sdk.dir=C\:\\Users\\lautarohernando\\AppData\\Local\\Android\\Sdk
++#Sun Nov 13 23:47:40 ART 2022
++sdk.dir=C\:\\Users\\marti\\AppData\\Local\\Android\\Sdk
+Index: .idea/deploymentTargetDropDown.xml
+IDEA additional info:
+Subsystem: com.intellij.openapi.diff.impl.patch.BaseRevisionTextPatchEP
+<+><?xml version=\"1.0\" encoding=\"UTF-8\"?>\r\n<project version=\"4\">\r\n  <component name=\"deploymentTargetDropDown\">\r\n    <targetSelectedWithDropDown>\r\n      <Target>\r\n        <type value=\"QUICK_BOOT_TARGET\" />\r\n        <deviceKey>\r\n          <Key>\r\n            <type value=\"VIRTUAL_DEVICE_PATH\" />\r\n            <value value=\"C:\\Users\\lautarohernando\\.android\\avd\\Pixel_3a_API_33_x86_64.avd\" />\r\n          </Key>\r\n        </deviceKey>\r\n      </Target>\r\n    </targetSelectedWithDropDown>\r\n    <timeTargetWasSelectedWithDropDown value=\"2022-11-12T23:39:48.649745500Z\" />\r\n  </component>\r\n</project>
+Subsystem: com.intellij.openapi.diff.impl.patch.CharsetEP
+<+>UTF-8
+===================================================================
+diff --git a/.idea/deploymentTargetDropDown.xml b/.idea/deploymentTargetDropDown.xml
+--- a/.idea/deploymentTargetDropDown.xml	(revision 7793d9ba5a873f8dad09df926fb35378015c426c)
++++ b/.idea/deploymentTargetDropDown.xml	(date 1668395616411)
+@@ -7,11 +7,11 @@
+         <deviceKey>
+           <Key>
+             <type value="VIRTUAL_DEVICE_PATH" />
+-            <value value="C:\Users\lautarohernando\.android\avd\Pixel_3a_API_33_x86_64.avd" />
++            <value value="C:\Users\marti\.android\avd\Pixel_6_Pro_API_33.avd" />
+           </Key>
+         </deviceKey>
+       </Target>
+     </targetSelectedWithDropDown>
+-    <timeTargetWasSelectedWithDropDown value="2022-11-12T23:39:48.649745500Z" />
++    <timeTargetWasSelectedWithDropDown value="2022-11-14T03:13:18.557368700Z" />
+   </component>
+ </project>
+\ No newline at end of file
