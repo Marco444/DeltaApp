@@ -28,19 +28,14 @@ class ExecuteRoutineViewModel(
     var actualExercise = MutableStateFlow(CyclesExercise(0,"","","",0,0f,0,0f,0,0))
         private set
 
-    private var opinions: List<String> = listOf("Aweful", "Bad", "Regular", "Good", "Excelent")
-    private var actualOpinion: Int = 2
-
-    var opinion = MutableStateFlow("Regular")
-
     val state: StateFlow<CyclesExercise>
         get() = actualExercise.asStateFlow()
 
 
-    var actualCycle = 0
-    var index = -1
+
     lateinit var iterator:ListIterator<CyclesExercise>
     var isInNext = true
+
     init {
         viewModelScope.launch {
             val cycles = routinesCycleRepository.getRoutinCycles(routineId)
@@ -51,13 +46,13 @@ class ExecuteRoutineViewModel(
             _execRoutineState.value.allExercises += _execRoutineState.value.exercises[1].value
             _execRoutineState.value.allExercises += _execRoutineState.value.exercises[2].value
 
+            exerciseCount = _execRoutineState.value.allExercises.size
+
             iterator = _execRoutineState.value.allExercises.listIterator()
             if(iterator.hasNext())
                 actualExercise.update { iterator.next() }
             else
                 actualExercise.update { CyclesExercise(0,"","","",0,0f,0,0f,0,0) }
-            index = 0
-
         }
     }
     fun routine(id:Int) : Routines {
@@ -79,10 +74,6 @@ class ExecuteRoutineViewModel(
         }
 
         actualExercise.update { iterator.previous() }
-
-    }
-    private fun setExercise(){
-        actualExercise.update { _execRoutineState.value.exercises[actualCycle].value[index] }
 
     }
 
@@ -118,25 +109,6 @@ class ExecuteRoutineViewModel(
 
     fun getExercises() : List<CyclesExercise>{
         return getRoutineWarmUpExercises() + getRoutineMainSetExercises() + getRoutineCoolDownExercises()
-    }
-
-    fun upOpinion() {
-        if(actualOpinion < 4) {
-            actualOpinion += 1
-            opinion.update { opinions[actualOpinion] }
-        }
-    }
-
-    fun downOpinion() {
-        if(actualOpinion > 0) {
-            actualOpinion -= 1
-            opinion.update { opinions[actualOpinion] }
-        }
-    }
-
-    fun cardsExpandable(): Boolean {
-        //return screenWidth != WindowWidthSizeClass.Expanded
-        return true
     }
 
 }
