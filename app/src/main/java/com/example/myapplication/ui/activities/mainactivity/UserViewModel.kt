@@ -6,16 +6,19 @@ import androidx.compose.runtime.setValue
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import com.example.myapplication.data.repository.UserRepository
+import com.example.myapplication.util.SessionManager
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.update
 import kotlinx.coroutines.launch
 
 class UserViewModel(
     private val userRepository: UserRepository,
-) : ViewModel() {
+    private val sessionManager: SessionManager,
+
+    ) : ViewModel() {
 
 
-    var userState = MutableStateFlow(UserState())
+    var userState = MutableStateFlow(UserState(isAuthenticated = sessionManager.loadAuthToken() != null))
         private set
   
     fun login(username: String, password: String) = viewModelScope.launch {
