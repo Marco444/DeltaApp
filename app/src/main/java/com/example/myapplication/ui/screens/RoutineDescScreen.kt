@@ -65,13 +65,27 @@ fun RoutineDescriptionScreen(viewModel: ExecuteRoutineViewModel,
                  Button1(
                      fontSize = 20,
                      text = "Start Routine",
-                     handler = starRoutineHanlder
+                     handler = {
+                         if(viewModel.hasNext()) {
+                             viewModel.nextExercise()
+                             starRoutineHanlder()
+                         }else{
+                             backHandler()
+                         }
+                     }
                  )
                  Spacer(modifier = Modifier.width(20.dp))
                  Button1(
                      fontSize = 20,
                      text = "Start Routine Lite",
-                     handler = starRoutineLiteHandler
+                     handler = {
+                         if(viewModel.hasNext()) {
+                             viewModel.nextExercise()
+                             starRoutineLiteHandler()
+                         }else{
+                             backHandler()
+                         }
+                     }
                  )
              }
          }

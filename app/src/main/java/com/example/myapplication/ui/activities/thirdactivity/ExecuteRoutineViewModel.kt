@@ -45,14 +45,9 @@ class ExecuteRoutineViewModel(
             _execRoutineState.value.allExercises += _execRoutineState.value.exercises[0].value
             _execRoutineState.value.allExercises += _execRoutineState.value.exercises[1].value
             _execRoutineState.value.allExercises += _execRoutineState.value.exercises[2].value
-
             exerciseCount = _execRoutineState.value.allExercises.size
-
             iterator = _execRoutineState.value.allExercises.listIterator()
-            if(iterator.hasNext())
-                actualExercise.update { iterator.next() }
-            else
-                actualExercise.update { CyclesExercise(0,"","","",0,0f,0,0f,0,0) }
+
         }
     }
     fun routine(id:Int) : Routines {
