@@ -13,6 +13,7 @@ import androidx.compose.ui.unit.sp
 import com.example.myapplication.ui.theme.BackgroundButton
 import com.example.myapplication.ui.theme.Green
 import com.example.myapplication.ui.theme.H1Font
+import com.example.myapplication.ui.theme.backGround
 
 
 @Composable
@@ -28,9 +29,25 @@ fun Button1(fontSize: Int, text: String, handler: () -> Unit = {}, modifier: Mod
             fontSize = fontSize.sp,
             fontFamily = H1Font,
             color = Green,
-
-            modifier = modifier.padding(7.dp)
+            modifier = modifier.padding(0.dp)
         )
     }
 }
 
+@Composable
+fun Button2(fontSize: Int, text: String, handler: () -> Unit = {}, modifier: Modifier = Modifier) {
+    Button(
+        onClick = handler,
+        colors = ButtonDefaults.buttonColors(backgroundColor = Green),
+        border = BorderStroke(3.dp, Green),
+        shape = RoundedCornerShape(20),
+        modifier = modifier
+    ) {
+        Text(text = text,
+            fontSize = fontSize.sp,
+            fontFamily = H1Font,
+            color = backGround,
+            modifier = modifier.padding(0.dp)
+        )
+    }
+}

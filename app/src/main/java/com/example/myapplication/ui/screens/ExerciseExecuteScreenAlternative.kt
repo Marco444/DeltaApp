@@ -76,10 +76,12 @@ fun ExerciseExecuteScreenAlternative(
                     )
                 }
 
+                Spacer(modifier = Modifier.height(10.dp))
+
                 Text(
                     text = viewModel.routine(0).title,
                     style = MaterialTheme.typography.h1,
-                    fontFamily = H1Font,
+                    fontSize = 50.sp,
                     color = Green,
                     modifier = Modifier.align(CenterHorizontally)
                 )
@@ -122,11 +124,11 @@ fun ExerciseExecuteScreenAlternative(
                         horizontalArrangement = Arrangement.Center
                     ) {
                         Button1(
-                            fontSize = 10,
+                            fontSize = 12,
                             text = "Previous",
                             modifier = Modifier
                                 .align(CenterVertically)
-                                .padding(10.dp),
+                                .padding(5.dp),
                             handler = {
                                 if(actual.value > 0)
                                     actual.update { actual.value - 1 }
@@ -140,11 +142,11 @@ fun ExerciseExecuteScreenAlternative(
 
                         if(actualV != exer.size - 1)
                             Button1(
-                                fontSize = 10,
+                                fontSize = 12,
                                 text = "Next",
                                 modifier = Modifier
                                     .align(CenterVertically)
-                                    .padding(10.dp),
+                                    .padding(5.dp),
                                 handler = {
                                     if(actual.value < exer.size - 1)
                                         actual.update { actual.value + 1 }
@@ -154,19 +156,14 @@ fun ExerciseExecuteScreenAlternative(
                                 }
                             )
                         else
-                            Button(
+                            Button2(
+                                fontSize = 12,
+                                text = "Finish",
                                 modifier = Modifier
                                     .align(CenterVertically)
-                                    .padding(10.dp),
-                                colors = ButtonDefaults.buttonColors(backgroundColor = Green),
-                                onClick = handlerFinishRoutine
-                        ){
-                                Text(
-                                    fontSize = 10.sp,
-                                    text = "Finish",
-                                    color = backGround
-                                )
-                            }
+                                    .padding(5.dp),
+                                handler = handlerFinishRoutine
+                            )
 
                     }
 
@@ -206,9 +203,7 @@ fun ExerciseCard(
     numberOfExercise: Int,
     Actual: MutableStateFlow<Int>
 ){
-    //var expanded by remember { mutableStateOf(!viewModel.cardsExpandable()) }
     val actual by Actual.collectAsState()
-    //val exercise by actualExercise.collectAsState()
 
     Box (
         Modifier
@@ -229,7 +224,7 @@ fun ExerciseCard(
         Column () {
             Text(
                 text = exercise.name,
-                fontFamily = NormalFont,
+                fontFamily = H1Font,
                 fontSize = 20.sp,
                 color = Color.White,
                 modifier = Modifier.padding(start = 20.dp, top = 10.dp, bottom = 10.dp, end = 20.dp)
@@ -237,6 +232,7 @@ fun ExerciseCard(
             if (numberOfExercise == actual) {
                 Text(
                     text = exercise.detail,
+                    fontFamily = NormalFont,
                     fontSize = 15.sp,
                     color = Color.White,
                     modifier = Modifier.padding(start = 20.dp, top = 10.dp, bottom = 10.dp, end = 20.dp)

@@ -12,12 +12,14 @@ import androidx.compose.runtime.*
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
+import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.unit.dp
+import com.example.myapplication.R
 import com.example.myapplication.ui.components.Button1
 import com.example.myapplication.ui.components.ExerciseExecCard
 import com.example.myapplication.ui.theme.Green
 import com.example.myapplication.ui.activities.thirdactivity.ExecuteRoutineViewModel
-
+import com.example.myapplication.ui.components.Button2
 
 
 @Composable
@@ -54,13 +56,15 @@ fun ExerciseExecScreen(viewModel: ExecuteRoutineViewModel = viewModel(),
     
                 Spacer(modifier = Modifier.height(20.dp))
 
-                Row(verticalAlignment = Alignment.CenterVertically, horizontalArrangement = Arrangement.SpaceEvenly, modifier = Modifier.width(300.dp)) {
-                    Button1(fontSize = 13, text = "Previous", handler =
+                Row(verticalAlignment = Alignment.CenterVertically, horizontalArrangement = Arrangement.SpaceEvenly, modifier = Modifier
+                    .width(300.dp)
+                    .fillMaxHeight()) {
+                    Button1(fontSize = 25, text = stringResource(id = R.string.prev_exercise), handler =
                     {
                         if(viewModel.hasPrevious())
                             viewModel.previusExercise()
                     })
-                    Button1(fontSize = 13, text = "Next", handler = {
+                    Button2(fontSize = 25, text = stringResource(id = R.string.next_exercise), handler = {
                         if(viewModel.hasNext())
                             viewModel.nextExercise()
                         else {
