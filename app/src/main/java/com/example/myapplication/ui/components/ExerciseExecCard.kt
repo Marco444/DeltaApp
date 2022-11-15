@@ -17,17 +17,18 @@ import androidx.compose.ui.unit.sp
 import com.example.myapplication.ui.classes.Exercise
 import com.example.myapplication.ui.theme.Green
 import com.example.myapplication.ui.activities.thirdactivity.ExecuteRoutineViewModel
+import com.example.myapplication.ui.classes.CyclesExercise
 import kotlinx.coroutines.flow.MutableStateFlow
 
 
 @Composable
-fun RecomposingTitle(exercise: MutableStateFlow<Exercise>) {
+fun RecomposingTitle(exercise: MutableStateFlow<CyclesExercise>) {
     val text by exercise.collectAsState()
     Text(text = text.name, fontSize = 30.sp)
 }
 
 @Composable
-fun ExerciseExecCard(viewModel: ExecuteRoutineViewModel, actualExercise: MutableStateFlow<Exercise>){
+fun ExerciseExecCard(viewModel: ExecuteRoutineViewModel, actualExercise: MutableStateFlow<CyclesExercise>){
 
     val exercise by actualExercise.collectAsState()
 
@@ -69,7 +70,7 @@ fun ExerciseExecCard(viewModel: ExecuteRoutineViewModel, actualExercise: Mutable
 }
 @SuppressLint("UnrememberedMutableState")
 @Composable
-fun WeightCards(name : String, actualExercise: MutableStateFlow<Exercise>, viewModel: ExecuteRoutineViewModel){
+fun WeightCards(name : String, actualExercise: MutableStateFlow<CyclesExercise>, viewModel: ExecuteRoutineViewModel){
     val exercise by actualExercise.collectAsState()
     var sliderValueRaw by remember { mutableStateOf(exercise.weight) }
     val interactionSource = remember { MutableInteractionSource() }
@@ -117,7 +118,7 @@ fun WeightCards(name : String, actualExercise: MutableStateFlow<Exercise>, viewM
 }
 @SuppressLint("UnrememberedMutableState")
 @Composable
-fun RepsCards(name : String, actualExercise: MutableStateFlow<Exercise>, viewModel: ExecuteRoutineViewModel){
+fun RepsCards(name : String, actualExercise: MutableStateFlow<CyclesExercise>, viewModel: ExecuteRoutineViewModel){
     val exercise by actualExercise.collectAsState()
     var sliderValueRaw by remember { mutableStateOf(exercise.repetitions) }
     val interactionSource = remember { MutableInteractionSource() }

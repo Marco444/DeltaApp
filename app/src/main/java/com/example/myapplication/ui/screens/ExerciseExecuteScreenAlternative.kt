@@ -32,6 +32,7 @@ import androidx.compose.ui.unit.sp
 import androidx.lifecycle.viewmodel.compose.viewModel
 import com.example.myapplication.R
 import com.example.myapplication.ui.activities.thirdactivity.ExecuteRoutineViewModel
+import com.example.myapplication.ui.classes.CyclesExercise
 import com.example.myapplication.ui.classes.Exercise
 import com.example.myapplication.ui.components.*
 import com.example.myapplication.ui.navigation.NavBarScreen
@@ -77,7 +78,7 @@ fun ExerciseExecuteScreenAlternative(
                 Spacer(modifier = Modifier.height(10.dp))
 
 
-                val exer: List<Exercise> = viewModel.getExercises()
+                val exer: List<CyclesExercise> = viewModel.getExercises()
                 val actual = remember { MutableStateFlow(0) }
                 LazyColumn(
                     modifier = Modifier
@@ -178,7 +179,7 @@ fun RoutineInfo(title : String, time: Int, description: String){
 @Composable
 fun ExerciseCard(
     viewModel: ExecuteRoutineViewModel = viewModel(),
-    exercise: Exercise,
+    exercise: CyclesExercise,
     numberOfExercise: Int,
     Actual: MutableStateFlow<Int>
 ){

@@ -8,6 +8,8 @@ import androidx.compose.material.Text
 import androidx.lifecycle.viewmodel.compose.viewModel
 import com.example.myapplication.ui.activities.secondactivity.SecondActivity
 import com.example.myapplication.ui.theme.MyApplicationTheme
+import com.example.myapplication.util.ExecuteRoutineViewModelFactory
+import com.example.myapplication.util.getExecRoutineViewModelFactory
 import com.google.accompanist.systemuicontroller.rememberSystemUiController
 
 class ThirdActivity : ComponentActivity() {
@@ -25,7 +27,7 @@ class ThirdActivity : ComponentActivity() {
                    DeltaAppExecute(
                        saved = saved,
                        redirectHandler = { startActivity(navigate); finish()},
-                       viewModel = viewModel()
+                       viewModel = viewModel(factory = getExecRoutineViewModelFactory(routineId = saved.toInt()))
                    )
                 }
                 

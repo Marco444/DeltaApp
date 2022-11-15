@@ -23,3 +23,11 @@ fun getRoutineViewModelFactory(defaultArgs: Bundle? = null) : RoutineViewModelFa
 
     return RoutineViewModelFactory( routinesRepository,userRepository, LocalSavedStateRegistryOwner.current, defaultArgs)
 }
+@Composable
+fun getExecRoutineViewModelFactory(defaultArgs: Bundle? = null,routineId : Int) : ExecuteRoutineViewModelFactory{
+    val application: MyApplication = LocalContext.current.applicationContext as MyApplication
+    val cyclesExercise = application.cyclesExerciseRepository
+    val routinesCycles = application.routinesCycleRepository
+
+    return ExecuteRoutineViewModelFactory(cyclesExercise,routinesCycles, routineId, LocalSavedStateRegistryOwner.current, defaultArgs)
+}
