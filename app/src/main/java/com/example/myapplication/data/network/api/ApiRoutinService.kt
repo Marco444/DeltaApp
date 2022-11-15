@@ -13,9 +13,8 @@ interface ApiRoutinService {
     @GET("routines/{routineId}")
     suspend fun getRoutine(@Path("routineId") routineId: Int) : Response<NetworkRoutine>
 
-    //TODO debemos cambiar el network routine que recibimos que el que mandamos pues uno tiene al usuario
     @PUT("routines/{routineId}")
-    suspend fun modifyRoutine(@Path("routineId") sportId: Int, @Body routine: NetworkRoutine) : Response<NetworkRoutine>
+    suspend fun modifyRoutine(@Path("routineId") routineId: Int, @Body routine: NetworkRoutine) : Response<NetworkRoutine>
 
     @DELETE("routine/{routineId}")
     suspend fun deleteRoutine(@Path("routineId") routineId: Int) : Response<Unit>
