@@ -12,8 +12,11 @@ import kotlinx.coroutines.flow.MutableStateFlow
 class ExecuteRoutine{
 
 
-    var exercises by mutableStateOf(List<MutableStateFlow<List<CyclesExercise>>>(3){ MutableStateFlow(arrayListOf()) })
+    var exercises by mutableStateOf(List<MutableStateFlow<List<CyclesExercise>>>(3){ MutableStateFlow(
+        listOf()
+    ) })
 
+    var allExercises by mutableStateOf(listOf<CyclesExercise>())
 
 
 

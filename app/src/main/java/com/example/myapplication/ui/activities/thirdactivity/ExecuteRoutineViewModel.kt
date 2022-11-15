@@ -23,7 +23,7 @@ class ExecuteRoutineViewModel(
     private val _execRoutineState = MutableStateFlow(ExecuteRoutine())
     val executeRoutine: StateFlow<ExecuteRoutine>
         get() = _execRoutineState.asStateFlow()
-    var exerciseCount = 0
+    var exerciseCount = 1
 
     var actualExercise = MutableStateFlow(CyclesExercise(0,"","","",0,0f,0,0f,0,0))
         private set
@@ -39,18 +39,23 @@ class ExecuteRoutineViewModel(
 
     var actualCycle = 0
     var index = -1
+    lateinit var iterator:ListIterator<CyclesExercise>
+    var isInNext = true
     init {
         viewModelScope.launch {
             val cycles = routinesCycleRepository.getRoutinCycles(routineId)
             _execRoutineState.value.exercises[0].value = cyclesExercisesRepository.getCycleExercises(cycles[0].id)
             _execRoutineState.value.exercises[1].value = cyclesExercisesRepository.getCycleExercises(cycles[1].id)
             _execRoutineState.value.exercises[2].value = cyclesExercisesRepository.getCycleExercises(cycles[2].id)
+            _execRoutineState.value.allExercises += _execRoutineState.value.exercises[0].value
+            _execRoutineState.value.allExercises += _execRoutineState.value.exercises[1].value
+            _execRoutineState.value.allExercises += _execRoutineState.value.exercises[2].value
 
-
-            //TODO FALTA CHEQUEAR LOS CICLOS QUE NO TIENE EJS
-
-
-            actualExercise.update { _execRoutineState.value.exercises[0].value[0] }
+            iterator = _execRoutineState.value.allExercises.listIterator()
+            if(iterator.hasNext())
+                actualExercise.update { iterator.next() }
+            else
+                actualExercise.update { CyclesExercise(0,"","","",0,0f,0,0f,0,0) }
             index = 0
 
         }
@@ -59,31 +64,21 @@ class ExecuteRoutineViewModel(
        return _execRoutineState.value.currentRoutine
     }
     fun nextExercise(){
-
-
-        val changeValue = _execRoutineState.value.exercises[actualCycle].value[index]
-        changeValue.weight = actualExercise.value.weight
-        index++
-        if (_execRoutineState.value.exercises[actualCycle].value.size == index )
-        {
-            index = 0
-            actualCycle++
+        if(!isInNext) {
+            iterator.next()
+            isInNext = true
         }
-        setExercise()
+
+        actualExercise.update { iterator.next() }
 
     }
     fun previusExercise(){
-
-        val changeValue = _execRoutineState.value.exercises[actualCycle].value[index]
-        changeValue.weight = actualExercise.value.weight
-        if (index == 0 && actualCycle != 0)
-        {
-            actualCycle--;
-            index = _execRoutineState.value.exercises[actualCycle].value.size - 1
-        }else if( actualCycle != 0) {
-            index -= 1
+        if(isInNext) {
+            iterator.previous()
+            isInNext = false
         }
-        setExercise()
+
+        actualExercise.update { iterator.previous() }
 
     }
     private fun setExercise(){
@@ -92,7 +87,10 @@ class ExecuteRoutineViewModel(
     }
 
     fun hasNext(): Boolean{
-        return actualCycle < 2
+        return iterator.hasNext()
+    }
+    fun hasPrevious(): Boolean{
+        return iterator.hasPrevious()
     }
 
     fun setReps(reps : Float){
