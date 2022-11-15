@@ -145,9 +145,9 @@ fun BackgroundImageCard(routine: Routines, imageHeight: Dp) {
 fun RoutineCard(routine: Routines, iconId: ImageVector, clickedIcon: () -> Unit = {}, actionHandler: () -> Unit = {}, routineCard: RoutineCard, viewModel: RoutinesViewModel) {
 
     var expanded by remember { mutableStateOf(!viewModel.cardsExpandable()) }
-    var imageHeight by remember { mutableStateOf(if(!viewModel.cardsExpandable()) 200.dp else 70.dp ) }
+    var imageHeight by remember { mutableStateOf(if (!viewModel.cardsExpandable()) 200.dp else 70.dp) }
 
-    Box (
+    Box(
         Modifier
             .width(ROUTINE_CARD_WIDTH.dp)
             .clickable {
@@ -155,23 +155,28 @@ fun RoutineCard(routine: Routines, iconId: ImageVector, clickedIcon: () -> Unit 
                 imageHeight = if (expanded) 200.dp else 70.dp
             },
         contentAlignment = Alignment.Center
-    ){
+    ) {
         BackgroundImageCard(routine, imageHeight)
-        Column(
-            horizontalAlignment = Alignment.CenterHorizontally,
-        ) {
-            RoutineCardTitle(
-                title = routine.title,
-                iconId = iconId,
-                clickedIcon = { clickedIcon() },
-                id = routine.id
-            )
-            if (expanded)
-                RoutineCardDetails(routine = routine,
-                                    buttonHandler = actionHandler,
-                                    buttonText = routineCard.description)
 
-        }
+            Column(
+                horizontalAlignment = Alignment.CenterHorizontally,
+                modifier = Modifier.matchParentSize().background(Color(0x7F000000), RoundedCornerShape(20.dp))
+            ) {
+
+                RoutineCardTitle(
+                    title = routine.title,
+                    iconId = iconId,
+                    clickedIcon = { clickedIcon() },
+                    id = routine.id
+                )
+                if (expanded)
+                    RoutineCardDetails(
+                        routine = routine,
+                        buttonHandler = actionHandler,
+                        buttonText = routineCard.description
+                    )
+
+            }
 
 
     }
