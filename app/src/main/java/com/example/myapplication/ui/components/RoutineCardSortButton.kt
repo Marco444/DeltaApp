@@ -4,6 +4,7 @@ import androidx.compose.foundation.background
 import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Row
+import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.material.Text
@@ -36,9 +37,10 @@ fun RoutineCardSortButton(viewModel: RoutinesViewModel, screen: NavBarScreen) {
 
     Row (
         modifier = Modifier
-            .clip(RoundedCornerShape(17.dp))
+            .clip(RoundedCornerShape(12.dp))
             .background(Gray)
-            .padding(5.dp),
+            .padding(5.dp)
+            .height(30.dp),
         ){
 
         for (sortOption in SortOption.values()) {
@@ -64,14 +66,14 @@ fun SortButton(onClick: () -> Unit, txt: String, color: Color) {
     Box(
         Modifier
             .clickable(onClick = onClick)
-            .clip(RoundedCornerShape(17.dp))
+            .clip(RoundedCornerShape(12.dp))
             .background(color)
-            .padding(10.dp)
+            .padding(5.dp)
 
     ) {
         Text(
             text = txt,
-            fontSize = 25.sp,
+            fontSize = 15.sp,
             color = White,
             modifier = Modifier
                 .background(color),
