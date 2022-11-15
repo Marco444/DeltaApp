@@ -8,6 +8,7 @@ import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.*
 import androidx.compose.foundation.lazy.LazyColumn
 import androidx.compose.foundation.lazy.items
+import androidx.compose.foundation.lazy.itemsIndexed
 import androidx.compose.foundation.lazy.rememberLazyListState
 import androidx.compose.foundation.shape.CircleShape
 import androidx.compose.foundation.shape.RoundedCornerShape
@@ -34,6 +35,7 @@ import androidx.lifecycle.viewmodel.compose.viewModel
 import com.example.myapplication.R
 import com.example.myapplication.ui.activities.thirdactivity.ExecuteRoutineViewModel
 import com.example.myapplication.ui.classes.CyclesExercise
+import com.example.myapplication.ui.classes.Exercise
 import com.example.myapplication.ui.components.*
 import com.example.myapplication.ui.navigation.NavBarScreen
 import com.example.myapplication.ui.theme.*
@@ -87,6 +89,7 @@ fun ExerciseExecuteScreenAlternative(
 
 
                 val exer: List<CyclesExercise> = viewModel.getExercises()
+                val exerIt: Iterator<CyclesExercise> = exer.iterator()
                 val actual = remember { MutableStateFlow(0) }
 
                 val listState = rememberLazyListState()
@@ -99,12 +102,12 @@ fun ExerciseExecuteScreenAlternative(
                         .padding(top = 0.dp),
                     //horizontalAlignment = CenterHorizontally
                 ){
-                    items(exer) {exer ->
+                    itemsIndexed(exer) {idx, exer ->
                         ExerciseCard(
                             exercise = exer,
                             viewModel = viewModel,
                             Actual = actual,
-                            numberOfExercise = exer.order
+                            numberOfExercise = idx
                         )
                     }
                 }
