@@ -1,6 +1,6 @@
 package com.example.myapplication.data.repository
 
-import com.example.myapplication.data.Routines
+import com.example.myapplication.ui.classes.Routines
 import com.example.myapplication.data.model.User
 import com.example.myapplication.data.network.UserRemoteDataSource
 import kotlinx.coroutines.sync.Mutex

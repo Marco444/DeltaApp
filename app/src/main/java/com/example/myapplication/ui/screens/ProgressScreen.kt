@@ -9,11 +9,10 @@ import androidx.compose.runtime.Composable
 import androidx.compose.runtime.rememberCoroutineScope
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
-import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.unit.dp
 import com.example.myapplication.R
-import com.example.myapplication.data.Routines
+import com.example.myapplication.ui.classes.Routines
 import com.example.myapplication.ui.components.*
 import com.example.myapplication.ui.navigation.NavBarScreen
 import com.example.myapplication.ui.activities.secondactivity.RoutinesViewModel
@@ -24,25 +23,30 @@ fun comparebyFavourite(routine1: Routines, routine2: Routines): Int {
 }
 
 @Composable
-fun ProgressScreen(viewModel: RoutinesViewModel, actionRedirect: (Int) -> Unit, scaffoldState: ScaffoldState){
+fun ProgressScreen(viewModel: RoutinesViewModel, actionRedirect: (Int) -> Unit, scaffoldState: ScaffoldState) {
 
     val coroutineScope = rememberCoroutineScope()
-    Column (
+    Column(
         modifier = Modifier
             .fillMaxWidth()
             .fillMaxHeight()
             .background(MaterialTheme.colors.background),
-    ){
 
-        Row (modifier = Modifier.padding(top = 10.dp, start = 10.dp)) {
-            HamburgerButton(
-                modifier = Modifier.align(Alignment.CenterVertically),
-                onClick = {
-                    coroutineScope.launch {
-                        scaffoldState.drawerState.open()
+        horizontalAlignment = Alignment.CenterHorizontally
+    ) {
+        Column(modifier = Modifier.align(Alignment.Start)) {
+
+            Row(modifier = Modifier.padding(top = 10.dp, start = 10.dp)) {
+                HamburgerButton(
+                    modifier = Modifier.align(Alignment.CenterVertically),
+                    onClick = {
+                        coroutineScope.launch {
+                            scaffoldState.drawerState.open()
+                        }
                     }
-                }
-            )
+
+                )
+            }
         }
         Row {
             Column(

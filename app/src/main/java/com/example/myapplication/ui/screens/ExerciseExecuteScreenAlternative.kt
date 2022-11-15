@@ -8,6 +8,7 @@ import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.*
 import androidx.compose.foundation.lazy.LazyColumn
 import androidx.compose.foundation.lazy.items
+import androidx.compose.foundation.lazy.rememberLazyListState
 import androidx.compose.foundation.shape.CircleShape
 import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.material.*
@@ -33,20 +34,27 @@ import androidx.lifecycle.viewmodel.compose.viewModel
 import com.example.myapplication.R
 import com.example.myapplication.ui.activities.thirdactivity.ExecuteRoutineViewModel
 import com.example.myapplication.ui.classes.CyclesExercise
-import com.example.myapplication.ui.classes.Exercise
 import com.example.myapplication.ui.components.*
 import com.example.myapplication.ui.navigation.NavBarScreen
 import com.example.myapplication.ui.theme.*
+import kotlinx.coroutines.CoroutineScope
+import kotlinx.coroutines.GlobalScope
+import kotlinx.coroutines.coroutineScope
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.update
+import kotlinx.coroutines.launch
 import kotlin.math.exp
+
 
 @Composable
 fun ExerciseExecuteScreenAlternative(
     viewModel: ExecuteRoutineViewModel = viewModel(),
-    handlerBack : () ->Unit,
-    handlerFinishRoutine: ()->Unit
+    handlerBack : () -> Unit,
+    handlerFinishRoutine: ()-> Unit
 ){
+    // For suspended functions that need a coroutine
+    val coroutineScope = rememberCoroutineScope()
+
     Box(modifier = Modifier.background(backGround)) {
         Column(verticalArrangement = Arrangement.SpaceEvenly) {
             Column(modifier = Modifier.fillMaxWidth()) {
@@ -80,7 +88,11 @@ fun ExerciseExecuteScreenAlternative(
 
                 val exer: List<CyclesExercise> = viewModel.getExercises()
                 val actual = remember { MutableStateFlow(0) }
+
+                val listState = rememberLazyListState()
+
                 LazyColumn(
+                    state = listState,
                     modifier = Modifier
                         .fillMaxHeight(0.85F)
                         .align(CenterHorizontally)
@@ -115,9 +127,14 @@ fun ExerciseExecuteScreenAlternative(
                             handler = {
                                 if(actual.value > 0)
                                     actual.update { actual.value - 1 }
+                                coroutineScope.launch{
+                                    listState.animateScrollToItem(index = actual.value)
+                                }
                             }
                         )
+
                         val actualV by actual.collectAsState()
+
                         if(actualV != exer.size - 1)
                             Button1(
                                 fontSize = 10,
@@ -128,6 +145,9 @@ fun ExerciseExecuteScreenAlternative(
                                 handler = {
                                     if(actual.value < exer.size - 1)
                                         actual.update { actual.value + 1 }
+                                    coroutineScope.launch{
+                                        listState.animateScrollToItem(index = actual.value)
+                                    }
                                 }
                             )
                         else
@@ -136,7 +156,7 @@ fun ExerciseExecuteScreenAlternative(
                                     .align(CenterVertically)
                                     .padding(10.dp),
                                 colors = ButtonDefaults.buttonColors(backgroundColor = Green),
-                                onClick = {}
+                                onClick = handlerFinishRoutine
                         ){
                                 Text(
                                     fontSize = 10.sp,
@@ -155,13 +175,13 @@ fun ExerciseExecuteScreenAlternative(
     }
 }
 
-@Preview
-@Composable
-fun TryALternative(){
-    ExerciseExecuteScreenAlternative(handlerBack = {}) {
-
-    }
-}
+//@Preview
+//@Composable
+//fun TryALternative(){
+//    ExerciseExecuteScreenAlternative(handlerBack = {}) {
+//
+//    }
+//}
 
 @Composable
 fun RoutineInfo(title : String, time: Int, description: String){
@@ -191,16 +211,16 @@ fun ExerciseCard(
         Modifier
             //.width(ROUTINE_CARD_WIDTH.dp)
             .fillMaxWidth(0.9F)
+            .clip(RoundedCornerShape(20.dp))
             .background(Gray)
             .border(
                 4.dp,
                 if (numberOfExercise == actual) Green else Gray,
-                shape = RoundedCornerShape(10.dp)
+                RoundedCornerShape(20.dp)
             )
             .clickable {
                 //expanded = if (viewModel.cardsExpandable()) !expanded else true
             }
-            .clip(RoundedCornerShape(10.dp)),
     ){
 
         Column () {

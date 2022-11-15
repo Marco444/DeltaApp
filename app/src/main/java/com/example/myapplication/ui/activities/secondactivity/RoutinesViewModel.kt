@@ -1,10 +1,9 @@
 package com.example.myapplication.ui.activities.secondactivity
 
 import androidx.compose.material3.windowsizeclass.WindowWidthSizeClass
-import androidx.compose.runtime.mutableStateOf
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
-import com.example.myapplication.data.Routines
+import com.example.myapplication.ui.classes.Routines
 import com.example.myapplication.data.repository.RoutinesRepository
 import com.example.myapplication.data.repository.UserRepository
 import com.example.myapplication.ui.components.RoutineCard

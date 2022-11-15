@@ -18,6 +18,7 @@ import androidx.compose.runtime.*
 import androidx.compose.ui.Alignment.Companion.CenterHorizontally
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.scale
+import androidx.compose.ui.graphics.Brush
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.input.key.onKeyEvent
 import androidx.compose.ui.platform.LocalConfiguration
@@ -55,9 +56,16 @@ fun LogIn(actionRedirect: () -> Unit, backButton: () -> Unit,viewModel: UserView
     val (snackbarVisibleState, setSnackBarState) = remember { mutableStateOf(false) }
 
 
+    val gradient = Brush.verticalGradient(
+        colors = listOf(Color.Transparent, Color.Black),
+    )
+
     //LockScreenOrientation(ActivityInfo.SCREEN_ORIENTATION_PORTRAIT)
     BackgroundImage(painter = painterResource(id = R.drawable.log_in_photo))
-    Column(verticalArrangement = Arrangement.SpaceEvenly) {
+    Column(
+        verticalArrangement = Arrangement.SpaceEvenly,
+        modifier = Modifier.fillMaxWidth().fillMaxHeight().background(gradient)
+    ) {
         Column(modifier = Modifier
             .fillMaxWidth()
             .verticalScroll(rememberScrollState()))
@@ -89,11 +97,10 @@ fun LogIn(actionRedirect: () -> Unit, backButton: () -> Unit,viewModel: UserView
             verticalArrangement = Arrangement.SpaceEvenly
         ) {
             Image(
-
                 painter = painterResource(R.drawable.delta_logo),
                 contentDescription = null,
                 modifier = Modifier
-                    .scale(1.5F)
+                    .fillMaxWidth(0.3F)
                     .align(CenterHorizontally)
             )
             EmailTextField(

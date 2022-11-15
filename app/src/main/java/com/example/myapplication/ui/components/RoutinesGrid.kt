@@ -13,7 +13,6 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.unit.dp
 import com.example.myapplication.ui.activities.secondactivity.RoutinesViewModel
 
-@OptIn(ExperimentalFoundationApi::class)
 @Composable
 fun RoutinesGrid(viewModel: RoutinesViewModel, actionRedirect: (Int) -> Unit, routineCard: RoutineCard) {
     LazyVerticalGrid(

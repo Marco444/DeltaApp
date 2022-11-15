@@ -22,6 +22,8 @@ import com.example.myapplication.R
 import com.example.myapplication.ui.components.*
 import com.example.myapplication.ui.navigation.NavBarScreen
 import com.example.myapplication.ui.activities.secondactivity.RoutinesViewModel
+import com.example.myapplication.ui.theme.Gray
+import com.example.myapplication.ui.theme.Green
 import kotlinx.coroutines.launch
 
 
@@ -40,7 +42,8 @@ fun SearchField() {
         colors = TextFieldDefaults.textFieldColors(
             backgroundColor = White,
             focusedIndicatorColor =  Color.Transparent),
-        textStyle = TextStyle.Default.copy(fontSize = 15.sp)
+        textStyle = TextStyle.Default.copy(fontSize = 15.sp),
+        modifier = Modifier.height(40.dp).fillMaxWidth(0.75F)
     )
 }
 
@@ -54,6 +57,8 @@ fun FilterButton(viewModel: RoutinesViewModel) {
             modifier = Modifier
                 .clip(RoundedCornerShape(8.dp))
                 .background(White)
+                .height(40.dp).
+                fillMaxWidth(0.65F)
         ) {
             Icon(Icons.Filled.Sort, contentDescription = null)
         }
@@ -82,24 +87,27 @@ fun SearchAndFilter(viewModel: RoutinesViewModel) {
 }
 
 @Composable
-fun ExploreScreen(viewModel: RoutinesViewModel, scaffoldState: ScaffoldState){
+fun ExploreScreen(viewModel: RoutinesViewModel, scaffoldState: ScaffoldState) {
     val coroutineScope = rememberCoroutineScope()
-    Column (
+    Column(
         modifier = Modifier
             .fillMaxWidth()
             .fillMaxHeight()
             .background(MaterialTheme.colors.background),
-    ){
+        horizontalAlignment = Alignment.CenterHorizontally
+    ) {
 
-        Row (modifier = Modifier.padding(top = 10.dp, start = 10.dp)) {
-            HamburgerButton(
-                modifier = Modifier.align(Alignment.CenterVertically),
-                onClick = {
-                    coroutineScope.launch {
-                        scaffoldState.drawerState.open()
+        Column(modifier = Modifier.align(Alignment.Start)) {
+            Row(modifier = Modifier.padding(top = 10.dp, start = 10.dp)) {
+                HamburgerButton(
+                    modifier = Modifier.align(Alignment.CenterVertically),
+                    onClick = {
+                        coroutineScope.launch {
+                            scaffoldState.drawerState.open()
+                        }
                     }
-                }
-            )
+                )
+            }
         }
         Row {
             Column(
@@ -126,3 +134,4 @@ fun ExploreScreen(viewModel: RoutinesViewModel, scaffoldState: ScaffoldState){
         }
     }
 }
+

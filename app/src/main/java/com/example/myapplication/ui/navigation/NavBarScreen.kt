@@ -6,6 +6,7 @@ import androidx.compose.ui.graphics.vector.ImageVector
 
 
 sealed class Screen(val route: String) {
+    object ExecuteLite: Screen("execute_lite_screen/{routineId}")
     object Execute: Screen( "execute_screen/{routineId}")
     object RoutineDescriptionScreen: Screen( "routine_description_screen/{routineId}")
     object ProgressDetail: Screen( "progress_detail_screen/{routineId}")

@@ -16,14 +16,18 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
-import com.example.myapplication.data.Routines
+import com.example.myapplication.ui.classes.Routines
 import com.example.myapplication.ui.components.Button1
 import com.example.myapplication.ui.components.ExPreviewCard
 import com.example.myapplication.ui.theme.Green
 import com.example.myapplication.ui.activities.thirdactivity.ExecuteRoutineViewModel
 
 @Composable
-fun RoutineDescriptionScreen(viewModel: ExecuteRoutineViewModel, routineId: String, backHandler : () -> Unit, starRoutineHanlder : ()->Unit){
+fun RoutineDescriptionScreen(viewModel: ExecuteRoutineViewModel,
+                             routineId: String,
+                             backHandler : () -> Unit,
+                             starRoutineHanlder : () -> Unit,
+                             starRoutineLiteHandler: () -> Unit){
 
 
     val routine: Routines = viewModel.routine(routineId.toInt())
@@ -53,7 +57,22 @@ fun RoutineDescriptionScreen(viewModel: ExecuteRoutineViewModel, routineId: Stri
              Spacer(modifier = Modifier.height(40.dp))
              ListOfExercises(viewModel)
              Spacer(modifier = Modifier.height(10.dp))
-             Button1(fontSize = 20, text = "Start Routine", handler = starRoutineHanlder)
+             Row(
+                 verticalAlignment = Alignment.CenterVertically,
+                 modifier = Modifier.align(Alignment.CenterHorizontally)
+             ) {
+                 Button1(
+                     fontSize = 20,
+                     text = "Start Routine",
+                     handler = starRoutineHanlder
+                 )
+                 Spacer(modifier = Modifier.width(20.dp))
+                 Button1(
+                     fontSize = 20,
+                     text = "Start Routine Lite",
+                     handler = starRoutineLiteHandler
+                 )
+             }
          }
      }
 
