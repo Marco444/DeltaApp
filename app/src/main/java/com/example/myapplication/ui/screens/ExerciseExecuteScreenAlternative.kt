@@ -8,6 +8,7 @@ import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.*
 import androidx.compose.foundation.lazy.LazyColumn
 import androidx.compose.foundation.lazy.items
+import androidx.compose.foundation.lazy.rememberLazyListState
 import androidx.compose.foundation.shape.CircleShape
 import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.material.*
@@ -36,9 +37,14 @@ import com.example.myapplication.ui.classes.Exercise
 import com.example.myapplication.ui.components.*
 import com.example.myapplication.ui.navigation.NavBarScreen
 import com.example.myapplication.ui.theme.*
+import kotlinx.coroutines.CoroutineScope
+import kotlinx.coroutines.GlobalScope
+import kotlinx.coroutines.coroutineScope
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.update
+import kotlinx.coroutines.launch
 import kotlin.math.exp
+
 
 @Composable
 fun ExerciseExecuteScreenAlternative(
@@ -46,6 +52,9 @@ fun ExerciseExecuteScreenAlternative(
     handlerBack : () -> Unit,
     handlerFinishRoutine: ()-> Unit
 ){
+    // For suspended functions that need a coroutine
+    val coroutineScope = rememberCoroutineScope()
+
     Box(modifier = Modifier.background(backGround)) {
         Column(verticalArrangement = Arrangement.SpaceEvenly) {
             Column(modifier = Modifier.fillMaxWidth()) {
@@ -79,7 +88,11 @@ fun ExerciseExecuteScreenAlternative(
 
                 val exer: List<Exercise> = viewModel.getExercises()
                 val actual = remember { MutableStateFlow(0) }
+
+                val listState = rememberLazyListState()
+
                 LazyColumn(
+                    state = listState,
                     modifier = Modifier
                         .fillMaxHeight(0.85F)
                         .align(CenterHorizontally)
@@ -114,9 +127,14 @@ fun ExerciseExecuteScreenAlternative(
                             handler = {
                                 if(actual.value > 0)
                                     actual.update { actual.value - 1 }
+                                coroutineScope.launch{
+                                    listState.animateScrollToItem(index = actual.value)
+                                }
                             }
                         )
+
                         val actualV by actual.collectAsState()
+
                         if(actualV != exer.size - 1)
                             Button1(
                                 fontSize = 10,
@@ -127,6 +145,9 @@ fun ExerciseExecuteScreenAlternative(
                                 handler = {
                                     if(actual.value < exer.size - 1)
                                         actual.update { actual.value + 1 }
+                                    coroutineScope.launch{
+                                        listState.animateScrollToItem(index = actual.value)
+                                    }
                                 }
                             )
                         else
