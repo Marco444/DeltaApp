@@ -55,7 +55,8 @@ class ExecuteRoutineViewModel(
             for (exercise in _execRoutineState.value.exercises[cycle].value){
                 for (set in 0..exercise.sets) {
                     _execRoutineState.value.allExercises += exercise
-                    _execRoutineState.value.allExercises += CyclesExercise(duration = exercise.rest, isExercise = false)
+                    if(exercise.rest != 0)
+                        _execRoutineState.value.allExercises += CyclesExercise(duration = exercise.rest, isExercise = false)
                 }
             }
         }
