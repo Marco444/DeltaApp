@@ -48,8 +48,6 @@ fun ProgressDetailScreen(viewModel: RoutinesViewModel, viewRoutineHandler: () ->
     val routine: Routines = viewModel.routine(id)!!
     val routineProgress: RoutineProgress = routine.routineProgress
 
-
-
     Column(
         horizontalAlignment = Alignment.CenterHorizontally,
         modifier = Modifier
