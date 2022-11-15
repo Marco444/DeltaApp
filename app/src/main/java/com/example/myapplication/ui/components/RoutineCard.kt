@@ -4,6 +4,8 @@ import androidx.compose.foundation.Image
 import Base64BitMap
 import android.content.Context
 import android.content.Intent
+import android.graphics.BitmapFactory
+import android.util.Base64
 import androidx.compose.foundation.background
 import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.*
@@ -20,6 +22,7 @@ import androidx.compose.ui.draw.clip
 import androidx.compose.ui.draw.scale
 import androidx.compose.ui.graphics.Brush
 import androidx.compose.ui.graphics.Color
+import androidx.compose.ui.graphics.ImageBitmap
 import androidx.compose.ui.graphics.asImageBitmap
 import androidx.compose.ui.layout.ContentScale
 import androidx.compose.ui.platform.LocalContext
@@ -110,10 +113,10 @@ fun RoutineCard(routine: Routines, iconId: Int, clickedIcon: () -> Unit = {}, ac
             },
         contentAlignment = Alignment.Center
     ){
-        val bitmap = Base64BitMap(routine.img)?.asImageBitmap()
-        if(bitmap != null) {
+        var bitmap : ImageBitmap?
+        if(routine.img == "")
             Image(
-                bitmap = bitmap,
+                painter =painterResource( R.drawable.registration_background),
                 contentDescription = "Routine Picture",
                 contentScale = ContentScale.Crop,
                 modifier = Modifier
@@ -121,6 +124,19 @@ fun RoutineCard(routine: Routines, iconId: Int, clickedIcon: () -> Unit = {}, ac
                     .clip(RoundedCornerShape(20.dp))
                     .height(imageHeight),
             )
+        else {
+            bitmap = Base64BitMap(routine.img)?.asImageBitmap()
+            if (bitmap != null) {
+                Image(
+                    bitmap = bitmap,
+                    contentDescription = "Routine Picture",
+                    contentScale = ContentScale.Crop,
+                    modifier = Modifier
+                        .width(ROUTINE_CARD_WIDTH.dp)
+                        .clip(RoundedCornerShape(20.dp))
+                        .height(imageHeight),
+                )
+            }
         }
         Column(
             horizontalAlignment = Alignment.CenterHorizontally,
