@@ -16,10 +16,10 @@ class RoutinesRemoteDataSource(private val apiRoutineService: ApiRoutinService):
             apiRoutineService.getRoutine(id)
         }
     }
-    suspend fun modifyRoutine(id:Int){
-       /* return handleApiResponse {
-            apiRoutineService.modifyRoutine(id,)
-        }*/
+    suspend fun modifyRoutine(routine: NetworkRoutine):NetworkRoutine{
+        return handleApiResponse {
+            apiRoutineService.modifyRoutine(routine.id,routine)
+        }
     }
     suspend fun deleteRoutine(id:Int){
         /* return handleApiResponse {
