@@ -45,9 +45,7 @@ class ExecuteRoutineViewModel(
             _execRoutineState.value.allExercises += _execRoutineState.value.exercises[0].value
             _execRoutineState.value.allExercises += _execRoutineState.value.exercises[1].value
             _execRoutineState.value.allExercises += _execRoutineState.value.exercises[2].value
-
             exerciseCount = _execRoutineState.value.allExercises.size
-
             iterator = _execRoutineState.value.allExercises.listIterator()
 
         }
