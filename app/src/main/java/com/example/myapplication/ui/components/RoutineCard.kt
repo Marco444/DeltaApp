@@ -44,9 +44,9 @@ import com.example.myapplication.ui.activities.secondactivity.RoutinesViewModel
 const val ROUTINE_CARD_WIDTH = 370;
 
 sealed class RoutineCard(val iconClicked: ImageVector, val iconUnClicked: ImageVector, val description: String) {
-    object MyRoutine: RoutineCard ( Icons.Default.Favorite, Icons.Outlined.FavoriteBorder, "Go")
+    object MyRoutine: RoutineCard ( Icons.Default.Favorite, Icons.Outlined.FavoriteBorder, "Start")
     object Progress: RoutineCard (Icons.Default.Favorite, Icons.Outlined.FavoriteBorder, "See Progress")
-    object ExploreRoutine: RoutineCard (  Icons.Default.BookmarkAdded, Icons.Outlined.Add, "Share")
+    object ExploreRoutine: RoutineCard (  Icons.Default.BookmarkAdded, Icons.Outlined.Add, "Preview")
 }
 
 @Composable
@@ -57,8 +57,7 @@ fun RoutineCardDetails( routine: Routines, buttonText: String, buttonHandler: ()
         color = Green,
         modifier = Modifier
     )
-    Row (modifier = Modifier.padding(20.dp),
-        verticalAlignment = Alignment.CenterVertically) {
+    Row (verticalAlignment = Alignment.CenterVertically) {
         Stars(routine = routine) 
         Button1(fontSize = 16, text = buttonText, handler = buttonHandler)
     }

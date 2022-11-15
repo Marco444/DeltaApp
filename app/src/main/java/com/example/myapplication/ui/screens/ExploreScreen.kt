@@ -87,7 +87,7 @@ fun SearchAndFilter(viewModel: RoutinesViewModel) {
 }
 
 @Composable
-fun ExploreScreen(viewModel: RoutinesViewModel, scaffoldState: ScaffoldState) {
+fun ExploreScreen(viewModel: RoutinesViewModel, scaffoldState: ScaffoldState, actionRedirect: (Int) -> Unit) {
     val coroutineScope = rememberCoroutineScope()
     Column(
         modifier = Modifier
@@ -126,7 +126,7 @@ fun ExploreScreen(viewModel: RoutinesViewModel, scaffoldState: ScaffoldState) {
 
                 RoutinesGrid(
                     viewModel = viewModel,
-                    actionRedirect = { },
+                    actionRedirect = actionRedirect,
                     routineCard = RoutineCard.ExploreRoutine
                 )
             }

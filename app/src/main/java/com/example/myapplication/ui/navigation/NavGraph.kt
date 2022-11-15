@@ -29,7 +29,7 @@ fun NavGraph(navController: NavHostController, viewModel: RoutinesViewModel, exe
             actionRedirect = {navController.navigate(Screen.ProgressDetail.route + it  )}, scaffoldState)
         }
         composable(NavBarScreen.Explore.route) {
-            ExploreScreen(viewModel = viewModel, scaffoldState)
+            ExploreScreen(viewModel = viewModel, scaffoldState, actionRedirect = executeRedirect)
         }
         composable(NavBarScreen.QR.route) {
             QRScreen(viewModel = viewModel)
