@@ -12,7 +12,11 @@ import kotlinx.coroutines.flow.MutableStateFlow
 class ExecuteRoutine{
 
 
-    var warmUp by mutableStateOf(emptyList<CyclesExercise>())
+    var exercises by mutableStateOf(List<MutableStateFlow<List<CyclesExercise>>>(3){ MutableStateFlow(arrayListOf()) })
+
+
+
+
     var coolDown by mutableStateOf(emptyList<CyclesExercise>())
     var mainSet by mutableStateOf(emptyList<CyclesExercise>())
 

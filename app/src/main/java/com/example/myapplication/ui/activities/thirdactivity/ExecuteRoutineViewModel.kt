@@ -36,68 +36,58 @@ class ExecuteRoutineViewModel(
     val state: StateFlow<CyclesExercise>
         get() = actualExercise.asStateFlow()
 
-   var nextWarmUp = 1
-    var nextMainSet = 1
-    var nextCoolDown = 1
+
+    var actualCycle = 0
+    var index = -1
     init {
         viewModelScope.launch {
             val cycles = routinesCycleRepository.getRoutinCycles(routineId)
-            _execRoutineState.value.warmUp = cyclesExercisesRepository.getCycleExercises(cycles[0].id)
-            _execRoutineState.value.mainSet = cyclesExercisesRepository.getCycleExercises(cycles[1].id)
-            _execRoutineState.value.coolDown = cyclesExercisesRepository.getCycleExercises(cycles[2].id)
-            nextExercise()
+            _execRoutineState.value.exercises[0].value = cyclesExercisesRepository.getCycleExercises(cycles[0].id)
+            _execRoutineState.value.exercises[1].value = cyclesExercisesRepository.getCycleExercises(cycles[1].id)
+            _execRoutineState.value.exercises[2].value = cyclesExercisesRepository.getCycleExercises(cycles[2].id)
+            actualExercise.update { _execRoutineState.value.exercises[0].value[0] }
+            index = 0
+
         }
     }
     fun routine(id:Int) : Routines {
        return _execRoutineState.value.currentRoutine
     }
     fun nextExercise(){
-        setExercise(nextWarmUp, nextWarmUp - 1)
-        //next++
+
+
+        val changeValue = _execRoutineState.value.exercises[actualCycle].value[index]
+        changeValue.weight = actualExercise.value.weight
+        index++
+        if (_execRoutineState.value.exercises[actualCycle].value.size == index )
+        {
+            index = 0
+            actualCycle++
+        }
+        setExercise()
+
     }
     fun previusExercise(){
-        //if(next != 1) {
-            //setExercise(next - 2, next - 1)
-           // next--
-       // }
+
+        val changeValue = _execRoutineState.value.exercises[actualCycle].value[index]
+        changeValue.weight = actualExercise.value.weight
+        if (index == 0 && actualCycle != 0)
+        {
+            actualCycle--;
+            index = _execRoutineState.value.exercises[actualCycle].value.size - 1
+        }else if( actualCycle != 0) {
+            index -= 1
+        }
+        setExercise()
+
     }
-    private fun setExercise(newOrder: Int,previousOrder : Int){
-        var aux = _execRoutineState.value.warmUp.find { it.order == nextWarmUp }
-        if(aux != null) {
-            nextWarmUp++;
-            val changeValue = _execRoutineState.value.warmUp.find { it.order == previousOrder }
-            changeValue?.weight = actualExercise.value.weight
-            actualExercise.update { aux!! }
-            return
-        }
-         aux = _execRoutineState.value.mainSet.find { it.order == nextMainSet }
-        if(aux != null) {
-            nextMainSet++;
-            val changeValue = _execRoutineState.value.mainSet.find { it.order == previousOrder }
-            changeValue?.weight = actualExercise.value.weight
-            actualExercise.update { aux!! }
-            return
-        }
-         aux = _execRoutineState.value.coolDown.find { it.order == nextCoolDown }
-        if(aux != null) {
-            nextCoolDown++;
-            val changeValue = _execRoutineState.value.coolDown.find { it.order == previousOrder }
-            changeValue?.weight = actualExercise.value.weight
-            actualExercise.update { aux }
-        }
+    private fun setExercise(){
+        actualExercise.update { _execRoutineState.value.exercises[actualCycle].value[index] }
+
     }
 
     fun hasNext(): Boolean{
-        var aux = _execRoutineState.value.warmUp.find { it.order == nextWarmUp }
-        if(aux != null)
-            return true
-        aux =   _execRoutineState.value.mainSet.find { it.order ==  nextMainSet }
-        if(aux != null)
-            return true
-        aux = _execRoutineState.value.coolDown.find { it.order ==  nextCoolDown }
-        if (aux != null)
-            return true
-        return false
+        return actualCycle < 2
     }
 
     fun setReps(reps : Float){
@@ -113,14 +103,14 @@ class ExecuteRoutineViewModel(
             oldExercise
         }
     }
-    fun getRoutineWarmUpExercises() : List<CyclesExercise>{
-        return   _execRoutineState.value.warmUp
+    private fun getRoutineWarmUpExercises() : List<CyclesExercise>{
+        return   _execRoutineState.value.exercises[0].value
     }
-    fun getRoutineCoolDownExercises() : List<CyclesExercise>{
-        return   _execRoutineState.value.coolDown
+    private fun getRoutineCoolDownExercises() : List<CyclesExercise>{
+        return   _execRoutineState.value.exercises[1].value
     }
-    fun getRoutineMainSetExercises() : List<CyclesExercise>{
-        return  _execRoutineState.value.mainSet
+    private fun getRoutineMainSetExercises() : List<CyclesExercise>{
+        return  _execRoutineState.value.exercises[2].value
     }
 
     fun getExercises() : List<CyclesExercise>{

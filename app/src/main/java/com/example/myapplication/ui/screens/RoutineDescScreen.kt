@@ -1,5 +1,6 @@
 package com.example.myapplication.ui.screens
 
+import android.annotation.SuppressLint
 import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.*
 import androidx.compose.foundation.lazy.LazyColumn
@@ -79,8 +80,12 @@ fun RoutineDescriptionScreen(viewModel: ExecuteRoutineViewModel,
     }
 }
 
+@SuppressLint("StateFlowValueCalledInComposition")
 @Composable
 fun ListOfExercises(viewModel: ExecuteRoutineViewModel){
+    val warmUp by viewModel.executeRoutine.value.exercises[0].collectAsState()
+    val mainSet by viewModel.executeRoutine.value.exercises[1].collectAsState()
+    val coolDown by viewModel.executeRoutine.value.exercises[2].collectAsState()
     LazyColumn(
         horizontalAlignment = Alignment.CenterHorizontally,
         modifier = Modifier.fillMaxHeight(0.8F)
@@ -89,7 +94,7 @@ fun ListOfExercises(viewModel: ExecuteRoutineViewModel){
             Text(text = "WarmUp", fontSize = 30.sp, color = Green)
 
         }
-        items(viewModel.getRoutineWarmUpExercises()) { item ->
+        items(warmUp) { item ->
                    Text(text = item.name, fontSize = 30.sp, color = Color.White)
                     Spacer(modifier = Modifier.height(1.dp))
             }
@@ -97,7 +102,7 @@ fun ListOfExercises(viewModel: ExecuteRoutineViewModel){
             Text(text = "mainSet", fontSize = 30.sp, color = Green)
 
         }
-        items(viewModel.getRoutineMainSetExercises()){ item ->
+        items(mainSet){ item ->
                 Text(text = item.name, fontSize = 30.sp, color = Color.White)
                 Spacer(modifier = Modifier.height(1.dp))
             }
@@ -105,7 +110,7 @@ fun ListOfExercises(viewModel: ExecuteRoutineViewModel){
             Text(text = "CoolDown", fontSize = 30.sp, color = Green)
 
         }
-        items(viewModel.getRoutineCoolDownExercises()){ item ->
+        items(coolDown){ item ->
             Text(text = item.name, fontSize = 30.sp, color = Color.White)
             Spacer(modifier = Modifier.height(1.dp))
         }

@@ -1,5 +1,6 @@
 package com.example.myapplication.ui.screens
 
+import android.annotation.SuppressLint
 import androidx.lifecycle.viewmodel.compose.viewModel
 import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.*
@@ -23,6 +24,8 @@ import com.example.myapplication.ui.activities.thirdactivity.ExecuteRoutineViewM
 fun ExerciseExecScreen(viewModel: ExecuteRoutineViewModel = viewModel(),
                        handlerBack : () ->Unit,
                        handlerFinishRoutine: ()->Unit){
+
+
 
     Box(modifier = Modifier.background(MaterialTheme.colors.background)) {
         Column(verticalArrangement = Arrangement.SpaceEvenly) {
