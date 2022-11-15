@@ -83,12 +83,10 @@ fun RoutineFinished(
             )
             Spacer(modifier = Modifier.height(20.dp))
 
-            Spacer(modifier = Modifier.height(5.dp))
-
             Stars(routine = viewModel.routine(routineId.toInt()))
 
             Spacer(modifier = Modifier.height(20.dp))
-            Button1(fontSize = 13, text = "Next", handler = nextHandler)
+            Button1(fontSize = 13, text = "Finish", handler = nextHandler)
             Spacer(modifier = Modifier.height(10.dp))
         }
     }
