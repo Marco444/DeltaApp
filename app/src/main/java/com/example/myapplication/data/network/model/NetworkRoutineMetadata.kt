@@ -7,5 +7,5 @@ data class NetworkRoutineMetadata (
     var isFavorite : Boolean? = false,
 
     @SerializedName("img")
-    var img : String? = null
+    var img : String? = ""
 )

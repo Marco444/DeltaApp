@@ -3,10 +3,10 @@ package com.example.myapplication.ui.activities.thirdactivity
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import com.example.myapplication.ui.classes.Exercise
-import com.example.myapplication.data.Routines
 import com.example.myapplication.data.repository.CyclesExercisesRepository
 import com.example.myapplication.data.repository.RoutinesCycleRepository
 import com.example.myapplication.ui.classes.CyclesExercise
+import com.example.myapplication.ui.classes.Routines
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.StateFlow
 import kotlinx.coroutines.flow.asStateFlow

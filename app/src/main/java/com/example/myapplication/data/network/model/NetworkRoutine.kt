@@ -34,12 +34,12 @@ data class NetworkRoutine (
     var category: NetworkCategory? = null,
 
     @SerializedName("metadata")
-    var metadata: NetworkRoutineMetadata
+    var metadata: NetworkRoutineMetadata?=null
 ){
     fun asModel() : Routines {
         return Routines(
             id = id,
-            img = metadata.img ?: "",
+            img = metadata?.img ?: "",
             description = detail,
             title = name,
             points = score

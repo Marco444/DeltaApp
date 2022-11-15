@@ -1,6 +1,5 @@
 package com.example.myapplication.data.network.model
 
-import com.example.myapplication.data.Routines
 import com.example.myapplication.ui.classes.RoutinesCycles
 import com.google.gson.annotations.SerializedName
 
