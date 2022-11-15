@@ -17,7 +17,8 @@ fun BackgroundRoutineImage(routine: Routines) {
             bitmap = bitmap,
             contentDescription = "Routine Picture",
             contentScale = ContentScale.Crop,
-            modifier = Modifier.fillMaxSize()
+            modifier = Modifier.fillMaxSize(),
+            alpha = 0.5f
         )
     }
 }

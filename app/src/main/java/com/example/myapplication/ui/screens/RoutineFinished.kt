@@ -34,7 +34,6 @@ fun RoutineFinished(
     nextHandler : () -> Unit
 ) {
 
-    val opinion by viewModel.opinion.collectAsState()
 
     Column(
         horizontalAlignment = Alignment.CenterHorizontally,
