@@ -55,8 +55,10 @@ fun ExerciseExecScreen(viewModel: ExecuteRoutineViewModel = viewModel(),
                 Spacer(modifier = Modifier.height(20.dp))
 
                 Row(verticalAlignment = Alignment.CenterVertically, horizontalArrangement = Arrangement.SpaceEvenly, modifier = Modifier.width(300.dp)) {
-                    Button1(fontSize = 13, text = "Previous", handler = {
-                        viewModel.previusExercise()
+                    Button1(fontSize = 13, text = "Previous", handler =
+                    {
+                        if(viewModel.hasPrevious())
+                            viewModel.previusExercise()
                     })
                     Button1(fontSize = 13, text = "Next", handler = {
                         if(viewModel.hasNext())
