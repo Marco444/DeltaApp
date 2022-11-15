@@ -4,7 +4,7 @@ import com.google.gson.annotations.SerializedName
 
 data class NetworkRoutineMetadata (
     @SerializedName("isFavorite")
-    var isFavorite : Boolean? = false,
+    var isFavorite : Boolean = false,
 
     @SerializedName("img")
     var img : String? = ""

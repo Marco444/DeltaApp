@@ -63,7 +63,7 @@ fun RoutineDescriptionScreen(viewModel: ExecuteRoutineViewModel,
                  modifier = Modifier.align(Alignment.CenterHorizontally)
              ) {
                  Button1(
-                     fontSize = 20,
+                     fontSize = 17,
                      text = "Start Routine",
                      handler = {
                          if(viewModel.hasNext()) {
@@ -76,7 +76,7 @@ fun RoutineDescriptionScreen(viewModel: ExecuteRoutineViewModel,
                  )
                  Spacer(modifier = Modifier.width(20.dp))
                  Button1(
-                     fontSize = 20,
+                     fontSize = 17,
                      text = "Start Routine Lite",
                      handler = {
                          if(viewModel.hasNext()) {

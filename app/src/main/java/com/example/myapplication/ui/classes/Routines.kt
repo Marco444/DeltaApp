@@ -2,6 +2,8 @@ package com.example.myapplication.ui.classes
 
 import androidx.compose.ui.graphics.Color
 import com.example.myapplication.R
+import com.example.myapplication.data.network.model.NetworkRoutine
+import com.example.myapplication.data.network.model.NetworkRoutineMetadata
 import com.example.myapplication.ui.classes.CyclesExercise
 
 import com.example.myapplication.ui.theme.GreenSuccess
@@ -45,5 +47,18 @@ data class Routines (
     var points: MutableStateFlow<Int> = MutableStateFlow(0),
     var changed: MutableStateFlow<Boolean> = MutableStateFlow(false),
     val routineProgress: RoutineProgress = RoutineProgress(0, 80f),
-    val exercises: RoutineExercises = RoutineExercises(emptyList(), emptyList(), emptyList())
-)
+    val difficulty : String,
+    val isPublic : Boolean = false
+){
+    fun asNetworkModel(): NetworkRoutine {
+        return NetworkRoutine(
+            id = id,
+            name = title,
+            detail = description,
+            difficulty = difficulty,
+            isPublic = isPublic,
+            score = points.value,
+            metadata = NetworkRoutineMetadata(favourite,img)
+        )
+    }
+}

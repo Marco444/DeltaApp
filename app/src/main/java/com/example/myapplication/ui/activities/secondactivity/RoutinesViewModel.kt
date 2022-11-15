@@ -14,24 +14,27 @@ import kotlinx.coroutines.flow.update
 import kotlinx.coroutines.launch
 
 class RoutinesViewModel(
-    routinesRepository: RoutinesRepository,
-    userRepository: UserRepository
+    private val routinesRepository: RoutinesRepository,
+    private val userRepository: UserRepository
 ) : ViewModel() {
     private val _sortState = MutableStateFlow(SortOption.POINTS)
 
     private val _routinesState = MutableStateFlow(RoutinesState())
 
     init {
+       getUserRoutines()
+
+    }
+    private fun getUserRoutines() = viewModelScope.launch {
         viewModelScope.launch {
-          val aux = userRepository.getCurrentUser(false)
-           if(aux != null)
-               aux.id?.let {
-                  _routinesState.value.userRoutines = userRepository.getUserRoutine(true, it).map {routine -> MutableStateFlow(routine) } }
+            val aux = userRepository.getCurrentUser(false)
+            aux?.id?.let {
+                _routinesState.value.userRoutines = userRepository.getUserRoutine(true, it).map {routine -> MutableStateFlow(routine) } }
         }
-        viewModelScope.launch {
-            _routinesState.value.exploreRoutines =
-                routinesRepository.getRoutines(true).map { MutableStateFlow(it) }
-        }
+    }
+    private fun getExploreRoutines() = viewModelScope.launch {
+        _routinesState.value.exploreRoutines =
+            routinesRepository.getRoutines(true).map { MutableStateFlow(it) }
     }
     fun getSortState(): MutableStateFlow<SortOption> {
         return _sortState
@@ -91,8 +94,12 @@ class RoutinesViewModel(
         } else {
             val routine = _routinesState.value.userRoutines.find { routine ->routine.value.id == id }!!
             routine.update { it.copy(favourite = !it.favourite) }
+            updateRoutine(routine.value)
         }
-
+    }
+    private fun updateRoutine(routines: Routines) =  viewModelScope.launch {
+        routinesRepository.modifyRoutine(routines)
+        getUserRoutines()
     }
 
     fun isSelected(id: Int, routineCard: RoutineCard): Boolean {

@@ -32,13 +32,12 @@ class RoutinesRepository(
 
 
 
-    suspend fun modifyRoutine(routine: Routines) : Routines? {
-       /* val updateRoutine = remoteDataSource.modifyRoutine(routine.asNetworkModel()).asModel()
+    suspend fun modifyRoutine(routine: Routines) : Routines {
+        val updateRoutine = remoteDataSource.modifyRoutine(routine.asNetworkModel()).asModel()
         routinesMutex.withLock {
-            this.sports = emptyList()
+            this.routines = emptyList()
         }
-        return updatedSport*/
-        return null
+        return updateRoutine
     }
 
     suspend fun deleteRoutine(routineId: Int) {
