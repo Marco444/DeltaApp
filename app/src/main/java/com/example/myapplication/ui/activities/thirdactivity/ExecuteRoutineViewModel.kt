@@ -45,6 +45,11 @@ class ExecuteRoutineViewModel(
             _execRoutineState.value.exercises[0].value = cyclesExercisesRepository.getCycleExercises(cycles[0].id)
             _execRoutineState.value.exercises[1].value = cyclesExercisesRepository.getCycleExercises(cycles[1].id)
             _execRoutineState.value.exercises[2].value = cyclesExercisesRepository.getCycleExercises(cycles[2].id)
+
+
+            //TODO FALTA CHEQUEAR LOS CICLOS QUE NO TIENE EJS
+
+
             actualExercise.update { _execRoutineState.value.exercises[0].value[0] }
             index = 0
 

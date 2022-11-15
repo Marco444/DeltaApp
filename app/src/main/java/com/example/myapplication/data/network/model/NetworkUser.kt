@@ -7,42 +7,52 @@ import java.util.Date
 class NetworkUser (
 
     @SerializedName("id")
-    var id: Int?,
-    @SerializedName("username")
+    var id: Int,
+   @SerializedName("username")
     var username: String,
+
     @SerializedName("firstName")
-    var firstName: String,
+    var firstName: String? = null,
+
     @SerializedName("lastName")
-    var lastName: String,
-    @SerializedName("gender")
-    var gender: String? = null,
-    @SerializedName("birthdate")
-    var birthdate: Date? = null,
-    @SerializedName("email")
-    var email: String,
-    @SerializedName("phone")
-    var phone: String? = null,
-    @SerializedName("avatarUrl")
-    var avatarUrl: String? = null,
-    @SerializedName("metadata")
-    var metadata: NetworkUserMetadata? = null,
-    @SerializedName("date")
-    var date: Date,
-    @SerializedName("lastActivity")
-    var lastActivity: Date? = null,
-    @SerializedName("verified")
-    var verified: Boolean
+    var lastName: String? = null,
+
+   @SerializedName("gender")
+   var gender: String? = null,
+
+   @SerializedName("birthdate")
+   var birthdate: Int? = null,
+
+  @SerializedName("email")
+  var email: String,
+  @SerializedName("phone")
+  var phone: String? = null,
+  @SerializedName("avatarUrl")
+  var avatarUrl: String? = null,
+  @SerializedName("metadata")
+  var metadata: NetworkUserMetadata? = null,
+  @SerializedName("date")
+  var date: Date,
+  @SerializedName("lastActivity")
+  var lastActivity: Date? = null,
+  @SerializedName("verified")
+  var verified: Boolean
 ) {
 
     fun asModel() : User {
         return User(
             id = id,
-            username = username,
+           username = username,
             firstName = firstName,
-            lastName = lastName,
-            email = email,
-            lastActivity = lastActivity,
-            avatarUrl = metadata?.img
+
+
+    lastName = lastName,
+
+    email = email,
+
+    lastActivity = lastActivity,
+
+    avatarUrl = metadata?.img
         )
     }
 }

@@ -20,6 +20,7 @@ abstract class RemoteDataSource {
             }
             response.errorBody()?.let {
                 val gson = Gson()
+                println("ENTRE ACA CON EL USUARIO")
                 val error = gson.fromJson<NetworkError>(it.string(), object : TypeToken<NetworkError?>() {}.type)
                 throw DataSourceException(error.code, error.description, error.details)
             }
