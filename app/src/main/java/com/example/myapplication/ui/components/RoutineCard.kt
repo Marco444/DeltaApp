@@ -32,6 +32,7 @@ import androidx.compose.ui.layout.ContentScale
 import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.text.style.TextAlign
+import androidx.compose.ui.unit.Dp
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import com.example.myapplication.R
@@ -112,13 +113,39 @@ fun RoutineCardTitle(title: String, iconId: ImageVector, clickedIcon: () -> Unit
     }
 }
 
+@Composable
+fun BackgroundImageCard(routine: Routines, imageHeight: Dp) {
+
+    if(routine.img == "")
+        Image(
+            painter = painterResource( R.drawable.registration_background),
+            contentDescription = "Routine Picture",
+            contentScale = ContentScale.Crop,
+            modifier = Modifier
+                .width(ROUTINE_CARD_WIDTH.dp)
+                .clip(RoundedCornerShape(20.dp))
+                .height(imageHeight),
+        )
+    else {
+        val bitmap = Base64BitMap(routine.img)?.asImageBitmap()
+        if (bitmap != null) {
+            Image(
+                bitmap = bitmap,
+                contentDescription = "Routine Picture",
+                contentScale = ContentScale.Crop,
+                modifier = Modifier
+                    .width(ROUTINE_CARD_WIDTH.dp)
+                    .clip(RoundedCornerShape(20.dp))
+                    .height(imageHeight),
+            )
+        }
+    }}
 
 @Composable
 fun RoutineCard(routine: Routines, iconId: ImageVector, clickedIcon: () -> Unit = {}, actionHandler: () -> Unit = {}, routineCard: RoutineCard, viewModel: RoutinesViewModel) {
 
     var expanded by remember { mutableStateOf(!viewModel.cardsExpandable()) }
     var imageHeight by remember { mutableStateOf(if(!viewModel.cardsExpandable()) 200.dp else 70.dp ) }
-
 
     Box (
         Modifier
@@ -129,30 +156,7 @@ fun RoutineCard(routine: Routines, iconId: ImageVector, clickedIcon: () -> Unit 
             },
         contentAlignment = Alignment.Center
     ){
-        if(routine.img == "")
-            Image(
-                painter = painterResource( R.drawable.registration_background),
-                contentDescription = "Routine Picture",
-                contentScale = ContentScale.Crop,
-                modifier = Modifier
-                    .width(ROUTINE_CARD_WIDTH.dp)
-                    .clip(RoundedCornerShape(20.dp))
-                    .height(imageHeight),
-            )
-        else {
-           val bitmap = Base64BitMap(routine.img)?.asImageBitmap()
-            if (bitmap != null) {
-                Image(
-                    bitmap = bitmap,
-                    contentDescription = "Routine Picture",
-                    contentScale = ContentScale.Crop,
-                    modifier = Modifier
-                        .width(ROUTINE_CARD_WIDTH.dp)
-                        .clip(RoundedCornerShape(20.dp))
-                        .height(imageHeight),
-                )
-            }
-        }
+        BackgroundImageCard(routine, imageHeight)
         Column(
             horizontalAlignment = Alignment.CenterHorizontally,
         ) {
