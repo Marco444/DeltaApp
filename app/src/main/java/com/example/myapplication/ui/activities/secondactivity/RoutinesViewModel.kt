@@ -64,9 +64,9 @@ class RoutinesViewModel(
 
     private fun sortRoutinesDate(screen: NavBarScreen) {
         if(screen == NavBarScreen.Explore)
-            _routinesState.value.exploreRoutines = _routinesState.value.exploreRoutines.sortedBy { routine -> routine.value.id }
+            _routinesState.value.exploreRoutines = _routinesState.value.exploreRoutines.sortedBy { routine -> -routine.value.id }
         else
-            _routinesState.value.userRoutines = _routinesState.value.userRoutines.sortedBy { routine -> routine.value.id }
+            _routinesState.value.userRoutines = _routinesState.value.userRoutines.sortedBy { routine -> -routine.value.id }
     }
 
     private fun sortRoutinesFavourite(screen: NavBarScreen) {
@@ -78,9 +78,9 @@ class RoutinesViewModel(
 
     private fun sortRoutinesPoints(screen: NavBarScreen) {
         if(screen == NavBarScreen.Explore)
-            _routinesState.value.exploreRoutines =  _routinesState.value.exploreRoutines.sortedBy { routine -> routine.value.points}
+            _routinesState.value.exploreRoutines =  _routinesState.value.exploreRoutines.sortedBy { routine -> -routine.value.points.value}
         else
-            _routinesState.value.userRoutines =  _routinesState.value.userRoutines.sortedBy { routine -> routine.value.points}
+            _routinesState.value.userRoutines =  _routinesState.value.userRoutines.sortedBy { routine -> -routine.value.points.value}
     }
 
     fun clickedIcon(id: Int, routineCard: RoutineCard) {

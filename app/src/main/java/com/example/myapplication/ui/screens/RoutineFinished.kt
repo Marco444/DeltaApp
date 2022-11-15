@@ -22,16 +22,18 @@ import androidx.compose.ui.unit.sp
 import com.example.myapplication.ui.components.Button1
 import com.example.myapplication.ui.theme.*
 import com.example.myapplication.ui.activities.thirdactivity.ExecuteRoutineViewModel
+import com.example.myapplication.ui.components.Stars
 
 
 @Composable
 fun RoutineFinished(
     viewModel: ExecuteRoutineViewModel,
     viewRoutineHandler: () -> Unit,
-    routineId: String?,
+    routineId: String,
     backButtonHandler: () -> Unit,
     nextHandler : () -> Unit
 ) {
+
     val opinion by viewModel.opinion.collectAsState()
 
     Column(
@@ -80,52 +82,10 @@ fun RoutineFinished(
                 modifier = Modifier.padding(top = 20.dp)
             )
             Spacer(modifier = Modifier.height(20.dp))
-            Text(
-                text = "Review this routine:",
-                fontFamily = NormalFont,
-                fontSize = 20.sp,
-                color = Color.White,
-                modifier = Modifier.padding(top = 20.dp)
-            )
 
             Spacer(modifier = Modifier.height(5.dp))
 
-            Row(
-                verticalAlignment = Alignment.CenterVertically,
-                modifier = Modifier.align(Alignment.CenterHorizontally)
-            ) {
-                Button(
-                    onClick = { viewModel.downOpinion() },
-                    shape = CircleShape,
-                    colors = ButtonDefaults.buttonColors(backgroundColor = Color.Transparent),
-                    elevation = ButtonDefaults.elevation(0.dp),
-                ) {
-                    Icon(
-                        Icons.Default.Remove,
-                        contentDescription = "-",
-                        tint = Color.Red,
-                    )
-                }
-                Text(
-                    text = opinion,
-                    fontFamily = NormalFont,
-                    fontSize = 20.sp,
-                    color = Color.White,
-                    modifier = Modifier.padding(top = 20.dp)
-                )
-                Button(
-                    onClick = { viewModel.upOpinion() },
-                    shape = CircleShape,
-                    colors = ButtonDefaults.buttonColors(backgroundColor = Color.Transparent),
-                    elevation = ButtonDefaults.elevation(0.dp),
-                ) {
-                    Icon(
-                        Icons.Default.Add,
-                        contentDescription = "+",
-                        tint = Color.Green
-                    )
-                }
-            }
+            Stars(routine = viewModel.routine(routineId.toInt()))
 
             Spacer(modifier = Modifier.height(20.dp))
             Button1(fontSize = 13, text = "Next", handler = nextHandler)

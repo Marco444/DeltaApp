@@ -17,7 +17,7 @@ class DeltaAppExecute {
 @Composable
 fun DeltaAppExecute(
     navController: NavHostController = rememberNavController(),
-    saved: String,
+    routineId: String,
     redirectHandler: () -> Unit,
     viewModel: ExecuteRoutineViewModel
 ) {
@@ -28,7 +28,7 @@ fun DeltaAppExecute(
         composable(Screen.RoutineDescriptionScreen.route) {
             RoutineDescriptionScreen(
                 viewModel =viewModel,
-                routineId = saved,
+                routineId = routineId,
                 backHandler = { redirectHandler().also { navController.popBackStack() } },
                 starRoutineHanlder = { navController.navigate(Screen.Execute.route) },
                 starRoutineLiteHandler = {navController.navigate(Screen.ExecuteLite.route)})
@@ -52,7 +52,11 @@ fun DeltaAppExecute(
                 })
         }
         composable(Screen.RoutineFinish.route){
-            RoutineFinished(viewModel = viewModel, viewRoutineHandler = {}, routineId ="",nextHandler = redirectHandler, backButtonHandler = {})
+            RoutineFinished(viewModel = viewModel,
+                            viewRoutineHandler = {},
+                            routineId = routineId,
+                            nextHandler = redirectHandler,
+                            backButtonHandler = {})
         }
     }
 }

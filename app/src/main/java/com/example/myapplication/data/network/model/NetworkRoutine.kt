@@ -2,6 +2,7 @@ package com.example.myapplication.data.network.model
 
 import com.example.myapplication.ui.classes.Routines
 import com.google.gson.annotations.SerializedName
+import kotlinx.coroutines.flow.MutableStateFlow
 import java.util.*
 
 data class NetworkRoutine (
@@ -42,7 +43,7 @@ data class NetworkRoutine (
             img = metadata?.img ?: "",
             description = detail,
             title = name,
-            points = score
+            points = MutableStateFlow(score)
         )
     }
 }

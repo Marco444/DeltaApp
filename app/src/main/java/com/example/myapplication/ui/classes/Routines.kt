@@ -42,10 +42,8 @@ data class Routines (
     val title: String,
     var added: Boolean = false,
     var favourite: Boolean = false,
-    var points: Int = 0,
+    var points: MutableStateFlow<Int> = MutableStateFlow(0),
     var changed: MutableStateFlow<Boolean> = MutableStateFlow(false),
     val routineProgress: RoutineProgress = RoutineProgress(0, 80f),
-    val exercises: RoutineExercises = RoutineExercises(mutableListOf(CyclesExercise(0,"pecho 1","","15f",1,0f,0,0f,0,0)),mutableListOf(
-        CyclesExercise(0,"pecho 2","","15f",1,0f,0,0f,0,0)
-    ),mutableListOf(CyclesExercise(0,"pecho 3","","15f",1,0f,0,0f,0,0)))
+    val exercises: RoutineExercises = RoutineExercises(emptyList(), emptyList(), emptyList())
 )
