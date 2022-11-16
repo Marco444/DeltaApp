@@ -93,7 +93,6 @@ fun ExerciseExecuteScreenAlternative(
 
 
                 val exer: List<CyclesExercise> = viewModel.getExercises()
-                val exerIt: Iterator<CyclesExercise> = exer.iterator()
                 val actual = remember { MutableStateFlow(0) }
 
                 val listState = rememberLazyListState()

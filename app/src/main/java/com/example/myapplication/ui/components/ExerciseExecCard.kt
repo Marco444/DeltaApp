@@ -52,6 +52,7 @@ fun ExerciseExecCard(viewModel: ExecuteRoutineViewModel, actualExercise: Mutable
                         name = "Weight",
                         actualExercise = actualExercise, viewModel = viewModel
                     )
+
                 }else{
                     Timer(
                         totalTime = exercise.duration * 1000L,
@@ -62,6 +63,14 @@ fun ExerciseExecCard(viewModel: ExecuteRoutineViewModel, actualExercise: Mutable
                     )
                 }
             }
+            if(exercise.duration != 0 && exercise.isExercise)
+                Timer(
+                    totalTime = exercise.duration * 1000L,
+                    handleColor = Green,
+                    inactiveBarColor = Color.DarkGray,
+                    activeBarColor = Green,
+                    modifier = Modifier.size(200.dp)
+                )
 
         }
 
