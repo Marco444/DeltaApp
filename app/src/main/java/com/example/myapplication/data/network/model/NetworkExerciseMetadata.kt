@@ -1,5 +1,7 @@
 package com.example.myapplication.data.network.model
 
+import com.example.myapplication.ui.classes.CycleMetadata
+import com.example.myapplication.ui.classes.CyclesExercise
 import com.google.gson.annotations.SerializedName
 
 class NetworkExerciseMetadata (
@@ -14,5 +16,13 @@ class NetworkExerciseMetadata (
 
     @SerializedName("rest")
     val rest : Int
-
-)
+){
+    fun asModel() : CycleMetadata {
+        return CycleMetadata(
+            id = id,
+            sets = sets,
+            weight = weight,
+            rest = rest
+        )
+    }
+}

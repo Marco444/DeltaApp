@@ -24,7 +24,7 @@ data class NetworkCycle(
     val repetitions : Int,
 
     @SerializedName("metadata")
-    val metadata : List<NetworkExerciseMetadata>
+    val metadata : List<NetworkExerciseMetadata>? = listOf()
 ){
     fun asModel() : RoutinesCycles {
         return RoutinesCycles(
@@ -34,6 +34,7 @@ data class NetworkCycle(
             type = type,
             order = order,
            repetitions = repetitions,
+            cycleMetadata = metadata?.map { it.asModel() }
         )
     }
 }
