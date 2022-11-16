@@ -73,11 +73,6 @@ class RoutinesViewModel(
         if(RoutineCard.ExploreRoutine == routineCard) {
            val routine = _routinesState.value.exploreRoutines.find { routine ->routine.value.id == id }!!
             routine.update { it.copy(added = !it.added) }
-            if(routine.value.added) {
-                addRoutine(routine.value)
-            } else {
-              // deleteRoutine(routine.value.id)
-            }
         } else {
             val routine = _routinesState.value.userRoutines.find { routine ->routine.value.id == id }!!
             routine.update { it.copy(favourite = !it.favourite) }

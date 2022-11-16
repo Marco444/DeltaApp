@@ -43,7 +43,9 @@ fun SearchField() {
             backgroundColor = White,
             focusedIndicatorColor =  Color.Transparent),
         textStyle = TextStyle.Default.copy(fontSize = 15.sp),
-        modifier = Modifier.height(40.dp).fillMaxWidth(0.75F)
+        modifier = Modifier
+            .height(40.dp)
+            .fillMaxWidth(0.75F)
     )
 }
 
@@ -57,8 +59,8 @@ fun FilterButton(viewModel: RoutinesViewModel) {
             modifier = Modifier
                 .clip(RoundedCornerShape(8.dp))
                 .background(White)
-                .height(40.dp).
-                fillMaxWidth(0.65F)
+                .height(40.dp)
+                .fillMaxWidth(0.65F)
         ) {
             Icon(Icons.Filled.Sort, contentDescription = null)
         }
@@ -70,11 +72,16 @@ fun FilterButton(viewModel: RoutinesViewModel) {
             .clip(RoundedCornerShape(8.dp))) {
             for(sortOption in SortOption.values()) {
                 DropdownMenuItem(onClick = { viewModel.sortRoutines(sortOption, NavBarScreen.Explore) ; expanded = false }) {
-                    Text(text = sortOption.name)
+                    when (sortOption) {
+                        SortOption.FAVOURITE -> Text(text = stringResource(id = R.string.favourite))
+                        SortOption.DATE -> Text(text = stringResource(id = R.string.date))
+                        else -> Text(text = stringResource(id = R.string.points))
+                    }
                 }
             }
         }
-    }}
+    }
+}
 
 @Composable
 fun SearchAndFilter(viewModel: RoutinesViewModel) {
