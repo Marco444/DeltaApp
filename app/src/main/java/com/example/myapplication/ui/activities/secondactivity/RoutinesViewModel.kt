@@ -23,7 +23,7 @@ class RoutinesViewModel(
 
     init {
        getUserRoutines()
-
+        getExploreRoutines()
     }
     private fun getUserRoutines() = viewModelScope.launch {
         viewModelScope.launch {
@@ -45,7 +45,6 @@ class RoutinesViewModel(
 
     }
     fun sortRoutines(option: SortOption, screen: NavBarScreen) {
-        println("sorting with ")
         if(option == SortOption.POINTS)
             sortRoutinesPoints(screen)
         if(option == SortOption.FAVOURITE)
@@ -57,8 +56,6 @@ class RoutinesViewModel(
     fun getRoutines(routineCard: RoutineCard): List<MutableStateFlow<Routines>> {
         return if(routineCard == RoutineCard.ExploreRoutine) _routinesState.value.exploreRoutines
         else _routinesState.value.userRoutines
-
-
     }
 
     fun routine(id: Int): Routines {
@@ -97,21 +94,16 @@ class RoutinesViewModel(
             updateRoutine(routine.value)
         }
     }
-    private fun updateRoutine(routines: Routines) =  viewModelScope.launch {
-        routinesRepository.modifyRoutine(routines)
+    private fun updateRoutine(routine: Routines) =  viewModelScope.launch {
+        routinesRepository.modifyRoutine(routine)
         getUserRoutines()
     }
 
     fun isSelected(id: Int, routineCard: RoutineCard): Boolean {
         return if(RoutineCard.ExploreRoutine == routineCard)
             _routinesState.value.exploreRoutines.find { routine ->routine.value.id == id }!!.value.added
-        else {
-            if(_routinesState.value.userRoutines.isNotEmpty()) {
-                _routinesState.value.userRoutines.find { routine -> routine.value.id == id }!!.value.favourite
-            }else
-                return false
-        }
-
+        else
+            _routinesState.value.userRoutines.isNotEmpty() && _routinesState.value.userRoutines.find { routine -> routine.value.id == id }!!.value.favourite
     }
 
 

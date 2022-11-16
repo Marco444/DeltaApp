@@ -32,8 +32,9 @@ class SecondActivity : ComponentActivity() {
                         args.putString("routineId", it.toString())
                         navigate.putExtras(args)
                         startActivity(navigate)
+                        finish()
                     },
-                    logoutRedirect = {startActivity(logoutIntent); finish();})
+                    logoutRedirect = { finish(); startActivity(logoutIntent)})
             }
         }
     }
