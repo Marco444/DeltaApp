@@ -176,27 +176,6 @@ fun ExerciseExecuteScreenAlternative(
     }
 }
 
-//@Preview
-//@Composable
-//fun TryALternative(){
-//    ExerciseExecuteScreenAlternative(handlerBack = {}) {
-//
-//    }
-//}
-
-@Composable
-fun RoutineInfo(title : String, time: Int, description: String){
-    Card(modifier = Modifier.width(300.dp),shape = RoundedCornerShape(20.dp), backgroundColor = Color.DarkGray){
-        Column(horizontalAlignment = CenterHorizontally) {
-            Text(text = title, color = Green, fontSize = 25.sp)
-            TimeComp(time)
-            Text(text = description, color = Color.White, fontSize = 13.sp,textAlign = TextAlign.Center,
-            )
-        }
-    }
-}
-
-
 @Composable
 fun ExerciseCard(
     viewModel: ExecuteRoutineViewModel = viewModel(),
@@ -231,13 +210,33 @@ fun ExerciseCard(
                 modifier = Modifier.padding(start = 20.dp, top = 10.dp, bottom = 10.dp, end = 20.dp)
             )
             if (numberOfExercise == actual) {
-                Text(
-                    text = exercise.detail,
-                    fontFamily = NormalFont,
-                    fontSize = 15.sp,
-                    color = Color.White,
-                    modifier = Modifier.padding(start = 20.dp, top = 10.dp, bottom = 10.dp, end = 20.dp)
-                )
+                Row(
+                    modifier = Modifier.fillMaxWidth(),
+                ) {
+                    Text(
+                        text = exercise.detail,
+                        fontFamily = NormalFont,
+                        fontSize = 15.sp,
+                        color = Color.White,
+                        modifier = Modifier.padding(
+                            start = 20.dp,
+                            top = 10.dp,
+                            bottom = 10.dp,
+                            end = 20.dp
+                        )
+                    )
+                }
+                Spacer(modifier = Modifier.height(10.dp))
+                Row(
+                    modifier = Modifier.fillMaxWidth(),
+                ) {
+                    Spacer(modifier = Modifier.width(5.dp))
+                    TextField(value = "Reps", onValueChange = {}, modifier = Modifier.height(40.dp))
+                    Spacer(modifier = Modifier.width(5.dp))
+                    TextField(value = "Weight", onValueChange = {}, modifier = Modifier.height(40.dp))
+                    Spacer(modifier = Modifier.width(5.dp))
+                }
+                Spacer(modifier = Modifier.height(20.dp))
             }
         }
 
