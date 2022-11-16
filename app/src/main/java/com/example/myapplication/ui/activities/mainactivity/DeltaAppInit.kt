@@ -25,13 +25,7 @@ fun DeltaAppInit(
                 tryOutHandler = initialisedHandler
             )
         }
-        composable(Screen.Login.route,
-            deepLinks = listOf(
-                navDeepLink {
-                    uriPattern = "http://deltapp.com"
-                }
-            )
-        ) {
+        composable(Screen.Login.route,) {
             LogIn(actionRedirect = initialisedHandler,
                 backButton = {navController.popBackStack()},
                 viewModel = viewModel )
