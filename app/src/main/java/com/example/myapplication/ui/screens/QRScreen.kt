@@ -26,13 +26,13 @@ fun QRScreen(viewModel: RoutinesViewModel) {
             .fillMaxWidth()
             .fillMaxHeight()
     ) {
-        Spacer(modifier = Modifier.height(100.dp))
+        Spacer(modifier = Modifier.fillMaxHeight(0.1F))
         Text(
             text = "Scan a Routine",
-            style = MaterialTheme.typography.h3,
-            modifier = Modifier.align(Alignment.CenterHorizontally)
+            style = MaterialTheme.typography.h1,
+            modifier = Modifier.align(Alignment.CenterHorizontally).fillMaxHeight(0.2F)
         )
-        Spacer(modifier = Modifier.height(100.dp))
+        Spacer(modifier = Modifier.fillMaxHeight(0.1F))
         Box(
             modifier = Modifier
                 .clip(RoundedCornerShape(10.dp))
@@ -40,10 +40,11 @@ fun QRScreen(viewModel: RoutinesViewModel) {
                 .width(300.dp)
                 .height(300.dp)
                 .align(Alignment.CenterHorizontally)
-
+                .fillMaxHeight(0.6F)
         ){
 
         }
+        Spacer(modifier = Modifier.fillMaxHeight(0.1F))
     }
 }
 
