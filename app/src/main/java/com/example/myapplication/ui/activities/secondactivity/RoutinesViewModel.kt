@@ -6,7 +6,6 @@ import androidx.lifecycle.viewModelScope
 import com.example.myapplication.ui.classes.Routines
 import com.example.myapplication.data.repository.RoutinesRepository
 import com.example.myapplication.data.repository.UserRepository
-import com.example.myapplication.ui.activities.thirdactivity.ExecuteRoutine
 import com.example.myapplication.ui.components.RoutineCard
 import com.example.myapplication.ui.components.SortOption
 import com.example.myapplication.ui.navigation.NavBarScreen
@@ -15,6 +14,7 @@ import kotlinx.coroutines.flow.StateFlow
 import kotlinx.coroutines.flow.asStateFlow
 import kotlinx.coroutines.flow.update
 import kotlinx.coroutines.launch
+import kotlinx.coroutines.runBlocking
 
 class RoutinesViewModel(
     private val routinesRepository: RoutinesRepository,
@@ -29,16 +29,31 @@ class RoutinesViewModel(
         get() = _hasNextPage.asStateFlow()
 
     init {
-       getUserRoutines()
+        if(loggedIn()) {
+            getUserRoutines()
+        }
         getExploreRoutines()
+
+    }
+
+    private fun loggedIn(): Boolean {
+        var logged: Boolean = false
+        runBlocking {
+           try {
+               val response = userRepository.checkCurrentUser()
+               val body = response.body()
+               if (response.isSuccessful && body != null) { logged = true }
+           } catch (e: Exception) {
+               logged = false
+           }
+        }
+        return logged
     }
 
     private fun getUserRoutines() = viewModelScope.launch {
-        viewModelScope.launch {
-            val aux = userRepository.getCurrentUser(false)
-            aux?.id?.let {
-                _routinesState.value.userRoutines = userRepository.getUserRoutine(true, it).map {routine -> MutableStateFlow(routine) } }
-        }
+        val aux = userRepository.getCurrentUser(false)
+        aux?.id?.let {
+            _routinesState.value.userRoutines = userRepository.getUserRoutine(true, it).map {routine -> MutableStateFlow(routine) } }
     }
 
     private fun getExploreRoutines() = viewModelScope.launch {

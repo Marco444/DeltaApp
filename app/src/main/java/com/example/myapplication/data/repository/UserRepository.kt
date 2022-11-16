@@ -3,8 +3,10 @@ package com.example.myapplication.data.repository
 import com.example.myapplication.ui.classes.Routines
 import com.example.myapplication.data.model.User
 import com.example.myapplication.data.network.UserRemoteDataSource
+import com.example.myapplication.data.network.model.NetworkUser
 import kotlinx.coroutines.sync.Mutex
 import kotlinx.coroutines.sync.withLock
+import retrofit2.Response
 
 class UserRepository(
     private val remoteDataSource: UserRemoteDataSource
@@ -39,6 +41,11 @@ class UserRepository(
 
         return currentUserMutex.withLock { this.currentUser }
     }
+
+    suspend fun checkCurrentUser(): Response<NetworkUser> {
+        return remoteDataSource.checkCurrentUser()
+    }
+
     suspend fun getUserRoutine(refresh: Boolean,id : Int): List<Routines>{
         if (refresh || userRoutines.isEmpty() && currentUser != null) {
             val result = remoteDataSource.getUserRoutines(id)
