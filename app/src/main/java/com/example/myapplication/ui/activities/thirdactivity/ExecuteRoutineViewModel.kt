@@ -42,13 +42,25 @@ class ExecuteRoutineViewModel(
             _execRoutineState.value.exercises[0].value = cyclesExercisesRepository.getCycleExercises(cycles[0].id)
             _execRoutineState.value.exercises[1].value = cyclesExercisesRepository.getCycleExercises(cycles[1].id)
             _execRoutineState.value.exercises[2].value = cyclesExercisesRepository.getCycleExercises(cycles[2].id)
-            _execRoutineState.value.allExercises += _execRoutineState.value.exercises[0].value
-            _execRoutineState.value.allExercises += _execRoutineState.value.exercises[1].value
-            _execRoutineState.value.allExercises += _execRoutineState.value.exercises[2].value
+
+
+           initAllExercises()
             exerciseCount = _execRoutineState.value.allExercises.size
             iterator = _execRoutineState.value.allExercises.listIterator()
 
         }
+    }
+    private fun initAllExercises(){
+        for (cycle in 0..2){
+            for (exercise in _execRoutineState.value.exercises[cycle].value){
+                for (set in 0..exercise.sets) {
+                    _execRoutineState.value.allExercises += exercise
+                    if(exercise.rest != 0)
+                        _execRoutineState.value.allExercises += CyclesExercise(duration = exercise.rest, isExercise = false)
+                }
+            }
+        }
+
     }
     fun routine(id:Int) : Routines {
        return _execRoutineState.value.currentRoutine

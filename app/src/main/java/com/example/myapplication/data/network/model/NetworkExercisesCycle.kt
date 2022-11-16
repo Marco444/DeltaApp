@@ -28,7 +28,7 @@ data class NetworkExercisesCycle (
             type = exercise.type,
             order = order,
             repetitions = repetitions.toFloat(),
-            duration = duration
+            duration = duration,
         )
     }
 }

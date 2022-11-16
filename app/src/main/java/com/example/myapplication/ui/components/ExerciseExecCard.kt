@@ -55,7 +55,7 @@ fun ExerciseExecCard(viewModel: ExecuteRoutineViewModel, actualExercise: Mutable
                     )
                 }else{
                     Timer(
-                        totalTime = 120L * 1000L,
+                        totalTime = exercise.rest * 1000L,
                         handleColor = Green,
                         inactiveBarColor = Color.DarkGray,
                         activeBarColor = Green,

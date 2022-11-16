@@ -159,7 +159,6 @@ fun RoutineCard(routine: Routines, iconId: ImageVector, clickedIcon: () -> Unit 
 
             Column(
                 horizontalAlignment = Alignment.CenterHorizontally,
-                modifier = Modifier.matchParentSize().background(Color(0x7F000000), RoundedCornerShape(20.dp))
             ) {
 
                 RoutineCardTitle(
@@ -176,7 +175,6 @@ fun RoutineCard(routine: Routines, iconId: ImageVector, clickedIcon: () -> Unit 
                     )
 
             }
-
 
     }
 

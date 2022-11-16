@@ -22,7 +22,7 @@ class ViewModelFactory constructor(
     ) = with(modelClass) {
         when {
             isAssignableFrom(UserViewModel::class.java) ->
-                UserViewModel(userRepository)
+                UserViewModel(userRepository,sessionManager)
             //aca agregar por cada viewModel
             /*
             isAssignableFrom(UserViewModel::class.java) ->

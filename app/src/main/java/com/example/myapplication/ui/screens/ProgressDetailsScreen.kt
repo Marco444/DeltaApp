@@ -48,8 +48,6 @@ fun ProgressDetailScreen(viewModel: RoutinesViewModel, viewRoutineHandler: () ->
     val routine: Routines = viewModel.routine(id)!!
     val routineProgress: RoutineProgress = routine.routineProgress
 
-
-
     Column(
         horizontalAlignment = Alignment.CenterHorizontally,
         modifier = Modifier
@@ -59,7 +57,7 @@ fun ProgressDetailScreen(viewModel: RoutinesViewModel, viewRoutineHandler: () ->
     ) {
 
         Box() {
-            BackgroundRoutineImage(routine = routine)
+           BackgroundRoutineImage(routine = routine)
             Row(verticalAlignment = Alignment.CenterVertically) {
                 Column(modifier = Modifier.fillMaxWidth()) {
                     BackButton(handler = backButtonHandler)

@@ -18,10 +18,6 @@ import com.example.myapplication.ui.navigation.NavBarScreen
 import com.example.myapplication.ui.activities.secondactivity.RoutinesViewModel
 import kotlinx.coroutines.launch
 
-fun comparebyFavourite(routine1: Routines, routine2: Routines): Int {
-    return routine1.id - routine2.id
-}
-
 @Composable
 fun ProgressScreen(viewModel: RoutinesViewModel, actionRedirect: (Int) -> Unit, scaffoldState: ScaffoldState) {
 
@@ -51,6 +47,7 @@ fun ProgressScreen(viewModel: RoutinesViewModel, actionRedirect: (Int) -> Unit, 
         Row {
             Column(
                 horizontalAlignment = Alignment.CenterHorizontally
+
             ) {
 
                 Text(
