@@ -46,6 +46,9 @@ class ExecuteRoutineViewModel(
         }
         viewModelScope.launch {
              cycles = routinesCycleRepository.getRoutinCycles(routineId)
+
+            if(_execRoutineState.value.exercises.isEmpty()) return@launch
+
             _execRoutineState.value.exercises[0].value = cyclesExercisesRepository.getCycleExercises(cycles[0].id).map {
                 it.rest = cycles[0].id
                 it

@@ -84,20 +84,10 @@ class RoutinesViewModel(
         return _routinesState.value.exploreRoutines.find { routine ->routine.value.id == id }!!.value
     }
 
-    fun clickedIcon(id: Int, routineCard: RoutineCard) {
-        if(RoutineCard.ExploreRoutine == routineCard) {
-           val routine = _routinesState.value.exploreRoutines.find { routine ->routine.value.id == id }!!
-            routine.update { it.copy(added = !it.added) }
-            if(routine.value.added) {
-                addRoutine(routine.value)
-            } else {
-              // deleteRoutine(routine.value.id)
-            }
-        } else {
+    fun clickedIcon(id: Int) {
             val routine = _routinesState.value.userRoutines.find { routine ->routine.value.id == id }!!
             routine.update { it.copy(favourite = !it.favourite) }
             updateRoutine(routine.value)
-        }
     }
 
 
