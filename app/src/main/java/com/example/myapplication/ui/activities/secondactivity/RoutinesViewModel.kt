@@ -29,25 +29,15 @@ class RoutinesViewModel(
         get() = _hasNextPage.asStateFlow()
 
     init {
-        if(loggedIn()) {
+        if(loggedIn())
             getUserRoutines()
-        }
+
         getExploreRoutines()
 
     }
 
     private fun loggedIn(): Boolean {
-        var logged: Boolean = false
-        runBlocking {
-           try {
-               val response = userRepository.checkCurrentUser()
-               val body = response.body()
-               if (response.isSuccessful && body != null) { logged = true }
-           } catch (e: Exception) {
-               logged = false
-           }
-        }
-        return logged
+      return userRepository.checkCurrentUser()
     }
 
     private fun getUserRoutines() = viewModelScope.launch {

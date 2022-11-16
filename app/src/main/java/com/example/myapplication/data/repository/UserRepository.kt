@@ -4,6 +4,7 @@ import com.example.myapplication.ui.classes.Routines
 import com.example.myapplication.data.model.User
 import com.example.myapplication.data.network.UserRemoteDataSource
 import com.example.myapplication.data.network.model.NetworkUser
+import kotlinx.coroutines.runBlocking
 import kotlinx.coroutines.sync.Mutex
 import kotlinx.coroutines.sync.withLock
 import retrofit2.Response
@@ -42,8 +43,18 @@ class UserRepository(
         return currentUserMutex.withLock { this.currentUser }
     }
 
-    suspend fun checkCurrentUser(): Response<NetworkUser> {
-        return remoteDataSource.checkCurrentUser()
+   fun checkCurrentUser(): Boolean {
+        var logged: Boolean = false
+        runBlocking {
+            try {
+                val response = remoteDataSource.checkCurrentUser()
+                val body = response.body()
+                if (response.isSuccessful && body != null) { logged = true }
+            } catch (e: Exception) {
+                logged = false
+            }
+        }
+        return logged
     }
 
     suspend fun getUserRoutine(refresh: Boolean,id : Int): List<Routines>{
