@@ -26,9 +26,18 @@
         </activity>
         <activity
             android:name=".ui.activities.secondactivity.SecondActivity"
-            android:exported="false"
+            android:exported="true"
             android:label="@string/title_activity_main2"
             android:theme="@style/Theme.MyApplication">
+            <intent-filter>
+                <category android:name="android.intent.category.BROWSABLE" />
+                <action android:name="android.intent.action.VIEW" />
+                <category android:name="android.intent.category.DEFAULT" />
+
+                <data
+                    android:scheme="http"
+                    android:host="deltapp.com" />
+            </intent-filter>
             <meta-data
                 android:name="android.app.lib_name"
                 android:value="" />
@@ -46,15 +55,7 @@
             <meta-data
                 android:name="android.app.lib_name"
                 android:value="" />
-            <intent-filter>
-                <category android:name="android.intent.category.BROWSABLE" />
-                <action android:name="android.intent.action.VIEW" />
-                <category android:name="android.intent.category.DEFAULT" />
 
-                <data
-                    android:scheme="http"
-                    android:host="deltapp.com" />
-            </intent-filter>
         </activity>
     </application>
 
