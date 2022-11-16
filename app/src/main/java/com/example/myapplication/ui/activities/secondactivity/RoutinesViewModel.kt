@@ -6,10 +6,13 @@ import androidx.lifecycle.viewModelScope
 import com.example.myapplication.ui.classes.Routines
 import com.example.myapplication.data.repository.RoutinesRepository
 import com.example.myapplication.data.repository.UserRepository
+import com.example.myapplication.ui.activities.thirdactivity.ExecuteRoutine
 import com.example.myapplication.ui.components.RoutineCard
 import com.example.myapplication.ui.components.SortOption
 import com.example.myapplication.ui.navigation.NavBarScreen
 import kotlinx.coroutines.flow.MutableStateFlow
+import kotlinx.coroutines.flow.StateFlow
+import kotlinx.coroutines.flow.asStateFlow
 import kotlinx.coroutines.flow.update
 import kotlinx.coroutines.launch
 
@@ -20,7 +23,10 @@ class RoutinesViewModel(
 
     private val _sortState = MutableStateFlow(SortOption.POINTS)
     private val _routinesState = MutableStateFlow(RoutinesState())
-
+    private var page = 0
+    private val _hasNextPage = MutableStateFlow(false)
+    val hasNextPage: StateFlow<Boolean>
+        get() = _hasNextPage.asStateFlow()
     init {
        getUserRoutines()
         getExploreRoutines()
@@ -35,8 +41,17 @@ class RoutinesViewModel(
     }
 
     private fun getExploreRoutines() = viewModelScope.launch {
-        _routinesState.value.exploreRoutines =
-            routinesRepository.getRoutines(true).map { MutableStateFlow(it) }
+        val response =  routinesRepository.getRoutines(true,page)
+        _routinesState.value.exploreRoutines += response.content.map { MutableStateFlow(it) }
+        page = response.page
+        _hasNextPage.update { !response.isLastPage }
+
+    }
+     fun nextPage(){
+        if(hasNextPage.value) {
+            page++
+            getExploreRoutines()
+        }
     }
 
     fun getSortState(): MutableStateFlow<SortOption> {
@@ -73,6 +88,11 @@ class RoutinesViewModel(
         if(RoutineCard.ExploreRoutine == routineCard) {
            val routine = _routinesState.value.exploreRoutines.find { routine ->routine.value.id == id }!!
             routine.update { it.copy(added = !it.added) }
+            if(routine.value.added) {
+                addRoutine(routine.value)
+            } else {
+              // deleteRoutine(routine.value.id)
+            }
         } else {
             val routine = _routinesState.value.userRoutines.find { routine ->routine.value.id == id }!!
             routine.update { it.copy(favourite = !it.favourite) }

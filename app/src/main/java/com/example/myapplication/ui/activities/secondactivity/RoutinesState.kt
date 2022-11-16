@@ -15,8 +15,7 @@ class RoutinesState {
 
     var userRoutines by mutableStateOf(emptyList<MutableStateFlow<Routines>>())
 
-
-    var exploreRoutines by mutableStateOf(emptyList<MutableStateFlow<Routines>>())
+    var exploreRoutines by mutableStateOf((emptyList<MutableStateFlow<Routines>>()))
 //            MutableStateFlow(
 //                Routines(0, R.drawable.registration_background,
 //                "This is a sample routine text", "PUSH", false)
@@ -51,6 +50,11 @@ class RoutinesState {
 //            )
 
 }
+data class PagedRoutines(
+    val content : List<Routines>,
+    val page : Int,
+    val isLastPage : Boolean
+)
 private fun encoder(filePath: String): String{
     val bytes = File(filePath).readBytes()
     val base64 = Base64.getEncoder().encodeToString(bytes)
