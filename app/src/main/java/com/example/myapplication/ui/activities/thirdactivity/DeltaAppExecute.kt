@@ -6,10 +6,7 @@ import androidx.navigation.compose.NavHost
 import androidx.navigation.compose.composable
 import androidx.navigation.compose.rememberNavController
 import com.example.myapplication.ui.navigation.Screen
-import com.example.myapplication.ui.screens.ExerciseExecScreen
-import com.example.myapplication.ui.screens.ExerciseExecuteScreenAlternative
-import com.example.myapplication.ui.screens.RoutineDescriptionScreen
-import com.example.myapplication.ui.screens.RoutineFinished
+import com.example.myapplication.ui.screens.*
 
 class DeltaAppExecute {
 }

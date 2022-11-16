@@ -43,7 +43,9 @@ fun SearchField() {
             backgroundColor = White,
             focusedIndicatorColor =  Color.Transparent),
         textStyle = TextStyle.Default.copy(fontSize = 15.sp),
-        modifier = Modifier.height(40.dp).fillMaxWidth(0.75F)
+        modifier = Modifier
+            .height(40.dp)
+            .fillMaxWidth(0.75F)
     )
 }
 
@@ -57,8 +59,8 @@ fun FilterButton(viewModel: RoutinesViewModel) {
             modifier = Modifier
                 .clip(RoundedCornerShape(8.dp))
                 .background(White)
-                .height(40.dp).
-                fillMaxWidth(0.65F)
+                .height(40.dp)
+                .fillMaxWidth(0.65F)
         ) {
             Icon(Icons.Filled.Sort, contentDescription = null)
         }
@@ -127,7 +129,8 @@ fun ExploreScreen(viewModel: RoutinesViewModel, scaffoldState: ScaffoldState, ac
                 RoutinesGrid(
                     viewModel = viewModel,
                     actionRedirect = actionRedirect,
-                    routineCard = RoutineCard.ExploreRoutine
+                    routineCard = RoutineCard.ExploreRoutine,
+                    buttonText = stringResource(id = R.string.Preview)
                 )
             }
 

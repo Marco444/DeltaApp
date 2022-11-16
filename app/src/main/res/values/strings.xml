@@ -21,4 +21,8 @@
     <string name="Start">Start</string>
     <string name="Progress">See Progress</string>
     <string name="Preview">Preview</string>
+    <string name="not_logged_in">Not Logged In</string>
+    <string name="logout">Log Out</string>
+    <string name="last_activity">Last activity \n</string>
+    <string name="see_progress">See Progress</string>
 </resources>

@@ -14,7 +14,7 @@ import androidx.compose.ui.unit.dp
 import com.example.myapplication.ui.activities.secondactivity.RoutinesViewModel
 
 @Composable
-fun RoutinesGrid(viewModel: RoutinesViewModel, actionRedirect: (Int) -> Unit, routineCard: RoutineCard) {
+fun RoutinesGrid(viewModel: RoutinesViewModel, actionRedirect: (Int) -> Unit, routineCard: RoutineCard, buttonText: String) {
     LazyVerticalGrid(
         GridCells.Adaptive(ROUTINE_CARD_WIDTH.dp)) {
         items(viewModel.getRoutines(routineCard)) { routineState ->
@@ -36,6 +36,7 @@ fun RoutinesGrid(viewModel: RoutinesViewModel, actionRedirect: (Int) -> Unit, ro
                         routineCard.iconClicked,
                     clickedIcon = { viewModel.clickedIcon(routine.id, routineCard) },
                     routineCard = routineCard,
+                    buttonText = buttonText,
                     viewModel = viewModel,
                     actionHandler = { actionRedirect(routine.id) }
                 )

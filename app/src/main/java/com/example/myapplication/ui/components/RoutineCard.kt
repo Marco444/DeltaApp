@@ -186,7 +186,7 @@ fun BackgroundImageCard(routine: Routines, imageHeight: Dp) {
     }}
 
 @Composable
-fun RoutineCard(routine: Routines, iconId: ImageVector, clickedIcon: () -> Unit = {}, actionHandler: () -> Unit = {}, routineCard: RoutineCard, viewModel: RoutinesViewModel) {
+fun RoutineCard(routine: Routines, iconId: ImageVector, clickedIcon: () -> Unit = {}, actionHandler: () -> Unit = {}, routineCard: RoutineCard, viewModel: RoutinesViewModel, buttonText: String) {
 
     var expanded by remember { mutableStateOf(!viewModel.cardsExpandable()) }
     var imageHeight by remember { mutableStateOf(if (!viewModel.cardsExpandable()) 200.dp else 70.dp) }
@@ -217,7 +217,7 @@ fun RoutineCard(routine: Routines, iconId: ImageVector, clickedIcon: () -> Unit 
                     RoutineCardDetails(
                         routine = routine,
                         buttonHandler = actionHandler,
-                        buttonText = routineCard.description
+                        buttonText = buttonText
                     )
 
             }
