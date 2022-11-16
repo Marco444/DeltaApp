@@ -15,12 +15,15 @@ import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.graphics.Color.Companion.Black
 import androidx.compose.ui.graphics.Color.Companion.Gray
 import androidx.compose.ui.graphics.Color.Companion.White
+import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
+import com.example.myapplication.R
 import com.example.myapplication.ui.navigation.NavBarScreen
 import com.example.myapplication.ui.activities.secondactivity.RoutinesViewModel
 import com.example.myapplication.ui.classes.Routines
 import kotlinx.coroutines.flow.MutableStateFlow
+
 
 enum class SortOption {
     FAVOURITE {
@@ -57,7 +60,12 @@ fun RoutineCardSortButton(viewModel: RoutinesViewModel, screen: NavBarScreen) {
         ){
 
         for (sortOption in SortOption.values()) {
-            SortButton(onClick = {viewModel.setSortState(sortOption, screen)}, txt = sortOption.name, color = sortOption.color(selected) )
+            val txt = when (sortOption) {
+                SortOption.FAVOURITE -> R.string.favourite
+                SortOption.DATE ->  R.string.date
+                else ->  R.string.points
+            }
+            SortButton(onClick = {viewModel.setSortState(sortOption, screen)}, txt = stringResource(txt), color = sortOption.color(selected) )
             if(sortOption != SortOption.POINTS) Delimiter()
         }
 

@@ -25,4 +25,5 @@
     <string name="logout">Log Out</string>
     <string name="last_activity">Last activity \n</string>
     <string name="see_progress">See Progress</string>
+    <string name="fav">Favourite</string>
 </resources>

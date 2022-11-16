@@ -72,11 +72,16 @@ fun FilterButton(viewModel: RoutinesViewModel) {
             .clip(RoundedCornerShape(8.dp))) {
             for(sortOption in SortOption.values()) {
                 DropdownMenuItem(onClick = { viewModel.sortRoutines(sortOption, NavBarScreen.Explore) ; expanded = false }) {
-                    Text(text = sortOption.name)
+                    when (sortOption) {
+                        SortOption.FAVOURITE -> Text(text = stringResource(id = R.string.favourite))
+                        SortOption.DATE -> Text(text = stringResource(id = R.string.date))
+                        else -> Text(text = stringResource(id = R.string.points))
+                    }
                 }
             }
         }
-    }}
+    }
+}
 
 @Composable
 fun SearchAndFilter(viewModel: RoutinesViewModel) {
