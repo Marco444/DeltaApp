@@ -17,6 +17,7 @@ import com.example.myapplication.ui.activities.secondactivity.RoutinesViewModel
 
 @Composable
 fun RoutinesGrid(viewModel: RoutinesViewModel, actionRedirect: (Int) -> Unit, routineCard: RoutineCard, buttonText: String) {
+    val hasNextPage by viewModel.hasNextPage.collectAsState()
     LazyVerticalGrid(
         GridCells.Adaptive(ROUTINE_CARD_WIDTH.dp)) {
         items(viewModel.getRoutines(routineCard)) { routineState ->
@@ -51,11 +52,15 @@ fun RoutinesGrid(viewModel: RoutinesViewModel, actionRedirect: (Int) -> Unit, ro
             Column(
                 horizontalAlignment = Alignment.CenterHorizontally
             ) {
-                Button1(
-                    fontSize = 17,
-                    text = stringResource(id = R.string.load_more),
-                )
-                Spacer(modifier = Modifier.height(20.dp))
+                if(hasNextPage) {
+                    Button1(
+                        fontSize = 17,
+                        text = stringResource(id = R.string.load_more),
+                        handler = { viewModel.nextPage() }
+                    )
+                    Spacer(modifier = Modifier.height(20.dp))
+
+                }
             }
         }
 

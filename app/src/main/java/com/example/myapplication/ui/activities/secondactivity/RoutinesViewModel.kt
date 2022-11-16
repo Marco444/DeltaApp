@@ -6,10 +6,13 @@ import androidx.lifecycle.viewModelScope
 import com.example.myapplication.ui.classes.Routines
 import com.example.myapplication.data.repository.RoutinesRepository
 import com.example.myapplication.data.repository.UserRepository
+import com.example.myapplication.ui.activities.thirdactivity.ExecuteRoutine
 import com.example.myapplication.ui.components.RoutineCard
 import com.example.myapplication.ui.components.SortOption
 import com.example.myapplication.ui.navigation.NavBarScreen
 import kotlinx.coroutines.flow.MutableStateFlow
+import kotlinx.coroutines.flow.StateFlow
+import kotlinx.coroutines.flow.asStateFlow
 import kotlinx.coroutines.flow.update
 import kotlinx.coroutines.launch
 
@@ -21,7 +24,9 @@ class RoutinesViewModel(
     private val _sortState = MutableStateFlow(SortOption.POINTS)
     private val _routinesState = MutableStateFlow(RoutinesState())
     private var page = 0
-    private var hasNextPage = false
+    private val _hasNextPage = MutableStateFlow(false)
+    val hasNextPage: StateFlow<Boolean>
+        get() = _hasNextPage.asStateFlow()
     init {
        getUserRoutines()
         getExploreRoutines()
@@ -37,14 +42,13 @@ class RoutinesViewModel(
 
     private fun getExploreRoutines() = viewModelScope.launch {
         val response =  routinesRepository.getRoutines(true,page)
-        _routinesState.value.exploreRoutines.addAll(
-            response.content.map { MutableStateFlow(it) })
+        _routinesState.value.exploreRoutines += response.content.map { MutableStateFlow(it) }
         page = response.page
-        hasNextPage = !response.isLastPage
+        _hasNextPage.update { !response.isLastPage }
 
     }
-    private fun nextPage(){
-        if(hasNextPage) {
+     fun nextPage(){
+        if(hasNextPage.value) {
             page++
             getExploreRoutines()
         }
@@ -62,7 +66,7 @@ class RoutinesViewModel(
 
     fun sortRoutines(option: SortOption, screen: NavBarScreen) {
         if(screen == NavBarScreen.Explore)
-            _routinesState.value.exploreRoutines.sortedWith { a: MutableStateFlow<Routines>, b: MutableStateFlow<Routines> -> option.comparator(a, b) }
+            _routinesState.value.exploreRoutines = _routinesState.value.exploreRoutines.sortedWith { a: MutableStateFlow<Routines>, b: MutableStateFlow<Routines> -> option.comparator(a, b) }
         else
             _routinesState.value.userRoutines = _routinesState.value.userRoutines.sortedWith { a: MutableStateFlow<Routines>, b: MutableStateFlow<Routines> -> option.comparator(a, b) }
     }
