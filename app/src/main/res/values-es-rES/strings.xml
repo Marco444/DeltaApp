@@ -21,7 +21,7 @@
     <string name="forgot_password">¿Olvidaste tu contraseña?</string>
     <string name="Start">Iniciar</string>
     <string name="Progress">Ver Progreso</string>
-    <string name="Preview">Previsualizar</string>
+    <string name="Preview">Ver</string>
     <string name="not_logged_in">Sin Iniciar Sesión</string>
     <string name="logout">Cerrar sesión</string>
     <string name="last_activity">Ultima actividad</string>
