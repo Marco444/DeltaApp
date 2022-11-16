@@ -82,7 +82,7 @@ fun RoutineFinished(
             )
             Spacer(modifier = Modifier.height(20.dp))
 
-            Stars(routine = viewModel.routine(routineId.toInt()))
+            Stars(routine = viewModel.routine(routineId.toInt()), clickable = true)
 
             Spacer(modifier = Modifier.height(20.dp))
             Button1(fontSize = 13, text = "Finish", handler = nextHandler)

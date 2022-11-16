@@ -19,15 +19,28 @@ import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import com.example.myapplication.ui.navigation.NavBarScreen
 import com.example.myapplication.ui.activities.secondactivity.RoutinesViewModel
+import com.example.myapplication.ui.classes.Routines
+import kotlinx.coroutines.flow.MutableStateFlow
 
 enum class SortOption {
-    FAVOURITE, DATE, POINTS;
+    FAVOURITE {
+        override val comparator: (MutableStateFlow<Routines>, MutableStateFlow<Routines>) -> Int
+            get() = {a: MutableStateFlow<Routines>, b: MutableStateFlow<Routines> -> b.value.favourite.compareTo(a.value.favourite) }
+    },
+    DATE {
+        override val comparator: (MutableStateFlow<Routines>, MutableStateFlow<Routines>) -> Int
+            get() = {a: MutableStateFlow<Routines>, b: MutableStateFlow<Routines> -> b.value.id - a.value.id}
+    },
+    POINTS() {
+        override val comparator: (MutableStateFlow<Routines>, MutableStateFlow<Routines>) -> Int
+            get() = {a: MutableStateFlow<Routines>, b: MutableStateFlow<Routines> -> b.value.points.value - a.value.points.value}
+    };
+
+    abstract val comparator: (MutableStateFlow<Routines>, MutableStateFlow<Routines>) -> Int
 
     fun color(selected: SortOption): Color {
         return if(selected.name == this.name) Black else Gray
     }
-
-
 }
 
 @Composable

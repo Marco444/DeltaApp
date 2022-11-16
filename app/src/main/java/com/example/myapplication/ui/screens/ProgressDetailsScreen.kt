@@ -1,7 +1,5 @@
 package com.example.myapplication.ui.screens
 
-import Base64BitMap
-import androidx.compose.foundation.Image
 import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.*
 import androidx.compose.foundation.shape.RoundedCornerShape
@@ -11,18 +9,14 @@ import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.clip
 import androidx.compose.ui.graphics.Color
-import androidx.compose.ui.graphics.asImageBitmap
-import androidx.compose.ui.layout.ContentScale
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import com.example.myapplication.ui.classes.RoutineProgress
 import com.example.myapplication.ui.classes.Routines
 import com.example.myapplication.ui.components.BackButton
-import com.example.myapplication.ui.theme.GrayTransparency
 import com.example.myapplication.ui.theme.Green
 import com.example.myapplication.ui.activities.secondactivity.RoutinesViewModel
 import com.example.myapplication.ui.components.BackgroundRoutineImage
-import com.example.myapplication.ui.components.ROUTINE_CARD_WIDTH
 
 
 @Composable
@@ -45,7 +39,7 @@ fun SliderDelta(value: Float,
 fun ProgressDetailScreen(viewModel: RoutinesViewModel, viewRoutineHandler: () -> Unit, routineId: String?, backButtonHandler: () -> Unit) {
 
     val id = routineId?.substringAfter('}')?.toInt() ?: -1
-    val routine: Routines = viewModel.routine(id)!!
+    val routine: Routines = viewModel.routineUser(id)!!
     val routineProgress: RoutineProgress = routine.routineProgress
 
     Column(
