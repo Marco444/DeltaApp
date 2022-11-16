@@ -22,4 +22,8 @@
     <string name="Start">Lancement</string>
     <string name="Progress">Voir le Progress</string>
     <string name="Preview">Aperçu</string>
+    <string name="see_progress">Voir le Progress</string>
+    <string name="last_activity">Derniere activite</string>
+    <string name="logout">Fermer la session</string>
+    <string name="not_logged_in">Pas connecté</string>
 </resources>
