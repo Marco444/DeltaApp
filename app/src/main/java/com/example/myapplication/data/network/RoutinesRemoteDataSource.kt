@@ -6,9 +6,9 @@ import com.example.myapplication.data.network.model.NetworkRoutine
 
 class RoutinesRemoteDataSource(private val apiRoutineService: ApiRoutinService): RemoteDataSource() {
 
-    suspend fun getRoutines() : NetworkPagedContent<NetworkRoutine> {
+    suspend fun getRoutines(page:Int) : NetworkPagedContent<NetworkRoutine> {
         return handleApiResponse {
-            apiRoutineService.getRoutines()
+            apiRoutineService.getRoutines(page)
         }
     }
     suspend fun getRoutine(id:Int):NetworkRoutine{

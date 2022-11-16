@@ -2,6 +2,7 @@ package com.example.myapplication.data.repository
 
 import com.example.myapplication.ui.classes.Routines
 import com.example.myapplication.data.network.RoutinesRemoteDataSource
+import com.example.myapplication.ui.activities.secondactivity.PagedRoutines
 import kotlinx.coroutines.sync.Mutex
 import kotlinx.coroutines.sync.withLock
 
@@ -13,17 +14,21 @@ class RoutinesRepository(
     private val routinesMutex = Mutex()
     // Cache of the latest sports got from the network.
     private var routines: List<Routines> = emptyList()
+    private var page = 0
+    private var isLastPage = false
 
-    suspend fun getRoutines(refresh: Boolean = false): List<Routines> {
+    suspend fun getRoutines(refresh: Boolean = false,page:Int): PagedRoutines {
         if (refresh || routines.isEmpty()) {
-            val result = remoteDataSource.getRoutines()
+            val result = remoteDataSource.getRoutines(page)
             // Thread-safe write to latestNews
             routinesMutex.withLock {
                 this.routines = result.content.map { it.asModel() }
+                this.page = result.page
+                this.isLastPage = result.isLastPage
             }
         }
 
-        return routinesMutex.withLock { this.routines }
+        return PagedRoutines(routinesMutex.withLock { this.routines },page,isLastPage)
     }
 
     suspend fun getRoutine(sportId: Int) : Routines {
