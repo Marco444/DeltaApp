@@ -134,7 +134,8 @@ fun ExploreScreen(viewModel: RoutinesViewModel, scaffoldState: ScaffoldState, ac
                 RoutinesGrid(
                     viewModel = viewModel,
                     actionRedirect = actionRedirect,
-                    routineCard = RoutineCard.ExploreRoutine
+                    routineCard = RoutineCard.ExploreRoutine,
+                    buttonText = stringResource(id = R.string.Preview)
                 )
             }
 

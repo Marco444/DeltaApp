@@ -18,7 +18,9 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.clip
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.graphics.asImageBitmap
+import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.unit.dp
+import com.example.myapplication.R
 import com.example.myapplication.ui.activities.mainactivity.UserViewModel
 import java.util.*
 
@@ -79,18 +81,20 @@ fun DrawerContent(
         ProfilePicture(userState.currentUser?.avatarUrl)
 
         Text(
-            text = userState.currentUser?.username ?: "Not logged in",
+            text = userState.currentUser?.username ?: stringResource(R.string.not_logged_in),
             style = MaterialTheme.typography.h2
         )
 
         if (userState.currentUser != null) {
             Text(
-                text = "Last activity \n" + userState.currentUser!!.lastActivity.toString(),
+                text = stringResource(R.string.last_activity) + userState.currentUser!!.lastActivity.toString(),
                 style = MaterialTheme.typography.body2,
                 modifier = Modifier.align(Alignment.CenterHorizontally)
             )
         }
 
-        LoginButton(text = "Logout", handler = logoutRedirect)
+        LoginButton(
+            text = stringResource(R.string.logout), handler = logoutRedirect
+        )
     }
 }

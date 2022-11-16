@@ -65,7 +65,8 @@ fun RoutinesScreen(viewModel: RoutinesViewModel,
                 RoutinesGrid(
                     viewModel = viewModel,
                     actionRedirect = actionRedirect,
-                    routineCard = RoutineCard.MyRoutine
+                    routineCard = RoutineCard.MyRoutine,
+                    buttonText = stringResource(id = R.string.Start)
                 )
             }
         }
