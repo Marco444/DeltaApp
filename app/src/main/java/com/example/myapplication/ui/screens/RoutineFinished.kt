@@ -68,7 +68,11 @@ fun RoutineFinished(
                 fontSize = 60.sp,
                 color = Color.White
             )
-            val delta = viewModel.getCurrentDelta().div(routine.delta?:1f)
+            var delta :Float
+            if(routine.delta != 0f)
+                 delta = viewModel.getCurrentDelta().div(routine.delta?:1f)
+            else
+                delta = viewModel.getCurrentDelta()
             val color : Color = if(delta < 0.3) {
                 Red
             }else if(delta < 0.7) {
@@ -79,7 +83,7 @@ fun RoutineFinished(
             }
 
             LinearProgressIndicator(
-                progress = viewModel.getCurrentDelta().div(routine.delta?:1f),
+                progress = delta,
                 color = color,
                 modifier = Modifier
                     .height(15.dp)
