@@ -77,8 +77,7 @@ class ExecuteRoutineViewModel(
         }
 
     }
-
-    fun finishRoutine(){
+    fun getCurrentDelta():Float{
         var contador = 0
         var delta = 0f
         for (exercise in _execRoutineState.value.allExercises){
@@ -89,14 +88,17 @@ class ExecuteRoutineViewModel(
             }
         }
         if(contador != 0)
-           delta /= contador
+            delta /= contador
+        return delta
+    }
+    fun finishRoutine(){
+        val delta = getCurrentDelta()
         executeRoutine.value.currentRoutine.value.delta = (executeRoutine.value.currentRoutine.value.delta?.plus(
             delta
         ))?.div(2)
         viewModelScope.launch {
-            executeRoutine.value.currentRoutine.update { routinesRepository.modifyRoutine(executeRoutine.value.currentRoutine.value)  }  }
-
-
+            executeRoutine.value.currentRoutine.update { routinesRepository.modifyRoutine(executeRoutine.value.currentRoutine.value)  }
+        }
     }
     fun nextExercise(){
         if(!isInNext) {

@@ -69,7 +69,7 @@ fun RoutineFinished(
                 color = Color.White
             )
             LinearProgressIndicator(
-                progress = 0.7f,
+                progress = viewModel.getCurrentDelta().div(routine.delta?:1f),
                 color = Green,
                 modifier = Modifier
                     .height(15.dp)
@@ -87,7 +87,9 @@ fun RoutineFinished(
             Stars(routine = routine, clickable = true)
 
             Spacer(modifier = Modifier.height(20.dp))
-            Button1(fontSize = 13, text = "Finish", handler = nextHandler)
+            Button1(fontSize = 13, text = "Finish", handler = {
+                viewModel.finishRoutine()
+                nextHandler() })
             Spacer(modifier = Modifier.height(10.dp))
         }
     }

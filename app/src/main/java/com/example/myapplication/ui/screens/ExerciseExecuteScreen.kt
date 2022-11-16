@@ -68,7 +68,6 @@ fun ExerciseExecScreen(viewModel: ExecuteRoutineViewModel = viewModel(),
                         if(viewModel.hasNext())
                             viewModel.nextExercise()
                         else {
-                            viewModel.finishRoutine()
                             handlerFinishRoutine()
                         }
                     })
