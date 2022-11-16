@@ -100,8 +100,10 @@ fun CardOptions(viewModel: RoutinesViewModel, routine: Routines) {
         )
         .clip(RoundedCornerShape(8.dp))) {
 
-        DropdownMenuItem(onClick = { expanded = false ; shareRoutine(context, routine.title) }) {
-            Text(text = "Share")
+        if(routine.isPublic) {
+            DropdownMenuItem(onClick = { expanded = false; shareRoutine(context, routine.title) }) {
+                Text(text = "Share")
+            }
         }
         DropdownMenuItem(onClick = { expanded = false ; viewModel.deleteRoutine(routine.id)} ) {
             Text(text = "Delete")
@@ -129,15 +131,17 @@ fun RoutineCardTitle(routineCard: RoutineCard, routine: Routines, iconId: ImageV
         )
 
         Spacer(modifier = Modifier.width(10.dp))
-        Icon(
-            iconId,
-            contentDescription = null,
-            modifier = Modifier
-                .clickable(onClick = clickedIcon)
-                .scale(1.5f)
-                .padding(end = 5.dp),
-            tint = Color.White,
-        )
+        if(routineCard != RoutineCard.ExploreRoutine) {
+            Icon(
+                iconId,
+                contentDescription = null,
+                modifier = Modifier
+                    .clickable(onClick = clickedIcon)
+                    .scale(1.5f)
+                    .padding(end = 5.dp),
+                tint = Color.White,
+            )
+        }
 
         if(routineCard == RoutineCard.ExploreRoutine) {
             Icon(
