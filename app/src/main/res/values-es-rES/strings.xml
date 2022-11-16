@@ -26,4 +26,9 @@
     <string name="logout">Cerrar sesión</string>
     <string name="last_activity">Ultima actividad</string>
     <string name="see_progress">Ver Progreso</string>
+    <string name="fav">Favoritas</string>
+    <string name="load_more">Cargar más</string>
+    <string name="error_header">¡Hubo un Error!</string>
+    <string name="error_msg">Lo sentimos, ocurrio un error al acceder a la read. Por favor, inténtelo de nuevo más  tarde.</string>
+    <string name="error_btn">Llévame al inicio</string>
 </resources>
