@@ -7,6 +7,7 @@ import com.example.myapplication.data.repository.CyclesExercisesRepository
 import com.example.myapplication.data.repository.RoutinesCycleRepository
 import com.example.myapplication.ui.classes.CyclesExercise
 import com.example.myapplication.ui.classes.Routines
+import com.example.myapplication.ui.classes.RoutinesCycles
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.StateFlow
 import kotlinx.coroutines.flow.asStateFlow
@@ -35,11 +36,14 @@ class ExecuteRoutineViewModel(
 
     lateinit var iterator:ListIterator<CyclesExercise>
     var isInNext = true
-
+   lateinit var  cycles : List<RoutinesCycles>
     init {
         viewModelScope.launch {
-            val cycles = routinesCycleRepository.getRoutinCycles(routineId)
-            _execRoutineState.value.exercises[0].value = cyclesExercisesRepository.getCycleExercises(cycles[0].id)
+             cycles = routinesCycleRepository.getRoutinCycles(routineId)
+            _execRoutineState.value.exercises[0].value = cyclesExercisesRepository.getCycleExercises(cycles[0].id).map {
+                it.rest = cycles[0].id
+                it
+            }
             _execRoutineState.value.exercises[1].value = cyclesExercisesRepository.getCycleExercises(cycles[1].id)
             _execRoutineState.value.exercises[2].value = cyclesExercisesRepository.getCycleExercises(cycles[2].id)
 
@@ -54,6 +58,11 @@ class ExecuteRoutineViewModel(
         for (cycle in 0..2){
             for (exercise in _execRoutineState.value.exercises[cycle].value){
                 for (set in 0..exercise.sets) {
+                    val metadata = cycles[cycle].cycleMetadata?.filter { it.id == exercise.id }
+                    exercise.rest = metadata?.get(0)?.rest?:0
+                    exercise.sets =metadata?.get(0)?.sets?:0
+                    exercise.weight = metadata?.get(0)?.weight?.toFloat()!!
+                    println(exercise)
                     _execRoutineState.value.allExercises += exercise
                     if(exercise.rest != 0)
                         _execRoutineState.value.allExercises += CyclesExercise(duration = exercise.rest, isExercise = false)
