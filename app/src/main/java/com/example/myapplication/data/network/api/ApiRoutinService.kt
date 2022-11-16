@@ -16,6 +16,9 @@ interface ApiRoutinService {
     @PUT("routines/{routineId}")
     suspend fun modifyRoutine(@Path("routineId") routineId: Int, @Body routine: NetworkRoutine) : Response<NetworkRoutine>
 
-    @DELETE("routine/{routineId}")
+    @DELETE("routines/{routineId}")
     suspend fun deleteRoutine(@Path("routineId") routineId: Int) : Response<Unit>
+
+    @POST("routines")
+    suspend fun addRoutine(@Body routine: NetworkRoutine) : Response<Unit>
 }

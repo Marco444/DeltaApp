@@ -10,9 +10,7 @@ import androidx.compose.foundation.background
 import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.*
 import androidx.compose.foundation.shape.RoundedCornerShape
-import androidx.compose.material.Icon
-import androidx.compose.material.IconButton
-import androidx.compose.material.Text
+import androidx.compose.material.*
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.filled.*
 import androidx.compose.material.icons.outlined.Add
@@ -39,6 +37,7 @@ import com.example.myapplication.R
 import com.example.myapplication.ui.classes.Routines
 import com.example.myapplication.ui.theme.Green
 import com.example.myapplication.ui.activities.secondactivity.RoutinesViewModel
+import com.example.myapplication.ui.navigation.NavBarScreen
 
 
 const val ROUTINE_CARD_WIDTH = 370;
@@ -46,7 +45,7 @@ const val ROUTINE_CARD_WIDTH = 370;
 sealed class RoutineCard(val iconClicked: ImageVector, val iconUnClicked: ImageVector, val description: String) {
     object MyRoutine: RoutineCard ( Icons.Default.Favorite, Icons.Outlined.FavoriteBorder, "Start")
     object Progress: RoutineCard (Icons.Default.Favorite, Icons.Outlined.FavoriteBorder, "See Progress")
-    object ExploreRoutine: RoutineCard (  Icons.Default.BookmarkAdded, Icons.Outlined.Add, "Preview")
+    object ExploreRoutine: RoutineCard (  Icons.Default.CheckCircle, Icons.Outlined.Add, "Preview")
 }
 
 @Composable
@@ -58,7 +57,7 @@ fun RoutineCardDetails( routine: Routines, buttonText: String, buttonHandler: ()
         modifier = Modifier
     )
     Row (verticalAlignment = Alignment.CenterVertically) {
-        Stars(routine = routine) 
+        Stars(routine = routine, clickable = false)
         Button1(fontSize = 16, text = buttonText, handler = buttonHandler)
     }
 }
@@ -79,7 +78,39 @@ private fun shareRoutine(context: Context, title: String) {
 }
 
 @Composable
-fun RoutineCardTitle(title: String, iconId: ImageVector, clickedIcon: () -> Unit = {}, id: Int) {
+fun CardOptions(viewModel: RoutinesViewModel, routine: Routines) {
+
+    val context = LocalContext.current
+
+    var expanded by remember { mutableStateOf(false) }
+
+    Icon(
+        Icons.Default.MoreVert,
+        contentDescription = null,
+        modifier = Modifier
+            .clickable(onClick = {expanded = true})
+            .scale(1.5f)
+            .padding(end = 5.dp),
+        tint = Color.White,
+    )
+    DropdownMenu(expanded = expanded, onDismissRequest = { expanded = false }, modifier = Modifier
+        .background(
+            Color.White
+        )
+        .clip(RoundedCornerShape(8.dp))) {
+
+        DropdownMenuItem(onClick = { expanded = false ; shareRoutine(context, routine.title) }) {
+            Text(text = "Share")
+        }
+        DropdownMenuItem(onClick = { expanded = false ; viewModel.deleteRoutine(routine.id)} ) {
+            Text(text = "Delete")
+        }
+    }
+}
+
+
+@Composable
+fun RoutineCardTitle(routine: Routines, iconId: ImageVector, clickedIcon: () -> Unit = {}, viewModel: RoutinesViewModel) {
 
 
     val context = LocalContext.current
@@ -87,7 +118,7 @@ fun RoutineCardTitle(title: String, iconId: ImageVector, clickedIcon: () -> Unit
     Row ( horizontalArrangement  =  Arrangement.SpaceBetween, verticalAlignment = Alignment.CenterVertically) {
 
         Text(
-            text = title,
+            text = routine.title,
             fontSize = 50.sp,
             color = Color.White,
             textAlign = TextAlign.Start,
@@ -95,9 +126,6 @@ fun RoutineCardTitle(title: String, iconId: ImageVector, clickedIcon: () -> Unit
         )
 
         Spacer(modifier = Modifier.width(10.dp))
-        IconButton(onClick = { shareRoutine(context, title) }) {
-            Icon(Icons.Default.Share, contentDescription = "share icon", tint = Color.White)
-        }
         Icon(
             iconId,
             contentDescription = null,
@@ -108,6 +136,7 @@ fun RoutineCardTitle(title: String, iconId: ImageVector, clickedIcon: () -> Unit
             tint = Color.White,
         )
 
+        CardOptions(viewModel = viewModel, routine = routine)
 
     }
 }
@@ -124,6 +153,7 @@ fun BackgroundImageCard(routine: Routines, imageHeight: Dp) {
                 .width(ROUTINE_CARD_WIDTH.dp)
                 .clip(RoundedCornerShape(20.dp))
                 .height(imageHeight),
+            alpha = 0.4f
         )
     else {
         val bitmap = Base64BitMap(routine.img)?.asImageBitmap()
@@ -136,6 +166,7 @@ fun BackgroundImageCard(routine: Routines, imageHeight: Dp) {
                     .width(ROUTINE_CARD_WIDTH.dp)
                     .clip(RoundedCornerShape(20.dp))
                     .height(imageHeight),
+                alpha = 0.4f
             )
         }
     }}
@@ -162,10 +193,10 @@ fun RoutineCard(routine: Routines, iconId: ImageVector, clickedIcon: () -> Unit 
             ) {
 
                 RoutineCardTitle(
-                    title = routine.title,
+                    routine = routine,
                     iconId = iconId,
                     clickedIcon = { clickedIcon() },
-                    id = routine.id
+                    viewModel = viewModel
                 )
                 if (expanded)
                     RoutineCardDetails(

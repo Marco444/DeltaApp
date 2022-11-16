@@ -17,13 +17,13 @@ import kotlinx.coroutines.flow.update
 
 
 @Composable
-fun Stars(routine: Routines) {
+fun Stars(routine: Routines, clickable: Boolean) {
 
    val selectedStars by routine.points.collectAsState()
 
     Row {
         for (starIndex in 1..5) {
-            IconButton(onClick = { routine.points.update { starIndex } }) {
+            IconButton(onClick = { if(clickable) routine.points.update { starIndex } }) {
                 Icon(
                     if (starIndex <= selectedStars) Icons.Default.Star
                     else Icons.Default.StarBorder,

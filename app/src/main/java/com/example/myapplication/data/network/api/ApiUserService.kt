@@ -23,4 +23,5 @@ interface ApiUserService {
 
     @GET("users/{userId}/routines")
     suspend fun getUserRoutines(@Path("userId") id : Int): Response<NetworkPagedContent<NetworkRoutine>
+
 >}
