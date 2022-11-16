@@ -111,7 +111,7 @@ fun CardOptions(viewModel: RoutinesViewModel, routine: Routines) {
 
 
 @Composable
-fun RoutineCardTitle(routine: Routines, iconId: ImageVector, clickedIcon: () -> Unit = {}, viewModel: RoutinesViewModel) {
+fun RoutineCardTitle(routineCard: RoutineCard, routine: Routines, iconId: ImageVector, clickedIcon: () -> Unit = {}, viewModel: RoutinesViewModel) {
 
 
     val context = LocalContext.current
@@ -139,7 +139,18 @@ fun RoutineCardTitle(routine: Routines, iconId: ImageVector, clickedIcon: () -> 
             tint = Color.White,
         )
 
-        CardOptions(viewModel = viewModel, routine = routine)
+        if(routineCard == RoutineCard.ExploreRoutine) {
+            Icon(
+                Icons.Default.Share,
+                contentDescription = null,
+                modifier = Modifier
+                    .clickable(onClick = { shareRoutine(context, routine.title) })
+                    .padding(end = 5.dp),
+                tint = Color.White,
+            )
+        } else {
+            CardOptions(viewModel = viewModel, routine = routine)
+        }
 
     }
 }
@@ -196,6 +207,7 @@ fun RoutineCard(routine: Routines, iconId: ImageVector, clickedIcon: () -> Unit 
             ) {
 
                 RoutineCardTitle(
+                    routineCard = routineCard,
                     routine = routine,
                     iconId = iconId,
                     clickedIcon = { clickedIcon() },
