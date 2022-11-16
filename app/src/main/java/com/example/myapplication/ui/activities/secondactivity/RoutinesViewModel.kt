@@ -27,6 +27,7 @@ class RoutinesViewModel(
     private val _hasNextPage = MutableStateFlow(false)
     val hasNextPage: StateFlow<Boolean>
         get() = _hasNextPage.asStateFlow()
+
     init {
        getUserRoutines()
         getExploreRoutines()
@@ -96,12 +97,6 @@ class RoutinesViewModel(
         routinesRepository.deleteRoutine(routineId)
         getUserRoutines()
     }
-
-    private fun addRoutine(routine: Routines) =  viewModelScope.launch {
-        routinesRepository.addRoutine(routine)
-        getUserRoutines()
-    }
-
 
     private fun updateRoutine(routine: Routines) =  viewModelScope.launch {
         routinesRepository.modifyRoutine(routine)

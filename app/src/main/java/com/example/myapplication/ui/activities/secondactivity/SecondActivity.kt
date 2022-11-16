@@ -31,8 +31,8 @@ class SecondActivity : ComponentActivity() {
                         val args = Bundle()
                         args.putString("routineId", it.toString())
                         navigate.putExtras(args)
-                        startActivity(navigate)
                         finish()
+                        startActivity(navigate)
                     },
                     logoutRedirect = { finish(); startActivity(logoutIntent)})
             }

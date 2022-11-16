@@ -10,8 +10,8 @@ import kotlinx.coroutines.flow.MutableStateFlow
 import java.io.File
 import java.util.*
 
-class RoutinesState {
 
+class RoutinesState {
 
     var userRoutines by mutableStateOf(emptyList<MutableStateFlow<Routines>>())
 
@@ -55,8 +55,8 @@ data class PagedRoutines(
     val page : Int,
     val isLastPage : Boolean
 )
-private fun encoder(filePath: String): String{
-    val bytes = File(filePath).readBytes()
-    val base64 = Base64.getEncoder().encodeToString(bytes)
-    return base64
-}
+//private fun encoder(filePath: String): String{
+//    val bytes = File(filePath).readBytes()
+//    val base64 = Base64.getEncoder().encodeToString(bytes)
+//    return base64
+//}
