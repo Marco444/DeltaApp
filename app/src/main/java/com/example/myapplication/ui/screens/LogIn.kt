@@ -64,7 +64,10 @@ fun LogIn(actionRedirect: () -> Unit, backButton: () -> Unit,viewModel: UserView
     BackgroundImage(painter = painterResource(id = R.drawable.log_in_photo))
     Column(
         verticalArrangement = Arrangement.SpaceEvenly,
-        modifier = Modifier.fillMaxWidth().fillMaxHeight().background(gradient)
+        modifier = Modifier
+            .fillMaxWidth()
+            .fillMaxHeight()
+            .background(gradient)
     ) {
         Column(modifier = Modifier
             .fillMaxWidth()
@@ -115,7 +118,7 @@ fun LogIn(actionRedirect: () -> Unit, backButton: () -> Unit,viewModel: UserView
             )
             Button1(
                 fontSize = 23,
-                text = "Log In",
+                text = stringResource(id = R.string.login),
                 handler = {
                     viewModel.login(email.text, passWord.text )
 
@@ -206,7 +209,7 @@ fun PasswordTextField(onTextChange :(TextFieldValue) -> Unit,modifier: Modifier 
 fun LinkedText(handler : (Int) -> Unit,modifier: Modifier = Modifier){
     val mAnnotatedLinkString = buildAnnotatedString {
         // creating a string to display in the Text
-        val mStr = "Forgot password?"
+        val mStr = stringResource(id = R.string.forgot_password)
         append(mStr)
         addStyle(
             style = SpanStyle(

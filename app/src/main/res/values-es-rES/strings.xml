@@ -1,0 +1,25 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="app_name">Delta</string>
+    <string name="try_out">Pruebalo</string>
+    <string name="login">Iniciar Sesion</string>
+    <string name="sing_up">Registrarte</string>
+    <string name="my_routines">Mis Rutinas</string>
+    <string name="progress_title">Progreso</string>
+    <string name="routines_title">Rutinas</string>
+    <string name="explore_title">Explorar</string>
+    <string name="see_routine_details">Ver detalles de la rutina</string>
+    <string name="favourite">Favorito</string>
+    <string name="date">Fecha</string>
+    <string name="points">Puntaje</string>
+    <string name="share_msg">¡Mira esta rutina!</string>
+    <string name="login_failed">Nombre de usuario o contraseña incorrectos</string>
+    <string name="next_exercise">Siguiente</string>
+    <string name="prev_exercise">Previo</string>
+    <string name="title_activity_main2">MainActivity2</string>
+    <string name="title_activity_third">ThirdActivity</string>
+    <string name="forgot_password">¿Olvidaste tu contraseña?</string>
+    <string name="Start">Iniciar</string>
+    <string name="Progress">Ver Progreso</string>
+    <string name="Preview">Avance</string>
+</resources>
