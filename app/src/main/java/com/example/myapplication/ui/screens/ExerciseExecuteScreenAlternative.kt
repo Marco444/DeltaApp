@@ -1,5 +1,6 @@
 package com.example.myapplication.ui.screens
 
+import android.annotation.SuppressLint
 import android.view.RoundedCorner
 import androidx.compose.foundation.Image
 import androidx.compose.foundation.background
@@ -48,6 +49,7 @@ import kotlinx.coroutines.launch
 import kotlin.math.exp
 
 
+@SuppressLint("StateFlowValueCalledInComposition")
 @Composable
 fun ExerciseExecuteScreenAlternative(
     viewModel: ExecuteRoutineViewModel = viewModel(),
@@ -56,7 +58,7 @@ fun ExerciseExecuteScreenAlternative(
 ){
     // For suspended functions that need a coroutine
     val coroutineScope = rememberCoroutineScope()
-
+    val routine by viewModel.executeRoutine.value.currentRoutine.collectAsState()
     Box(modifier = Modifier.background(backGround)) {
         Column(verticalArrangement = Arrangement.SpaceEvenly) {
             Column(modifier = Modifier.fillMaxWidth()) {
@@ -79,7 +81,7 @@ fun ExerciseExecuteScreenAlternative(
                 Spacer(modifier = Modifier.height(10.dp))
 
                 Text(
-                    text = viewModel.routine(0).title,
+                    text = routine.title,
                     style = MaterialTheme.typography.h1,
                     fontSize = 50.sp,
                     color = Green,

@@ -46,7 +46,8 @@ data class NetworkRoutine (
             points = MutableStateFlow(score),
             favourite = metadata?.isFavorite ?: false,
             difficulty = difficulty?: "",
-            isPublic = isPublic
+            isPublic = isPublic,
+            delta = metadata?.delta
         )
     }
 }

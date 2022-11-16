@@ -23,6 +23,7 @@ import com.example.myapplication.ui.components.ExPreviewCard
 import com.example.myapplication.ui.theme.Green
 import com.example.myapplication.ui.activities.thirdactivity.ExecuteRoutineViewModel
 
+@SuppressLint("StateFlowValueCalledInComposition")
 @Composable
 fun RoutineDescriptionScreen(viewModel: ExecuteRoutineViewModel,
                              routineId: String,
@@ -31,7 +32,7 @@ fun RoutineDescriptionScreen(viewModel: ExecuteRoutineViewModel,
                              starRoutineLiteHandler: () -> Unit){
 
 
-    val routine: Routines = viewModel.routine(routineId.toInt())
+    val routine by viewModel.executeRoutine.value.currentRoutine.collectAsState()
 
     Box(modifier = Modifier.background(Color(0xFF1E1E1E))) {
      Column(verticalArrangement = Arrangement.SpaceEvenly) {

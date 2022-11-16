@@ -1,5 +1,6 @@
 package com.example.myapplication.ui.screens
 
+import android.annotation.SuppressLint
 import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.*
 import androidx.compose.foundation.shape.CircleShape
@@ -25,6 +26,7 @@ import com.example.myapplication.ui.activities.thirdactivity.ExecuteRoutineViewM
 import com.example.myapplication.ui.components.Stars
 
 
+@SuppressLint("StateFlowValueCalledInComposition")
 @Composable
 fun RoutineFinished(
     viewModel: ExecuteRoutineViewModel,
@@ -33,7 +35,7 @@ fun RoutineFinished(
     backButtonHandler: () -> Unit,
     nextHandler : () -> Unit
 ) {
-
+    val routine by viewModel.executeRoutine.value.currentRoutine.collectAsState()
 
     Column(
         horizontalAlignment = Alignment.CenterHorizontally,
@@ -49,7 +51,7 @@ fun RoutineFinished(
             modifier = Modifier.fillMaxHeight(0.1F),
             verticalAlignment = CenterVertically
         ) {
-            Text(text = viewModel.routine(0).title, fontFamily = H1Font, fontSize = 50.sp, color = Green)
+            Text(text = routine.title, fontFamily = H1Font, fontSize = 50.sp, color = Green)
         }
         Column(
             horizontalAlignment = Alignment.CenterHorizontally,
@@ -82,7 +84,7 @@ fun RoutineFinished(
             )
             Spacer(modifier = Modifier.height(20.dp))
 
-            Stars(routine = viewModel.routine(routineId.toInt()))
+            Stars(routine = routine)
 
             Spacer(modifier = Modifier.height(20.dp))
             Button1(fontSize = 13, text = "Finish", handler = nextHandler)

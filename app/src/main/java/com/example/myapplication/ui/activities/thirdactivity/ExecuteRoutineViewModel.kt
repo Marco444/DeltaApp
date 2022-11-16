@@ -5,6 +5,7 @@ import androidx.lifecycle.viewModelScope
 import com.example.myapplication.ui.classes.Exercise
 import com.example.myapplication.data.repository.CyclesExercisesRepository
 import com.example.myapplication.data.repository.RoutinesCycleRepository
+import com.example.myapplication.data.repository.RoutinesRepository
 import com.example.myapplication.ui.classes.CyclesExercise
 import com.example.myapplication.ui.classes.Routines
 import com.example.myapplication.ui.classes.RoutinesCycles
@@ -16,14 +17,16 @@ import kotlinx.coroutines.launch
 import kotlin.math.roundToInt
 
 class ExecuteRoutineViewModel(
-      routineId : Int,
-      cyclesExercisesRepository: CyclesExercisesRepository,
-     routinesCycleRepository: RoutinesCycleRepository,
+    private val routineId : Int,
+      private val cyclesExercisesRepository: CyclesExercisesRepository,
+      private val routinesCycleRepository: RoutinesCycleRepository,
+      private val routinesRepository: RoutinesRepository
 ) : ViewModel() {
 
     private val _execRoutineState = MutableStateFlow(ExecuteRoutine())
     val executeRoutine: StateFlow<ExecuteRoutine>
         get() = _execRoutineState.asStateFlow()
+
     var exerciseCount = 1
 
     var actualExercise = MutableStateFlow(CyclesExercise(0,"","","",0,0f,0,0f,0,0))
@@ -32,12 +35,15 @@ class ExecuteRoutineViewModel(
     val state: StateFlow<CyclesExercise>
         get() = actualExercise.asStateFlow()
 
-
-
     lateinit var iterator:ListIterator<CyclesExercise>
     var isInNext = true
    lateinit var  cycles : List<RoutinesCycles>
+
+
     init {
+        viewModelScope.launch {
+            executeRoutine.value.currentRoutine.update { routinesRepository.getRoutine(routineId) }
+        }
         viewModelScope.launch {
              cycles = routinesCycleRepository.getRoutinCycles(routineId)
             _execRoutineState.value.exercises[0].value = cyclesExercisesRepository.getCycleExercises(cycles[0].id).map {
@@ -47,8 +53,7 @@ class ExecuteRoutineViewModel(
             _execRoutineState.value.exercises[1].value = cyclesExercisesRepository.getCycleExercises(cycles[1].id)
             _execRoutineState.value.exercises[2].value = cyclesExercisesRepository.getCycleExercises(cycles[2].id)
 
-
-           initAllExercises()
+            initAllExercises()
             exerciseCount = _execRoutineState.value.allExercises.size
             iterator = _execRoutineState.value.allExercises.listIterator()
 
@@ -62,17 +67,36 @@ class ExecuteRoutineViewModel(
                     exercise.rest = metadata?.get(0)?.rest?:0
                     exercise.sets =metadata?.get(0)?.sets?:0
                     exercise.weight = metadata?.get(0)?.weight?.toFloat()!!
+                    exercise.index =  _execRoutineState.value.allExercises.size
                     println(exercise)
                     _execRoutineState.value.allExercises += exercise
                     if(exercise.rest != 0)
-                        _execRoutineState.value.allExercises += CyclesExercise(duration = exercise.rest, isExercise = false)
+                        _execRoutineState.value.allExercises += CyclesExercise(duration = exercise.rest, isExercise = false, index = exercise.index!! +1)
                 }
             }
         }
 
     }
-    fun routine(id:Int) : Routines {
-       return _execRoutineState.value.currentRoutine
+
+    fun finishRoutine(){
+        var contador = 0
+        var delta = 0f
+        for (exercise in _execRoutineState.value.allExercises){
+            if (exercise.isExercise)
+            {
+                contador++
+                delta += exercise.weight * exercise.repetitions
+            }
+        }
+        if(contador != 0)
+           delta /= contador
+        executeRoutine.value.currentRoutine.value.delta = (executeRoutine.value.currentRoutine.value.delta?.plus(
+            delta
+        ))?.div(2)
+        viewModelScope.launch {
+            executeRoutine.value.currentRoutine.update { routinesRepository.modifyRoutine(executeRoutine.value.currentRoutine.value)  }  }
+
+
     }
     fun nextExercise(){
         if(!isInNext) {

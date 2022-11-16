@@ -15,6 +15,7 @@ import com.example.myapplication.ui.activities.thirdactivity.ExecuteRoutineViewM
 class ExecuteRoutineViewModelFactory constructor(
     private val cyclesExercisesRepository: CyclesExercisesRepository,
     private val routinesCycleRepository: RoutinesCycleRepository,
+    private val routinesRepository : RoutinesRepository,
     private val routineId : Int,
     owner: SavedStateRegistryOwner,
     defaultArgs: Bundle? = null
@@ -27,7 +28,7 @@ class ExecuteRoutineViewModelFactory constructor(
     ) = with(modelClass) {
         when {
             isAssignableFrom(ExecuteRoutineViewModel::class.java) ->
-                ExecuteRoutineViewModel(routineId,cyclesExercisesRepository,routinesCycleRepository)
+                ExecuteRoutineViewModel(routineId,cyclesExercisesRepository,routinesCycleRepository, routinesRepository )
             else ->
                 throw IllegalArgumentException("Unknown ViewModel class: ${modelClass.name}")
         }

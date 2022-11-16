@@ -11,5 +11,6 @@ data class CyclesExercise (
         var weight:Float = 0f,
         var rest:Int = 0,
         val duration:Int,
-        var isExercise : Boolean = true
+        var isExercise : Boolean = true,
+        var index:Int? = 0
 )

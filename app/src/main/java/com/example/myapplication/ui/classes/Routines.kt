@@ -38,17 +38,18 @@ class RoutineProgress (
 }
 
 data class Routines (
-    val id: Int,
-    val img: String,
-    val description: String,
-    val title: String,
+    val id: Int = 0,
+    val img: String = "",
+    val description: String = "",
+    val title: String = "",
     var added: Boolean = false,
     var favourite: Boolean = false,
     var points: MutableStateFlow<Int> = MutableStateFlow(0),
     var changed: MutableStateFlow<Boolean> = MutableStateFlow(false),
     val routineProgress: RoutineProgress = RoutineProgress(0, 80f),
-    val difficulty : String,
-    val isPublic : Boolean = false
+    val difficulty : String = "",
+    val isPublic : Boolean = false,
+    var delta : Float? = 0f
 ){
     fun asNetworkModel(): NetworkRoutine {
         return NetworkRoutine(
@@ -58,7 +59,7 @@ data class Routines (
             difficulty = difficulty,
             isPublic = isPublic,
             score = points.value,
-            metadata = NetworkRoutineMetadata(favourite,img)
+            metadata = NetworkRoutineMetadata(favourite,img,delta)
         )
     }
 }

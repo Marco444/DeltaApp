@@ -28,6 +28,7 @@ fun getExecRoutineViewModelFactory(defaultArgs: Bundle? = null,routineId : Int) 
     val application: MyApplication = LocalContext.current.applicationContext as MyApplication
     val cyclesExercise = application.cyclesExerciseRepository
     val routinesCycles = application.routinesCycleRepository
+    val routinesRepository = application.routinesRepository
 
-    return ExecuteRoutineViewModelFactory(cyclesExercise,routinesCycles, routineId, LocalSavedStateRegistryOwner.current, defaultArgs)
+    return ExecuteRoutineViewModelFactory(cyclesExercise,routinesCycles,routinesRepository, routineId, LocalSavedStateRegistryOwner.current, defaultArgs)
 }

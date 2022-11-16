@@ -19,10 +19,6 @@ class ExecuteRoutine{
     var allExercises by mutableStateOf(listOf<CyclesExercise>())
 
 
-
-    var coolDown by mutableStateOf(emptyList<CyclesExercise>())
-    var mainSet by mutableStateOf(emptyList<CyclesExercise>())
-
-    var currentRoutine : Routines = Routines(0,"","","Rutina de ejemplo", added = true, difficulty = "")
+    var currentRoutine : MutableStateFlow<Routines> = MutableStateFlow (Routines(0,"","","Rutina de ejemplo", added = true, difficulty = ""))
     var routineId : Int = 0
 }

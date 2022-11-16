@@ -31,9 +31,8 @@ fun RecomposingTitle(exercise: MutableStateFlow<CyclesExercise>) {
 fun ExerciseExecCard(viewModel: ExecuteRoutineViewModel, actualExercise: MutableStateFlow<CyclesExercise>){
 
     val exercise by actualExercise.collectAsState()
-
     LinearProgressIndicator(
-        progress =  exercise.order / (viewModel.exerciseCount * 1f),
+        progress = exercise.index?.div((viewModel.exerciseCount * 1f)) ?: 0f,
         modifier = Modifier.padding(30.dp)
     )
 
