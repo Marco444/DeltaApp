@@ -30,6 +30,7 @@ import androidx.compose.ui.layout.ContentScale
 import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.text.style.TextAlign
+import androidx.compose.ui.text.style.TextOverflow
 import androidx.compose.ui.unit.Dp
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
@@ -122,7 +123,9 @@ fun RoutineCardTitle(routine: Routines, iconId: ImageVector, clickedIcon: () -> 
             fontSize = 50.sp,
             color = Color.White,
             textAlign = TextAlign.Start,
-            modifier = Modifier.wrapContentSize()
+            maxLines = 1,
+            overflow = TextOverflow.Ellipsis,
+            modifier = Modifier.width((ROUTINE_CARD_WIDTH - 100).dp)
         )
 
         Spacer(modifier = Modifier.width(10.dp))

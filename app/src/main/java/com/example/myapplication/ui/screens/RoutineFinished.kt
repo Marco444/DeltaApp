@@ -84,7 +84,7 @@ fun RoutineFinished(
             )
             Spacer(modifier = Modifier.height(20.dp))
 
-            Stars(routine = routine)
+            Stars(routine = routine, clickable = true)
 
             Spacer(modifier = Modifier.height(20.dp))
             Button1(fontSize = 13, text = "Finish", handler = nextHandler)
