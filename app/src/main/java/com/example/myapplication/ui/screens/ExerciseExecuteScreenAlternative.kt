@@ -210,9 +210,6 @@ fun ExerciseCard(
                 modifier = Modifier.padding(start = 20.dp, top = 10.dp, bottom = 10.dp, end = 20.dp)
             )
             if (numberOfExercise == actual) {
-                Row(
-                    modifier = Modifier.fillMaxWidth(),
-                ) {
                     Text(
                         text = exercise.detail,
                         fontFamily = NormalFont,
@@ -225,18 +222,6 @@ fun ExerciseCard(
                             end = 20.dp
                         )
                     )
-                }
-                Spacer(modifier = Modifier.height(10.dp))
-                Row(
-                    modifier = Modifier.fillMaxWidth(),
-                ) {
-                    Spacer(modifier = Modifier.width(5.dp))
-                    TextField(value = "Reps", onValueChange = {}, modifier = Modifier.height(40.dp))
-                    Spacer(modifier = Modifier.width(5.dp))
-                    TextField(value = "Weight", onValueChange = {}, modifier = Modifier.height(40.dp))
-                    Spacer(modifier = Modifier.width(5.dp))
-                }
-                Spacer(modifier = Modifier.height(20.dp))
             }
         }
 
