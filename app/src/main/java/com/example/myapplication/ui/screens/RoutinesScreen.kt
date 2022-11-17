@@ -25,7 +25,17 @@ fun RoutinesScreen(viewModel: RoutinesViewModel,
                    scaffoldState: ScaffoldState,
                    errorRedirect: () -> Unit
 ){
+
     val coroutineScope = rememberCoroutineScope()
+
+    val error by viewModel.error.collectAsState()
+
+    if(error) {
+        errorRedirect()
+        viewModel.errorHandled()
+    }
+
+
     Column (
         modifier = Modifier
             .fillMaxWidth()

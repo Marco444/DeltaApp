@@ -6,6 +6,8 @@ import androidx.compose.material.MaterialTheme
 import androidx.compose.material.ScaffoldState
 import androidx.compose.material.Text
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.collectAsState
+import androidx.compose.runtime.getValue
 import androidx.compose.runtime.rememberCoroutineScope
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
@@ -22,6 +24,13 @@ import kotlinx.coroutines.launch
 fun ProgressScreen(viewModel: RoutinesViewModel, actionRedirect: (Int) -> Unit, scaffoldState: ScaffoldState, errorRedirect: () -> Unit) {
 
     val coroutineScope = rememberCoroutineScope()
+
+    val error by viewModel.error.collectAsState()
+    if(error) {
+        errorRedirect()
+        viewModel.errorHandled()
+    }
+
     Column(
         modifier = Modifier
             .fillMaxWidth()
