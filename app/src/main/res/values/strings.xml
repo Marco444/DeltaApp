@@ -31,6 +31,7 @@
     <string name="error_msg">We are sorry, there has been a problem. Please verify there is internet connection and restart the app.</string>
     <string name="error_btn">Take Me Home</string>
     <string name="rest">Rest</string>
+    <string name="explanationProgress">This graphic shows how you average volume has changed during several executions of this routine</string>
     <string name="display_routines_pic_title">Display Routine Images</string>
     <string name="display_routines_pic_description">Decide whether to display or not the picture of a routine.</string>
     <string name="exec_routine_mode_title">Routine Execution Lite Mode</string>
