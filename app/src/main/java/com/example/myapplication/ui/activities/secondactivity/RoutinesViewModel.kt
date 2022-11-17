@@ -255,15 +255,17 @@ class RoutinesViewModel(
     }
 
     // SETTINGS -> TODO moverlo para arriba una vez que funque
-    val displayRoutineImages = MutableStateFlow(true)
-    val executionRoutineModeLite = MutableStateFlow(false)
+    val displayRoutineImages = MutableStateFlow(routinesRepository.getDisplayRoutineImage())
+    val executionRoutineModeLite = MutableStateFlow(routinesRepository.getExecuteRoutineLiteMode())
 
     fun setDisplayRoutineImages(){
         displayRoutineImages.update { !displayRoutineImages.value }
+        routinesRepository.saveDisplayRoutineImage(displayRoutineImages.value)
     }
 
     fun setExecutionRoutineModeLite(){
         executionRoutineModeLite.update { !executionRoutineModeLite.value }
+        routinesRepository.saveExecuteRoutineLiteMode(executionRoutineModeLite.value)
     }
 
 }

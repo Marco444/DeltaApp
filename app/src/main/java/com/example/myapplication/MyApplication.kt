@@ -18,7 +18,7 @@ class MyApplication : Application() {
         get() = UserRemoteDataSource(RetrofitClient.getApiUserService(this), sessionManager)
 
     private val routinesRemoteDataSource: RoutinesRemoteDataSource
-        get() = RoutinesRemoteDataSource(RetrofitClient.getApiRoutineService(this))
+        get() = RoutinesRemoteDataSource(RetrofitClient.getApiRoutineService(this), sessionManager)
     private val routinesCyclesRemoteDataSource: RoutinesCyclesRemoteDataSource
         get() = RoutinesCyclesRemoteDataSource(RetrofitClient.getApiRoutinesCycles(this))
     private val cyclesExerciseRemoteDataSource: CyclesExercisesRemoteDataSource

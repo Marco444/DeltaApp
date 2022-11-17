@@ -79,4 +79,20 @@ class RoutinesRepository(
         return remoteDataSource.addReview(routineId,review.asNetworkModel()).asModel()
     }
 
+    fun saveDisplayRoutineImage(value: Boolean){
+        remoteDataSource.saveDisplayRoutineImage(value)
+    }
+
+    fun saveExecuteRoutineLiteMode(value: Boolean){
+        remoteDataSource.saveExecuteRoutineLiteMode(value)
+    }
+
+    fun getDisplayRoutineImage(): Boolean{
+        return remoteDataSource.getDisplayRoutineImage()
+    }
+
+    fun getExecuteRoutineLiteMode(): Boolean{
+        return remoteDataSource.getExecuteRoutineLiteMode()
+    }
+
 }

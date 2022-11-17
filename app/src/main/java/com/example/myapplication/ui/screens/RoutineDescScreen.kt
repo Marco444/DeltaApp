@@ -30,7 +30,8 @@ fun RoutineDescriptionScreen(viewModel: ExecuteRoutineViewModel,
                              backHandler : () -> Unit,
                              starRoutineHanlder : () -> Unit,
                              starRoutineLiteHandler: () -> Unit,
-                             errorRedirect: () -> Unit
+                             errorRedirect: () -> Unit,
+                             liteMode: Boolean
                              ){
 
 
@@ -78,20 +79,10 @@ fun RoutineDescriptionScreen(viewModel: ExecuteRoutineViewModel,
                      handler = {
                          if(viewModel.hasNext()) {
                              viewModel.nextExercise()
-                             starRoutineHanlder()
-                         }else{
-                             backHandler()
-                         }
-                     }
-                 )
-                 Spacer(modifier = Modifier.width(20.dp))
-                 Button1(
-                     fontSize = 17,
-                     text = "Start Routine Lite",
-                     handler = {
-                         if(viewModel.hasNext()) {
-                             viewModel.nextExercise()
-                             starRoutineLiteHandler()
+                             if(viewModel.getExecuteRoutineLiteMode())
+                                 starRoutineLiteHandler()
+                             else
+                                 starRoutineHanlder()
                          }else{
                              backHandler()
                          }
