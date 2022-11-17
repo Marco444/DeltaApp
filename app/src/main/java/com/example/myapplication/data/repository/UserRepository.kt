@@ -10,6 +10,7 @@ import kotlinx.coroutines.sync.withLock
 import retrofit2.Response
 
 import com.example.myapplication.data.network.model.NetworkUser
+import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.runBlocking
 
 class UserRepository(
@@ -35,6 +36,12 @@ class UserRepository(
 
     suspend fun logout() {
         remoteDataSource.logout()
+    }
+    val authenticate : MutableStateFlow<Boolean> = MutableStateFlow(remoteDataSource.getSessionManager().loadAuthToken() != null)
+
+
+    fun authenticate(): MutableStateFlow<Boolean> {
+        return authenticate
     }
 
     //Esto es para no ir a pedir el usuario cada vez que hacemos currentUser

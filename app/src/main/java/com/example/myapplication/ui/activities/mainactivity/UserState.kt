@@ -1,10 +1,11 @@
 package com.example.myapplication.ui.activities.mainactivity
 
 import com.example.myapplication.data.model.User
+import kotlinx.coroutines.flow.MutableStateFlow
 
 
 data class UserState(
-    val isAuthenticated: Boolean = false,
+    val isAuthenticated: MutableStateFlow<Boolean>,
     val isFetching: Boolean = false,
     val currentUser: User? = null,
     val message: String? = null,

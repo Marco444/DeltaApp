@@ -108,7 +108,7 @@ fun WeightCards(name : String, actualExercise: MutableStateFlow<CyclesExercise>,
                     viewModel.setWeight(sliderValue)
                 },
                 interactionSource = interactionSource,
-                valueRange = 0f..300f,
+                valueRange = 0f..150f,
                 colors = SliderDefaults.colors(
                     activeTickColor = Green,
                     inactiveTickColor = Green,
@@ -156,7 +156,7 @@ fun RepsCards(name : String, actualExercise: MutableStateFlow<CyclesExercise>, v
                     viewModel.setReps(sliderValue)
                 },
                 interactionSource = interactionSource,
-                valueRange = 0f..300f,
+                valueRange = 0f..40f,
                 colors = SliderDefaults.colors(
                     activeTickColor = Green,
                     inactiveTickColor = Green,

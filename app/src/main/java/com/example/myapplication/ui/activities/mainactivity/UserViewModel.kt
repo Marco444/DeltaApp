@@ -18,7 +18,7 @@ class UserViewModel(
     ) : ViewModel() {
 
 
-    var userState = MutableStateFlow(UserState(isAuthenticated = sessionManager.loadAuthToken() != null))
+    var userState = MutableStateFlow(UserState(isAuthenticated = userRepository.authenticate()))
         private set
   
     fun login(username: String, password: String) = viewModelScope.launch {
@@ -30,10 +30,10 @@ class UserViewModel(
         runCatching {
             userRepository.login(username, password)
         }.onSuccess { response ->
+            userState.value.isAuthenticated.value = true
             userState.update {
                 it.copy(
                     isFetching = false,
-                    isAuthenticated = true
                 )
             }
         }.onFailure { e ->
@@ -58,10 +58,11 @@ class UserViewModel(
         runCatching {
             userRepository.logout()
         }.onSuccess { response ->
+            userState.value.isAuthenticated.value = false
+
             userState.update {
                 it.copy(
                     isFetching = false,
-                    isAuthenticated = false,
                     currentUser = null,
                 )
             }

@@ -20,6 +20,6 @@ interface ApiRoutinService {
     @POST("routines")
     suspend fun addRoutine(@Body routine: NetworkRoutine) : Response<Unit>
 
-    @POST("review/{routineId}")
+    @POST("reviews/{routineId}")
     suspend fun addReview(@Path("routineId") routineId: Int,@Body review : NetworkReview):Response<NetworkGetReview>
 }

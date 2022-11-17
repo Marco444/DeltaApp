@@ -40,7 +40,7 @@ class RoutinesViewModel(
     }
 
     private fun loggedIn(): Boolean {
-      return userRepository.checkCurrentUser()
+      return userRepository.authenticate().value
     }
 
     private fun getUserRoutines() = viewModelScope.launch {

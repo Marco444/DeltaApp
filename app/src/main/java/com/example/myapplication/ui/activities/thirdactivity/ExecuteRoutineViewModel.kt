@@ -45,6 +45,7 @@ class ExecuteRoutineViewModel(
     init {
         viewModelScope.launch {
             executeRoutine.value.currentRoutine.update { routinesRepository.getRoutine(routineId) }
+            executeRoutine.value.currentRoutine.value.points.value = 0
         }
         viewModelScope.launch {
              cycles = routinesCycleRepository.getRoutinCycles(routineId)
@@ -52,10 +53,7 @@ class ExecuteRoutineViewModel(
             if(!_execRoutineState.value.exercises.isEmpty()) {
 
                 _execRoutineState.value.exercises[0].value =
-                    cyclesExercisesRepository.getCycleExercises(cycles[0].id).map {
-                        it.rest = cycles[0].id
-                        it
-                    }
+                    cyclesExercisesRepository.getCycleExercises(cycles[0].id)
                 _execRoutineState.value.exercises[1].value =
                     cyclesExercisesRepository.getCycleExercises(cycles[1].id)
                 _execRoutineState.value.exercises[2].value =
@@ -106,7 +104,7 @@ class ExecuteRoutineViewModel(
             delta
         ))?.div(2)
         viewModelScope.launch {
-
+            routinesRepository.addReview(executeRoutine.value.currentRoutine.value.id,Review(score = executeRoutine.value.currentRoutine.value.points.value,""))
         }
         viewModelScope.launch {
             val currentUser = userRepository.getCurrentUser(true)

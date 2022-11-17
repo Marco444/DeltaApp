@@ -3,6 +3,7 @@ package com.example.myapplication.data.repository
 import com.example.myapplication.ui.classes.Routines
 import com.example.myapplication.data.network.RoutinesRemoteDataSource
 import com.example.myapplication.ui.activities.secondactivity.PagedRoutines
+import com.example.myapplication.ui.activities.thirdactivity.Review
 import kotlinx.coroutines.sync.Mutex
 import kotlinx.coroutines.sync.withLock
 
@@ -31,8 +32,8 @@ class RoutinesRepository(
         return PagedRoutines(routinesMutex.withLock { this.routines },page,isLastPage)
     }
 
-    suspend fun getRoutine(sportId: Int) : Routines {
-        return remoteDataSource.getRoutine(sportId).asModel()
+    suspend fun getRoutine(routineId: Int) : Routines {
+        return remoteDataSource.getRoutine(routineId).asModel()
     }
 
     suspend fun addRoutine(routine: Routines) {
@@ -55,6 +56,9 @@ class RoutinesRepository(
             this.routines = emptyList()
         }
         remoteDataSource.deleteRoutine(routineId)
+    }
+    suspend fun addReview(routineId:Int,review : Review): Review {
+        return remoteDataSource.addReview(routineId,review.asNetworkModel()).asModel()
     }
 
 }

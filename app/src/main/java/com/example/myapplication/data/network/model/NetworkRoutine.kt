@@ -32,7 +32,7 @@ data class NetworkRoutine (
     var user : NetworkUserLite? = null,
 
     @SerializedName("category")
-    var category: NetworkCategory? = NetworkCategory(0,"",""),
+    var category: NetworkCategory? = NetworkCategory(1,"",""),
 
     @SerializedName("metadata")
     var metadata: NetworkRoutineMetadata? = null

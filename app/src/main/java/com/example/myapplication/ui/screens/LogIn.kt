@@ -51,7 +51,7 @@ fun LogIn(actionRedirect: () -> Unit, backButton: () -> Unit,viewModel: UserView
     val configuration = LocalConfiguration.current
     val focusManager = LocalFocusManager.current
     val uiState by viewModel.userState.collectAsState()
-
+    val auth by uiState.isAuthenticated.collectAsState()
     // For the snackbar
     val (snackbarVisibleState, setSnackBarState) = remember { mutableStateOf(false) }
 
@@ -129,8 +129,8 @@ fun LogIn(actionRedirect: () -> Unit, backButton: () -> Unit,viewModel: UserView
                 handler = {/*TODO AGREGAR EL MODIFICADOR DEL STORE*/ },
                 modifier = Modifier.align(CenterHorizontally)
             )
-            LaunchedEffect(key1 = uiState.isAuthenticated){
-                if(uiState.isAuthenticated) {
+            LaunchedEffect(key1 = auth){
+                if(auth) {
                     setSnackBarState(false)
                     actionRedirect()
                 }
