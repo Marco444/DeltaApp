@@ -111,16 +111,15 @@ fun ProgressDetailScreen(viewModel: RoutinesViewModel, viewRoutineHandler: () ->
                                 fontSize = 20.sp,
                                 color = Color.White
                             )*/
-                            var i = 0
-                            val map = routine.delta?.associate{(i++) to it}
-                            Chart(
-                                data = map?: emptyMap()
-                                , height = 250.dp,
-                                isExpanded = showChart,
-                                bottomEndRadius = 20.dp,
-                                bottomStartRadius = 20.dp
-                            ) {
-                                showChart = !showChart
+                            if(routine.delta?.isNotEmpty() == true) {
+                                var i = 0
+                                val map = routine.delta?.associate { (i++) to it }
+                                Chart(
+                                    data = map ?: emptyMap(), height = 250.dp,
+                                    isExpanded = showChart,
+                                    bottomEndRadius = 20.dp,
+                                    bottomStartRadius = 20.dp
+                                )
                             }
 
                         }

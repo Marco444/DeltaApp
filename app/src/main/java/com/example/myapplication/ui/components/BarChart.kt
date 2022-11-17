@@ -53,7 +53,6 @@ fun Chart(
     bottomEndRadius: Dp = 0.dp,
     isExpanded: Boolean = true,
     closeIcon: ImageVector = Icons.Default.KeyboardArrowUp,
-    onCloseListener: () -> Unit
 ) {
 
 
