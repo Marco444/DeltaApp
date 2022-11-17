@@ -21,24 +21,10 @@ sealed class Screen(val route: String) {
 
 sealed class NavBarScreen(val title: String,
                           val icon: ImageVector,
-                          val deepLink: List<NavDeepLink> = emptyList(),
-                          val arguments: List<NamedNavArgument> = emptyList(),
                           private val route_: String): Screen(route = route_) {
     object Routines: NavBarScreen("Routines", Icons.Default.FitnessCenter , route_ = "routines_screen")
     object Progress: NavBarScreen("Progress", Icons.Default.BarChart, route_ = "progress_screen")
     object Explore: NavBarScreen("Explore", Icons.Default.Search,
-        deepLink = listOf(
-            navDeepLink {
-                uriPattern = "http://deltapp.com/{id}"
-                action = Intent.ACTION_VIEW
-            }
-        ),
-        arguments = listOf(
-            navArgument("id") {
-                type = NavType.IntType
-                defaultValue = -1
-            }
-        ),
         route_ = "explore_screen")
     object QR: NavBarScreen("QR", Icons.Default.QrCode, route_ = "qr_screen")
 
