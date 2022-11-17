@@ -49,11 +49,11 @@ fun ApiErrorScreen(){
                 modifier = Modifier.padding(horizontal = 20.dp).align(Alignment.CenterHorizontally)
             )
             Spacer(modifier = Modifier.height(20.dp))
-            Button2(
-                fontSize = 20,
-                text = stringResource(R.string.error_btn),
-                modifier = Modifier.align(Alignment.CenterHorizontally)
-            )
+//            Button2(
+//                fontSize = 20,
+//                text = stringResource(R.string.error_btn),
+//                modifier = Modifier.align(Alignment.CenterHorizontally)
+//            )
             Spacer(modifier = Modifier.height(20.dp))
         }
 

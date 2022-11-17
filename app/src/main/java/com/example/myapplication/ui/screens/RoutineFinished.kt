@@ -33,10 +33,17 @@ fun RoutineFinished(
     viewRoutineHandler: () -> Unit,
     routineId: String,
     backButtonHandler: () -> Unit,
-    nextHandler : () -> Unit
+    nextHandler : () -> Unit,
+    errorRedirect: () -> Unit
 ) {
     val routine by viewModel.executeRoutine.value.currentRoutine.collectAsState()
 
+    val error by viewModel.error.collectAsState()
+
+    if(error) {
+        errorRedirect()
+        viewModel.errorHandled()
+    }
     Column(
         horizontalAlignment = Alignment.CenterHorizontally,
         modifier = Modifier

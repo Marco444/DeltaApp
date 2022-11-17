@@ -3,6 +3,7 @@ package com.example.myapplication.ui.activities.secondactivity
 import androidx.compose.material3.windowsizeclass.WindowWidthSizeClass
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
+import com.example.myapplication.data.model.User
 import com.example.myapplication.ui.classes.Routines
 import com.example.myapplication.data.repository.RoutinesRepository
 import com.example.myapplication.data.repository.UserRepository
@@ -23,14 +24,22 @@ class RoutinesViewModel(
 
     private val _sortState = MutableStateFlow(SortOption.POINTS)
     private val _routinesState = MutableStateFlow(RoutinesState())
-    private var pageExplore = 0
-    private var pageUser = 0
     private val _hasNextPageExplore = MutableStateFlow(false)
     private val _hasNextPageUser = MutableStateFlow(false)
+
+
+    val error = MutableStateFlow(false)
+    fun errorHandled() {
+        error.update { false }
+    }
+
+    private var pageExplore = 0
+    private var pageUser = 0
     val hasNextPageUser: StateFlow<Boolean>
         get() = _hasNextPageUser.asStateFlow()
     val hasNextPageExplore: StateFlow<Boolean>
         get() = _hasNextPageExplore.asStateFlow()
+
     init {
         if(loggedIn())
             getUserRoutines()
@@ -44,13 +53,28 @@ class RoutinesViewModel(
     }
 
     private fun getUserRoutines() = viewModelScope.launch {
-            val aux = userRepository.getCurrentUser(false)
-            aux?.id?.let {
-                val response = userRepository.getUserRoutine(true, it, pageUser)
-                _routinesState.value.userRoutines += response.content.map {routine -> MutableStateFlow(routine) }
-                pageUser = response.page
-                _hasNextPageUser.update { !response.isLastPage }
+       var aux: User? = User(-1)
+
+        runCatching {
+            aux = userRepository.getCurrentUser(false)!!
+        }.onSuccess {
+            var response: PagedRoutines? = null
+            runCatching {
+                response = userRepository.getUserRoutine(true, aux!!.id, pageUser)
+            }.onSuccess {
+                _routinesState.value.userRoutines += response!!.content.map { routine ->
+                    MutableStateFlow(
+                        routine
+                    )
+                }
+                pageUser = response!!.page
+                _hasNextPageUser.update { !response!!.isLastPage }
+            }.onFailure {
+                error.update { true }
             }
+        }.onFailure {
+            error.update { true }
+        }
     }
     fun getExploreWithParams(text:String?)= viewModelScope.launch {
         var page = 0
@@ -67,11 +91,20 @@ class RoutinesViewModel(
         }
 
     }
-     private fun getExploreRoutines() = viewModelScope.launch {
-        val response =  routinesRepository.getRoutines(true,pageExplore,null)
-        _routinesState.value.exploreRoutines += response.content.map { MutableStateFlow(it) }
-        pageExplore = response.page
-        _hasNextPageExplore.update { !response.isLastPage }
+
+    private fun getExploreRoutines() = viewModelScope.launch {
+        var response = PagedRoutines(emptyList(), 0, true)
+
+        runCatching {
+            response = routinesRepository.getRoutines(true,pageExplore,null)
+        }.onSuccess {
+            _routinesState.value.exploreRoutines += response.content.map { MutableStateFlow(it) }
+            pageExplore = response.page
+            _hasNextPageExplore.update { !response.isLastPage }
+        }.onFailure {
+            error.update { true }
+        }
+
     }
 
 
@@ -128,13 +161,25 @@ class RoutinesViewModel(
 
      fun deleteRoutine(routineId: Int) = viewModelScope.launch {
         _routinesState.value.userRoutines = emptyList()
-        routinesRepository.deleteRoutine(routineId)
-        getUserRoutines()
+
+         runCatching {
+             routinesRepository.deleteRoutine(routineId)
+         }.onSuccess {
+             getUserRoutines()
+         }.onFailure {
+             error.update { true }
+         }
+
     }
 
     private fun updateRoutine(routine: Routines) =  viewModelScope.launch {
-        routinesRepository.modifyRoutine(routine)
-        getUserRoutines()
+        runCatching {
+            routinesRepository.modifyRoutine(routine)
+        }.onSuccess {
+            getUserRoutines()
+        }.onFailure {
+            error.update { true }
+        }
     }
 
     fun isSelected(id: Int, routineCard: RoutineCard): Boolean {

@@ -115,8 +115,15 @@ fun SearchAndFilter(viewModel: RoutinesViewModel) {
 }
 
 @Composable
-fun ExploreScreen(viewModel: RoutinesViewModel, scaffoldState: ScaffoldState, actionRedirect: (Int) -> Unit, refferedRoutineId: Int = -1) {
+fun ExploreScreen(viewModel: RoutinesViewModel, scaffoldState: ScaffoldState, actionRedirect: (Int) -> Unit, refferedRoutineId: Int = -1, errorRedirect: () -> Unit) {
     val coroutineScope = rememberCoroutineScope()
+
+    val error by viewModel.error.collectAsState()
+    if(error) {
+        errorRedirect()
+        viewModel.errorHandled()
+    }
+
     Column(
         modifier = Modifier
             .fillMaxWidth()
@@ -159,7 +166,8 @@ fun ExploreScreen(viewModel: RoutinesViewModel, scaffoldState: ScaffoldState, ac
                     viewModel = viewModel,
                     actionRedirect = actionRedirect,
                     routineCard = RoutineCard.ExploreRoutine,
-                    buttonText = stringResource(id = R.string.Preview)
+                    buttonText = stringResource(id = R.string.Preview),
+                    errorRedirect = errorRedirect
                 )
             }
 

@@ -1,6 +1,8 @@
 package com.example.myapplication.ui.activities.mainactivity
 
+import android.content.Context
 import androidx.compose.runtime.Composable
+import androidx.compose.ui.layout.ContentScale
 import com.example.myapplication.ui.screens.LogIn
 import com.example.myapplication.ui.screens.LandingScreen
 import androidx.lifecycle.viewmodel.compose.viewModel
@@ -15,7 +17,7 @@ import com.example.myapplication.util.getViewModelFactory
 @Composable
 fun DeltaAppInit(
     viewModel: UserViewModel = viewModel(factory = getViewModelFactory()),
-    navController: NavHostController = rememberNavController(),
+    navController: NavHostController,
     initialisedHandler: () -> Unit,
 ) {
     NavHost(navController = navController, startDestination = Screen.Home.route) {
@@ -23,8 +25,7 @@ fun DeltaAppInit(
             LandingScreen(
                 loginHandler = { navController.navigate(Screen.Login.route) },
                 tryOutHandler = initialisedHandler,
-                userViewModel = viewModel
-
+                userViewModel = viewModel,
             )
         }
         composable(Screen.Login.route,) {

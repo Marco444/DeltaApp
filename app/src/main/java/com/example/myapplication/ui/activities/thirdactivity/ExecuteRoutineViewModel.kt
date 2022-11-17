@@ -27,6 +27,10 @@ class ExecuteRoutineViewModel(
      private val userRepository: UserRepository
 ) : ViewModel() {
 
+    val error = MutableStateFlow(false)
+    fun errorHandled() {
+        error.update { false }
+    }
     private val _execRoutineState = MutableStateFlow(ExecuteRoutine())
     val executeRoutine: StateFlow<ExecuteRoutine>
         get() = _execRoutineState.asStateFlow()
@@ -50,22 +54,23 @@ class ExecuteRoutineViewModel(
             executeRoutine.value.currentRoutine.value.points.value = 0
         }
         viewModelScope.launch {
-             cycles = routinesCycleRepository.getRoutinCycles(routineId)
 
-            if(!_execRoutineState.value.exercises.isEmpty()) {
+                runCatching {
+                    cycles = routinesCycleRepository.getRoutinCycles(routineId)
+                    _execRoutineState.value.exercises[0].value =
+                        cyclesExercisesRepository.getCycleExercises(cycles[0].id)
+                    _execRoutineState.value.exercises[1].value =
+                        cyclesExercisesRepository.getCycleExercises(cycles[1].id)
+                    _execRoutineState.value.exercises[2].value =
+                        cyclesExercisesRepository.getCycleExercises(cycles[2].id)
+                }.onFailure {
+                   error.update{ true }
+                }
 
-                _execRoutineState.value.exercises[0].value =
-                    cyclesExercisesRepository.getCycleExercises(cycles[0].id)
-                _execRoutineState.value.exercises[1].value =
-                    cyclesExercisesRepository.getCycleExercises(cycles[1].id)
-                _execRoutineState.value.exercises[2].value =
-                    cyclesExercisesRepository.getCycleExercises(cycles[2].id)
 
                 initAllExercises()
                 exerciseCount = _execRoutineState.value.allExercises.size
                 iterator = _execRoutineState.value.allExercises.listIterator()
-            }
-
         }
     }
     private fun initAllExercises(){

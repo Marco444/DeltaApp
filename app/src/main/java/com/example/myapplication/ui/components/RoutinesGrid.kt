@@ -16,7 +16,11 @@ import com.example.myapplication.R
 import com.example.myapplication.ui.activities.secondactivity.RoutinesViewModel
 
 @Composable
-fun RoutinesGrid(viewModel: RoutinesViewModel, actionRedirect: (Int) -> Unit, routineCard: RoutineCard, buttonText: String) {
+fun RoutinesGrid(viewModel: RoutinesViewModel,
+                 actionRedirect: (Int) -> Unit,
+                 routineCard: RoutineCard,
+                 buttonText: String,
+                 errorRedirect: () -> Unit) {
 
 
     val hasNextPageUser by viewModel.hasNextPageUser.collectAsState()

@@ -34,6 +34,8 @@ class UserRepository(
         remoteDataSource.login(username, password)
     }
 
+    var isAuthenticated = MutableStateFlow(false)
+
     suspend fun logout() {
         remoteDataSource.logout()
     }

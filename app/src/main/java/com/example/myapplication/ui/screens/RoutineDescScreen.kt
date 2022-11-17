@@ -29,8 +29,17 @@ fun RoutineDescriptionScreen(viewModel: ExecuteRoutineViewModel,
                              routineId: String,
                              backHandler : () -> Unit,
                              starRoutineHanlder : () -> Unit,
-                             starRoutineLiteHandler: () -> Unit){
+                             starRoutineLiteHandler: () -> Unit,
+                             errorRedirect: () -> Unit
+                             ){
 
+
+    val error by viewModel.error.collectAsState()
+
+    if(error) {
+        errorRedirect()
+        viewModel.errorHandled()
+    }
 
     val routine by viewModel.executeRoutine.value.currentRoutine.collectAsState()
 
