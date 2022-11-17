@@ -29,6 +29,26 @@ class RoutinesRemoteDataSource(private val apiRoutineService: ApiRoutinService):
          }
     }
 
+    suspend fun removeFavourite(id: Int) {
+        return handleApiResponse {
+            apiRoutineService.removeFavourite(id)
+        }
+    }
+
+    suspend fun addFavourite(id: Int) {
+        return handleApiResponse {
+            apiRoutineService.addFavourite(id)
+        }
+    }
+
+
+    suspend fun getFavourites(page: Int) : NetworkPagedContent<NetworkRoutine>{
+        return handleApiResponse {
+            apiRoutineService.getFavourite(page)
+        }
+    }
+
+
     suspend fun addRoutine(routine: NetworkRoutine) {
         return handleApiResponse {
             apiRoutineService.addRoutine(routine)

@@ -52,6 +52,32 @@ class RoutinesViewModel(
       return userRepository.authenticate().value
     }
 
+
+    fun showFavorites() = viewModelScope.launch {
+        _routinesState.value.exploreRoutines = emptyList()
+
+        var content = routinesRepository.getFavourites(0)
+        var favourites = content.content
+        while(!content.isLastPage) {
+            content = routinesRepository.getFavourites(content.page + 1)
+            favourites += content.content
+        }
+
+        _routinesState.value.exploreRoutines = favourites.map{ MutableStateFlow(it.copy(favourite = true))}
+    }
+
+    private fun addFavourite(id: Int) = viewModelScope.launch{
+        runCatching {
+            routinesRepository.addFavourite(id)
+        }
+    }
+
+    private fun removeFavourite(id: Int) = viewModelScope.launch{
+        runCatching {
+            routinesRepository.removeFavourite(id)
+        }
+    }
+
     private fun getUserRoutines() = viewModelScope.launch {
        var aux: User? = User(-1)
 
@@ -71,9 +97,13 @@ class RoutinesViewModel(
                 _hasNextPageUser.update { !response!!.isLastPage }
             }.onFailure {
                 error.update { true }
+                throw it
+
             }
         }.onFailure {
             error.update { true }
+            throw it
+
         }
     }
     fun getExploreWithParamsWrapper(text: String?){
@@ -167,10 +197,20 @@ class RoutinesViewModel(
         return _routinesState.value.exploreRoutines.find { routine ->routine.value.id == id }!!.value
     }
 
-    fun clickedIcon(id: Int) {
-            val routine = _routinesState.value.userRoutines.find { routine ->routine.value.id == id }!!
+    fun clickedIcon(id: Int, routineCard: RoutineCard) {
+        if(routineCard != RoutineCard.ExploreRoutine) {
+            val routine = _routinesState.value.userRoutines.find { routine -> routine.value.id == id }!!
             routine.update { it.copy(favourite = !it.favourite) }
             updateRoutine(routine.value)
+        } else {
+            val routine = _routinesState.value.exploreRoutines.find { routine -> routine.value.id == id }!!
+            routine.update { it.copy(favourite = !it.favourite) }
+            if(routine.value.favourite) {
+                addFavourite(routine.value.id)
+            } else {
+                removeFavourite(routine.value.id)
+            }
+        }
     }
 
 
@@ -199,7 +239,7 @@ class RoutinesViewModel(
 
     fun isSelected(id: Int, routineCard: RoutineCard): Boolean {
         return if(RoutineCard.ExploreRoutine == routineCard)
-           routineExplore(id).added
+           routineExplore(id).favourite
         else
             _routinesState.value.userRoutines.isNotEmpty() && routineUser(id).favourite
     }

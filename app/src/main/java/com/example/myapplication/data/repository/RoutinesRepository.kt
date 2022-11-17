@@ -13,8 +13,11 @@ class RoutinesRepository(
 
     // Mutex to make writes to cached values thread-safe.
     private val routinesMutex = Mutex()
+
     // Cache of the latest sports got from the network.
     private var routines: List<Routines> = emptyList()
+
+
     private var page = 0
     private var isLastPage = false
 
@@ -34,6 +37,21 @@ class RoutinesRepository(
 
     suspend fun getRoutine(routineId: Int) : Routines {
         return remoteDataSource.getRoutine(routineId).asModel()
+    }
+
+    suspend fun getFavourites(page:Int): PagedRoutines {
+        val result = remoteDataSource.getFavourites(page)
+        val content = result.content.map { it.asModel() }
+        return PagedRoutines( content, result.page, result.isLastPage)
+    }
+
+
+    suspend fun addFavourite(id: Int) {
+        return remoteDataSource.addFavourite(id)
+    }
+
+    suspend fun removeFavourite(id: Int) {
+        return remoteDataSource.removeFavourite(id)
     }
 
     suspend fun addRoutine(routine: Routines) {
