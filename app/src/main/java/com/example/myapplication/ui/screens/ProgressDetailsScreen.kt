@@ -53,58 +53,60 @@ fun ProgressDetailScreen(viewModel: RoutinesViewModel, viewRoutineHandler: () ->
 
         Box() {
            BackgroundRoutineImage(routine = routine)
-            Row(verticalAlignment = Alignment.CenterVertically) {
+            Column(verticalArrangement = Arrangement.SpaceEvenly) {
+
                 Column(modifier = Modifier.fillMaxWidth()) {
+
                     BackButton(handler = backButtonHandler)
-                }
-            }
-            Row(verticalAlignment = Alignment.CenterVertically) {
 
-                Column(
-                    horizontalAlignment = Alignment.CenterHorizontally,
-                    modifier = Modifier
-                        .fillMaxSize()
-                        .padding(top = 20.dp),
-                ) {
-
-                    Text(text = routine.title, style = MaterialTheme.typography.h1)
+                    Spacer(modifier = Modifier.height(30.dp))
 
                     Column(
                         horizontalAlignment = Alignment.CenterHorizontally,
                         modifier = Modifier
-                            .padding(top = 50.dp) //este padding sirve como margin
-                            .clip(RoundedCornerShape(30.dp))
-                            .fillMaxWidth(0.7f)
-                            .background(MaterialTheme.colors.background)
-                            .padding(20.dp) //este como padding per se, ya con el background
+                            .fillMaxSize()
+                            .padding(top = 20.dp),
                     ) {
 
+                        Text(text = routine.title, style = MaterialTheme.typography.h1)
 
-                        Text(
-                            text = routineProgress.progressTile(),
-                            style = MaterialTheme.typography.h3,
-                            color = routineProgress.color()
-                        )
+                        Column(
+                            horizontalAlignment = Alignment.CenterHorizontally,
+                            modifier = Modifier
+                                .padding(top = 50.dp) //este padding sirve como margin
+                                .clip(RoundedCornerShape(30.dp))
+                                .fillMaxWidth(0.7f)
+                                .background(MaterialTheme.colors.background)
+                                .padding(20.dp) //este como padding per se, ya con el background
+                        ) {
 
-                        SliderDelta(
-                            routineProgress.agreggatePerformance,
-                            false,
-                            {},
-                            routineProgress.color()
-                        )
+
+                            Text(
+                                text = routineProgress.progressTile(),
+                                style = MaterialTheme.typography.h3,
+                                color = routineProgress.color()
+                            )
+
+                            SliderDelta(
+                                routineProgress.agreggatePerformance,
+                                false,
+                                {},
+                                routineProgress.color()
+                            )
+
+                            Spacer(modifier = Modifier.height(20.dp))
+                            Text(
+                                text = routineProgress.progressDescription(),
+                                fontSize = 20.sp,
+                                color = Color.White
+                            )
+                        }
+
+
 
                         Spacer(modifier = Modifier.height(20.dp))
-                        Text(
-                            text = routineProgress.progressDescription(),
-                            fontSize = 20.sp,
-                            color = Color.White
-                        )
                     }
-
                 }
-
-                Spacer(modifier = Modifier.height(20.dp))
-
             }
         }
     }
