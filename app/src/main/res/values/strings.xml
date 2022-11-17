@@ -28,7 +28,7 @@
     <string name="fav">Favourite</string>
     <string name="load_more">Load More</string>
     <string name="error_header">There has been an error</string>
-    <string name="error_msg">We are sorry, there has been a problem while accessing the network. Please try again later.</string>
+    <string name="error_msg">We are sorry, there has been a problem. Please try again later or turning on wifi.</string>
     <string name="error_btn">Take Me Home</string>
     <string name="rest">Rest</string>
 
