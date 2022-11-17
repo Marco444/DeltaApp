@@ -28,14 +28,15 @@ class MainActivity : ComponentActivity() {
 
                 DeltaAppInit(initialisedHandler = {
                     if(it == -1) {
-                        finish();
+                        finish()
                         startActivity(navigateRoutines)
                     }
                     else {
+                        finish()
                         val args = Bundle()
                         args.putString("routineId", it.toString())
-                        navigateExecute.putExtras(args)
-                        startActivity(navigateExecute)
+                        navigateRoutines.putExtras(args)
+                        startActivity(navigateRoutines)
                     } },
                     navController = navController)
             }

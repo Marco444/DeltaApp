@@ -21,6 +21,7 @@ class SecondActivity : ComponentActivity() {
 
                 val systemUiController = rememberSystemUiController()
                 systemUiController.setSystemBarsColor(color = androidx.compose.ui.graphics.Color.Black )
+                val saved: String = intent.extras?.getString("routineId")?: "-1"
 
                 val navigate = Intent(this@SecondActivity, ThirdActivity::class.java)
                 val logoutIntent = Intent(this@SecondActivity, MainActivity::class.java)
@@ -28,13 +29,15 @@ class SecondActivity : ComponentActivity() {
                 DeltaApp(
                     windowSize = calculateWindowSizeClass(this).widthSizeClass,
                     executeRedirect = {
-                        finish()
                         val args = Bundle()
                         args.putString("routineId", it.toString())
                         navigate.putExtras(args)
                         startActivity(navigate)
                     },
-                    logoutRedirect = { finish(); startActivity(logoutIntent)})
+                    logoutRedirect = { finish(); startActivity(logoutIntent)},
+                    routineId = saved.toInt()
+
+                )
             }
         }
     }
