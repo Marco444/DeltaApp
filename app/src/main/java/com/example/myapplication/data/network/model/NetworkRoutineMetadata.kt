@@ -10,5 +10,5 @@ data class NetworkRoutineMetadata (
     var img : String? = "",
 
     @SerializedName("delta")
-    var delta : Float? = 0f
+    var delta : List<Float>? = emptyList()
 )

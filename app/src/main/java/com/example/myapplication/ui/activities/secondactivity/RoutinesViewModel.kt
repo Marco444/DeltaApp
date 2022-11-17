@@ -97,9 +97,13 @@ class RoutinesViewModel(
                 _hasNextPageUser.update { !response!!.isLastPage }
             }.onFailure {
                 error.update { true }
+                throw it
+
             }
         }.onFailure {
             error.update { true }
+            throw it
+
         }
     }
     fun getExploreWithParamsWrapper(text: String?){

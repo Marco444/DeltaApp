@@ -108,9 +108,12 @@ class ExecuteRoutineViewModel(
     }
     fun finishRoutine(){
         val delta = getCurrentDelta()
-        executeRoutine.value.currentRoutine.value.delta = (executeRoutine.value.currentRoutine.value.delta?.plus(
+        val lastDelta = executeRoutine.value.currentRoutine.value.delta?.average()
+        executeRoutine.value.currentRoutine.value.delta = executeRoutine.value.currentRoutine.value.delta?.plus(
             delta
-        ))?.div(2)
+        )
+
+
         viewModelScope.launch {
             routinesRepository.addReview(executeRoutine.value.currentRoutine.value.id,Review(score = executeRoutine.value.currentRoutine.value.points.value,""))
         }
