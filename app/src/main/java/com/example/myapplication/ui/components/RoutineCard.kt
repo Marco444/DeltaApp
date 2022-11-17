@@ -64,11 +64,11 @@ fun RoutineCardDetails( routine: Routines, buttonText: String, buttonHandler: ()
 }
 
 
-private fun shareRoutine(context: Context, title: String) {
+private fun shareRoutine(context: Context, routine: Routines) {
     val intent = Intent(Intent.ACTION_SEND).apply {
         type = "text/plain"
-        putExtra(Intent.EXTRA_SUBJECT, "Routine")
-        putExtra(Intent.EXTRA_TEXT, context.getString(R.string.share_msg) + "http://deltapp.com")
+        putExtra(Intent.EXTRA_SUBJECT, "Routine: " + routine.title)
+        putExtra(Intent.EXTRA_TEXT, context.getString(R.string.share_msg) + "http://deltapp.com/" + routine.id)
     }
     context.startActivity(
         Intent.createChooser(
@@ -101,7 +101,7 @@ fun CardOptions(viewModel: RoutinesViewModel, routine: Routines) {
         .clip(RoundedCornerShape(8.dp))) {
 
         if(routine.isPublic) {
-            DropdownMenuItem(onClick = { expanded = false; shareRoutine(context, routine.title) }) {
+            DropdownMenuItem(onClick = { expanded = false; shareRoutine(context, routine) }) {
                 Text(text = "Share")
             }
         }
@@ -148,7 +148,7 @@ fun RoutineCardTitle(routineCard: RoutineCard, routine: Routines, iconId: ImageV
                 Icons.Default.Share,
                 contentDescription = null,
                 modifier = Modifier
-                    .clickable(onClick = { shareRoutine(context, routine.title) })
+                    .clickable(onClick = { shareRoutine(context, routine) })
                     .padding(end = 5.dp),
                 tint = Color.White,
             )

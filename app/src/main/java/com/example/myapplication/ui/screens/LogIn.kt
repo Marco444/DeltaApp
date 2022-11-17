@@ -43,7 +43,7 @@ import com.example.myapplication.ui.theme.Green
 
 
 @Composable
-fun LogIn(actionRedirect: () -> Unit, backButton: () -> Unit,viewModel: UserViewModel){
+fun LogIn(actionRedirect: (Int) -> Unit, backButton: () -> Unit, viewModel: UserViewModel, routineId: Int){
 
     var passWord by remember { mutableStateOf(TextFieldValue("")) }
     var email by remember { mutableStateOf(TextFieldValue("")) }
@@ -129,7 +129,7 @@ fun LogIn(actionRedirect: () -> Unit, backButton: () -> Unit,viewModel: UserView
             LaunchedEffect(key1 = auth){
                 if(auth) {
                     setSnackBarState(false)
-                    actionRedirect()
+                    actionRedirect(routineId)
                 }
             }
             LaunchedEffect(key1 = uiState.errorBoolean){

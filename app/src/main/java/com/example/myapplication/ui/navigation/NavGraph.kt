@@ -36,8 +36,7 @@ fun NavGraph(navController: NavHostController, viewModel: RoutinesViewModel, exe
                 errorRedirect = {navController.navigate(Screen.Error.route)}
             )
         }
-        composable(NavBarScreen.Explore.route, deepLinks = NavBarScreen.Explore.deepLink, arguments = NavBarScreen.Explore.arguments) { entry ->
-            val id = entry.arguments?.getInt("id") ?: -1
+        composable(NavBarScreen.Explore.route) { entry ->
             ExploreScreen(viewModel = viewModel,
                 scaffoldState,
                 actionRedirect = executeRedirect,
