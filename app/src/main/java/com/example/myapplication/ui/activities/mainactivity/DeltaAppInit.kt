@@ -8,6 +8,7 @@ import androidx.navigation.NavHostController
 import androidx.navigation.compose.NavHost
 import androidx.navigation.compose.composable
 import androidx.navigation.compose.rememberNavController
+import androidx.navigation.navDeepLink
 import com.example.myapplication.ui.navigation.Screen
 import com.example.myapplication.util.getViewModelFactory
 
@@ -24,13 +25,7 @@ fun DeltaAppInit(
                 tryOutHandler = initialisedHandler
             )
         }
-        composable(Screen.Login.route,
-//            deepLinks = listOf(
-//                navDeepLink {
-//                    uriPattern = "http://test.com"
-//                }
-//            )
-        ) {
+        composable(Screen.Login.route,) {
             LogIn(actionRedirect = initialisedHandler,
                 backButton = {navController.popBackStack()},
                 viewModel = viewModel )

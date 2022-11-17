@@ -25,7 +25,7 @@ class ThirdActivity : ComponentActivity() {
                 if(saved != null) {
                    DeltaAppExecute(
                        routineId = saved,
-                       redirectHandler = { startActivity(navigate); finish()},
+                       redirectHandler = { finish(); startActivity(navigate) },
                        viewModel = viewModel(factory = getExecRoutineViewModelFactory(routineId = saved.toInt()))
                    )
                 }

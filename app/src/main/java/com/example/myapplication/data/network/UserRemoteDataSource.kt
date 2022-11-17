@@ -6,6 +6,7 @@ import com.example.myapplication.data.network.model.NetworkPagedContent
 import com.example.myapplication.data.network.model.NetworkRoutine
 import com.example.myapplication.util.SessionManager
 import com.example.myapplication.data.network.model.NetworkUser
+import retrofit2.Response
 
 class UserRemoteDataSource(
     private val apiUserService: ApiUserService,
@@ -22,6 +23,10 @@ class UserRemoteDataSource(
     suspend fun logout() {
         handleApiResponse { apiUserService.logout() }
         sessionManager.removeAuthToken()
+    }
+
+    suspend fun checkCurrentUser() : Response<NetworkUser> {
+       return apiUserService.getCurrentUser()
     }
 
     suspend fun getCurrentUser() : NetworkUser {
