@@ -1,15 +1,18 @@
 package com.example.myapplication.ui.activities.mainactivity
 
 import android.content.Context
+import android.content.Intent
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.layout.ContentScale
 import com.example.myapplication.ui.screens.LogIn
 import com.example.myapplication.ui.screens.LandingScreen
 import androidx.lifecycle.viewmodel.compose.viewModel
 import androidx.navigation.NavHostController
+import androidx.navigation.NavType
 import androidx.navigation.compose.NavHost
 import androidx.navigation.compose.composable
 import androidx.navigation.compose.rememberNavController
+import androidx.navigation.navArgument
 import androidx.navigation.navDeepLink
 import com.example.myapplication.ui.navigation.Screen
 import com.example.myapplication.util.getViewModelFactory
@@ -18,7 +21,7 @@ import com.example.myapplication.util.getViewModelFactory
 fun DeltaAppInit(
     viewModel: UserViewModel = viewModel(factory = getViewModelFactory()),
     navController: NavHostController,
-    initialisedHandler: () -> Unit,
+    initialisedHandler: (Int) -> Unit,
 ) {
     NavHost(navController = navController, startDestination = Screen.Home.route) {
         composable(Screen.Home.route) {
@@ -28,10 +31,26 @@ fun DeltaAppInit(
                 userViewModel = viewModel,
             )
         }
-        composable(Screen.Login.route,) {
-            LogIn(actionRedirect = initialisedHandler,
+        composable(Screen.Login.route,
+            deepLinks = listOf(
+                navDeepLink {
+                    uriPattern = "http://deltapp.com/{id}"
+                    action = Intent.ACTION_VIEW
+                }
+            ),
+            arguments = listOf(
+                navArgument("id") {
+                    type = NavType.IntType
+                    defaultValue = -1
+                }
+            )) { entry ->
+            val id = entry.arguments?.getInt("id") ?: -1
+            LogIn(
+                actionRedirect = initialisedHandler,
                 backButton = {navController.popBackStack()},
-                viewModel = viewModel )
+                viewModel = viewModel,
+                routineId = id
+            )
         }
     }
 }

@@ -35,7 +35,7 @@ fun BackgroundImage(painter: Painter) {
 
 
 @Composable
-fun LandingScreen(loginHandler: () -> Unit, tryOutHandler: () -> Unit, userViewModel: UserViewModel) {
+fun LandingScreen(loginHandler: () -> Unit, tryOutHandler: (Int) -> Unit, userViewModel: UserViewModel) {
 
     val gradient = Brush.verticalGradient(colors = listOf(Color.Transparent, Color.Black))
     val uiState by userViewModel.userState.collectAsState()
@@ -57,7 +57,7 @@ fun LandingScreen(loginHandler: () -> Unit, tryOutHandler: () -> Unit, userViewM
                 contentDescription = "delta symbol of greek alphabet",
                 modifier = Modifier.fillMaxWidth(0.3F)
             )
-            Button1(fontSize = 42, text = stringResource(R.string.try_out), handler = tryOutHandler)
+            Button1(fontSize = 42, text = stringResource(R.string.try_out), handler = { tryOutHandler(-1) })
 
             Row {
                 Button1(fontSize = 24, text = stringResource(R.string.login), handler = loginHandler)
@@ -66,7 +66,7 @@ fun LandingScreen(loginHandler: () -> Unit, tryOutHandler: () -> Unit, userViewM
     }
     LaunchedEffect(key1 = auth){
         if(auth) {
-            tryOutHandler()
+            tryOutHandler(-1)
         }
     }
 }
