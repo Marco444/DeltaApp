@@ -59,23 +59,23 @@ fun ProgressDetailScreen(viewModel: RoutinesViewModel, viewRoutineHandler: () ->
 
                     BackButton(handler = backButtonHandler)
 
-                    Spacer(modifier = Modifier.height(30.dp))
 
                     Column(
                         horizontalAlignment = Alignment.CenterHorizontally,
+                        verticalArrangement = Arrangement.SpaceEvenly,
                         modifier = Modifier
                             .fillMaxSize()
-                            .padding(top = 20.dp),
+                            .padding(top = 10.dp),
                     ) {
 
-                        Text(text = routine.title, style = MaterialTheme.typography.h1)
+                        Text(text = routine.title, style = MaterialTheme.typography.h1, fontSize = 50.sp)
 
                         Column(
                             horizontalAlignment = Alignment.CenterHorizontally,
                             modifier = Modifier
                                 .padding(top = 50.dp) //este padding sirve como margin
                                 .clip(RoundedCornerShape(30.dp))
-                                .fillMaxWidth(0.7f)
+                                .fillMaxWidth(0.8f)
                                 .background(MaterialTheme.colors.background)
                                 .padding(20.dp) //este como padding per se, ya con el background
                         ) {
@@ -83,10 +83,11 @@ fun ProgressDetailScreen(viewModel: RoutinesViewModel, viewRoutineHandler: () ->
 
                             Text(
                                 text = routineProgress.progressTile(),
-                                style = MaterialTheme.typography.h3,
-                                color = routineProgress.color()
+                                style = MaterialTheme.typography.h1,
+                                color = routineProgress.color(),
+                                fontSize = 40.sp
                             )
-
+                            Spacer(modifier = Modifier.height(20.dp))
                             SliderDelta(
                                 routineProgress.agreggatePerformance,
                                 false,
@@ -94,9 +95,10 @@ fun ProgressDetailScreen(viewModel: RoutinesViewModel, viewRoutineHandler: () ->
                                 routineProgress.color()
                             )
 
-                            Spacer(modifier = Modifier.height(20.dp))
+                            Spacer(modifier = Modifier.height(30.dp))
                             Text(
                                 text = routineProgress.progressDescription(),
+                                style = MaterialTheme.typography.h3,
                                 fontSize = 20.sp,
                                 color = Color.White
                             )
