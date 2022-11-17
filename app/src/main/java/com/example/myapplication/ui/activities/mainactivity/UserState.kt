@@ -4,7 +4,7 @@ import com.example.myapplication.data.model.User
 
 
 data class UserState(
-    val isAuthenticated: Boolean = false,
+    //val isAuthenticated: Boolean = false,
     val isFetching: Boolean = false,
     val currentUser: User? = null,
     val message: String? = null,

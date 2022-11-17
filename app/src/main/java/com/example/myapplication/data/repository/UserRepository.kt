@@ -4,6 +4,7 @@ import com.example.myapplication.ui.classes.Routines
 import com.example.myapplication.data.model.User
 import com.example.myapplication.data.network.UserRemoteDataSource
 import com.example.myapplication.data.network.model.NetworkUser
+import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.runBlocking
 import kotlinx.coroutines.sync.Mutex
 import kotlinx.coroutines.sync.withLock
@@ -25,6 +26,8 @@ class UserRepository(
     suspend fun login(username: String, password: String) {
         remoteDataSource.login(username, password)
     }
+
+    var isAuthenticated = MutableStateFlow(false)
 
     suspend fun logout() {
         remoteDataSource.logout()
