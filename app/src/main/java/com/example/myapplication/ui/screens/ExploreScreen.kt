@@ -91,14 +91,14 @@ fun FilterButton(viewModel: RoutinesViewModel) {
                 Color.White
             )
             .clip(RoundedCornerShape(8.dp))) {
-            for(sortOption in SortOption.values()) {
-                DropdownMenuItem(onClick = { viewModel.sortRoutines(sortOption, NavBarScreen.Explore) ; expanded = false }) {
-                    when (sortOption) {
-                        SortOption.FAVOURITE -> Text(text = stringResource(id = R.string.favourite))
-                        SortOption.DATE -> Text(text = stringResource(id = R.string.date))
-                        else -> Text(text = stringResource(id = R.string.points))
-                    }
-                }
+            DropdownMenuItem(onClick = { viewModel.sortRoutines(SortOption.POINTS, NavBarScreen.Explore) ; expanded = false }) {
+                Text(text = stringResource(id = R.string.points))
+            }
+            DropdownMenuItem(onClick = { viewModel.sortRoutines(SortOption.DATE, NavBarScreen.Explore) ; expanded = false }) {
+                Text(text = stringResource(id = R.string.date))
+            }
+            DropdownMenuItem(onClick = { viewModel.showFavorites() ; expanded = false }) {
+                Text(text = stringResource(id = R.string.favourite))
             }
         }
     }
@@ -115,7 +115,13 @@ fun SearchAndFilter(viewModel: RoutinesViewModel) {
 }
 
 @Composable
-fun ExploreScreen(viewModel: RoutinesViewModel, scaffoldState: ScaffoldState, actionRedirect: (Int) -> Unit, refferedRoutineId: Int = -1, errorRedirect: () -> Unit) {
+fun ExploreScreen(viewModel: RoutinesViewModel,
+                  scaffoldState: ScaffoldState,
+                  actionRedirect: (Int) -> Unit,
+                  refferedRoutineId: Int = -1,
+                  errorRedirect: () -> Unit,
+                  settingsRedirect: () -> Unit
+) {
     val coroutineScope = rememberCoroutineScope()
 
     val error by viewModel.error.collectAsState()
@@ -133,7 +139,7 @@ fun ExploreScreen(viewModel: RoutinesViewModel, scaffoldState: ScaffoldState, ac
     ) {
 
         Column(modifier = Modifier.align(Alignment.Start)) {
-            TopBar(scaffoldState)
+            TopBar(scaffoldState, settingsRedirect)
         }
         Row {
             Column(

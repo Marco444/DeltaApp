@@ -131,7 +131,6 @@ fun RoutineCardTitle(routineCard: RoutineCard, routine: Routines, iconId: ImageV
         )
 
         Spacer(modifier = Modifier.width(10.dp))
-        if(routineCard != RoutineCard.ExploreRoutine) {
             Icon(
                 iconId,
                 contentDescription = null,
@@ -141,7 +140,6 @@ fun RoutineCardTitle(routineCard: RoutineCard, routine: Routines, iconId: ImageV
                     .padding(end = 5.dp),
                 tint = Color.White,
             )
-        }
 
         if(routineCard == RoutineCard.ExploreRoutine) {
             Icon(

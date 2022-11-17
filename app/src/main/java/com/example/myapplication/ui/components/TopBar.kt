@@ -14,7 +14,8 @@ import kotlinx.coroutines.launch
 
 @Composable
 fun TopBar(
-    scaffoldState: ScaffoldState
+    scaffoldState: ScaffoldState,
+    settingsRedirect: () -> Unit
 ){
     val coroutineScope = rememberCoroutineScope()
     Row(
@@ -31,7 +32,7 @@ fun TopBar(
         )
         SettingsButton(
             modifier = Modifier.align(Alignment.CenterVertically),
-            onClick = {}
+            onClick = settingsRedirect
         )
     }
 }

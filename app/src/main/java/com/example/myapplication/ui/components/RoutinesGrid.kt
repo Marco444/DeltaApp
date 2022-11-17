@@ -45,7 +45,7 @@ fun RoutinesGrid(viewModel: RoutinesViewModel,
                         routineCard.iconUnClicked
                     else
                         routineCard.iconClicked,
-                    clickedIcon = { viewModel.clickedIcon(routine.id) },
+                    clickedIcon = { viewModel.clickedIcon(routine.id, routineCard) },
                     routineCard = routineCard,
                     buttonText = buttonText,
                     viewModel = viewModel,

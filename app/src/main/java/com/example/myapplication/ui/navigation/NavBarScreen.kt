@@ -16,7 +16,7 @@ sealed class Screen(val route: String) {
     object RoutineFinish : Screen("routineFinish")
     object Login : Screen("login")
     object Home : Screen("home")
-
+    object Settings : Screen("settings")
 }
 
 sealed class NavBarScreen(val title: String,
