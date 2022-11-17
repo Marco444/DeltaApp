@@ -34,6 +34,13 @@ fun RoutineDescriptionScreen(viewModel: ExecuteRoutineViewModel,
                              ){
 
 
+    val error by viewModel.error.collectAsState()
+
+    if(error) {
+        errorRedirect()
+        viewModel.errorHandled()
+    }
+
     val routine by viewModel.executeRoutine.value.currentRoutine.collectAsState()
 
     Box(modifier = Modifier.background(Color(0xFF1E1E1E))) {

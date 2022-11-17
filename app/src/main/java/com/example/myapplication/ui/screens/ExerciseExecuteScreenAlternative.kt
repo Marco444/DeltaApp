@@ -57,6 +57,13 @@ fun ExerciseExecuteScreenAlternative(
     handlerFinishRoutine: ()-> Unit,
     errorRedirect: () -> Unit
 ){
+
+    val error by viewModel.error.collectAsState()
+
+    if(error) {
+        errorRedirect()
+        viewModel.errorHandled()
+    }
     // For suspended functions that need a coroutine
     val coroutineScope = rememberCoroutineScope()
     val routine by viewModel.executeRoutine.value.currentRoutine.collectAsState()

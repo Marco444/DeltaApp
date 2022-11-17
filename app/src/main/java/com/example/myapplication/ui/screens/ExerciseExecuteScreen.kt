@@ -30,6 +30,12 @@ fun ExerciseExecScreen(viewModel: ExecuteRoutineViewModel = viewModel(),
                        ){
 
 
+    val error by viewModel.error.collectAsState()
+
+    if(error) {
+        errorRedirect()
+        viewModel.errorHandled()
+    }
 
     Box(modifier = Modifier.background(MaterialTheme.colors.background)) {
         Column(verticalArrangement = Arrangement.SpaceEvenly) {
