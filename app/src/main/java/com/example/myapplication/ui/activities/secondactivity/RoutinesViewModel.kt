@@ -23,11 +23,14 @@ class RoutinesViewModel(
 
     private val _sortState = MutableStateFlow(SortOption.POINTS)
     private val _routinesState = MutableStateFlow(RoutinesState())
-    private var page = 0
-    private val _hasNextPage = MutableStateFlow(false)
-    val hasNextPage: StateFlow<Boolean>
-        get() = _hasNextPage.asStateFlow()
-
+    private var pageExplore = 0
+    private var pageUser = 0
+    private val _hasNextPageExplore = MutableStateFlow(false)
+    private val _hasNextPageUser = MutableStateFlow(false)
+    val hasNextPageUser: StateFlow<Boolean>
+        get() = _hasNextPageUser.asStateFlow()
+    val hasNextPageExplore: StateFlow<Boolean>
+        get() = _hasNextPageExplore.asStateFlow()
     init {
         if(loggedIn())
             getUserRoutines()
@@ -41,21 +44,32 @@ class RoutinesViewModel(
     }
 
     private fun getUserRoutines() = viewModelScope.launch {
-        val aux = userRepository.getCurrentUser(false)
-        aux?.id?.let {
-            _routinesState.value.userRoutines = userRepository.getUserRoutine(true, it).map {routine -> MutableStateFlow(routine) } }
+            val aux = userRepository.getCurrentUser(false)
+            aux?.id?.let {
+                val response = userRepository.getUserRoutine(true, it, pageUser)
+                _routinesState.value.userRoutines += response.content.map {routine -> MutableStateFlow(routine) }
+                pageUser = response.page
+                _hasNextPageUser.update { !response.isLastPage }
+            }
     }
 
     private fun getExploreRoutines() = viewModelScope.launch {
-        val response =  routinesRepository.getRoutines(true,page)
+        val response =  routinesRepository.getRoutines(true,pageExplore)
         _routinesState.value.exploreRoutines += response.content.map { MutableStateFlow(it) }
-        page = response.page
-        _hasNextPage.update { !response.isLastPage }
-
+        pageExplore = response.page
+        _hasNextPageExplore.update { !response.isLastPage }
     }
-     fun nextPage(){
-        if(hasNextPage.value) {
-            page++
+
+     fun nextPageUser(){
+        if(hasNextPageUser.value) {
+            pageUser++
+            getUserRoutines()
+        }
+    }
+
+    fun nextPageExplore(){
+        if(hasNextPageExplore.value) {
+            pageExplore++
             getExploreRoutines()
         }
     }
