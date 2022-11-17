@@ -94,7 +94,7 @@ fun SearchAndFilter(viewModel: RoutinesViewModel) {
 }
 
 @Composable
-fun ExploreScreen(viewModel: RoutinesViewModel, scaffoldState: ScaffoldState, actionRedirect: (Int) -> Unit) {
+fun ExploreScreen(viewModel: RoutinesViewModel, scaffoldState: ScaffoldState, actionRedirect: (Int) -> Unit, refferedRoutineId: Int = -1) {
     val coroutineScope = rememberCoroutineScope()
     Column(
         modifier = Modifier
@@ -125,6 +125,9 @@ fun ExploreScreen(viewModel: RoutinesViewModel, scaffoldState: ScaffoldState, ac
                     style = MaterialTheme.typography.h1
                 )
 
+                if(refferedRoutineId != -1) {
+                    Text(text = "This references to $refferedRoutineId", color = White)
+                }
                 Spacer(modifier = Modifier.height(10.dp))
 
                 SearchAndFilter(viewModel = viewModel)

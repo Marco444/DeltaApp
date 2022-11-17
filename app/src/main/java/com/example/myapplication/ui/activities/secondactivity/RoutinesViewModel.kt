@@ -6,7 +6,6 @@ import androidx.lifecycle.viewModelScope
 import com.example.myapplication.ui.classes.Routines
 import com.example.myapplication.data.repository.RoutinesRepository
 import com.example.myapplication.data.repository.UserRepository
-import com.example.myapplication.ui.activities.thirdactivity.ExecuteRoutine
 import com.example.myapplication.ui.components.RoutineCard
 import com.example.myapplication.ui.components.SortOption
 import com.example.myapplication.ui.navigation.NavBarScreen
@@ -15,6 +14,7 @@ import kotlinx.coroutines.flow.StateFlow
 import kotlinx.coroutines.flow.asStateFlow
 import kotlinx.coroutines.flow.update
 import kotlinx.coroutines.launch
+import kotlinx.coroutines.runBlocking
 
 class RoutinesViewModel(
     private val routinesRepository: RoutinesRepository,
@@ -32,8 +32,15 @@ class RoutinesViewModel(
     val hasNextPageExplore: StateFlow<Boolean>
         get() = _hasNextPageExplore.asStateFlow()
     init {
-       getUserRoutines()
+        if(loggedIn())
+            getUserRoutines()
+
         getExploreRoutines()
+
+    }
+
+    private fun loggedIn(): Boolean {
+      return userRepository.checkCurrentUser()
     }
 
     private fun getUserRoutines() = viewModelScope.launch {
@@ -109,12 +116,6 @@ class RoutinesViewModel(
         routinesRepository.deleteRoutine(routineId)
         getUserRoutines()
     }
-
-    private fun addRoutine(routine: Routines) =  viewModelScope.launch {
-        routinesRepository.addRoutine(routine)
-        getUserRoutines()
-    }
-
 
     private fun updateRoutine(routine: Routines) =  viewModelScope.launch {
         routinesRepository.modifyRoutine(routine)

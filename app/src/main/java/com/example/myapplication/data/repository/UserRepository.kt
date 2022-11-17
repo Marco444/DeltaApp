@@ -3,9 +3,14 @@ package com.example.myapplication.data.repository
 import com.example.myapplication.ui.classes.Routines
 import com.example.myapplication.data.model.User
 import com.example.myapplication.data.network.UserRemoteDataSource
+import kotlinx.coroutines.runBlocking
 import com.example.myapplication.ui.activities.secondactivity.PagedRoutines
 import kotlinx.coroutines.sync.Mutex
 import kotlinx.coroutines.sync.withLock
+import retrofit2.Response
+
+import com.example.myapplication.data.network.model.NetworkUser
+import kotlinx.coroutines.runBlocking
 
 class UserRepository(
     private val remoteDataSource: UserRemoteDataSource
@@ -44,6 +49,21 @@ class UserRepository(
 
         return currentUserMutex.withLock { this.currentUser }
     }
+
+    fun checkCurrentUser(): Boolean {
+        var logged: Boolean = false
+        runBlocking {
+            try {
+                val response = remoteDataSource.checkCurrentUser()
+                val body = response.body()
+                if (response.isSuccessful && body != null) { logged = true }
+            } catch (e: Exception) {
+                logged = false
+            }
+        }
+        return logged
+    }
+
     suspend fun getUserRoutine(refresh: Boolean,id : Int, page: Int): PagedRoutines{
         if (refresh || userRoutines.isEmpty() && currentUser != null) {
             val result = remoteDataSource.getUserRoutines(id, page)
