@@ -52,13 +52,28 @@ class RoutinesViewModel(
                 _hasNextPageUser.update { !response.isLastPage }
             }
     }
+    fun getExploreWithParams(text:String?)= viewModelScope.launch {
+        var page = 0
+        var response =  routinesRepository.getRoutines(true,page,text)
+        page++
+        pageExplore = 0
+        _routinesState.value.exploreRoutines = response.content.map { MutableStateFlow(it) }
+        _hasNextPageExplore.update { !response.isLastPage }
+        while (_hasNextPageExplore.value) {
+             response =  routinesRepository.getRoutines(true,page++,text)
+            _routinesState.value.exploreRoutines += response.content.map { MutableStateFlow(it) }
+            pageExplore = response.page
+            _hasNextPageExplore.update { !response.isLastPage }
+        }
 
-    private fun getExploreRoutines() = viewModelScope.launch {
-        val response =  routinesRepository.getRoutines(true,pageExplore)
+    }
+     private fun getExploreRoutines() = viewModelScope.launch {
+        val response =  routinesRepository.getRoutines(true,pageExplore,null)
         _routinesState.value.exploreRoutines += response.content.map { MutableStateFlow(it) }
         pageExplore = response.page
         _hasNextPageExplore.update { !response.isLastPage }
     }
+
 
      fun nextPageUser(){
         if(hasNextPageUser.value) {

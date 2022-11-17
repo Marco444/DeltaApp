@@ -6,7 +6,7 @@ import retrofit2.http.*
 
 interface ApiRoutinService {
     @GET("routines")
-    suspend fun getRoutines(@Query("page")page:Int) : Response<NetworkPagedContent<NetworkRoutine>>
+    suspend fun getRoutines(@Query("page")page:Int,@Query("search")searchString:String?) : Response<NetworkPagedContent<NetworkRoutine>>
 
     @GET("routines/{routineId}")
     suspend fun getRoutine(@Path("routineId") routineId: Int) : Response<NetworkRoutine>

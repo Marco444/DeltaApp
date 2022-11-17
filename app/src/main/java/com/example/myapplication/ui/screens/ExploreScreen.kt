@@ -9,10 +9,13 @@ import androidx.compose.material.icons.filled.Search
 import androidx.compose.material.icons.filled.Sort
 import androidx.compose.runtime.*
 import androidx.compose.ui.Alignment
+import androidx.compose.ui.ExperimentalComposeUiApi
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.clip
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.graphics.Color.Companion.White
+import androidx.compose.ui.platform.LocalFocusManager
+import androidx.compose.ui.platform.LocalSoftwareKeyboardController
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.text.TextStyle
 import androidx.compose.ui.text.input.TextFieldValue
@@ -28,23 +31,41 @@ import kotlinx.coroutines.launch
 
 
 @Composable
-fun SearchField() {
+fun SearchField(viewModel: RoutinesViewModel) {
     var text by remember { mutableStateOf(TextFieldValue("")) }
+    val focusManager = LocalFocusManager.current
     TextField(
         value = text,
         onValueChange = { newText ->
-            text = newText
+            if (newText.text.isNotEmpty() && newText.text.last() == '\n'){
+                focusManager.clearFocus()
+                if(text.text.length >  3)
+                    viewModel.getExploreWithParams(text.text)
+            }else{
+                text = newText
+            }
+            if(newText.text.isEmpty()){
+                viewModel.getExploreWithParams(null)
+            }
         },
         shape = RoundedCornerShape(8.dp),
         trailingIcon = {
-            Icon(Icons.Filled.Search, "")
+            IconButton(onClick = {
+                if(text.text.length >= 3)
+                    viewModel.getExploreWithParams(text.text)
+                else
+                    viewModel.getExploreWithParams(null)
+
+            }) {
+                Icon(Icons.Filled.Search, "")
+            }
         },
         colors = TextFieldDefaults.textFieldColors(
             backgroundColor = White,
             focusedIndicatorColor =  Color.Transparent),
         textStyle = TextStyle.Default.copy(fontSize = 15.sp),
         modifier = Modifier
-            .height(40.dp)
+            .height(55.dp)
             .fillMaxWidth(0.75F)
     )
 }
@@ -87,7 +108,7 @@ fun FilterButton(viewModel: RoutinesViewModel) {
 fun SearchAndFilter(viewModel: RoutinesViewModel) {
 
     Row(verticalAlignment = Alignment.CenterVertically) {
-        SearchField()
+        SearchField(viewModel)
         Spacer(Modifier.width(10.dp))
         FilterButton(viewModel = viewModel)
     }
