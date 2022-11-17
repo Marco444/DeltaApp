@@ -54,7 +54,8 @@ import kotlin.math.exp
 fun ExerciseExecuteScreenAlternative(
     viewModel: ExecuteRoutineViewModel = viewModel(),
     handlerBack : () -> Unit,
-    handlerFinishRoutine: ()-> Unit
+    handlerFinishRoutine: ()-> Unit,
+    errorRedirect: () -> Unit
 ){
     // For suspended functions that need a coroutine
     val coroutineScope = rememberCoroutineScope()

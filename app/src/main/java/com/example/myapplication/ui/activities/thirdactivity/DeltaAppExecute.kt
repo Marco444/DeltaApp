@@ -28,7 +28,9 @@ fun DeltaAppExecute(
                 routineId = routineId,
                 backHandler = { redirectHandler().also { navController.popBackStack() } },
                 starRoutineHanlder = { navController.navigate(Screen.Execute.route) },
-                starRoutineLiteHandler = {navController.navigate(Screen.ExecuteLite.route)})
+                starRoutineLiteHandler = {navController.navigate(Screen.ExecuteLite.route)},
+                errorRedirect = {navController.navigate(Screen.Error.route)}
+            )
         }
         composable(Screen.Execute.route) { backStackEntry ->
             ExerciseExecScreen(
@@ -37,23 +39,32 @@ fun DeltaAppExecute(
                 handlerFinishRoutine = {
                     navController.navigate(
                         Screen.RoutineFinish.route)
-                })
+                },
+                errorRedirect = {navController.navigate(Screen.Error.route)}
+            )
         }
         composable(Screen.ExecuteLite.route) { backStackEntry ->
-           ExerciseExecuteScreenAlternative(
+            ExerciseExecuteScreenAlternative(
                 viewModel =  viewModel,
                 handlerBack = { navController.popBackStack() },
                 handlerFinishRoutine = {
                     navController.navigate(
                         Screen.RoutineFinish.route)
-                })
+                },
+                errorRedirect = {navController.navigate(Screen.Error.route)}
+            )
         }
         composable(Screen.RoutineFinish.route){
             RoutineFinished(viewModel = viewModel,
-                            viewRoutineHandler = {},
-                            routineId = routineId,
-                            nextHandler = redirectHandler,
-                            backButtonHandler = {})
+                viewRoutineHandler = {},
+                routineId = routineId,
+                nextHandler = redirectHandler,
+                backButtonHandler = {},
+                errorRedirect = {navController.navigate(Screen.Error.route)}
+            )
+        }
+        composable(Screen.Error.route) {
+            ApiErrorScreen()
         }
     }
 }

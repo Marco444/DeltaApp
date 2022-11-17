@@ -25,7 +25,9 @@ import com.example.myapplication.ui.components.Button2
 @Composable
 fun ExerciseExecScreen(viewModel: ExecuteRoutineViewModel = viewModel(),
                        handlerBack : () ->Unit,
-                       handlerFinishRoutine: ()->Unit){
+                       handlerFinishRoutine: ()->Unit,
+                       errorRedirect: () -> Unit
+                       ){
 
 
 

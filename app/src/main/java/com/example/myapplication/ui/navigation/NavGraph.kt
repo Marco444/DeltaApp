@@ -31,13 +31,18 @@ fun NavGraph(navController: NavHostController, viewModel: RoutinesViewModel, exe
         }
         composable(NavBarScreen.Progress.route) {
             ProgressScreen(viewModel = viewModel,
-            actionRedirect = {navController.navigate(Screen.ProgressDetail.route + it  )}, scaffoldState,
-            errorRedirect = {navController.navigate(Screen.Error.route)})
+                actionRedirect = {navController.navigate(Screen.ProgressDetail.route + it  )},
+                scaffoldState = scaffoldState,
+                errorRedirect = {navController.navigate(Screen.Error.route)}
+            )
         }
         composable(NavBarScreen.Explore.route, deepLinks = NavBarScreen.Explore.deepLink, arguments = NavBarScreen.Explore.arguments) { entry ->
             val id = entry.arguments?.getInt("id") ?: -1
-            ExploreScreen(viewModel = viewModel, scaffoldState, actionRedirect = executeRedirect, refferedRoutineId = id,
-            errorRedirect = {navController.navigate(Screen.Error.route)})
+            ExploreScreen(viewModel = viewModel,
+                scaffoldState,
+                actionRedirect = executeRedirect,
+                refferedRoutineId = id,
+                errorRedirect = {navController.navigate(Screen.Error.route)})
         }
         composable(NavBarScreen.QR.route) {
             QRScreen(viewModel = viewModel)
