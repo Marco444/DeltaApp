@@ -176,4 +176,8 @@ class ExecuteRoutineViewModel(
         return getRoutineWarmUpExercises() + getRoutineMainSetExercises() + getRoutineCoolDownExercises()
     }
 
+    fun getExecuteRoutineLiteMode(): Boolean {
+        return routinesRepository.getExecuteRoutineLiteMode()
+    }
+
 }

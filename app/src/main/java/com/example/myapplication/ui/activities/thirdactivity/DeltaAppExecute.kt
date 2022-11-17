@@ -29,7 +29,8 @@ fun DeltaAppExecute(
                 backHandler = { redirectHandler().also { navController.popBackStack() } },
                 starRoutineHanlder = { navController.navigate(Screen.Execute.route) },
                 starRoutineLiteHandler = {navController.navigate(Screen.ExecuteLite.route)},
-                errorRedirect = {navController.navigate(Screen.Error.route)}
+                errorRedirect = {navController.navigate(Screen.Error.route)},
+                liteMode = false
             )
         }
         composable(Screen.Execute.route) { backStackEntry ->
