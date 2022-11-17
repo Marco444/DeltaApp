@@ -18,9 +18,9 @@ class RoutinesRepository(
     private var page = 0
     private var isLastPage = false
 
-    suspend fun getRoutines(refresh: Boolean = false,page:Int): PagedRoutines {
+    suspend fun getRoutines(refresh: Boolean = false,page:Int,searchText:String?): PagedRoutines {
         if (refresh || routines.isEmpty()) {
-            val result = remoteDataSource.getRoutines(page)
+            val result = remoteDataSource.getRoutines(page,searchText)
             // Thread-safe write to latestNews
             routinesMutex.withLock {
                 this.routines = result.content.map { it.asModel() }

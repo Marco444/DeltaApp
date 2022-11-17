@@ -11,6 +11,7 @@ import retrofit2.Response
 
 import com.example.myapplication.data.network.model.NetworkUser
 import kotlinx.coroutines.flow.MutableStateFlow
+import kotlinx.coroutines.flow.update
 import kotlinx.coroutines.runBlocking
 
 class UserRepository(
@@ -31,12 +32,21 @@ class UserRepository(
     private var page = 0
 
     suspend fun login(username: String, password: String) {
-        remoteDataSource.login(username, password)
+        try {
+            remoteDataSource.login(username, password)
+            authenticate.update { true }
+
+        }catch (e: Exception){
+            throw e
+        }
+
     }
 
     var isAuthenticated = MutableStateFlow(false)
 
     suspend fun logout() {
+        authenticate.update { false }
+
         remoteDataSource.logout()
     }
     val authenticate : MutableStateFlow<Boolean> = MutableStateFlow(remoteDataSource.getSessionManager().loadAuthToken() != null)

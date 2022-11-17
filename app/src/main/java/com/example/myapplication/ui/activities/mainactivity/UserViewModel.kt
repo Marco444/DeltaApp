@@ -27,7 +27,6 @@ class UserViewModel(
         runCatching {
             userRepository.login(username, password)
         }.onSuccess { response ->
-            userState.value.isAuthenticated.value = true
             userState.update {
                 it.copy(
                     isFetching = false,
@@ -55,8 +54,6 @@ class UserViewModel(
         runCatching {
             userRepository.logout()
         }.onSuccess { response ->
-            userState.value.isAuthenticated.value = false
-
             userState.update {
                 it.copy(
                     isFetching = false,
