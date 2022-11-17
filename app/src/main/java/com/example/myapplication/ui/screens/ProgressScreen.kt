@@ -21,7 +21,13 @@ import com.example.myapplication.ui.activities.secondactivity.RoutinesViewModel
 import kotlinx.coroutines.launch
 
 @Composable
-fun ProgressScreen(viewModel: RoutinesViewModel, actionRedirect: (Int) -> Unit, scaffoldState: ScaffoldState, errorRedirect: () -> Unit) {
+fun ProgressScreen(viewModel: RoutinesViewModel,
+                   actionRedirect: (Int) -> Unit,
+                   scaffoldState: ScaffoldState,
+                   errorRedirect: () -> Unit,
+                   settingsRedirect: () -> Unit
+)
+{
 
     val coroutineScope = rememberCoroutineScope()
 
@@ -40,7 +46,7 @@ fun ProgressScreen(viewModel: RoutinesViewModel, actionRedirect: (Int) -> Unit, 
         horizontalAlignment = Alignment.CenterHorizontally
     ) {
         Column(modifier = Modifier.align(Alignment.Start)) {
-            TopBar(scaffoldState)
+            TopBar(scaffoldState, settingsRedirect)
         }
         Row {
             Column(

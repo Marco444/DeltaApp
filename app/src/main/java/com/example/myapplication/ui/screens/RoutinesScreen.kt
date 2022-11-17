@@ -23,7 +23,8 @@ import kotlinx.coroutines.launch
 fun RoutinesScreen(viewModel: RoutinesViewModel,
                    actionRedirect: (Int) -> Unit,
                    scaffoldState: ScaffoldState,
-                   errorRedirect: () -> Unit
+                   errorRedirect: () -> Unit,
+                   settingsRedirect: () -> Unit
 ){
 
     val error by viewModel.error.collectAsState()
@@ -44,7 +45,7 @@ fun RoutinesScreen(viewModel: RoutinesViewModel,
     ){
 
         Column(modifier = Modifier.align(Alignment.Start)) {
-            TopBar(scaffoldState)
+            TopBar(scaffoldState, settingsRedirect)
         }
         Row {
             Column(

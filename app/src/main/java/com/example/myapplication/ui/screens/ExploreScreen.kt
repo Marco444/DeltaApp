@@ -94,7 +94,13 @@ fun SearchAndFilter(viewModel: RoutinesViewModel) {
 }
 
 @Composable
-fun ExploreScreen(viewModel: RoutinesViewModel, scaffoldState: ScaffoldState, actionRedirect: (Int) -> Unit, refferedRoutineId: Int = -1, errorRedirect: () -> Unit) {
+fun ExploreScreen(viewModel: RoutinesViewModel,
+                  scaffoldState: ScaffoldState,
+                  actionRedirect: (Int) -> Unit,
+                  refferedRoutineId: Int = -1,
+                  errorRedirect: () -> Unit,
+                  settingsRedirect: () -> Unit
+) {
     val coroutineScope = rememberCoroutineScope()
 
     val error by viewModel.error.collectAsState()
@@ -112,7 +118,7 @@ fun ExploreScreen(viewModel: RoutinesViewModel, scaffoldState: ScaffoldState, ac
     ) {
 
         Column(modifier = Modifier.align(Alignment.Start)) {
-            TopBar(scaffoldState)
+            TopBar(scaffoldState, settingsRedirect)
         }
         Row {
             Column(

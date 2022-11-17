@@ -27,13 +27,16 @@ fun NavGraph(navController: NavHostController, viewModel: RoutinesViewModel, exe
         composable(NavBarScreen.Routines.route) {
             RoutinesScreen(viewModel = viewModel,
                 actionRedirect = executeRedirect, scaffoldState,
-                errorRedirect = {navController.navigate(Screen.Error.route)})
+                errorRedirect = {navController.navigate(Screen.Error.route)},
+                settingsRedirect = {navController.navigate(Screen.Settings.route)}
+            )
         }
         composable(NavBarScreen.Progress.route) {
             ProgressScreen(viewModel = viewModel,
                 actionRedirect = {navController.navigate(Screen.ProgressDetail.route + it  )},
                 scaffoldState = scaffoldState,
-                errorRedirect = {navController.navigate(Screen.Error.route)}
+                errorRedirect = {navController.navigate(Screen.Error.route)},
+                settingsRedirect = {navController.navigate(Screen.Settings.route)}
             )
         }
         composable(NavBarScreen.Explore.route) { entry ->
@@ -41,7 +44,9 @@ fun NavGraph(navController: NavHostController, viewModel: RoutinesViewModel, exe
                 scaffoldState,
                 actionRedirect = executeRedirect,
                 refferedRoutineId = id,
-                errorRedirect = {navController.navigate(Screen.Error.route)})
+                errorRedirect = {navController.navigate(Screen.Error.route)},
+                settingsRedirect = {navController.navigate(Screen.Settings.route)}
+            )
         }
         composable(NavBarScreen.QR.route) {
             QRScreen(viewModel = viewModel)
@@ -56,6 +61,9 @@ fun NavGraph(navController: NavHostController, viewModel: RoutinesViewModel, exe
                 backButtonHandler = {navController.popBackStack()},
                 routineId = backStackEntry.arguments?.getString("routineId"),
                 errorRedirect = {navController.navigate(Screen.Error.route)})
+        }
+        composable(Screen.Settings.route){
+            SettingsPage(viewModel = viewModel, backHandler = {navController.popBackStack()})
         }
 
     }

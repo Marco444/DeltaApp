@@ -60,10 +60,3 @@ fun ApiErrorScreen(){
     }
 
 }
-
-
-@Preview
-@Composable
-fun testError(){
-    ApiErrorScreen()
-}
