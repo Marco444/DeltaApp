@@ -5,6 +5,16 @@ import retrofit2.Response
 import retrofit2.http.*
 
 interface ApiRoutinService {
+
+    @POST("favourite/{routineId}")
+    suspend fun addFavourite(@Path("routineId") routineId: Int): Response<Unit>
+
+    @DELETE("favourite/{routineId}")
+    suspend fun removeFavourite(@Path("routineId") routineId: Int): Response<Unit>
+
+    @GET("favourite")
+    suspend fun getFavourite(@Query("page")page:Int):  Response<NetworkPagedContent<NetworkRoutine>>
+
     @GET("routines")
     suspend fun getRoutines(@Query("page")page:Int,@Query("search")searchString:String?) : Response<NetworkPagedContent<NetworkRoutine>>
 

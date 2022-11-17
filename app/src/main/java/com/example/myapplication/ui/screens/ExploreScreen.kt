@@ -91,14 +91,14 @@ fun FilterButton(viewModel: RoutinesViewModel) {
                 Color.White
             )
             .clip(RoundedCornerShape(8.dp))) {
-            for(sortOption in SortOption.values()) {
-                DropdownMenuItem(onClick = { viewModel.sortRoutines(sortOption, NavBarScreen.Explore) ; expanded = false }) {
-                    when (sortOption) {
-                        SortOption.FAVOURITE -> Text(text = stringResource(id = R.string.favourite))
-                        SortOption.DATE -> Text(text = stringResource(id = R.string.date))
-                        else -> Text(text = stringResource(id = R.string.points))
-                    }
-                }
+            DropdownMenuItem(onClick = { viewModel.sortRoutines(SortOption.POINTS, NavBarScreen.Explore) ; expanded = false }) {
+                Text(text = stringResource(id = R.string.points))
+            }
+            DropdownMenuItem(onClick = { viewModel.sortRoutines(SortOption.DATE, NavBarScreen.Explore) ; expanded = false }) {
+                Text(text = stringResource(id = R.string.date))
+            }
+            DropdownMenuItem(onClick = { viewModel.showFavorites() ; expanded = false }) {
+                Text(text = stringResource(id = R.string.favourite))
             }
         }
     }
