@@ -39,7 +39,7 @@ fun SearchField(viewModel: RoutinesViewModel) {
         onValueChange = { newText ->
             if (newText.text.isNotEmpty() && newText.text.last() == '\n'){
                 focusManager.clearFocus()
-                if(text.text.length >  3)
+                if(text.text.length >=  3)
                     viewModel.getExploreWithParamsWrapper(text.text)
             }else{
                 text = newText

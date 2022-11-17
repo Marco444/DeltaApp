@@ -77,8 +77,13 @@ class RoutinesViewModel(
         }
     }
     fun getExploreWithParamsWrapper(text: String?){
-        _routinesState.value.exploreRoutines = emptyList()
-        getExploreWithParams(text)
+        if(text != null) {
+            _routinesState.value.exploreRoutines = emptyList()
+            getExploreWithParams(text)
+        }else{
+            _routinesState.value.exploreRoutines = emptyList()
+            getExploreRoutines()
+        }
     }
     private fun getExploreWithParams(text:String?)= viewModelScope.launch {
         runCatching {
@@ -86,6 +91,7 @@ class RoutinesViewModel(
             var response = routinesRepository.getRoutines(true, page, text)
             page++
             pageExplore = 0
+            _hasNextPageExplore.update { false }
             _routinesState.value.exploreRoutines = response.content.map { MutableStateFlow(it) }
             var hasNext = !response.isLastPage
             while (hasNext) {
