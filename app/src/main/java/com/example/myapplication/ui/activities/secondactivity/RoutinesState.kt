@@ -15,7 +15,7 @@ class RoutinesState {
 
     var userRoutines by mutableStateOf(emptyList<MutableStateFlow<Routines>>())
 
-    var exploreRoutines by mutableStateOf((emptyList<MutableStateFlow<Routines>>()))
+    var exploreRoutines by mutableStateOf(emptyList<MutableStateFlow<Routines>>())
 
 }
 data class PagedRoutines(

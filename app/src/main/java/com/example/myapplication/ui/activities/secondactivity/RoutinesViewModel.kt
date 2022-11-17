@@ -76,12 +76,27 @@ class RoutinesViewModel(
             error.update { true }
         }
     }
+    fun getExploreWithParams(text:String?)= viewModelScope.launch {
+        var page = 0
+        var response =  routinesRepository.getRoutines(true,page,text)
+        page++
+        pageExplore = 0
+        _routinesState.value.exploreRoutines = response.content.map { MutableStateFlow(it) }
+        _hasNextPageExplore.update { !response.isLastPage }
+        while (_hasNextPageExplore.value) {
+             response =  routinesRepository.getRoutines(true,page++,text)
+            _routinesState.value.exploreRoutines += response.content.map { MutableStateFlow(it) }
+            pageExplore = response.page
+            _hasNextPageExplore.update { !response.isLastPage }
+        }
+
+    }
 
     private fun getExploreRoutines() = viewModelScope.launch {
         var response = PagedRoutines(emptyList(), 0, true)
 
         runCatching {
-            response = routinesRepository.getRoutines(true,pageExplore)
+            response = routinesRepository.getRoutines(true,pageExplore,null)
         }.onSuccess {
             _routinesState.value.exploreRoutines += response.content.map { MutableStateFlow(it) }
             pageExplore = response.page
@@ -91,6 +106,7 @@ class RoutinesViewModel(
         }
 
     }
+
 
      fun nextPageUser(){
         if(hasNextPageUser.value) {

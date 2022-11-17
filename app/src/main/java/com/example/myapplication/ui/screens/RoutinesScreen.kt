@@ -26,8 +26,6 @@ fun RoutinesScreen(viewModel: RoutinesViewModel,
                    errorRedirect: () -> Unit
 ){
 
-    val coroutineScope = rememberCoroutineScope()
-
     val error by viewModel.error.collectAsState()
 
     if(error) {
@@ -46,17 +44,7 @@ fun RoutinesScreen(viewModel: RoutinesViewModel,
     ){
 
         Column(modifier = Modifier.align(Alignment.Start)) {
-
-            Row(modifier = Modifier.padding(top = 10.dp, start = 10.dp)) {
-                HamburgerButton(
-                    modifier = Modifier.align(Alignment.CenterVertically),
-                    onClick = {
-                        coroutineScope.launch {
-                            scaffoldState.drawerState.open()
-                        }
-                    }
-                )
-            }
+            TopBar(scaffoldState)
         }
         Row {
             Column(
