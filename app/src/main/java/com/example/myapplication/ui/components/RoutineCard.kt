@@ -39,6 +39,7 @@ import com.example.myapplication.ui.classes.Routines
 import com.example.myapplication.ui.theme.Green
 import com.example.myapplication.ui.activities.secondactivity.RoutinesViewModel
 import com.example.myapplication.ui.navigation.NavBarScreen
+import com.example.myapplication.ui.theme.Gray
 
 
 const val ROUTINE_CARD_WIDTH = 370;
@@ -46,7 +47,7 @@ const val ROUTINE_CARD_WIDTH = 370;
 sealed class RoutineCard(val iconClicked: ImageVector, val iconUnClicked: ImageVector, val description: String) {
     object MyRoutine: RoutineCard ( Icons.Default.Favorite, Icons.Outlined.FavoriteBorder, "Start")
     object Progress: RoutineCard (Icons.Default.Favorite, Icons.Outlined.FavoriteBorder, "See Progress")
-    object ExploreRoutine: RoutineCard (  Icons.Default.CheckCircle, Icons.Outlined.Add, "Preview")
+    object ExploreRoutine: RoutineCard (  Icons.Default.Favorite, Icons.Outlined.FavoriteBorder, "Preview")
 }
 
 @Composable
@@ -89,7 +90,7 @@ fun CardOptions(viewModel: RoutinesViewModel, routine: Routines) {
         Icons.Default.MoreVert,
         contentDescription = null,
         modifier = Modifier
-            .clickable(onClick = {expanded = true})
+            .clickable(onClick = { expanded = true })
             .scale(1.5f)
             .padding(end = 5.dp),
         tint = Color.White,
@@ -199,10 +200,15 @@ fun RoutineCard(routine: Routines, iconId: ImageVector, clickedIcon: () -> Unit 
             .clickable {
                 expanded = if (viewModel.cardsExpandable()) !expanded else true
                 imageHeight = if (expanded) 200.dp else 70.dp
-            },
+            }
+            .background(Gray, RoundedCornerShape(20.dp)),
         contentAlignment = Alignment.Center
     ) {
-        BackgroundImageCard(routine, imageHeight)
+        val showImage by viewModel.displayRoutineImages.collectAsState()
+
+        if(showImage) {
+            BackgroundImageCard(routine, imageHeight)
+        }
 
             Column(
                 horizontalAlignment = Alignment.CenterHorizontally,

@@ -5,8 +5,9 @@ import com.example.myapplication.data.network.model.NetworkGetReview
 import com.example.myapplication.data.network.model.NetworkPagedContent
 import com.example.myapplication.data.network.model.NetworkReview
 import com.example.myapplication.data.network.model.NetworkRoutine
+import com.example.myapplication.util.SessionManager
 
-class RoutinesRemoteDataSource(private val apiRoutineService: ApiRoutinService): RemoteDataSource() {
+class RoutinesRemoteDataSource(private val apiRoutineService: ApiRoutinService, private val sessionManager: SessionManager): RemoteDataSource() {
 
     suspend fun getRoutines(page:Int,searchRoutine:String?) : NetworkPagedContent<NetworkRoutine> {
         return handleApiResponse {
@@ -58,5 +59,21 @@ class RoutinesRemoteDataSource(private val apiRoutineService: ApiRoutinService):
         return handleApiResponse {
             apiRoutineService.addReview(routineId,review)
         }
+    }
+
+    fun saveDisplayRoutineImage(value: Boolean){
+        sessionManager.saveDisplayRoutineImage(value)
+    }
+
+    fun saveExecuteRoutineLiteMode(value: Boolean){
+        sessionManager.saveExecuteRoutineLiteMode(value)
+    }
+
+    fun getDisplayRoutineImage(): Boolean{
+        return sessionManager.loadDisplayRoutineImage()
+    }
+
+    fun getExecuteRoutineLiteMode(): Boolean{
+        return sessionManager.loadExecuteRoutineLiteMode()
     }
 }

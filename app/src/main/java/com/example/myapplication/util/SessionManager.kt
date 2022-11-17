@@ -9,6 +9,8 @@ class SessionManager (context: Context) {
         context.getSharedPreferences(PREFERENCES_NAME, Context.MODE_PRIVATE)
 
     companion object {
+        const val DISPLAY_ROUTINE_IMAGE = "display_routine_image"
+        val EXECUTE_ROUTINE_LITE_MODE = "execute_routine_lite_mode"
         const val AUTH_TOKEN = "auth_token"
         const val PREFERENCES_NAME = "preferences"
     }
@@ -28,4 +30,25 @@ class SessionManager (context: Context) {
         editor.putString(AUTH_TOKEN, token)
         editor.apply()
     }
+
+    fun loadDisplayRoutineImage():Boolean{
+        return preferences.getBoolean(DISPLAY_ROUTINE_IMAGE, true)
+    }
+
+    fun loadExecuteRoutineLiteMode():Boolean{
+        return preferences.getBoolean(EXECUTE_ROUTINE_LITE_MODE, false)
+    }
+
+    fun saveDisplayRoutineImage(value: Boolean){
+        val editor = preferences.edit()
+        editor.putBoolean(DISPLAY_ROUTINE_IMAGE, value)
+        editor.apply()
+    }
+
+    fun saveExecuteRoutineLiteMode(value: Boolean){
+        val editor = preferences.edit()
+        editor.putBoolean(EXECUTE_ROUTINE_LITE_MODE, value)
+        editor.apply()
+    }
+
 }
