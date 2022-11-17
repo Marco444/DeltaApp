@@ -26,6 +26,7 @@ import kotlinx.coroutines.flow.MutableStateFlow
 @Composable
 fun RecomposingTitle(exercise: MutableStateFlow<CyclesExercise>) {
     val text by exercise.collectAsState()
+    Text(text = text.cycle?:"", fontSize = 20.sp, color = Green)
     if(text.isExercise)
         Text(text = text.name, fontSize = 30.sp)
     else

@@ -12,5 +12,6 @@ data class CyclesExercise (
         var rest:Int = 0,
         val duration:Int,
         var isExercise : Boolean = true,
-        var index:Int? = 0
+        var index:Int? = 0,
+        var cycle : String? = ""
 )

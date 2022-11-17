@@ -77,10 +77,11 @@ class ExecuteRoutineViewModel(
                     exercise.sets =metadata?.get(0)?.sets?:0
                     exercise.weight = metadata?.get(0)?.weight?.toFloat() ?: 0f
                     exercise.index =  _execRoutineState.value.allExercises.size
+                    exercise.cycle = cycles[cycle].name
                     println(exercise)
                     _execRoutineState.value.allExercises += exercise
                     if(exercise.rest != 0)
-                        _execRoutineState.value.allExercises += CyclesExercise(duration = exercise.rest, isExercise = false, index = exercise.index!! +1)
+                        _execRoutineState.value.allExercises += CyclesExercise(cycle= exercise.cycle,duration = exercise.rest, isExercise = false, index = exercise.index!! +1)
                 }
             }
         }
