@@ -112,16 +112,7 @@ fun ExploreScreen(viewModel: RoutinesViewModel, scaffoldState: ScaffoldState, ac
     ) {
 
         Column(modifier = Modifier.align(Alignment.Start)) {
-            Row(modifier = Modifier.padding(top = 10.dp, start = 10.dp)) {
-                HamburgerButton(
-                    modifier = Modifier.align(Alignment.CenterVertically),
-                    onClick = {
-                        coroutineScope.launch {
-                            scaffoldState.drawerState.open()
-                        }
-                    }
-                )
-            }
+            TopBar(scaffoldState)
         }
         Row {
             Column(
