@@ -31,5 +31,5 @@
     <string name="error_msg">We are sorry, there has been a problem. Please verify there is internet connection and restart the app.</string>
     <string name="error_btn">Take Me Home</string>
     <string name="rest">Rest</string>
-
+    <string name="explanationProgress">This graphic shows how you average volume has changed during several executions of this routine</string>
 </resources>
