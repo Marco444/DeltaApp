@@ -39,22 +39,22 @@ fun SearchField(viewModel: RoutinesViewModel) {
         onValueChange = { newText ->
             if (newText.text.isNotEmpty() && newText.text.last() == '\n'){
                 focusManager.clearFocus()
-                if(text.text.length >  3)
-                    viewModel.getExploreWithParams(text.text)
+                if(text.text.length >=  3)
+                    viewModel.getExploreWithParamsWrapper(text.text)
             }else{
                 text = newText
             }
             if(newText.text.isEmpty()){
-                viewModel.getExploreWithParams(null)
+                viewModel.getExploreWithParamsWrapper(null)
             }
         },
         shape = RoundedCornerShape(8.dp),
         trailingIcon = {
             IconButton(onClick = {
                 if(text.text.length >= 3)
-                    viewModel.getExploreWithParams(text.text)
+                    viewModel.getExploreWithParamsWrapper(text.text)
                 else
-                    viewModel.getExploreWithParams(null)
+                    viewModel.getExploreWithParamsWrapper(null)
 
             }) {
                 Icon(Icons.Filled.Search, "")
@@ -115,7 +115,13 @@ fun SearchAndFilter(viewModel: RoutinesViewModel) {
 }
 
 @Composable
-fun ExploreScreen(viewModel: RoutinesViewModel, scaffoldState: ScaffoldState, actionRedirect: (Int) -> Unit, refferedRoutineId: Int = -1, errorRedirect: () -> Unit) {
+fun ExploreScreen(viewModel: RoutinesViewModel,
+                  scaffoldState: ScaffoldState,
+                  actionRedirect: (Int) -> Unit,
+                  refferedRoutineId: Int = -1,
+                  errorRedirect: () -> Unit,
+                  settingsRedirect: () -> Unit
+) {
     val coroutineScope = rememberCoroutineScope()
 
     val error by viewModel.error.collectAsState()
@@ -133,7 +139,7 @@ fun ExploreScreen(viewModel: RoutinesViewModel, scaffoldState: ScaffoldState, ac
     ) {
 
         Column(modifier = Modifier.align(Alignment.Start)) {
-            TopBar(scaffoldState)
+            TopBar(scaffoldState, settingsRedirect)
         }
         Row {
             Column(
