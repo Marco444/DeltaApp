@@ -4,6 +4,7 @@ import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.*
 import androidx.compose.foundation.lazy.LazyColumn
 import androidx.compose.foundation.shape.RoundedCornerShape
+import androidx.compose.material.MaterialTheme
 import androidx.compose.material.Switch
 import androidx.compose.material.SwitchColors
 import androidx.compose.material.Text
@@ -13,23 +14,31 @@ import androidx.compose.material.icons.filled.Favorite
 import androidx.compose.material.icons.outlined.Add
 import androidx.compose.material.icons.outlined.FavoriteBorder
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.collectAsState
+import androidx.compose.runtime.getValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.graphics.vector.ImageVector
+import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import androidx.lifecycle.ViewModel
 import com.example.myapplication.data.repository.UserRepository
 import com.example.myapplication.ui.activities.secondactivity.RoutinesViewModel
+import com.example.myapplication.ui.components.BackButton
 import com.example.myapplication.ui.theme.*
+import kotlinx.coroutines.flow.asStateFlow
 
 @Composable
 fun SettingsPage(
     viewModel: RoutinesViewModel,
     backHandler: () -> Unit
 ){
+
+    val displayRoutineImages by viewModel.displayRoutineImages.collectAsState()
+    val executionRoutineModeLite by viewModel.executionRoutineModeLite.collectAsState()
 
     Box(
         modifier = Modifier
@@ -41,26 +50,53 @@ fun SettingsPage(
         Column(
             modifier = Modifier.fillMaxWidth(0.95F)
         ) {
-            LazyColumn(){
+
+            BackButton (handler = backHandler)
+
+            LazyColumn(
+                modifier = Modifier.fillMaxWidth(),
+                horizontalAlignment = Alignment.CenterHorizontally
+            ) {
                 item {
-                    SettingsCard(name = "Display Routine Images", description = "Decide whether to display or not the picture of a Routine", action = {})
+                    Spacer(modifier = Modifier.height(10.dp))
+                }
+                item{
+                    Text(
+                        text = stringResource(id = com.example.myapplication.R.string.settings),
+                        style = MaterialTheme.typography.h1
+                    )
                 }
                 item {
                     Spacer(modifier = Modifier.height(10.dp))
                 }
                 item {
-                    SettingsCard(name = "Display Routine Images", description = "Decide whether to display or not the picture of a Routine", action = {})
+                    SettingsCard(
+                        checked = displayRoutineImages,
+                        name = stringResource(com.example.myapplication.R.string.display_routines_pic_title),
+                        description = stringResource(com.example.myapplication.R.string.display_routines_pic_description),
+                        action = {
+                            viewModel.setDisplayRoutineImages()
+                        }
+                    )
                 }
                 item {
                     Spacer(modifier = Modifier.height(10.dp))
                 }
                 item {
-                    SettingsCard(name = "Display Routine Images", description = "Decide whether to display or not the picture of a Routine", action = {})
+                    SettingsCard(
+                        checked = executionRoutineModeLite,
+                        name = stringResource(com.example.myapplication.R.string.exec_routine_mode_title),
+                        description = stringResource(com.example.myapplication.R.string.exec_routine_mode_description),
+                        action = {
+                            viewModel.setExecutionRoutineModeLite()
+                        }
+                    )
                 }
                 item {
                     Spacer(modifier = Modifier.height(10.dp))
                 }
             }
+
         }
 
     }
@@ -69,9 +105,10 @@ fun SettingsPage(
 
 @Composable
 fun SettingsCard(
+    checked: Boolean,
     name: String,
     description: String,
-    action: () -> Unit
+    action: (Boolean) -> Unit
 ){
 
     Column(
@@ -80,11 +117,12 @@ fun SettingsCard(
             .background(Gray, RoundedCornerShape(30.dp))
     ) {
         Row(
-            modifier = Modifier.padding(30.dp)
+            modifier = Modifier.padding(vertical = 15.dp, horizontal = 20.dp),
+            verticalAlignment = Alignment.CenterVertically
         ) {
             Switch(
-                checked = true,
-                onCheckedChange = {},
+                checked = checked,
+                onCheckedChange = action,
             )
             Spacer(modifier = Modifier.width(30.dp))
             Column() {
@@ -100,7 +138,6 @@ fun SettingsCard(
                     fontSize = 15.sp,
                     color = Color.White
                 )
-
             }
         }
     }

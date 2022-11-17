@@ -254,5 +254,16 @@ class RoutinesViewModel(
         screenWidth = width;
     }
 
+    // SETTINGS -> TODO moverlo para arriba una vez que funque
+    val displayRoutineImages = MutableStateFlow(true)
+    val executionRoutineModeLite = MutableStateFlow(false)
+
+    fun setDisplayRoutineImages(){
+        displayRoutineImages.update { !displayRoutineImages.value }
+    }
+
+    fun setExecutionRoutineModeLite(){
+        executionRoutineModeLite.update { !executionRoutineModeLite.value }
+    }
 
 }
