@@ -11,7 +11,7 @@ class NetworkUser (
    @SerializedName("username")
     var username: String,
 
-    @SerializedName("firstName")
+  /*  @SerializedName("firstName")
     var firstName: String? = null,
 
     @SerializedName("lastName")
@@ -32,11 +32,11 @@ class NetworkUser (
   @SerializedName("metadata")
   var metadata: NetworkUserMetadata? = null,
   @SerializedName("date")
-  var date: Date,
+  var date: Date,*/
   @SerializedName("lastActivity")
   var lastActivity: Date? = null,
- @SerializedName("verified")
-  var verified: Boolean
+ /*@SerializedName("verified")
+  var verified: Boolean*/
 ) {
 
     fun asModel() : User {
@@ -44,7 +44,7 @@ class NetworkUser (
             id = id,
            username = username,
             lastActivity = lastActivity,
-            avatarUrl = metadata?.img
+           // avatarUrl = metadata?.img
         )
     }
 }

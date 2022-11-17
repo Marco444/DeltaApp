@@ -22,7 +22,9 @@ fun DeltaAppInit(
         composable(Screen.Home.route) {
             LandingScreen(
                 loginHandler = { navController.navigate(Screen.Login.route) },
-                tryOutHandler = initialisedHandler
+                tryOutHandler = initialisedHandler,
+                userViewModel = viewModel
+
             )
         }
         composable(Screen.Login.route,) {

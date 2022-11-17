@@ -12,8 +12,10 @@ import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.graphics.Color.Companion.Gray
+import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
+import com.example.myapplication.R
 import com.example.myapplication.ui.classes.Exercise
 import com.example.myapplication.ui.theme.Green
 import com.example.myapplication.ui.activities.thirdactivity.ExecuteRoutineViewModel
@@ -24,7 +26,12 @@ import kotlinx.coroutines.flow.MutableStateFlow
 @Composable
 fun RecomposingTitle(exercise: MutableStateFlow<CyclesExercise>) {
     val text by exercise.collectAsState()
-    Text(text = text.name, fontSize = 30.sp)
+    Text(text = text.cycle?:"", fontSize = 20.sp, color = Green)
+    if(text.isExercise)
+        Text(text = text.name, fontSize = 30.sp)
+    else
+        Text(text = stringResource(id = R.string.rest), fontSize = 30.sp)
+
 }
 
 @Composable
@@ -63,7 +70,7 @@ fun ExerciseExecCard(viewModel: ExecuteRoutineViewModel, actualExercise: Mutable
                     )
                 }
             }
-            if(exercise.duration != 0 && exercise.isExercise)
+            if(exercise.duration != 0 && exercise.isExercise) {
                 Timer(
                     totalTime = exercise.duration * 1000L,
                     handleColor = Green,
@@ -71,7 +78,7 @@ fun ExerciseExecCard(viewModel: ExecuteRoutineViewModel, actualExercise: Mutable
                     activeBarColor = Green,
                     modifier = Modifier.size(200.dp)
                 )
-
+            }
         }
 
     }
@@ -108,7 +115,7 @@ fun WeightCards(name : String, actualExercise: MutableStateFlow<CyclesExercise>,
                     viewModel.setWeight(sliderValue)
                 },
                 interactionSource = interactionSource,
-                valueRange = 0f..300f,
+                valueRange = 0f..150f,
                 colors = SliderDefaults.colors(
                     activeTickColor = Green,
                     inactiveTickColor = Green,
@@ -156,7 +163,7 @@ fun RepsCards(name : String, actualExercise: MutableStateFlow<CyclesExercise>, v
                     viewModel.setReps(sliderValue)
                 },
                 interactionSource = interactionSource,
-                valueRange = 0f..300f,
+                valueRange = 0f..40f,
                 colors = SliderDefaults.colors(
                     activeTickColor = Green,
                     inactiveTickColor = Green,

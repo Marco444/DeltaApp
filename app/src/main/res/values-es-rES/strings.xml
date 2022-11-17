@@ -31,4 +31,6 @@
     <string name="error_header">¡Hubo un Error!</string>
     <string name="error_msg">Lo sentimos, ocurrio un error al acceder a la read. Por favor, inténtelo de nuevo más  tarde.</string>
     <string name="error_btn">Llévame al inicio</string>
+    <string name="rest">Descanso</string>
+
 </resources>

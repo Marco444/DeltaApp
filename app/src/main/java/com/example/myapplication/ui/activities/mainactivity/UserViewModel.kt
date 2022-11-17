@@ -1,6 +1,5 @@
 package com.example.myapplication.ui.activities.mainactivity
 
-import androidx.compose.runtime.collectAsState
 import androidx.compose.runtime.getValue
 import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.setValue
@@ -9,7 +8,6 @@ import androidx.lifecycle.viewModelScope
 import com.example.myapplication.data.repository.UserRepository
 import com.example.myapplication.util.SessionManager
 import kotlinx.coroutines.flow.MutableStateFlow
-import kotlinx.coroutines.flow.asStateFlow
 import kotlinx.coroutines.flow.update
 import kotlinx.coroutines.launch
 
@@ -20,12 +18,9 @@ class UserViewModel(
     ) : ViewModel() {
 
 
-    var userState = MutableStateFlow(UserState(/*isAuthenticated = sessionManager.loadAuthToken() != null*/))
+    var userState = MutableStateFlow(UserState(isAuthenticated = userRepository.authenticate()))
         private set
-
-
-    val isAuthenticated = userRepository.isAuthenticated.asStateFlow()
-
+  
     fun login(username: String, password: String) = viewModelScope.launch {
         userState.update { it.copy(
             isFetching = true,
@@ -35,12 +30,12 @@ class UserViewModel(
         runCatching {
             userRepository.login(username, password)
         }.onSuccess { response ->
+            userState.value.isAuthenticated.value = true
             userState.update {
                 it.copy(
                     isFetching = false,
                 )
             }
-            //isAuthenticated.value = true
         }.onFailure { e ->
             // Handle the error and notify the UI when appropriate.
             userState.update {
@@ -63,10 +58,11 @@ class UserViewModel(
         runCatching {
             userRepository.logout()
         }.onSuccess { response ->
+            userState.value.isAuthenticated.value = false
+
             userState.update {
                 it.copy(
                     isFetching = false,
-                    isAuthenticated = false,
                     currentUser = null,
                 )
             }

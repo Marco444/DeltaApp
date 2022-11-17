@@ -1,7 +1,9 @@
 package com.example.myapplication.data.network
 
 import com.example.myapplication.data.network.api.ApiRoutinService
+import com.example.myapplication.data.network.model.NetworkGetReview
 import com.example.myapplication.data.network.model.NetworkPagedContent
+import com.example.myapplication.data.network.model.NetworkReview
 import com.example.myapplication.data.network.model.NetworkRoutine
 
 class RoutinesRemoteDataSource(private val apiRoutineService: ApiRoutinService): RemoteDataSource() {
@@ -30,6 +32,11 @@ class RoutinesRemoteDataSource(private val apiRoutineService: ApiRoutinService):
     suspend fun addRoutine(routine: NetworkRoutine) {
         return handleApiResponse {
             apiRoutineService.addRoutine(routine)
+        }
+    }
+    suspend fun addReview(routineId : Int,review: NetworkReview): NetworkGetReview {
+        return handleApiResponse {
+            apiRoutineService.addReview(routineId,review)
         }
     }
 }

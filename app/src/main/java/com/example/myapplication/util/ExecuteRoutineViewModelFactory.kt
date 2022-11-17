@@ -17,6 +17,7 @@ class ExecuteRoutineViewModelFactory constructor(
     private val routinesCycleRepository: RoutinesCycleRepository,
     private val routinesRepository : RoutinesRepository,
     private val routineId : Int,
+    private val userRepository: UserRepository,
     owner: SavedStateRegistryOwner,
     defaultArgs: Bundle? = null
 ) : AbstractSavedStateViewModelFactory(owner, defaultArgs) {
@@ -28,7 +29,7 @@ class ExecuteRoutineViewModelFactory constructor(
     ) = with(modelClass) {
         when {
             isAssignableFrom(ExecuteRoutineViewModel::class.java) ->
-                ExecuteRoutineViewModel(routineId,cyclesExercisesRepository,routinesCycleRepository, routinesRepository )
+                ExecuteRoutineViewModel(routineId,cyclesExercisesRepository,routinesCycleRepository, routinesRepository,userRepository )
             else ->
                 throw IllegalArgumentException("Unknown ViewModel class: ${modelClass.name}")
         }

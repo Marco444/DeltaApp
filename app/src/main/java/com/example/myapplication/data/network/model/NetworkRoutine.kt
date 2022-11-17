@@ -32,10 +32,10 @@ data class NetworkRoutine (
     var user : NetworkUserLite? = null,
 
     @SerializedName("category")
-    var category: NetworkCategory? = null,
+    var category: NetworkCategory? = NetworkCategory(1,"",""),
 
     @SerializedName("metadata")
-    var metadata: NetworkRoutineMetadata? = NetworkRoutineMetadata()
+    var metadata: NetworkRoutineMetadata? = null
 ){
     fun asModel() : Routines {
         return Routines(
@@ -44,10 +44,11 @@ data class NetworkRoutine (
             description = detail,
             title = name,
             points = MutableStateFlow(score),
-            favourite = metadata?.isFavorite ?: false,
+           favourite = metadata?.isFavorite ?: false,
             difficulty = difficulty?: "",
             isPublic = isPublic,
-            delta = metadata?.delta
+            delta = metadata?.delta,
+            ownerId = user?.id?: 0
         )
     }
 }

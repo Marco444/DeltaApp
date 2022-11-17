@@ -4,6 +4,9 @@ import androidx.compose.foundation.Image
 import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.*
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.LaunchedEffect
+import androidx.compose.runtime.collectAsState
+import androidx.compose.runtime.getValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Brush
@@ -14,6 +17,7 @@ import androidx.compose.ui.modifier.modifierLocalConsumer
 import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.res.stringResource
 import com.example.myapplication.R
+import com.example.myapplication.ui.activities.mainactivity.UserViewModel
 import com.example.myapplication.ui.components.Button1
 
 
@@ -31,9 +35,11 @@ fun BackgroundImage(painter: Painter) {
 
 
 @Composable
-fun LandingScreen(loginHandler: () -> Unit, tryOutHandler: () -> Unit) {
+fun LandingScreen(loginHandler: () -> Unit, tryOutHandler: () -> Unit, userViewModel: UserViewModel) {
 
     val gradient = Brush.verticalGradient(colors = listOf(Color.Transparent, Color.Black))
+    val uiState by userViewModel.userState.collectAsState()
+    val auth by uiState.isAuthenticated.collectAsState()
 
     Box {
         BackgroundImage(painter = painterResource(id = R.drawable.registration_background))
@@ -56,6 +62,11 @@ fun LandingScreen(loginHandler: () -> Unit, tryOutHandler: () -> Unit) {
             Row {
                 Button1(fontSize = 24, text = stringResource(R.string.login), handler = loginHandler)
             }
+        }
+    }
+    LaunchedEffect(key1 = auth){
+        if(auth) {
+            tryOutHandler()
         }
     }
 }
