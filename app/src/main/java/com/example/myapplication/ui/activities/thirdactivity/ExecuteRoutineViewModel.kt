@@ -1,7 +1,9 @@
 package com.example.myapplication.ui.activities.thirdactivity
 
+import androidx.compose.ui.res.stringResource
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
+import com.example.myapplication.R
 import com.example.myapplication.ui.classes.Exercise
 import com.example.myapplication.data.repository.CyclesExercisesRepository
 import com.example.myapplication.data.repository.RoutinesCycleRepository

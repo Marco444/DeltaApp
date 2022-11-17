@@ -125,10 +125,7 @@ fun LogIn(actionRedirect: () -> Unit, backButton: () -> Unit,viewModel: UserView
                     },
                 modifier = Modifier.align(CenterHorizontally)
             )
-            LinkedText(
-                handler = {/*TODO AGREGAR EL MODIFICADOR DEL STORE*/ },
-                modifier = Modifier.align(CenterHorizontally)
-            )
+
             LaunchedEffect(key1 = auth){
                 if(auth) {
                     setSnackBarState(false)
@@ -204,23 +201,6 @@ fun PasswordTextField(onTextChange :(TextFieldValue) -> Unit,modifier: Modifier 
         modifier = modifier,
         textStyle = TextStyle.Default.copy(fontSize = 15.sp)
     )
-}
-@Composable
-fun LinkedText(handler : (Int) -> Unit,modifier: Modifier = Modifier){
-    val mAnnotatedLinkString = buildAnnotatedString {
-        // creating a string to display in the Text
-        val mStr = stringResource(id = R.string.forgot_password)
-        append(mStr)
-        addStyle(
-            style = SpanStyle(
-                color = Color.White,
-                textDecoration = TextDecoration.Underline
-            ), start = 0, end = mStr.length
-        )
-
-    }
-    ClickableText(text = mAnnotatedLinkString, onClick = handler,modifier = modifier)
-
 }
 @Composable
 fun LockScreenOrientation(orientation: Int) {
