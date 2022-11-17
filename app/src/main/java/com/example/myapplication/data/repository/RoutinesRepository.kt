@@ -18,7 +18,6 @@ class RoutinesRepository(
     private var routines: List<Routines> = emptyList()
 
 
-
     private var page = 0
     private var isLastPage = false
 
@@ -40,9 +39,12 @@ class RoutinesRepository(
         return remoteDataSource.getRoutine(routineId).asModel()
     }
 
-//    suspend fun getFavourites(page: Int): PagedRoutines {
-//       //return remoteDataSource.getFavourites(page).asModel()
-//    }
+    suspend fun getFavourites(page:Int): PagedRoutines {
+        val result = remoteDataSource.getFavourites(page)
+        val content = result.content.map { it.asModel() }
+        return PagedRoutines( content, result.page, result.isLastPage)
+    }
+
 
     suspend fun addFavourite(id: Int) {
         return remoteDataSource.addFavourite(id)

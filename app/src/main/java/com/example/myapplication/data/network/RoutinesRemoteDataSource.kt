@@ -42,7 +42,7 @@ class RoutinesRemoteDataSource(private val apiRoutineService: ApiRoutinService):
     }
 
 
-    suspend fun getFavourite(page: Int) : NetworkPagedContent<NetworkRoutine>{
+    suspend fun getFavourites(page: Int) : NetworkPagedContent<NetworkRoutine>{
         return handleApiResponse {
             apiRoutineService.getFavourite(page)
         }

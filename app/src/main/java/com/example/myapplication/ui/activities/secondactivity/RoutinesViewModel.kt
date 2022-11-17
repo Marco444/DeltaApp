@@ -53,12 +53,17 @@ class RoutinesViewModel(
     }
 
 
-
-    fun showFavorites() {
+    fun showFavorites() = viewModelScope.launch {
         _routinesState.value.exploreRoutines = emptyList()
-        runCatching {
-           //_routinesState.value.exploreRoutines = routinesRepository.getFavourites(1)
+
+        var content = routinesRepository.getFavourites(0)
+        var favourites = content.content
+        while(!content.isLastPage) {
+            content = routinesRepository.getFavourites(content.page + 1)
+            favourites += content.content
         }
+
+        _routinesState.value.exploreRoutines = favourites.map{ MutableStateFlow(it.copy(favourite = true))}
     }
 
     private fun addFavourite(id: Int) = viewModelScope.launch{
