@@ -75,9 +75,13 @@ fun RoutineFinished(
                 fontSize = 60.sp,
                 color = Color.White
             )
-            var delta :Float
-            if(routine.delta != 0f)
-                 delta = viewModel.getCurrentDelta().div(routine.delta?:1f)
+            var delta = 0f
+            var average = 0.0
+            if(routine.delta?.isNotEmpty()?:false)
+                average = routine.delta?.average()?:0.0
+            println(average)
+            if(average != 0.0)
+                 delta = viewModel.getCurrentDelta().div(average?:1.0).toFloat()
             else
                 delta = viewModel.getCurrentDelta()
             val color : Color = if(delta < 0.3) {
