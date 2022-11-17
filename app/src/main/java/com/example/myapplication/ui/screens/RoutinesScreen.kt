@@ -22,7 +22,8 @@ import kotlinx.coroutines.launch
 @Composable
 fun RoutinesScreen(viewModel: RoutinesViewModel,
                    actionRedirect: (Int) -> Unit,
-                   scaffoldState: ScaffoldState
+                   scaffoldState: ScaffoldState,
+                   errorRedirect: () -> Unit
 ){
     val coroutineScope = rememberCoroutineScope()
     Column (
@@ -66,7 +67,8 @@ fun RoutinesScreen(viewModel: RoutinesViewModel,
                     viewModel = viewModel,
                     actionRedirect = actionRedirect,
                     routineCard = RoutineCard.MyRoutine,
-                    buttonText = stringResource(id = R.string.Start)
+                    buttonText = stringResource(id = R.string.Start),
+                    errorRedirect = errorRedirect
                 )
             }
         }

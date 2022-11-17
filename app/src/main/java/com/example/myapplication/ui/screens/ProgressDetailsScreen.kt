@@ -36,10 +36,11 @@ fun SliderDelta(value: Float,
 }
 
 @Composable
-fun ProgressDetailScreen(viewModel: RoutinesViewModel, viewRoutineHandler: () -> Unit, routineId: String?, backButtonHandler: () -> Unit) {
+fun ProgressDetailScreen(viewModel: RoutinesViewModel, viewRoutineHandler: () -> Unit, routineId: String?, backButtonHandler: () -> Unit, errorRedirect: () -> Unit) {
 
     val id = routineId?.substringAfter('}')?.toInt() ?: -1
-    val routine: Routines = viewModel.routineUser(id)!!
+    val routine: Routines = viewModel.routineUser(id)
+
     val routineProgress: RoutineProgress = routine.routineProgress
 
     Column(
