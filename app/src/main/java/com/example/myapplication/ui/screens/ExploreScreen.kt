@@ -40,21 +40,21 @@ fun SearchField(viewModel: RoutinesViewModel) {
             if (newText.text.isNotEmpty() && newText.text.last() == '\n'){
                 focusManager.clearFocus()
                 if(text.text.length >  3)
-                    viewModel.getExploreWithParams(text.text)
+                    viewModel.getExploreWithParamsWrapper(text.text)
             }else{
                 text = newText
             }
             if(newText.text.isEmpty()){
-                viewModel.getExploreWithParams(null)
+                viewModel.getExploreWithParamsWrapper(null)
             }
         },
         shape = RoundedCornerShape(8.dp),
         trailingIcon = {
             IconButton(onClick = {
                 if(text.text.length >= 3)
-                    viewModel.getExploreWithParams(text.text)
+                    viewModel.getExploreWithParamsWrapper(text.text)
                 else
-                    viewModel.getExploreWithParams(null)
+                    viewModel.getExploreWithParamsWrapper(null)
 
             }) {
                 Icon(Icons.Filled.Search, "")

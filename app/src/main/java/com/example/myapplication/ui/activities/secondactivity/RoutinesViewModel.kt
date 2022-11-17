@@ -76,20 +76,29 @@ class RoutinesViewModel(
             error.update { true }
         }
     }
-    fun getExploreWithParams(text:String?)= viewModelScope.launch {
-        var page = 0
-        var response =  routinesRepository.getRoutines(true,page,text)
-        page++
-        pageExplore = 0
-        _routinesState.value.exploreRoutines = response.content.map { MutableStateFlow(it) }
-        _hasNextPageExplore.update { !response.isLastPage }
-        while (_hasNextPageExplore.value) {
-             response =  routinesRepository.getRoutines(true,page++,text)
-            _routinesState.value.exploreRoutines += response.content.map { MutableStateFlow(it) }
-            pageExplore = response.page
-            _hasNextPageExplore.update { !response.isLastPage }
-        }
+    fun getExploreWithParamsWrapper(text: String?){
+        _routinesState.value.exploreRoutines = emptyList()
+        getExploreWithParams(text)
+    }
+    private fun getExploreWithParams(text:String?)= viewModelScope.launch {
+        runCatching {
+            var page = 0
+            var response = routinesRepository.getRoutines(true, page, text)
+            page++
+            pageExplore = 0
+            _routinesState.value.exploreRoutines = response.content.map { MutableStateFlow(it) }
+            var hasNext = !response.isLastPage
+            while (hasNext) {
+                response = routinesRepository.getRoutines(true, page++, text)
+                _routinesState.value.exploreRoutines += response.content.map { MutableStateFlow(it) }
+                pageExplore = response.page
+                hasNext = !response.isLastPage
+            }
+        }.onSuccess{
 
+        }.onFailure {
+            error.update { true }
+        }
     }
 
     private fun getExploreRoutines() = viewModelScope.launch {
