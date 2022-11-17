@@ -6,6 +6,7 @@ import com.example.myapplication.ui.classes.Exercise
 import com.example.myapplication.data.repository.CyclesExercisesRepository
 import com.example.myapplication.data.repository.RoutinesCycleRepository
 import com.example.myapplication.data.repository.RoutinesRepository
+import com.example.myapplication.data.repository.UserRepository
 import com.example.myapplication.ui.classes.CyclesExercise
 import com.example.myapplication.ui.classes.Routines
 import com.example.myapplication.ui.classes.RoutinesCycles
@@ -20,7 +21,8 @@ class ExecuteRoutineViewModel(
     private val routineId : Int,
       private val cyclesExercisesRepository: CyclesExercisesRepository,
       private val routinesCycleRepository: RoutinesCycleRepository,
-      private val routinesRepository: RoutinesRepository
+      private val routinesRepository: RoutinesRepository,
+     private val userRepository: UserRepository
 ) : ViewModel() {
 
     private val _execRoutineState = MutableStateFlow(ExecuteRoutine())
@@ -47,18 +49,22 @@ class ExecuteRoutineViewModel(
         viewModelScope.launch {
              cycles = routinesCycleRepository.getRoutinCycles(routineId)
 
-            if(_execRoutineState.value.exercises.isEmpty()) return@launch
+            if(!_execRoutineState.value.exercises.isEmpty()) {
 
-            _execRoutineState.value.exercises[0].value = cyclesExercisesRepository.getCycleExercises(cycles[0].id).map {
-                it.rest = cycles[0].id
-                it
+                _execRoutineState.value.exercises[0].value =
+                    cyclesExercisesRepository.getCycleExercises(cycles[0].id).map {
+                        it.rest = cycles[0].id
+                        it
+                    }
+                _execRoutineState.value.exercises[1].value =
+                    cyclesExercisesRepository.getCycleExercises(cycles[1].id)
+                _execRoutineState.value.exercises[2].value =
+                    cyclesExercisesRepository.getCycleExercises(cycles[2].id)
+
+                initAllExercises()
+                exerciseCount = _execRoutineState.value.allExercises.size
+                iterator = _execRoutineState.value.allExercises.listIterator()
             }
-            _execRoutineState.value.exercises[1].value = cyclesExercisesRepository.getCycleExercises(cycles[1].id)
-            _execRoutineState.value.exercises[2].value = cyclesExercisesRepository.getCycleExercises(cycles[2].id)
-
-            initAllExercises()
-            exerciseCount = _execRoutineState.value.allExercises.size
-            iterator = _execRoutineState.value.allExercises.listIterator()
 
         }
     }
@@ -69,7 +75,7 @@ class ExecuteRoutineViewModel(
                     val metadata = cycles[cycle].cycleMetadata?.filter { it.id == exercise.id }
                     exercise.rest = metadata?.get(0)?.rest?:0
                     exercise.sets =metadata?.get(0)?.sets?:0
-                    exercise.weight = metadata?.get(0)?.weight?.toFloat()!!
+                    exercise.weight = metadata?.get(0)?.weight?.toFloat() ?: 0f
                     exercise.index =  _execRoutineState.value.allExercises.size
                     println(exercise)
                     _execRoutineState.value.allExercises += exercise
@@ -100,7 +106,12 @@ class ExecuteRoutineViewModel(
             delta
         ))?.div(2)
         viewModelScope.launch {
-            executeRoutine.value.currentRoutine.update { routinesRepository.modifyRoutine(executeRoutine.value.currentRoutine.value)  }
+
+        }
+        viewModelScope.launch {
+            val currentUser = userRepository.getCurrentUser(true)
+            if(currentUser?.id == executeRoutine.value.currentRoutine.value.ownerId)
+                executeRoutine.value.currentRoutine.update { routinesRepository.modifyRoutine(executeRoutine.value.currentRoutine.value)  }
         }
     }
     fun nextExercise(){

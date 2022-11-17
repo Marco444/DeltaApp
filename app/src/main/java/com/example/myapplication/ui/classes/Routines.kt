@@ -49,7 +49,8 @@ data class Routines (
     val routineProgress: RoutineProgress = RoutineProgress(0, 80f),
     val difficulty : String = "",
     val isPublic : Boolean = false,
-    var delta : Float? = 0f
+    var delta : Float? = 0f,
+    val ownerId : Int = 0
 ){
     fun asNetworkModel(): NetworkRoutine {
         return NetworkRoutine(
