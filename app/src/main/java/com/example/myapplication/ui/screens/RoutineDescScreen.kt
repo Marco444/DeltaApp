@@ -73,21 +73,23 @@ fun RoutineDescriptionScreen(viewModel: ExecuteRoutineViewModel,
                  verticalAlignment = Alignment.CenterVertically,
                  modifier = Modifier.align(Alignment.CenterHorizontally)
              ) {
-                 Button1(
-                     fontSize = 17,
-                     text = "Start Routine",
-                     handler = {
-                         if(viewModel.hasNext()) {
-                             viewModel.nextExercise()
-                             if(viewModel.getExecuteRoutineLiteMode())
-                                 starRoutineLiteHandler()
-                             else
-                                 starRoutineHanlder()
-                         }else{
-                             backHandler()
+                 if(!fetchState.isFetching) {
+                     Button1(
+                         fontSize = 17,
+                         text = "Start Routine",
+                         handler = {
+                             if (viewModel.hasNext()) {
+                                 viewModel.nextExercise()
+                                 if (viewModel.getExecuteRoutineLiteMode())
+                                     starRoutineLiteHandler()
+                                 else
+                                     starRoutineHanlder()
+                             } else {
+                                 backHandler()
+                             }
                          }
-                     }
-                 )
+                     )
+                 }
              }
          }
      }
