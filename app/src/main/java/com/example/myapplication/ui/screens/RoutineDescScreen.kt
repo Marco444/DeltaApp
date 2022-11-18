@@ -65,7 +65,7 @@ fun RoutineDescriptionScreen(viewModel: ExecuteRoutineViewModel,
          }
          Spacer(modifier = Modifier.height(20.dp))
          Column(modifier = Modifier.fillMaxSize(), horizontalAlignment = Alignment.CenterHorizontally) {
-             ExPreviewCard(routine.title ?: "",30,routine.description ?: "")
+             ExPreviewCard(routine.title )
              Spacer(modifier = Modifier.height(40.dp))
              ListOfExercises(viewModel)
              Spacer(modifier = Modifier.height(10.dp))

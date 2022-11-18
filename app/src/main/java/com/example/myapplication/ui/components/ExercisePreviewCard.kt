@@ -19,25 +19,10 @@ import androidx.compose.ui.unit.sp
 import com.example.myapplication.ui.theme.Green
 
 @Composable
-fun ExPreviewCard(title : String, time:Int,description :String){
+fun ExPreviewCard(title : String){
     Card(modifier = Modifier.width(300.dp),shape = RoundedCornerShape(20.dp), backgroundColor = Color.DarkGray){
         Column(horizontalAlignment = Alignment.CenterHorizontally) {
             Text(text = title, color = Green, fontSize = 25.sp)
-            TimeComp(time)
-            Text(text = description, color = Color.White, fontSize = 13.sp,textAlign = TextAlign.Center,
-            )
         }
-    }
-}
-
-@Composable
-fun TimeComp(time : Int){
-    Row(verticalAlignment = Alignment.CenterVertically) {
-        Icon(
-            Icons.Default.Timer,
-            contentDescription = "Timer",
-            tint = Color.Black
-        ) 
-        Text(text = "$time mn", color = Color.White, fontSize = 10.sp)
     }
 }
