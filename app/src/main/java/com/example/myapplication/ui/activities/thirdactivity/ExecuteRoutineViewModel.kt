@@ -127,22 +127,33 @@ class ExecuteRoutineViewModel(
         if(executeRoutine.value.currentRoutine.value.points.value > 0)
             runBlocking {
                 kotlin.runCatching {
-                launch {
-                    routinesRepository.addReview(
-                        executeRoutine.value.currentRoutine.value.id,
-                        Review(score = executeRoutine.value.currentRoutine.value.points.value, "")
-                    )
-                    val currentUser = userRepository.getCurrentUser(true)
-                    if (currentUser?.id == executeRoutine.value.currentRoutine.value.ownerId)
-                        executeRoutine.value.currentRoutine.update {
-                            routinesRepository.modifyRoutine(
-                                executeRoutine.value.currentRoutine.value
+                    launch {
+                        routinesRepository.addReview(
+                            executeRoutine.value.currentRoutine.value.id,
+                            Review(
+                                score = executeRoutine.value.currentRoutine.value.points.value,
+                                ""
                             )
+                        )
+                    }
+
+                    if (!getExecuteRoutineLiteMode()) {
+                        runBlocking {
+                            launch {
+                                val currentUser = userRepository.getCurrentUser(true)
+                                if (currentUser?.id == executeRoutine.value.currentRoutine.value.ownerId)
+                                    executeRoutine.value.currentRoutine.update {
+                                        routinesRepository.modifyRoutine(
+                                            executeRoutine.value.currentRoutine.value
+                                        )
+                                    }
+                            }
                         }
-                }
-            }.onFailure {
+                    }
+                }.onFailure {
                     _fetchingState.update { it.copy(isFetching = false,error = true, message = it.message) }
-            } }
+                }
+        }
     }
     fun nextExercise(){
         if(!isInNext) {

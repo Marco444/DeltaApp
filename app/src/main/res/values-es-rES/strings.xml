@@ -34,5 +34,13 @@
     <string name="rest">Descanso</string>
     <string name="conection_error">Error de coneccion</string>
     <string name="try_again">Volver a intentarlo</string>
+    <string name="explanationProgress">Este grafico muestra como fue cambiando tu promedio en cada ejecucion de esta rutina.</string>
+    <string name="display_routines_pic_title">Mostrar Imagenes De Las Rutinas</string>
+    <string name="display_routines_pic_description">Elige si quieres ver o no las imagenes de portada para cada rutina.</string>
+    <string name="exec_routine_mode_title">Ejecucion De Rutina En Modo Liviano</string>
+    <string name="exec_routine_mode_description">El modo liviano permite simplificar la forma en la que se muestra cada ejercicio y su descripcion.</string>
+    <string name="settings">Configuracion</string>
+    <string name="finish">Terminar</string>
+    <string name="review_routine">Califica esta rutina:</string>
 
 </resources>

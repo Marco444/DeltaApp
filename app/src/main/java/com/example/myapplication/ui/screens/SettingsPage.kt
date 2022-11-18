@@ -48,7 +48,7 @@ fun SettingsPage(
     ) {
 
         Column(
-            modifier = Modifier.fillMaxWidth(0.95F)
+            modifier = Modifier.fillMaxWidth()
         ) {
 
             BackButton (handler = backHandler)
@@ -99,7 +99,7 @@ fun SettingsCard(
 
     Column(
         modifier = Modifier
-            .fillMaxWidth()
+            .fillMaxWidth(0.9F)
             .background(Gray, RoundedCornerShape(30.dp)),
         horizontalAlignment = Alignment.CenterHorizontally
     ) {

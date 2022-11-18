@@ -21,7 +21,7 @@
     <string name="Start">Start</string>
     <string name="Progress">See Progress</string>
     <string name="Preview">Preview</string>
-    <string name="not_logged_in" translatable="false">Not Logged In</string>
+    <string name="not_logged_in">Not Logged In</string>
     <string name="logout">Log Out</string>
     <string name="last_activity">Last activity \n</string>
     <string name="see_progress">See Progress</string>
@@ -39,4 +39,14 @@
     <string name="settings">Settings</string>
     <string name="conection_error">Connection Error</string>
     <string name="try_again">Try again</string>
+    <string name="finish">Finish</string>
+    <string name="review_routine">Review this routine:</string>
+    <string name="good_delta">You have surpass your average!</string>
+    <string name="regular_delta">You almost reached your average!</string>
+    <string name="bad_delta">Your performance was below average</string>
+    <string name="good_delta_title">Well Done!</string>
+    <string name="regular_delta_title">Almost!</string>
+    <string name="bad_delta_title">Carry On</string>
+    <string name="routine_finished_title">Done</string>
+    <string name="routine_finished_text">Take a break, you have finished this routine</string>
 </resources>

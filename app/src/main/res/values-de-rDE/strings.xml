@@ -26,4 +26,16 @@
     <string name="not_logged_in">Nicht eingeloggt</string>
     <string name="logout">Sitzung schließen</string>
     <string name="last_activity">Letzte Aktivität</string>
+    <string name="fav">Lieblings</string>
+    <string name="load_more">Mehr laden</string>
+    <string name="error_header">Ein Fehler ist aufgetreten</string>
+    <string name="error_msg">Es tut uns leid, es ist ein Problem aufgetreten. Bitte überprüfen Sie, ob eine Internetverbindung besteht und starten Sie die App neu.</string>
+    <string name="error_btn">Gehen zu Home</string>
+    <string name="rest">Pause</string>
+    <string name="explanationProgress">Diese Grafik zeigt, wie sich Ihr durchschnittliches Volumen während mehrerer Ausführungen dieser Routine verändert hat</string>
+    <string name="display_routines_pic_title">Routinebilder anzeigen</string>
+    <string name="display_routines_pic_description">Entscheiden Sie, ob das Bild einer Routine angezeigt werden soll oder nicht.</string>
+    <string name="exec_routine_mode_title">Mode Lite d\'exécution de routine</string>
+    <string name="exec_routine_mode_description">Der Lite-Modus vereinfacht die Art und Weise, wie Sie eine Routine ausführen. Sehen Sie nur den Namen der Übung und die Beschreibung</string>
+    <string name="settings">Einstellungen</string>
 </resources>
