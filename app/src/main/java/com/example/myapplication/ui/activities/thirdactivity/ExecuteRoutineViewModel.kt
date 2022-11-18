@@ -134,17 +134,19 @@ class ExecuteRoutineViewModel(
                     )
                 }
             }
-        runBlocking {
-            launch {
-                    val currentUser = userRepository.getCurrentUser(true)
-                    if (currentUser?.id == executeRoutine.value.currentRoutine.value.ownerId)
-                        executeRoutine.value.currentRoutine.update {
-                            routinesRepository.modifyRoutine(
-                                executeRoutine.value.currentRoutine.value
-                            )
-                        }
+            if(!getExecuteRoutineLiteMode()) {
+                runBlocking {
+                    launch {
+                        val currentUser = userRepository.getCurrentUser(true)
+                        if (currentUser?.id == executeRoutine.value.currentRoutine.value.ownerId)
+                            executeRoutine.value.currentRoutine.update {
+                                routinesRepository.modifyRoutine(
+                                    executeRoutine.value.currentRoutine.value
+                                )
+                            }
+                    }
                 }
-        }
+            }
     }
     fun nextExercise(){
         if(!isInNext) {

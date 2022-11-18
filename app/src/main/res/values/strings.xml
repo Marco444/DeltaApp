@@ -45,4 +45,6 @@
     <string name="good_delta_title">Well Done!</string>
     <string name="regular_delta_title">Almost!</string>
     <string name="bad_delta_title">Carry On</string>
+    <string name="routine_finished_title">Done</string>
+    <string name="routine_finished_text">Take a break, you have finished this routine</string>
 </resources>
