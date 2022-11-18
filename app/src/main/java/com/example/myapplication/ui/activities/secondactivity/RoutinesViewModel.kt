@@ -100,21 +100,25 @@ class RoutinesViewModel(
             var aux: User? = User(-1)
             _fetchingState.update { it.copy(isFetching = true, error = false) }
             runCatching {
+                _routinesState.value.userRoutines = emptyList()
                 aux = userRepository.getCurrentUser(false)!!
             }.onSuccess {
                 var response: PagedRoutines? = null
                 runCatching {
-                    response = userRepository.getUserRoutine(true, aux!!.id, pageUser)
+                    var page = 0
+                    var hasNext = true
+                    response = userRepository.getUserRoutine(true, aux!!.id, page++)
+                    _routinesState.value.userRoutines = response!!.content.map { MutableStateFlow(it) }
+                    hasNext = !response!!.isLastPage
+                    while (hasNext){
+                        response = userRepository.getUserRoutine(true, aux!!.id, page++)
+                        _routinesState.value.userRoutines += response!!.content.map { MutableStateFlow(it) }
+                        hasNext = !response!!.isLastPage
+                    }
+
                 }.onSuccess {
                     _fetchingState.update { it.copy(isFetching = false, error = false) }
 
-                    _routinesState.value.userRoutines += response!!.content.map { routine ->
-                        MutableStateFlow(
-                            routine
-                        )
-                    }
-                    pageUser = response!!.page
-                    _hasNextPageUser.update { !response!!.isLastPage }
                 }.onFailure { apiError ->
                     _fetchingState.update { it.copy(isFetching = false, error = true, message = apiError.message?:"") }
 
@@ -123,7 +127,6 @@ class RoutinesViewModel(
             }.onFailure { apiError ->
                 _fetchingState.update { it.copy(isFetching = false, error = true, message = apiError.message?:"") }
                 error.update { true }
-                //throw it
             }
         }
     }
@@ -148,6 +151,7 @@ class RoutinesViewModel(
             while (hasNext) {
                 response = routinesRepository.getRoutines(true, page++, text)
                 _routinesState.value.exploreRoutines += response.content.map { MutableStateFlow(it) }
+
                 pageExplore = response.page
                 hasNext = !response.isLastPage
             }
@@ -306,7 +310,7 @@ class RoutinesViewModel(
         runCatching {
             routinesRepository.modifyRoutine(routine)
         }.onSuccess {
-            getUserRoutines()
+            //getUserRoutines()
         }.onFailure {
             error.update { true }
         }

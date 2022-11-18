@@ -81,8 +81,6 @@ fun ExerciseExecScreen(viewModel: ExecuteRoutineViewModel = viewModel(),
                     })
 
                 }
-//                if (popupControl) {
-//                    }
                 }
             }
         }

@@ -36,9 +36,7 @@ fun RoutinesGrid(viewModel: RoutinesViewModel,
                 contentAlignment = Alignment.Center
             ) {
 
-                //this line literally makes the recomposition happen!
                 val routine by routineState.collectAsState()
-
                 RoutineCard(
                     routine = routine,
                     iconId =    if (!viewModel.isSelected(routine.id, routineCard))
@@ -55,27 +53,5 @@ fun RoutinesGrid(viewModel: RoutinesViewModel,
                 Spacer(modifier = Modifier.height(30.dp))
             }
         }
-
-        item {
-            Column(
-                horizontalAlignment = Alignment.CenterHorizontally
-            ) {
-                if(((routineCard == RoutineCard.MyRoutine ||  routineCard == RoutineCard.Progress) && hasNextPageUser) || (routineCard == RoutineCard.ExploreRoutine && hasNextPageExplore)) {
-                    Button1(
-                        fontSize = 17,
-                        text = stringResource(id = R.string.load_more),
-                        handler = {
-                            if(routineCard == RoutineCard.ExploreRoutine)
-                                viewModel.nextPageExplore()
-                            else
-                                viewModel.nextPageUser()
-                        }
-                    )
-                    Spacer(modifier = Modifier.height(20.dp))
-
-                }
-            }
-        }
-
     }
 }

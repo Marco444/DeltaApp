@@ -1,0 +1,241 @@
+Index: app/src/main/java/com/example/myapplication/ui/navigation/NavGraph.kt
+IDEA additional info:
+Subsystem: com.intellij.openapi.diff.impl.patch.BaseRevisionTextPatchEP
+<+>package com.example.myapplication.ui.navigation\n\nimport android.content.Intent\nimport androidx.compose.material.ScaffoldState\nimport androidx.compose.runtime.Composable\nimport androidx.navigation.NavHostController\nimport androidx.navigation.NavType\nimport androidx.navigation.compose.NavHost\nimport androidx.navigation.compose.composable\nimport androidx.navigation.navArgument\nimport androidx.navigation.navDeepLink\nimport com.example.myapplication.ui.screens.*\nimport com.example.myapplication.ui.activities.secondactivity.RoutinesViewModel\n\n@Composable\n\n/*\n* La clave del disenio de navegacion es que cada pantalla tenga una accion principal a la\n* que va a llevar, y de esa manera hacer que esa accion se manje direction directamente y\n* unicamente desde aca\n* */\nfun NavGraph(navController: NavHostController, viewModel: RoutinesViewModel, executeRedirect: (Int) -> Unit, scaffoldState: ScaffoldState) {\n    NavHost(\n        navController = navController,\n        startDestination = NavBarScreen.Routines.route,\n    ) {\n        composable(NavBarScreen.Routines.route) {\n            RoutinesScreen(viewModel = viewModel,\n                actionRedirect = executeRedirect, scaffoldState,\n                errorRedirect = {navController.navigate(Screen.Error.route)},\n                settingsRedirect = {navController.navigate(Screen.Settings.route)}\n            )\n        }\n        composable(NavBarScreen.Progress.route) {\n            ProgressScreen(viewModel = viewModel,\n                actionRedirect = {navController.navigate(Screen.ProgressDetail.route + it  )},\n                scaffoldState = scaffoldState,\n                errorRedirect = {navController.navigate(Screen.Error.route)},\n                settingsRedirect = {navController.navigate(Screen.Settings.route)}\n            )\n        }\n        composable(NavBarScreen.Explore.route) { entry ->\n            ExploreScreen(viewModel = viewModel,\n                scaffoldState,\n                actionRedirect = executeRedirect,\n                refferedRoutineId = id,\n                errorRedirect = {navController.navigate(Screen.Error.route)},\n                settingsRedirect = {navController.navigate(Screen.Settings.route)}\n            )\n        }\n        composable(Screen.Error.route) {\n            ApiErrorScreen()\n        }\n        composable(Screen.ProgressDetail.route) {backStackEntry ->\n            ProgressDetailScreen(\n                viewModel = viewModel,\n                viewRoutineHandler = {navController.navigate(Screen.Execute.route)},\n                backButtonHandler = {navController.popBackStack()},\n                routineId = backStackEntry.arguments?.getString(\"routineId\"),\n                errorRedirect = {navController.navigate(Screen.Error.route)})\n        }\n        composable(Screen.Settings.route){\n            SettingsPage(viewModel = viewModel, backHandler = {navController.popBackStack()})\n        }\n\n    }\n}
+Subsystem: com.intellij.openapi.diff.impl.patch.CharsetEP
+<+>UTF-8
+===================================================================
+diff --git a/app/src/main/java/com/example/myapplication/ui/navigation/NavGraph.kt b/app/src/main/java/com/example/myapplication/ui/navigation/NavGraph.kt
+--- a/app/src/main/java/com/example/myapplication/ui/navigation/NavGraph.kt	(revision 1ecb49a1ffcc77534301e40c5df475d28ddaf635)
++++ b/app/src/main/java/com/example/myapplication/ui/navigation/NavGraph.kt	(date 1668790094103)
+@@ -26,7 +26,8 @@
+     ) {
+         composable(NavBarScreen.Routines.route) {
+             RoutinesScreen(viewModel = viewModel,
+-                actionRedirect = executeRedirect, scaffoldState,
++                actionRedirect = executeRedirect,
++                scaffoldState = scaffoldState,
+                 errorRedirect = {navController.navigate(Screen.Error.route)},
+                 settingsRedirect = {navController.navigate(Screen.Settings.route)}
+             )
+@@ -41,7 +42,7 @@
+         }
+         composable(NavBarScreen.Explore.route) { entry ->
+             ExploreScreen(viewModel = viewModel,
+-                scaffoldState,
++                scaffoldState = scaffoldState,
+                 actionRedirect = executeRedirect,
+                 refferedRoutineId = id,
+                 errorRedirect = {navController.navigate(Screen.Error.route)},
+Index: app/src/main/java/com/example/myapplication/ui/screens/ExploreScreen.kt
+IDEA additional info:
+Subsystem: com.intellij.openapi.diff.impl.patch.BaseRevisionTextPatchEP
+<+>package com.example.myapplication.ui.screens\n\nimport androidx.compose.foundation.background\nimport androidx.compose.foundation.layout.*\nimport androidx.compose.foundation.shape.RoundedCornerShape\nimport androidx.compose.material.*\nimport androidx.compose.material.icons.Icons\nimport androidx.compose.material.icons.filled.Search\nimport androidx.compose.material.icons.filled.Sort\nimport androidx.compose.runtime.*\nimport androidx.compose.ui.Alignment\nimport androidx.compose.ui.ExperimentalComposeUiApi\nimport androidx.compose.ui.Modifier\nimport androidx.compose.ui.draw.clip\nimport androidx.compose.ui.graphics.Color\nimport androidx.compose.ui.graphics.Color.Companion.White\nimport androidx.compose.ui.platform.LocalFocusManager\nimport androidx.compose.ui.platform.LocalSoftwareKeyboardController\nimport androidx.compose.ui.res.stringResource\nimport androidx.compose.ui.text.TextStyle\nimport androidx.compose.ui.text.input.TextFieldValue\nimport androidx.compose.ui.unit.dp\nimport androidx.compose.ui.unit.sp\nimport com.example.myapplication.R\nimport com.example.myapplication.ui.components.*\nimport com.example.myapplication.ui.navigation.NavBarScreen\nimport com.example.myapplication.ui.activities.secondactivity.RoutinesViewModel\nimport com.example.myapplication.ui.theme.Gray\nimport com.example.myapplication.ui.theme.Green\nimport kotlinx.coroutines.launch\n\n\n@Composable\nfun SearchField(viewModel: RoutinesViewModel) {\n    var text by remember { mutableStateOf(TextFieldValue(\"\")) }\n    val focusManager = LocalFocusManager.current\n    TextField(\n        value = text,\n        onValueChange = { newText ->\n            if (newText.text.isNotEmpty() && newText.text.last() == '\\n'){\n                focusManager.clearFocus()\n                if(text.text.length >=  3)\n                    viewModel.getExploreWithParamsWrapper(text.text)\n            }else{\n                text = newText\n            }\n            if(newText.text.isEmpty()){\n                viewModel.getExploreWithParamsWrapper(null)\n            }\n        },\n        shape = RoundedCornerShape(8.dp),\n        trailingIcon = {\n            IconButton(onClick = {\n                if(text.text.length >= 3)\n                    viewModel.getExploreWithParamsWrapper(text.text)\n                else\n                    viewModel.getExploreWithParamsWrapper(null)\n\n            }) {\n                Icon(Icons.Filled.Search, \"\")\n            }\n        },\n        colors = TextFieldDefaults.textFieldColors(\n            backgroundColor = White,\n            focusedIndicatorColor =  Color.Transparent),\n        textStyle = TextStyle.Default.copy(fontSize = 15.sp),\n        modifier = Modifier\n            .height(55.dp)\n            .fillMaxWidth(0.75F)\n    )\n}\n\n@Composable\nfun FilterButton(viewModel: RoutinesViewModel) {\n    var expanded by remember { mutableStateOf(false) }\n\n    Box {\n        IconButton(\n            onClick = { expanded = !expanded},\n            modifier = Modifier\n                .clip(RoundedCornerShape(8.dp))\n                .background(White)\n                .height(40.dp)\n                .fillMaxWidth(0.65F)\n        ) {\n            Icon(Icons.Filled.Sort, contentDescription = null)\n        }\n\n        DropdownMenu(expanded = expanded, onDismissRequest = { expanded = false }, modifier = Modifier\n            .background(\n                Color.White\n            )\n            .clip(RoundedCornerShape(8.dp))) {\n            DropdownMenuItem(onClick = { viewModel.getExploreRoutines() ; expanded = false }) {\n                Text(text = \"all\")\n            }\n            DropdownMenuItem(onClick = { viewModel.getUserFavoritesWrapper() ; expanded = false }) {\n                Text(text = stringResource(id = R.string.favourite))\n            }\n        }\n    }\n}\n\n@Composable\nfun SearchAndFilter(viewModel: RoutinesViewModel) {\n\n    Row(verticalAlignment = Alignment.CenterVertically) {\n        SearchField(viewModel)\n        Spacer(Modifier.width(10.dp))\n        FilterButton(viewModel = viewModel)\n    }\n}\n\n@Composable\nfun ExploreScreen(viewModel: RoutinesViewModel,\n                  scaffoldState: ScaffoldState,\n                  actionRedirect: (Int) -> Unit,\n                  refferedRoutineId: Int = -1,\n                  errorRedirect: () -> Unit,\n                  settingsRedirect: () -> Unit\n) {\n    val coroutineScope = rememberCoroutineScope()\n\n    val error by viewModel.error.collectAsState()\n    if(error) {\n        errorRedirect()\n        viewModel.errorHandled()\n    }\n\n    Column(\n        modifier = Modifier\n            .fillMaxWidth()\n            .fillMaxHeight()\n            .background(MaterialTheme.colors.background),\n        horizontalAlignment = Alignment.CenterHorizontally\n    ) {\n\n        Column(modifier = Modifier.align(Alignment.Start)) {\n            TopBar(scaffoldState, settingsRedirect)\n        }\n        Row {\n            Column(\n                horizontalAlignment = Alignment.CenterHorizontally\n            ) {\n                Text(\n                    text = stringResource(R.string.explore_title),\n                    style = MaterialTheme.typography.h1\n                )\n\n                if(refferedRoutineId != -1) {\n                    Text(text = \"This references to $refferedRoutineId\", color = White)\n                }\n                Spacer(modifier = Modifier.height(10.dp))\n\n                SearchAndFilter(viewModel = viewModel)\n\n                Spacer(modifier = Modifier.height(20.dp))\n\n                RoutinesGrid(\n                    viewModel = viewModel,\n                    actionRedirect = actionRedirect,\n                    routineCard = RoutineCard.ExploreRoutine,\n                    buttonText = stringResource(id = R.string.Preview),\n                    errorRedirect = errorRedirect\n                )\n            }\n\n        }\n    }\n}\n\n
+Subsystem: com.intellij.openapi.diff.impl.patch.CharsetEP
+<+>UTF-8
+===================================================================
+diff --git a/app/src/main/java/com/example/myapplication/ui/screens/ExploreScreen.kt b/app/src/main/java/com/example/myapplication/ui/screens/ExploreScreen.kt
+--- a/app/src/main/java/com/example/myapplication/ui/screens/ExploreScreen.kt	(revision 1ecb49a1ffcc77534301e40c5df475d28ddaf635)
++++ b/app/src/main/java/com/example/myapplication/ui/screens/ExploreScreen.kt	(date 1668790432021)
+@@ -30,86 +30,8 @@
+ import kotlinx.coroutines.launch
+ 
+ 
+-@Composable
+-fun SearchField(viewModel: RoutinesViewModel) {
+-    var text by remember { mutableStateOf(TextFieldValue("")) }
+-    val focusManager = LocalFocusManager.current
+-    TextField(
+-        value = text,
+-        onValueChange = { newText ->
+-            if (newText.text.isNotEmpty() && newText.text.last() == '\n'){
+-                focusManager.clearFocus()
+-                if(text.text.length >=  3)
+-                    viewModel.getExploreWithParamsWrapper(text.text)
+-            }else{
+-                text = newText
+-            }
+-            if(newText.text.isEmpty()){
+-                viewModel.getExploreWithParamsWrapper(null)
+-            }
+-        },
+-        shape = RoundedCornerShape(8.dp),
+-        trailingIcon = {
+-            IconButton(onClick = {
+-                if(text.text.length >= 3)
+-                    viewModel.getExploreWithParamsWrapper(text.text)
+-                else
+-                    viewModel.getExploreWithParamsWrapper(null)
+-
+-            }) {
+-                Icon(Icons.Filled.Search, "")
+-            }
+-        },
+-        colors = TextFieldDefaults.textFieldColors(
+-            backgroundColor = White,
+-            focusedIndicatorColor =  Color.Transparent),
+-        textStyle = TextStyle.Default.copy(fontSize = 15.sp),
+-        modifier = Modifier
+-            .height(55.dp)
+-            .fillMaxWidth(0.75F)
+-    )
+-}
+-
+-@Composable
+-fun FilterButton(viewModel: RoutinesViewModel) {
+-    var expanded by remember { mutableStateOf(false) }
+-
+-    Box {
+-        IconButton(
+-            onClick = { expanded = !expanded},
+-            modifier = Modifier
+-                .clip(RoundedCornerShape(8.dp))
+-                .background(White)
+-                .height(40.dp)
+-                .fillMaxWidth(0.65F)
+-        ) {
+-            Icon(Icons.Filled.Sort, contentDescription = null)
+-        }
+-
+-        DropdownMenu(expanded = expanded, onDismissRequest = { expanded = false }, modifier = Modifier
+-            .background(
+-                Color.White
+-            )
+-            .clip(RoundedCornerShape(8.dp))) {
+-            DropdownMenuItem(onClick = { viewModel.getExploreRoutines() ; expanded = false }) {
+-                Text(text = "all")
+-            }
+-            DropdownMenuItem(onClick = { viewModel.getUserFavoritesWrapper() ; expanded = false }) {
+-                Text(text = stringResource(id = R.string.favourite))
+-            }
+-        }
+-    }
+-}
+-
+-@Composable
+-fun SearchAndFilter(viewModel: RoutinesViewModel) {
+-
+-    Row(verticalAlignment = Alignment.CenterVertically) {
+-        SearchField(viewModel)
+-        Spacer(Modifier.width(10.dp))
+-        FilterButton(viewModel = viewModel)
+-    }
+-}
++
++
+ 
+ @Composable
+ fun ExploreScreen(viewModel: RoutinesViewModel,
+Index: app/src/main/java/com/example/myapplication/ui/components/SearchAndFilter.kt
+IDEA additional info:
+Subsystem: com.intellij.openapi.diff.impl.patch.CharsetEP
+<+>UTF-8
+===================================================================
+diff --git a/app/src/main/java/com/example/myapplication/ui/components/SearchAndFilter.kt b/app/src/main/java/com/example/myapplication/ui/components/SearchAndFilter.kt
+new file mode 100644
+--- /dev/null	(date 1668790432051)
++++ b/app/src/main/java/com/example/myapplication/ui/components/SearchAndFilter.kt	(date 1668790432051)
+@@ -0,0 +1,103 @@
++package com.example.myapplication.ui.components
++
++import androidx.compose.foundation.background
++import androidx.compose.foundation.layout.*
++import androidx.compose.foundation.shape.RoundedCornerShape
++import androidx.compose.material.*
++import androidx.compose.material.icons.Icons
++import androidx.compose.material.icons.filled.Search
++import androidx.compose.material.icons.filled.Sort
++import androidx.compose.runtime.*
++import androidx.compose.ui.Alignment
++import androidx.compose.ui.Modifier
++import androidx.compose.ui.draw.clip
++import androidx.compose.ui.graphics.Color
++import androidx.compose.ui.platform.LocalFocusManager
++import androidx.compose.ui.res.stringResource
++import androidx.compose.ui.text.TextStyle
++import androidx.compose.ui.text.input.TextFieldValue
++import androidx.compose.ui.unit.dp
++import androidx.compose.ui.unit.sp
++import com.example.myapplication.R
++import com.example.myapplication.ui.activities.secondactivity.RoutinesViewModel
++
++@Composable
++fun SearchField(viewModel: RoutinesViewModel) {
++    var text by remember { mutableStateOf(TextFieldValue("")) }
++    val focusManager = LocalFocusManager.current
++    TextField(
++        value = text,
++        onValueChange = { newText ->
++            if (newText.text.isNotEmpty() && newText.text.last() == '\n'){
++                focusManager.clearFocus()
++                if(text.text.length >=  3)
++                    viewModel.getExploreWithParamsWrapper(text.text)
++            }else{
++                text = newText
++            }
++            if(newText.text.isEmpty()){
++                viewModel.getExploreWithParamsWrapper(null)
++            }
++        },
++        shape = RoundedCornerShape(8.dp),
++        trailingIcon = {
++            IconButton(onClick = {
++                if(text.text.length >= 3)
++                    viewModel.getExploreWithParamsWrapper(text.text)
++                else
++                    viewModel.getExploreWithParamsWrapper(null)
++
++            }) {
++                Icon(Icons.Filled.Search, "")
++            }
++        },
++        colors = TextFieldDefaults.textFieldColors(
++            backgroundColor = Color.White,
++            focusedIndicatorColor =  Color.Transparent),
++        textStyle = TextStyle.Default.copy(fontSize = 15.sp),
++        modifier = Modifier
++            .height(55.dp)
++            .fillMaxWidth(0.75F)
++    )
++}
++
++@Composable
++fun FilterButton(viewModel: RoutinesViewModel) {
++    var expanded by remember { mutableStateOf(false) }
++
++    Box {
++        IconButton(
++            onClick = { expanded = !expanded},
++            modifier = Modifier
++                .clip(RoundedCornerShape(8.dp))
++                .background(Color.White)
++                .height(40.dp)
++                .fillMaxWidth(0.65F)
++        ) {
++            Icon(Icons.Filled.Sort, contentDescription = null)
++        }
++
++        DropdownMenu(expanded = expanded, onDismissRequest = { expanded = false }, modifier = Modifier
++            .background(
++                Color.White
++            )
++            .clip(RoundedCornerShape(8.dp))) {
++            DropdownMenuItem(onClick = { viewModel.getExploreRoutines() ; expanded = false }) {
++                Text(text = "all")
++            }
++            DropdownMenuItem(onClick = { viewModel.getUserFavoritesWrapper() ; expanded = false }) {
++                Text(text = stringResource(id = R.string.favourite))
++            }
++        }
++    }
++}
++
++@Composable
++fun SearchAndFilter(viewModel: RoutinesViewModel) {
++
++    Row(verticalAlignment = Alignment.CenterVertically) {
++        SearchField(viewModel)
++        Spacer(Modifier.width(10.dp))
++        FilterButton(viewModel = viewModel)
++    }
++}

@@ -26,4 +26,16 @@
     <string name="last_activity">Derniere activite</string>
     <string name="logout">Fermer la session</string>
     <string name="not_logged_in">Pas connecté</string>
+    <string name="fav">Favori</string>
+    <string name="load_more">Charger plus</string>
+    <string name="error_header">Il y a eu une erreur</string>
+    <string name="error_msg">Nous sommes désolés, il y a eu un problème. Veuillez vérifier qu\'il y a une connexion Internet et redémarrer l\'application.</string>
+    <string name="error_btn">Aller au Home</string>
+    <string name="rest">Repos</string>
+    <string name="explanationProgress">Ce graphique montre comment votre volume moyen a changé au cours de plusieurs exécutions de cette routine</string>
+    <string name="display_routines_pic_title">Afficher les images de routine</string>
+    <string name="display_routines_pic_description">Décidez d\'afficher ou non l\'image d\'une routine.</string>
+    <string name="exec_routine_mode_title">Routineausführung Lite</string>
+    <string name="exec_routine_mode_description">Le mode Lite simplifie la façon dont vous exécutez une routine. Ne voir que le nom de l\'exercice et la description</string>
+    <string name="settings">Réglages</string>
 </resources>

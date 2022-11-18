@@ -13,6 +13,7 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.graphics.Color.Companion.Gray
 import androidx.compose.ui.res.stringResource
+import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import com.example.myapplication.R
@@ -27,16 +28,21 @@ import kotlinx.coroutines.flow.MutableStateFlow
 fun RecomposingTitle(exercise: MutableStateFlow<CyclesExercise>) {
     val text by exercise.collectAsState()
     Text(text = text.cycle?:"", fontSize = 20.sp, color = Green)
-    if(text.isExercise)
-        Text(text = text.name, fontSize = 30.sp)
-    else
-        Text(text = stringResource(id = R.string.rest), fontSize = 30.sp)
+
+    Column( verticalArrangement = Arrangement.SpaceEvenly,horizontalAlignment = Alignment.CenterHorizontally) {
+        if(text.isExercise) {
+            Text(text = text.name, fontSize = 30.sp, textAlign = TextAlign.Center)
+            Text(text = text.detail, fontSize = 15.sp, textAlign = TextAlign.Center, color = Color.White)
+        }
+        else
+            Text(text = stringResource(id = R.string.rest), fontSize = 30.sp)
+    }
+
 
 }
 
 @Composable
 fun ExerciseExecCard(viewModel: ExecuteRoutineViewModel, actualExercise: MutableStateFlow<CyclesExercise>){
-
     val exercise by actualExercise.collectAsState()
     LinearProgressIndicator(
         progress = exercise.index?.div((viewModel.exerciseCount * 1f)) ?: 0f,
