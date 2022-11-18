@@ -42,5 +42,16 @@
     <string name="settings">Configuracion</string>
     <string name="finish">Terminar</string>
     <string name="review_routine">Califica esta rutina:</string>
+    <string name="good_delta">¡Has superado tu promedio!</string>
+    <string name="regular_delta">¡Casi llegaste a tu promedio!</string>
+    <string name="bad_delta">Tu desempeño estuvo por debajo del promedio</string>
+    <string name="good_delta_title">¡Bien hecho!</string>
+    <string name="regular_delta_title">¡Casi!</string>
+    <string name="bad_delta_title">Segui trabajando</string>
+    <string name="routine_finished_title">Hecho</string>
+    <string name="routine_finished_text">Tómate un descanso, has terminado esta rutina.</string>
+    <string name="volume">Volumen</string>
+    <string name="weight">Peso (Kg)</string>
+    <string name="reps">Repeticiones</string>
 
 </resources>

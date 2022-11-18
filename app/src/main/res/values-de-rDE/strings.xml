@@ -35,7 +35,22 @@
     <string name="explanationProgress">Diese Grafik zeigt, wie sich Ihr durchschnittliches Volumen während mehrerer Ausführungen dieser Routine verändert hat</string>
     <string name="display_routines_pic_title">Routinebilder anzeigen</string>
     <string name="display_routines_pic_description">Entscheiden Sie, ob das Bild einer Routine angezeigt werden soll oder nicht.</string>
-    <string name="exec_routine_mode_title">Mode Lite d\'exécution de routine</string>
+    <string name="exec_routine_mode_title">Routineausführung Lite</string>
     <string name="exec_routine_mode_description">Der Lite-Modus vereinfacht die Art und Weise, wie Sie eine Routine ausführen. Sehen Sie nur den Namen der Übung und die Beschreibung</string>
     <string name="settings">Einstellungen</string>
+    <string name="conection_error">Verbindungsfehler</string>
+    <string name="try_again">versuchen Sie es nochmal</string>
+    <string name="finish">Fertig</string>
+    <string name="review_routine">Überprüfen diese Routine:</string>
+    <string name="good_delta">Sie haben Ihren Durchschnitt übertroffen!</string>
+    <string name="regular_delta">Sie haben fast Ihren Durchschnitt erreicht!</string>
+    <string name="bad_delta">Ihre Leistung war unterdurchschnittlich</string>
+    <string name="good_delta_title">Gut erledigt!</string>
+    <string name="regular_delta_title">Fast!</string>
+    <string name="bad_delta_title">Treiben</string>
+    <string name="routine_finished_title">Erledigt</string>
+    <string name="routine_finished_text">Machen Sie eine Pause, Sie haben diese Routine beendet</string>
+    <string name="volume">Volumen</string>
+    <string name="weight">Gewicht (kg)</string>
+    <string name="reps">Wiederholungen</string>
 </resources>
