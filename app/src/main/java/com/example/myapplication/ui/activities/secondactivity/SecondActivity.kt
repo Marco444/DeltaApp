@@ -13,7 +13,8 @@ import com.google.accompanist.systemuicontroller.rememberSystemUiController
 
 
 class SecondActivity : ComponentActivity() {
-    @OptIn(ExperimentalMaterial3WindowSizeClassApi::class)
+    val activity = this
+
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContent {
@@ -21,13 +22,14 @@ class SecondActivity : ComponentActivity() {
 
                 val systemUiController = rememberSystemUiController()
                 systemUiController.setSystemBarsColor(color = androidx.compose.ui.graphics.Color.Black )
+
                 val saved: String = intent.extras?.getString("routineId")?: "-1"
 
                 val navigate = Intent(this@SecondActivity, ThirdActivity::class.java)
                 val logoutIntent = Intent(this@SecondActivity, MainActivity::class.java)
 
                 DeltaApp(
-                    windowSize = calculateWindowSizeClass(this).widthSizeClass,
+                    activity = activity,
                     executeRedirect = {
                         val args = Bundle()
                         args.putString("routineId", it.toString())

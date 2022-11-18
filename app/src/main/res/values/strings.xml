@@ -52,4 +52,6 @@
     <string name="routine_finished_title">Done</string>
     <string name="routine_finished_text">Take a break, you have finished this routine</string>
     <string name="volume">Volume</string>
+    <string name="weight">Weight (Kg)</string>
+    <string name="reps">Reps</string>
 </resources>

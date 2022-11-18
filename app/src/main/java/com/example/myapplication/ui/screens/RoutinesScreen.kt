@@ -4,6 +4,8 @@ package com.example.myapplication.ui.screens
 import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.*
 import androidx.compose.material.*
+import androidx.compose.material3.windowsizeclass.ExperimentalMaterial3WindowSizeClassApi
+import androidx.compose.material3.windowsizeclass.calculateWindowSizeClass
 
 import androidx.compose.runtime.*
 import androidx.compose.ui.Alignment
@@ -15,20 +17,23 @@ import com.example.myapplication.R
 import com.example.myapplication.ui.components.*
 import com.example.myapplication.ui.navigation.NavBarScreen
 import com.example.myapplication.ui.activities.secondactivity.RoutinesViewModel
+import com.example.myapplication.ui.activities.secondactivity.SecondActivity
 import kotlinx.coroutines.launch
 
+@OptIn(ExperimentalMaterial3WindowSizeClassApi::class)
 @Composable
 fun RoutinesScreen(viewModel: RoutinesViewModel,
                    actionRedirect: (Int) -> Unit,
                    scaffoldState: ScaffoldState,
                    errorRedirect: () -> Unit,
-                   settingsRedirect: () -> Unit
+                   settingsRedirect: () -> Unit,
 ){
 
     val error by viewModel.error.collectAsState()
     val fetchState by viewModel.fetchingState.collectAsState()
     val (snackbarVisibleState, setSnackBarState) = remember { mutableStateOf(false) }
 
+    val displayHamburguer by viewModel.hamburguer.collectAsState()
 
     Column (
         modifier = Modifier
@@ -40,7 +45,7 @@ fun RoutinesScreen(viewModel: RoutinesViewModel,
     ){
 
         Column(modifier = Modifier.align(Alignment.Start)) {
-            TopBar(scaffoldState, settingsRedirect, hamburguerDisplay = viewModel.cardsExpandable())
+            TopBar(scaffoldState, settingsRedirect, hamburguerDisplay = displayHamburguer)
         }
         Row {
             Column(

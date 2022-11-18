@@ -51,7 +51,7 @@ fun ExerciseExecScreen(viewModel: ExecuteRoutineViewModel = viewModel(),
                 {
                     Icon(
                         Icons.Default.Close,
-                        contentDescription = "content description",
+                        contentDescription = "close",
                         tint = Color.Black
                     )
                 }

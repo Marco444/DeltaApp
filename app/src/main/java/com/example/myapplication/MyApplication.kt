@@ -1,6 +1,7 @@
 package com.example.myapplication
 
 import android.app.Application
+import androidx.compose.ui.graphics.Color
 import com.example.myapplication.data.network.CyclesExercisesRemoteDataSource
 import com.example.myapplication.data.network.RoutinesCyclesRemoteDataSource
 import com.example.myapplication.data.network.RoutinesRemoteDataSource
@@ -12,7 +13,11 @@ import com.example.myapplication.data.repository.CyclesExercisesRepository
 import com.example.myapplication.data.repository.RoutinesCycleRepository
 import com.example.myapplication.data.repository.RoutinesRepository
 
+
+
+
 class MyApplication : Application() {
+
 
     private val userRemoteDataSource: UserRemoteDataSource
         get() = UserRemoteDataSource(RetrofitClient.getApiUserService(this), sessionManager)

@@ -28,6 +28,7 @@ fun ProgressScreen(viewModel: RoutinesViewModel,
     val (snackbarVisibleState, setSnackBarState) = remember { mutableStateOf(false) }
     val fetchState by viewModel.fetchingState.collectAsState()
 
+    val displayHamburguer by viewModel.hamburguer.collectAsState()
     Column(
         modifier = Modifier
             .fillMaxWidth()
@@ -37,7 +38,7 @@ fun ProgressScreen(viewModel: RoutinesViewModel,
         horizontalAlignment = Alignment.CenterHorizontally
     ) {
         Column(modifier = Modifier.align(Alignment.Start)) {
-            TopBar(scaffoldState, settingsRedirect, hamburguerDisplay = viewModel.cardsExpandable())
+            TopBar(scaffoldState, settingsRedirect, hamburguerDisplay = displayHamburguer)
         }
         Row {
             Column(

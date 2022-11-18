@@ -7,7 +7,9 @@ import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.padding
 import androidx.compose.material.Scaffold
 import androidx.compose.material.rememberScaffoldState
+import androidx.compose.material3.windowsizeclass.ExperimentalMaterial3WindowSizeClassApi
 import androidx.compose.material3.windowsizeclass.WindowWidthSizeClass
+import androidx.compose.material3.windowsizeclass.calculateWindowSizeClass
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.unit.LayoutDirection
@@ -24,10 +26,11 @@ import com.example.myapplication.util.getRoutineViewModelFactory
 import com.example.myapplication.util.getViewModelFactory
 
 
+@OptIn(ExperimentalMaterial3WindowSizeClassApi::class)
 @SuppressLint("CoroutineCreationDuringComposition")
 @Composable
 fun DeltaApp(
-    windowSize: WindowWidthSizeClass,
+    activity: SecondActivity,
     modifier: Modifier = Modifier,
     viewModel: RoutinesViewModel = viewModel(factory = getRoutineViewModelFactory()),
     navController: NavHostController = rememberNavController(),
@@ -35,6 +38,7 @@ fun DeltaApp(
     logoutRedirect: () -> Unit,
     userViewModel: UserViewModel = viewModel(factory = getViewModelFactory()),
 ) {
+    val windowSize = calculateWindowSizeClass(activity).widthSizeClass
     viewModel.setWidth(windowSize)
 
     // Variables for drawer
@@ -66,7 +70,7 @@ fun DeltaApp(
                     navController = navController,
                     viewModel = viewModel,
                     executeRedirect = executeRedirect,
-                    scaffoldState = scaffoldState
+                    scaffoldState = scaffoldState,
                 )
             }
         }
@@ -91,7 +95,7 @@ fun DeltaApp(
                     navController = navController,
                     viewModel = viewModel,
                     scaffoldState = scaffoldState,
-                    executeRedirect = executeRedirect
+                    executeRedirect = executeRedirect,
                 )
             }
         }

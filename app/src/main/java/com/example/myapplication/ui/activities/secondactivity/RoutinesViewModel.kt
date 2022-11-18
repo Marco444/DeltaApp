@@ -348,14 +348,16 @@ class RoutinesViewModel(
             _routinesState.value.userRoutines.isNotEmpty() && routineUser(id).favourite
     }
 
-    private var screenWidth: WindowWidthSizeClass = WindowWidthSizeClass.Compact
+    private var screenWidth = MutableStateFlow(WindowWidthSizeClass.Compact)
+    val hamburguer = MutableStateFlow(true)
 
     fun cardsExpandable(): Boolean {
-        return screenWidth != WindowWidthSizeClass.Expanded
+        return screenWidth.value != WindowWidthSizeClass.Expanded
     }
 
     fun setWidth(width: WindowWidthSizeClass) {
-        screenWidth = width;
+        screenWidth.update { width };
+        hamburguer.update { width != WindowWidthSizeClass.Medium }
     }
 
     // SETTINGS -> TODO moverlo para arriba una vez que funque
