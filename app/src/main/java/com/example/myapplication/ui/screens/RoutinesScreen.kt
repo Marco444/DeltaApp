@@ -3,10 +3,8 @@ package com.example.myapplication.ui.screens
 
 import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.*
+import androidx.compose.material.*
 
-import androidx.compose.material.MaterialTheme
-import androidx.compose.material.ScaffoldState
-import androidx.compose.material.Text
 import androidx.compose.runtime.*
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
@@ -29,11 +27,7 @@ fun RoutinesScreen(viewModel: RoutinesViewModel,
 
     val error by viewModel.error.collectAsState()
     val fetchState by viewModel.fetchingState.collectAsState()
-
-    if(error) {
-        errorRedirect()
-        viewModel.errorHandled()
-    }
+    val (snackbarVisibleState, setSnackBarState) = remember { mutableStateOf(false) }
 
 
     Column (
@@ -75,5 +69,24 @@ fun RoutinesScreen(viewModel: RoutinesViewModel,
     }
     if(fetchState.isFetching){
         SimpleCircularProgressComponent()
+    }
+
+    LaunchedEffect(key1 = fetchState.error, block = {
+        if(fetchState.error)
+            setSnackBarState(true)
+    })
+    // The Snackbar
+    if (snackbarVisibleState) {
+        Snackbar(
+            action = {
+                Button(
+                    onClick = { setSnackBarState(!snackbarVisibleState); viewModel.getExploreRoutines() ; viewModel.getUserRoutines() },
+                ) {
+                    Text(text = "Try again")
+                }
+            },
+            modifier = Modifier.padding(8.dp)
+
+        ) { Text(text = fetchState.message) }
     }
 }

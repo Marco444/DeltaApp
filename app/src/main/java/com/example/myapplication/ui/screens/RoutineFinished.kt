@@ -9,17 +9,17 @@ import androidx.compose.material.*
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.filled.Add
 import androidx.compose.material.icons.filled.Remove
-import androidx.compose.runtime.Composable
-import androidx.compose.runtime.collectAsState
-import androidx.compose.runtime.getValue
+import androidx.compose.runtime.*
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Alignment.Companion.CenterHorizontally
 import androidx.compose.ui.Alignment.Companion.CenterVertically
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.clip
 import androidx.compose.ui.graphics.Color
+import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
+import com.example.myapplication.R
 import com.example.myapplication.ui.components.Button1
 import com.example.myapplication.ui.theme.*
 import com.example.myapplication.ui.activities.thirdactivity.ExecuteRoutineViewModel
@@ -39,12 +39,9 @@ fun RoutineFinished(
 ) {
     val routine by viewModel.executeRoutine.value.currentRoutine.collectAsState()
 
-    val error by viewModel.error.collectAsState()
+    val fetchingState by viewModel.fetchingState.collectAsState()
+    val (snackbarVisibleState, setSnackBarState) = remember { mutableStateOf(false) }
 
-    if(error) {
-        errorRedirect()
-        viewModel.errorHandled()
-    }
     Column(
         horizontalAlignment = Alignment.CenterHorizontally,
         modifier = Modifier
@@ -117,11 +114,32 @@ fun RoutineFinished(
                 fontSize = 13,
                 text = "Finish",
                 handler = {
-                    viewModel.finishRoutine()
-                    nextHandler()
+                        viewModel.finishRoutine()
+                        if(!fetchingState.error)
+                            nextHandler()
+                        else{
+                            setSnackBarState(true)
+                        }
+
+
+
                 }
             )
             Spacer(modifier = Modifier.height(10.dp))
         }
+    }
+    // The Snackbar
+    if (snackbarVisibleState) {
+        Snackbar(
+            action = {
+                Button(
+                    onClick = {setSnackBarState(!snackbarVisibleState)},
+                ) {
+                    Text(text = stringResource(id = R.string.try_again))
+                }
+            },
+            modifier = Modifier.padding(8.dp)
+
+        ) { Text(text =  fetchingState.message?: "") }
     }
 }

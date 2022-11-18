@@ -45,6 +45,7 @@ class UserViewModel(
     }
 
     fun logout() = viewModelScope.launch {
+        userRepository.authenticate.update { false }
         userState.update {
             it.copy(
                 isFetching = true,
@@ -62,7 +63,7 @@ class UserViewModel(
             }
         }.onFailure { e ->
             // Handle the error and notify the UI when appropriate.
-
+            userRepository.authenticate.update { false }
             userState.update {
                 it.copy(
 

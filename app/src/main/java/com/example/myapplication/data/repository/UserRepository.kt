@@ -47,11 +47,6 @@ class UserRepository(
     var isAuthenticated = MutableStateFlow(false)
     private val isAuthMutex = Mutex()
     suspend fun logout() {
-        isAuthMutex.withLock {
-            authenticate.update { false }
-        }
-
-
         remoteDataSource.logout()
     }
     val authenticate : MutableStateFlow<Boolean> = MutableStateFlow(remoteDataSource.getSessionManager().loadAuthToken() != null)

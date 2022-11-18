@@ -126,16 +126,12 @@ class ExecuteRoutineViewModel(
 
         if(executeRoutine.value.currentRoutine.value.points.value > 0)
             runBlocking {
-
+                kotlin.runCatching {
                 launch {
                     routinesRepository.addReview(
                         executeRoutine.value.currentRoutine.value.id,
                         Review(score = executeRoutine.value.currentRoutine.value.points.value, "")
                     )
-                }
-            }
-        runBlocking {
-            launch {
                     val currentUser = userRepository.getCurrentUser(true)
                     if (currentUser?.id == executeRoutine.value.currentRoutine.value.ownerId)
                         executeRoutine.value.currentRoutine.update {
@@ -144,7 +140,9 @@ class ExecuteRoutineViewModel(
                             )
                         }
                 }
-        }
+            }.onFailure {
+                    _fetchingState.update { it.copy(isFetching = false,error = true, message = it.message) }
+            } }
     }
     fun nextExercise(){
         if(!isInNext) {

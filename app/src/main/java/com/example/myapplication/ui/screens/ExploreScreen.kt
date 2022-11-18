@@ -43,12 +43,9 @@ fun ExploreScreen(viewModel: RoutinesViewModel,
 ) {
     val coroutineScope = rememberCoroutineScope()
     val fetchState by viewModel.fetchingState.collectAsState()
+    val (snackbarVisibleState, setSnackBarState) = remember { mutableStateOf(false) }
 
     val error by viewModel.error.collectAsState()
-    if(error) {
-        errorRedirect()
-        viewModel.errorHandled()
-    }
 
     Column(
         modifier = Modifier
@@ -92,6 +89,24 @@ fun ExploreScreen(viewModel: RoutinesViewModel,
     }
     if(fetchState.isFetching){
         SimpleCircularProgressComponent()
+    }
+    LaunchedEffect(key1 = fetchState.error, block = {
+        if(fetchState.error)
+            setSnackBarState(true)
+    })
+    // The Snackbar
+    if (snackbarVisibleState) {
+        Snackbar(
+            action = {
+                Button(
+                    onClick = { setSnackBarState(!snackbarVisibleState); viewModel.getExploreRoutines() ; viewModel.getUserRoutines() },
+                ) {
+                    Text(text = "Try again")
+                }
+            },
+            modifier = Modifier.padding(8.dp)
+
+        ) { Text(text = fetchState.message) }
     }
 }
 

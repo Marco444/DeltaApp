@@ -2,13 +2,8 @@ package com.example.myapplication.ui.screens
 
 import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.*
-import androidx.compose.material.MaterialTheme
-import androidx.compose.material.ScaffoldState
-import androidx.compose.material.Text
-import androidx.compose.runtime.Composable
-import androidx.compose.runtime.collectAsState
-import androidx.compose.runtime.getValue
-import androidx.compose.runtime.rememberCoroutineScope
+import androidx.compose.material.*
+import androidx.compose.runtime.*
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.res.stringResource
@@ -30,12 +25,8 @@ fun ProgressScreen(viewModel: RoutinesViewModel,
 {
 
     val coroutineScope = rememberCoroutineScope()
-
-    val error by viewModel.error.collectAsState()
-    if(error) {
-        errorRedirect()
-        viewModel.errorHandled()
-    }
+    val (snackbarVisibleState, setSnackBarState) = remember { mutableStateOf(false) }
+    val fetchState by viewModel.fetchingState.collectAsState()
 
     Column(
         modifier = Modifier
@@ -75,5 +66,23 @@ fun ProgressScreen(viewModel: RoutinesViewModel,
                 )
             }
         }
+    }
+    LaunchedEffect(key1 = fetchState.error, block = {
+        if(fetchState.error)
+            setSnackBarState(true)
+    })
+    // The Snackbar
+    if (snackbarVisibleState) {
+        Snackbar(
+            action = {
+                Button(
+                    onClick = { setSnackBarState(!snackbarVisibleState); viewModel.getUserRoutines() },
+                ) {
+                    Text(text = "Try again")
+                }
+            },
+            modifier = Modifier.padding(8.dp)
+
+        ) { Text(text = fetchState.message) }
     }
 }

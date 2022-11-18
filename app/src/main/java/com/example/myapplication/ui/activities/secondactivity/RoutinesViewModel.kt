@@ -4,6 +4,7 @@ import androidx.compose.material3.windowsizeclass.WindowWidthSizeClass
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import com.example.myapplication.data.model.User
+import com.example.myapplication.data.network.DataSourceException
 import com.example.myapplication.ui.classes.Routines
 import com.example.myapplication.data.repository.RoutinesRepository
 import com.example.myapplication.data.repository.UserRepository
@@ -95,7 +96,7 @@ class RoutinesViewModel(
         }
     }
 
-    private fun getUserRoutines() = viewModelScope.launch {
+    fun getUserRoutines() = viewModelScope.launch {
         if(loggedIn()) {
             var aux: User? = User(-1)
             _fetchingState.update { it.copy(isFetching = true, error = false) }
@@ -120,7 +121,16 @@ class RoutinesViewModel(
                     _fetchingState.update { it.copy(isFetching = false, error = false) }
 
                 }.onFailure { apiError ->
-                    _fetchingState.update { it.copy(isFetching = false, error = true, message = apiError.message?:"") }
+                    if(apiError is DataSourceException) {
+                        apiError as DataSourceException
+                        _fetchingState.update {
+                            it.copy(
+                                isFetching = false,
+                                error = true,
+                                message = apiError.message ?: "",
+                            )
+                        }
+                    }
 
                     error.update { true }
                 }
