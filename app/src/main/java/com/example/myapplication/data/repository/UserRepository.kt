@@ -34,7 +34,9 @@ class UserRepository(
     suspend fun login(username: String, password: String) {
         try {
             remoteDataSource.login(username, password)
-            authenticate.update { true }
+            isAuthMutex.withLock {
+                authenticate.update { true }
+            }
 
         }catch (e: Exception){
             throw e
@@ -43,9 +45,12 @@ class UserRepository(
     }
 
     var isAuthenticated = MutableStateFlow(false)
-
+    private val isAuthMutex = Mutex()
     suspend fun logout() {
-        authenticate.update { false }
+        isAuthMutex.withLock {
+            authenticate.update { false }
+        }
+
 
         remoteDataSource.logout()
     }

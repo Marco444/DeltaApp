@@ -53,7 +53,7 @@ fun DeltaApp(
             drawerContent = {
                 DrawerContent(
                     userViewModel,
-                    logoutRedirect = { logoutRedirect(); userViewModel.logout() })
+                    logoutRedirect = {userViewModel.logout().invokeOnCompletion {  logoutRedirect()}})
             },
             scaffoldState = scaffoldState
         ) {
