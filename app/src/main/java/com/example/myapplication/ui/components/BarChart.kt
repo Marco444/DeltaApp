@@ -32,8 +32,11 @@ import androidx.compose.ui.graphics.vector.ImageVector
 import androidx.compose.ui.input.pointer.PointerIconDefaults.Text
 import androidx.compose.ui.input.pointer.pointerInput
 import androidx.compose.ui.res.stringResource
+import androidx.compose.ui.text.font.Font
+import androidx.compose.ui.text.font.FontFamily
 import androidx.compose.ui.unit.Dp
 import androidx.compose.ui.unit.dp
+import androidx.compose.ui.unit.sp
 import androidx.core.graphics.ColorUtils
 import com.example.myapplication.R
 import com.example.myapplication.ui.theme.Gray
@@ -113,7 +116,13 @@ fun Chart(
             .animateContentSize()
     ) {
 
-
+        Text(
+            modifier = Modifier
+                .padding(top=20.dp).rotate(-90f),
+            fontSize = 18.sp,
+            text = stringResource(R.string.volume),
+            color = Color.White
+        )
 
         Canvas(modifier = Modifier
             .fillMaxSize()
@@ -131,6 +140,7 @@ fun Chart(
                         offset = it,
                         listSize = data.size,
                         itemWidth = barWidth
+
                     )
                     if (chosenBar >= 0) {
                         chosenBarKey = data.toList()[chosenBar].first.toString()
@@ -179,6 +189,7 @@ fun Chart(
                         paint
                     )
                     //--------------------(showing the bar label)--------------------//
+
                     if (chosenBarKey == item.key.toString()) {
                         val localLabelColor = Color(
                             ColorUtils.blendARGB(
@@ -216,15 +227,17 @@ fun Chart(
 
                     spaceStep += spaceBetweenBars + barWidth
                 }
+                drawContext.canvas.nativeCanvas.drawText(
+                    "Executions",
+                    size.width - 60 ,
+                    size.height + 40,
+                    paint
+                )
             })
-            Text(
-                modifier = Modifier
-                    .rotate(-90f)
-                    .padding(20.dp),
-                text = stringResource(R.string.volume),
-                color = Color.White
-            )
+
+
     }
+
 }
 
 

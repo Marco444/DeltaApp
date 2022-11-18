@@ -42,7 +42,7 @@ fun NavGraph(userViewModel: UserViewModel,
         }
         composable(NavBarScreen.Progress.route) {
             ProgressScreen(viewModel = viewModel,
-                actionRedirect = {navController.navigate(Screen.ProgressDetail.route + it  )},
+                actionRedirect = {viewModel.getRoutine(it);navController.navigate(Screen.ProgressDetail.route + it  )},
                 scaffoldState = scaffoldState,
                 errorRedirect = {navController.navigate(Screen.Error.route)},
                 settingsRedirect = {navController.navigate(Screen.Settings.route)}
