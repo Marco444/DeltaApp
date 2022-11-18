@@ -1,0 +1,18 @@
+Index: app/src/main/java/com/example/myapplication/ui/navigation/NavBarScreen.kt
+IDEA additional info:
+Subsystem: com.intellij.openapi.diff.impl.patch.BaseRevisionTextPatchEP
+<+>package com.example.myapplication.ui.navigation\n\nimport android.content.Intent\nimport androidx.compose.material.icons.Icons\nimport androidx.compose.material.icons.filled.*\nimport androidx.compose.ui.graphics.vector.ImageVector\nimport androidx.navigation.*\n\n\nsealed class Screen(val route: String) {\n    object Error: Screen(\"error_screen\")\n    object ExecuteLite: Screen(\"execute_lite_screen/{routineId}\")\n    object Execute: Screen( \"execute_screen/{routineId}\")\n    object RoutineDescriptionScreen: Screen( \"routine_description_screen/{routineId}\")\n    object ProgressDetail: Screen( \"progress_detail_screen/{routineId}\")\n    object RoutineFinish : Screen(\"routineFinish\")\n    object Login : Screen(\"login\")\n    object Home : Screen(\"home\")\n    object Settings : Screen(\"settings\")\n}\n\nsealed class NavBarScreen(val title: String, val icon: ImageVector, private val route_: String): Screen(route = route_) {\n    object Routines: NavBarScreen(\"Routines\", Icons.Default.FitnessCenter , route_ = \"routines_screen\")\n    object Progress: NavBarScreen(\"Progress\", Icons.Default.BarChart, route_ = \"progress_screen\")\n    object Explore: NavBarScreen(\"Explore\", Icons.Default.Search, route_ = \"explore_screen\")\n    object Profile : NavBarScreen(\"Profile\", Icons.Default.Person, route_ = \"profile\")\n}\n\n
+Subsystem: com.intellij.openapi.diff.impl.patch.CharsetEP
+<+>UTF-8
+===================================================================
+diff --git a/app/src/main/java/com/example/myapplication/ui/navigation/NavBarScreen.kt b/app/src/main/java/com/example/myapplication/ui/navigation/NavBarScreen.kt
+--- a/app/src/main/java/com/example/myapplication/ui/navigation/NavBarScreen.kt	(revision 16bec6c68de7d1b5fea711801870de25f7228f5d)
++++ b/app/src/main/java/com/example/myapplication/ui/navigation/NavBarScreen.kt	(date 1668795620702)
+@@ -23,6 +23,6 @@
+     object Routines: NavBarScreen("Routines", Icons.Default.FitnessCenter , route_ = "routines_screen")
+     object Progress: NavBarScreen("Progress", Icons.Default.BarChart, route_ = "progress_screen")
+     object Explore: NavBarScreen("Explore", Icons.Default.Search, route_ = "explore_screen")
+-    object Profile : NavBarScreen("Profile", Icons.Default.Person, route_ = "profile")
++    object Profile : NavBarScreen("Profile", Icons.Default.AccountCircle, route_ = "profile")
+ }
+ 
