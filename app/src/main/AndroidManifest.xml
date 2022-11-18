@@ -13,7 +13,9 @@
         android:supportsRtl="true"
         android:theme="@style/Theme.MyApplication"
         android:networkSecurityConfig="@xml/network_security_config"
-        tools:targetApi="tiramisu">
+        tools:targetApi="tiramisu"
+        android:launchMode="singleInstance"
+        >
         <activity
             android:name=".ui.activities.thirdactivity.ThirdActivity"
             android:exported="false"

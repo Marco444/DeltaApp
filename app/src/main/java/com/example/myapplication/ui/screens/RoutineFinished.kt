@@ -9,9 +9,7 @@ import androidx.compose.material.*
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.filled.Add
 import androidx.compose.material.icons.filled.Remove
-import androidx.compose.runtime.Composable
-import androidx.compose.runtime.collectAsState
-import androidx.compose.runtime.getValue
+import androidx.compose.runtime.*
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Alignment.Companion.CenterHorizontally
 import androidx.compose.ui.Alignment.Companion.CenterVertically
@@ -19,6 +17,8 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.clip
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.res.stringResource
+import androidx.compose.ui.res.stringResource
+import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import com.example.myapplication.R
@@ -41,12 +41,9 @@ fun RoutineFinished(
 ) {
     val routine by viewModel.executeRoutine.value.currentRoutine.collectAsState()
 
-    val error by viewModel.error.collectAsState()
+    val fetchingState by viewModel.fetchingState.collectAsState()
+    val (snackbarVisibleState, setSnackBarState) = remember { mutableStateOf(false) }
 
-    if(error) {
-        errorRedirect()
-        viewModel.errorHandled()
-    }
     Column(
         horizontalAlignment = Alignment.CenterHorizontally,
         modifier = Modifier
@@ -72,54 +69,74 @@ fun RoutineFinished(
                 .background(GrayTransparency)
                 .padding(20.dp) //este como padding per se, ya con el background
         ) {
+            if(!viewModel.getExecuteRoutineLiteMode()) {
+                var delta = 0f
+                var average = 0.0
+                if (routine.delta?.isNotEmpty() ?: false)
+                    average = routine.delta?.average() ?: 0.0
 
-            var delta = 0f
-            var average = 0.0
-            if(routine.delta?.isNotEmpty()?:false)
-                average = routine.delta?.average()?:0.0
+                if (average != 0.0)
+                    delta = viewModel.getCurrentDelta().div(average ?: 1.0).toFloat()
+                else
+                    delta = viewModel.getCurrentDelta()
+                val color: Color = if (delta < 0.7) {
+                    Red
+                } else if (delta < 1) {
+                    Yellow
+                } else {
+                    Green
+                }
 
-            if(average != 0.0)
-                 delta = viewModel.getCurrentDelta().div(average?:1.0).toFloat()
-            else
-                delta = viewModel.getCurrentDelta()
-            val color : Color = if(delta < 0.7) {
-                Red
-            }else if(delta < 1) {
-                Yellow
+                Text(
+                    text = if (color == Red) stringResource(id = R.string.bad_delta_title)
+                    else if (color == Yellow) stringResource(id = R.string.regular_delta_title)
+                    else stringResource(id = R.string.good_delta_title),
+                    textAlign = TextAlign.Center,
+                    fontFamily = H1Font,
+                    fontSize = 60.sp,
+                    color = Color.White
+                )
+
+                LinearProgressIndicator(
+                    progress = delta,
+                    color = color,
+                    modifier = Modifier
+                        .height(15.dp)
+                        .clip(RoundedCornerShape(30.dp))
+                )
+
+                Text(
+                    text = if (color == Red) stringResource(id = R.string.bad_delta)
+                    else if (color == Yellow) stringResource(id = R.string.regular_delta)
+                    else stringResource(id = R.string.good_delta),
+                    fontFamily = NormalFont,
+                    textAlign = TextAlign.Center,
+                    fontSize = 20.sp,
+                    color = Color.White,
+                    modifier = Modifier
+                        .padding(top = 20.dp)
+                        .align(Alignment.CenterHorizontally)
+                )
             }
-            else {
-                Green
+            else{
+                Text(
+                    text = stringResource(id = R.string.routine_finished_title),
+                    textAlign = TextAlign.Center,
+                    fontFamily = H1Font,
+                    fontSize = 60.sp,
+                    color = Color.White
+                )
+                Text(
+                    text = stringResource(id = R.string.routine_finished_text),
+                    textAlign = TextAlign.Center,
+                    fontFamily = NormalFont,
+                    fontSize = 20.sp,
+                    color = Color.White,
+                    modifier = Modifier
+                        .padding(top = 20.dp)
+                        .align(Alignment.CenterHorizontally)
+                )
             }
-
-            Text(
-                text = if(color == Red) stringResource(id = R.string.bad_delta_title)
-                else if(color == Yellow) stringResource(id = R.string.regular_delta_title)
-                else stringResource(id = R.string.good_delta_title)
-                ,
-                fontFamily = H1Font,
-                fontSize = 60.sp,
-                color = Color.White
-            )
-
-            LinearProgressIndicator(
-                progress = delta,
-                color = color,
-                modifier = Modifier
-                    .height(15.dp)
-                    .clip(RoundedCornerShape(30.dp))
-            )
-
-            Text(
-                text = if(color == Red) stringResource(id = R.string.bad_delta)
-                    else if(color == Yellow) stringResource(id = R.string.regular_delta)
-                    else stringResource(id = R.string.good_delta)
-                ,
-                fontFamily = NormalFont,
-                fontSize = 20.sp,
-                color = Color.White,
-                modifier = Modifier.padding(top = 20.dp). align(Alignment.CenterHorizontally)
-            )
-
 
             Spacer(modifier = Modifier.height(20.dp))
             Text(
@@ -131,8 +148,12 @@ fun RoutineFinished(
             )
 
             Spacer(modifier = Modifier.height(0.dp))
-            Row (modifier = Modifier.fillMaxWidth()){
-                Stars(routine = routine, clickable = true)
+            Column(modifier = Modifier
+                .fillMaxWidth()
+                .align(Alignment.CenterHorizontally)){
+                Row(modifier = Modifier.fillMaxWidth(), horizontalArrangement = Arrangement.Center) {
+                    Stars(routine = routine, clickable = true)
+                }
             }
 
             Spacer(modifier = Modifier.height(20.dp))
@@ -140,11 +161,32 @@ fun RoutineFinished(
                 fontSize = 13,
                 text = stringResource(id = R.string.finish),
                 handler = {
-                    viewModel.finishRoutine()
-                    nextHandler()
+                        viewModel.finishRoutine()
+                        if(!fetchingState.error)
+                            nextHandler()
+                        else{
+                            setSnackBarState(true)
+                        }
+
+
+
                 }
             )
             Spacer(modifier = Modifier.height(10.dp))
         }
+    }
+    // The Snackbar
+    if (snackbarVisibleState) {
+        Snackbar(
+            action = {
+                Button(
+                    onClick = {setSnackBarState(!snackbarVisibleState)},
+                ) {
+                    Text(text = stringResource(id = R.string.try_again))
+                }
+            },
+            modifier = Modifier.padding(8.dp)
+
+        ) { Text(text =  fetchingState.message?: "") }
     }
 }

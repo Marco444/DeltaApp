@@ -124,25 +124,35 @@ class ExecuteRoutineViewModel(
         )
 
 
-        if(executeRoutine.value.currentRoutine.value.points.value > 0)
-            runBlocking {
 
-                launch {
-                    routinesRepository.addReview(
-                        executeRoutine.value.currentRoutine.value.id,
-                        Review(score = executeRoutine.value.currentRoutine.value.points.value, "")
-                    )
-                }
-            }
-        runBlocking {
-            launch {
-                    val currentUser = userRepository.getCurrentUser(true)
-                    if (currentUser?.id == executeRoutine.value.currentRoutine.value.ownerId)
-                        executeRoutine.value.currentRoutine.update {
-                            routinesRepository.modifyRoutine(
-                                executeRoutine.value.currentRoutine.value
+            runBlocking {
+                kotlin.runCatching {
+                    launch {
+                        if(executeRoutine.value.currentRoutine.value.points.value > 0)
+                            routinesRepository.addReview(
+                                executeRoutine.value.currentRoutine.value.id,
+                            Review(
+                                score = executeRoutine.value.currentRoutine.value.points.value,
+                                ""
                             )
+                        )
+                    }
+
+                    if (!getExecuteRoutineLiteMode()) {
+                        runBlocking {
+                            launch {
+                                val currentUser = userRepository.getCurrentUser(true)
+                                if (currentUser?.id == executeRoutine.value.currentRoutine.value.ownerId)
+                                    executeRoutine.value.currentRoutine.update {
+                                        routinesRepository.modifyRoutine(
+                                            executeRoutine.value.currentRoutine.value
+                                        )
+                                    }
+                            }
                         }
+                    }
+                }.onFailure {
+                    _fetchingState.update { it.copy(isFetching = false,error = true, message = it.message) }
                 }
         }
     }

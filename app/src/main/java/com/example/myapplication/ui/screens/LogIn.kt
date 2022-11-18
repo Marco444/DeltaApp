@@ -129,7 +129,7 @@ fun LogIn(actionRedirect: (Int) -> Unit, viewModel: UserViewModel, routineId: In
             },
             modifier = Modifier.padding(8.dp)
 
-        ) { Text(text = stringResource(id = R.string.login_failed)) }
+        ) { Text(text =  uiState.message?: "") }
     }
 
 }
