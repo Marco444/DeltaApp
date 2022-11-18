@@ -16,7 +16,6 @@ import kotlinx.coroutines.flow.StateFlow
 import kotlinx.coroutines.flow.asStateFlow
 import kotlinx.coroutines.flow.update
 import kotlinx.coroutines.launch
-import kotlinx.coroutines.runBlocking
 
 class RoutinesViewModel(
     private val routinesRepository: RoutinesRepository,
@@ -59,10 +58,10 @@ class RoutinesViewModel(
 
     fun getUserFavoritesWrapper() {
         _routinesState.value.exploreRoutines = emptyList()
-        getUserFavorites()
+        displayUserFavorites(true)
     }
 
-    private fun getUserFavorites() = viewModelScope.launch {
+    private fun displayUserFavorites(onlyFavourites: Boolean) = viewModelScope.launch {
 
         var content = routinesRepository.getFavourites(0)
         val favourites = content.content.toMutableList()
@@ -71,7 +70,17 @@ class RoutinesViewModel(
             favourites += content.content
         }
 
-       _routinesState.value.exploreRoutines = favourites.map { MutableStateFlow(it.copy(favourite = true)) }
+        if(onlyFavourites) {
+            _routinesState.value.exploreRoutines = favourites.map { MutableStateFlow(it.copy(favourite = true)) }
+        } else {
+            for (routine in _routinesState.value.exploreRoutines) {
+                for (favourite in favourites) {
+                    if (routine.value.id == favourite.id)
+                        routine.update {it.copy(favourite = true)}
+                }
+            }
+        }
+
     }
 
     private fun addFavourite(id: Int) = viewModelScope.launch{
@@ -114,6 +123,7 @@ class RoutinesViewModel(
             }.onFailure { apiError ->
                 _fetchingState.update { it.copy(isFetching = false, error = true, message = apiError.message?:"") }
                 error.update { true }
+                //throw it
             }
         }
     }
@@ -141,6 +151,7 @@ class RoutinesViewModel(
                 pageExplore = response.page
                 hasNext = !response.isLastPage
             }
+            displayUserFavorites(onlyFavourites = false)
         }.onSuccess{
 
         }.onFailure {
@@ -166,13 +177,18 @@ class RoutinesViewModel(
                 content = routinesRepository.getFavourites(content.page + 1)
                 favourites += content.content
             }
-
             for (routine in _routinesState.value.exploreRoutines) {
                 for (favourite in favourites) {
                     if (routine.value.id == favourite.id)
                         routine.update {it.copy(favourite = true)}
                 }
             }
+            displayUserFavorites(onlyFavourites = false)
+
+            pageExplore = response.page
+            _hasNextPageExplore.update { true }
+        }.onFailure {
+
         }.onSuccess {
             _fetchingState.update { it.copy(isFetching = false, error = false) }
             _hasNextPageExplore.update { false }
@@ -208,9 +224,29 @@ class RoutinesViewModel(
 
     }
 
-    fun sortRoutines(option: SortOption, screen: NavBarScreen) {
+    private fun getRoutineUser(id: Int): MutableStateFlow<Routines> {
+        val routine = _routinesState.value.userRoutines.find { routine ->routine.value.id == id }
+        return if(routine == null) {
+            error.update { true }
+            MutableStateFlow(Routines())
+        } else {
+            routine
+        }
+    }
+
+    private fun getRoutineExplore(id: Int): MutableStateFlow<Routines> {
+        val routine = _routinesState.value.exploreRoutines.find { routine ->routine.value.id == id }
+        return if(routine == null) {
+            error.update { true }
+            MutableStateFlow(Routines())
+        } else {
+            routine
+        }
+    }
+
+    private fun sortRoutines(option: SortOption, screen: NavBarScreen) {
         if(screen == NavBarScreen.Explore)
-        _routinesState.value.userRoutines = _routinesState.value.userRoutines.sortedWith { a: MutableStateFlow<Routines>, b: MutableStateFlow<Routines> -> option.comparator(a, b) }
+            _routinesState.value.exploreRoutines = _routinesState.value.exploreRoutines.sortedWith { a: MutableStateFlow<Routines>, b: MutableStateFlow<Routines> -> option.comparator(a, b) }
         else
             _routinesState.value.userRoutines = _routinesState.value.userRoutines.sortedWith { a: MutableStateFlow<Routines>, b: MutableStateFlow<Routines> -> option.comparator(a, b) }
     }
@@ -221,27 +257,34 @@ class RoutinesViewModel(
     }
 
     fun routineUser(id: Int): Routines {
-        return _routinesState.value.userRoutines.find { routine ->routine.value.id == id }!!.value
+        return getRoutineUser(id).value
     }
 
-    fun routineExplore(id: Int): Routines {
-        return _routinesState.value.exploreRoutines.find { routine ->routine.value.id == id }!!.value
+    private fun routineExplore(id: Int): Routines {
+        return getRoutineExplore(id).value
+    }
+
+    private fun userRoutineFavourites(id: Int) {
+        val routine = getRoutineUser(id)
+        routine.update { it.copy(favourite = !it.favourite) }
+        updateRoutine(routine.value)
+    }
+
+    private fun exploreRoutineFavourites(id: Int) {
+        val routine = getRoutineExplore(id)
+        routine.update { it.copy(favourite = !it.favourite) }
+
+        if(routine.value.favourite)
+            addFavourite(routine.value.id)
+         else
+            removeFavourite(routine.value.id)
+
     }
 
     fun clickedIcon(id: Int, routineCard: RoutineCard) {
-        if(routineCard != RoutineCard.ExploreRoutine) {
-            val routine = _routinesState.value.userRoutines.find { routine -> routine.value.id == id }!!
-            routine.update { it.copy(favourite = !it.favourite) }
-            updateRoutine(routine.value)
-        } else {
-            val routine = _routinesState.value.exploreRoutines.find { routine -> routine.value.id == id }!!
-            routine.update { it.copy(favourite = !it.favourite) }
-            if(routine.value.favourite) {
-                addFavourite(routine.value.id)
-            } else {
-                removeFavourite(routine.value.id)
-            }
-        }
+        if(routineCard != RoutineCard.ExploreRoutine)
+          userRoutineFavourites(id)
+        else exploreRoutineFavourites(id)
     }
 
 

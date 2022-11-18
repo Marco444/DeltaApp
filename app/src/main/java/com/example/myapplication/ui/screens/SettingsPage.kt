@@ -53,23 +53,16 @@ fun SettingsPage(
 
             BackButton (handler = backHandler)
 
-            LazyColumn(
+            Column(
                 modifier = Modifier.fillMaxWidth(),
                 horizontalAlignment = Alignment.CenterHorizontally
             ) {
-                item {
                     Spacer(modifier = Modifier.height(10.dp))
-                }
-                item{
                     Text(
                         text = stringResource(id = com.example.myapplication.R.string.settings),
                         style = MaterialTheme.typography.h1
                     )
-                }
-                item {
                     Spacer(modifier = Modifier.height(10.dp))
-                }
-                item {
                     SettingsCard(
                         checked = displayRoutineImages,
                         name = stringResource(com.example.myapplication.R.string.display_routines_pic_title),
@@ -78,11 +71,7 @@ fun SettingsPage(
                             viewModel.setDisplayRoutineImages()
                         }
                     )
-                }
-                item {
                     Spacer(modifier = Modifier.height(10.dp))
-                }
-                item {
                     SettingsCard(
                         checked = executionRoutineModeLite,
                         name = stringResource(com.example.myapplication.R.string.exec_routine_mode_title),
@@ -91,10 +80,7 @@ fun SettingsPage(
                             viewModel.setExecutionRoutineModeLite()
                         }
                     )
-                }
-                item {
                     Spacer(modifier = Modifier.height(10.dp))
-                }
             }
 
         }
@@ -114,7 +100,8 @@ fun SettingsCard(
     Column(
         modifier = Modifier
             .fillMaxWidth()
-            .background(Gray, RoundedCornerShape(30.dp))
+            .background(Gray, RoundedCornerShape(30.dp)),
+        horizontalAlignment = Alignment.CenterHorizontally
     ) {
         Row(
             modifier = Modifier.padding(vertical = 15.dp, horizontal = 20.dp),

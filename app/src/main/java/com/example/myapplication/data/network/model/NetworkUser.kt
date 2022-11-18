@@ -35,6 +35,8 @@ class NetworkUser (
   var date: Date,*/
   @SerializedName("lastActivity")
   var lastActivity: Date? = null,
+    @SerializedName("metadata")
+    var metadata: NetworkUserMetadata? = null,
  /*@SerializedName("verified")
   var verified: Boolean*/
 ) {
@@ -44,7 +46,7 @@ class NetworkUser (
             id = id,
            username = username,
             lastActivity = lastActivity,
-           // avatarUrl = metadata?.img
+            avatarUrl = metadata?.img
         )
     }
 }

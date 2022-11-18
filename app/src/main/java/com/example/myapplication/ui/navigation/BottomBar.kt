@@ -16,7 +16,6 @@ fun BottomBar(navController: NavController) {
         NavBarScreen.Routines,
         NavBarScreen.Progress,
         NavBarScreen.Explore,
-        NavBarScreen.QR
     )
 
     BottomNavigation (backgroundColor = Gray, contentColor = Green) {

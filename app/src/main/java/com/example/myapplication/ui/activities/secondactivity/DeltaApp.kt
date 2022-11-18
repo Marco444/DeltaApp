@@ -34,11 +34,10 @@ fun DeltaApp(
     executeRedirect: (Int) -> Unit,
     logoutRedirect: () -> Unit,
     userViewModel: UserViewModel = viewModel(factory = getViewModelFactory()),
-    routineId : Int
 ) {
-    if (routineId != -1){
-       executeRedirect(routineId)
-    }
+//    if (routineId != -1){
+//       executeRedirect(routineId)
+//    }
     viewModel.setWidth(windowSize)
 
     // Variables for drawer
