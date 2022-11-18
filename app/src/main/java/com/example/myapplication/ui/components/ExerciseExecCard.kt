@@ -57,12 +57,12 @@ fun ExerciseExecCard(viewModel: ExecuteRoutineViewModel, actualExercise: Mutable
             Row(verticalAlignment = Alignment.CenterVertically) {
                 if(exercise.isExercise) {
                     RepsCards(
-                        name = "Reps",
+                        name = stringResource(R.string.reps),
                         actualExercise = actualExercise, viewModel = viewModel
                     )
                     Spacer(modifier = Modifier.width(30.dp))
                     WeightCards(
-                        name = "Weight",
+                        name = stringResource(R.string.weight),
                         actualExercise = actualExercise, viewModel = viewModel
                     )
 
