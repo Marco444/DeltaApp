@@ -82,29 +82,31 @@ class RoutinesViewModel(
     }
 
     private fun getUserRoutines() = viewModelScope.launch {
-       var aux: User? = User(-1)
+        if(loggedIn()) {
+            var aux: User? = User(-1)
 
-        runCatching {
-            aux = userRepository.getCurrentUser(false)!!
-        }.onSuccess {
-            var response: PagedRoutines? = null
             runCatching {
-                response = userRepository.getUserRoutine(true, aux!!.id, pageUser)
+                aux = userRepository.getCurrentUser(false)!!
             }.onSuccess {
-                _routinesState.value.userRoutines += response!!.content.map { routine ->
-                    MutableStateFlow(
-                        routine
-                    )
+                var response: PagedRoutines? = null
+                runCatching {
+                    response = userRepository.getUserRoutine(true, aux!!.id, pageUser)
+                }.onSuccess {
+                    _routinesState.value.userRoutines += response!!.content.map { routine ->
+                        MutableStateFlow(
+                            routine
+                        )
+                    }
+                    pageUser = response!!.page
+                    _hasNextPageUser.update { !response!!.isLastPage }
+                }.onFailure {
+                    error.update { true }
+                    //throw it
                 }
-                pageUser = response!!.page
-                _hasNextPageUser.update { !response!!.isLastPage }
             }.onFailure {
                 error.update { true }
                 //throw it
             }
-        }.onFailure {
-            error.update { true }
-            //throw it
         }
     }
     fun getExploreWithParamsWrapper(text: String?){

@@ -17,7 +17,6 @@ class UserViewModel(
 
     var userState = MutableStateFlow(UserState(isAuthenticated = userRepository.authenticate()))
         private set
-  
     fun login(username: String, password: String) = viewModelScope.launch {
         userState.update { it.copy(
             isFetching = true,
@@ -74,28 +73,30 @@ class UserViewModel(
     }
 
     fun getCurrentUser() = viewModelScope.launch {
-        userState.update {
-            it.copy(
-                isFetching = true,
-                message = null
-            )
-        }
-        runCatching {
-            userRepository.getCurrentUser(userState.value.currentUser == null)
-        }.onSuccess { response ->
+        if(userRepository.authenticate.value) {
             userState.update {
                 it.copy(
-                    isFetching = false,
-                    currentUser = response
+                    isFetching = true,
+                    message = null
                 )
             }
-        }.onFailure { e ->
-            // Handle the error and notify the UI when appropriate.
-            userState.update {
-                it.copy(
-                    message = e.message,
-                    isFetching = false
-                )
+            runCatching {
+                userRepository.getCurrentUser(userState.value.currentUser == null)
+            }.onSuccess { response ->
+                userState.update {
+                    it.copy(
+                        isFetching = false,
+                        currentUser = response
+                    )
+                }
+            }.onFailure { e ->
+                // Handle the error and notify the UI when appropriate.
+                userState.update {
+                    it.copy(
+                        message = e.message,
+                        isFetching = false
+                    )
+                }
             }
         }
     }
