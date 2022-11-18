@@ -12,11 +12,15 @@ import com.example.myapplication.data.repository.UserRepository
 import com.example.myapplication.ui.classes.CyclesExercise
 import com.example.myapplication.ui.classes.Routines
 import com.example.myapplication.ui.classes.RoutinesCycles
+import kotlinx.coroutines.async
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.StateFlow
 import kotlinx.coroutines.flow.asStateFlow
 import kotlinx.coroutines.flow.update
+import kotlinx.coroutines.joinAll
 import kotlinx.coroutines.launch
+import kotlinx.coroutines.runBlocking
+import okhttp3.internal.wait
 import kotlin.math.roundToInt
 
 class ExecuteRoutineViewModel(
@@ -113,14 +117,25 @@ class ExecuteRoutineViewModel(
             delta
         )
 
+        runBlocking {
 
-        viewModelScope.launch {
-            routinesRepository.addReview(executeRoutine.value.currentRoutine.value.id,Review(score = executeRoutine.value.currentRoutine.value.points.value,""))
+            launch {
+                routinesRepository.addReview(
+                    executeRoutine.value.currentRoutine.value.id,
+                    Review(score = executeRoutine.value.currentRoutine.value.points.value, "")
+                )
+            }
         }
-        viewModelScope.launch {
-            val currentUser = userRepository.getCurrentUser(true)
-            if(currentUser?.id == executeRoutine.value.currentRoutine.value.ownerId)
-                executeRoutine.value.currentRoutine.update { routinesRepository.modifyRoutine(executeRoutine.value.currentRoutine.value)  }
+        runBlocking {
+            launch {
+                    val currentUser = userRepository.getCurrentUser(true)
+                    if (currentUser?.id == executeRoutine.value.currentRoutine.value.ownerId)
+                        executeRoutine.value.currentRoutine.update {
+                            routinesRepository.modifyRoutine(
+                                executeRoutine.value.currentRoutine.value
+                            )
+                        }
+                }
         }
     }
     fun nextExercise(){

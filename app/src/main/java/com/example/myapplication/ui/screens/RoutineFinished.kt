@@ -24,6 +24,7 @@ import com.example.myapplication.ui.components.Button1
 import com.example.myapplication.ui.theme.*
 import com.example.myapplication.ui.activities.thirdactivity.ExecuteRoutineViewModel
 import com.example.myapplication.ui.components.Stars
+import okhttp3.internal.wait
 
 
 @SuppressLint("StateFlowValueCalledInComposition")
@@ -112,9 +113,14 @@ fun RoutineFinished(
             Stars(routine = routine, clickable = true)
 
             Spacer(modifier = Modifier.height(20.dp))
-            Button1(fontSize = 13, text = "Finish", handler = {
-                viewModel.finishRoutine()
-                nextHandler() })
+            Button1(
+                fontSize = 13,
+                text = "Finish",
+                handler = {
+                    viewModel.finishRoutine()
+                    nextHandler()
+                }
+            )
             Spacer(modifier = Modifier.height(10.dp))
         }
     }

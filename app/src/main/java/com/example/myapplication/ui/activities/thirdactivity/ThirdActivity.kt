@@ -9,6 +9,10 @@ import com.example.myapplication.ui.activities.secondactivity.SecondActivity
 import com.example.myapplication.ui.theme.MyApplicationTheme
 import com.example.myapplication.util.getExecRoutineViewModelFactory
 import com.google.accompanist.systemuicontroller.rememberSystemUiController
+import kotlinx.coroutines.android.awaitFrame
+import kotlinx.coroutines.awaitAll
+import kotlinx.coroutines.delay
+import okhttp3.internal.wait
 
 class ThirdActivity : ComponentActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -25,7 +29,10 @@ class ThirdActivity : ComponentActivity() {
                 if(saved != null) {
                    DeltaAppExecute(
                        routineId = saved,
-                       redirectHandler = { finish(); startActivity(navigate) },
+                       redirectHandler = {
+                           finish()
+                           startActivity(navigate)
+                                         },
                        viewModel = viewModel(factory = getExecRoutineViewModelFactory(routineId = saved.toInt()))
                    )
                 }
