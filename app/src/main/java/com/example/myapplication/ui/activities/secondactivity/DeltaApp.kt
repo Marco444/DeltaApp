@@ -1,6 +1,7 @@
 package com.example.myapplication.ui.activities.secondactivity
 
 import android.annotation.SuppressLint
+import android.os.Bundle
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.padding
@@ -32,8 +33,12 @@ fun DeltaApp(
     navController: NavHostController = rememberNavController(),
     executeRedirect: (Int) -> Unit,
     logoutRedirect: () -> Unit,
-    userViewModel: UserViewModel = viewModel(factory = getViewModelFactory())
+    userViewModel: UserViewModel = viewModel(factory = getViewModelFactory()),
+    routineId : Int
 ) {
+    if (routineId != -1){
+       executeRedirect(routineId)
+    }
     viewModel.setWidth(windowSize)
 
     // Variables for drawer
@@ -91,4 +96,5 @@ fun DeltaApp(
         }
     }
 }
+
 

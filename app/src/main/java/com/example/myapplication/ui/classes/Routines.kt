@@ -2,6 +2,7 @@ package com.example.myapplication.ui.classes
 
 import androidx.compose.ui.graphics.Color
 import com.example.myapplication.R
+import com.example.myapplication.data.network.model.NetworkLiteRoutine
 import com.example.myapplication.data.network.model.NetworkRoutine
 import com.example.myapplication.data.network.model.NetworkRoutineMetadata
 import com.example.myapplication.ui.classes.CyclesExercise
@@ -61,6 +62,16 @@ data class Routines (
             isPublic = isPublic,
             score = points.value,
             metadata = NetworkRoutineMetadata(favourite,img,delta)
+        )
+    }
+    fun asLiteNetworkModel():NetworkLiteRoutine{
+        return NetworkLiteRoutine(
+            id = id,
+            name = title,
+            detail = description,
+            difficulty = difficulty,
+            metadata = NetworkRoutineMetadata(favourite,img,delta),
+            isPublic = isPublic
         )
     }
 }
