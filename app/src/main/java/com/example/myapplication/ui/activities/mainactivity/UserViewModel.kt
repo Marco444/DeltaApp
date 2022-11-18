@@ -17,6 +17,7 @@ class UserViewModel(
 
     var userState = MutableStateFlow(UserState(isAuthenticated = userRepository.authenticate()))
         private set
+
     fun login(username: String, password: String) = viewModelScope.launch {
         userState.update { it.copy(
             isFetching = true,

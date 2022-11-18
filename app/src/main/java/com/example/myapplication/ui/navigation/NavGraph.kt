@@ -48,9 +48,6 @@ fun NavGraph(navController: NavHostController, viewModel: RoutinesViewModel, exe
                 settingsRedirect = {navController.navigate(Screen.Settings.route)}
             )
         }
-        composable(NavBarScreen.QR.route) {
-            QRScreen(viewModel = viewModel)
-        }
         composable(Screen.Error.route) {
             ApiErrorScreen()
         }

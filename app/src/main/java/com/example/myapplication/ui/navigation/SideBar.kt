@@ -14,7 +14,6 @@ fun SideBar(navController: NavController) {
         NavBarScreen.Routines,
         NavBarScreen.Progress,
         NavBarScreen.Explore,
-        NavBarScreen.QR
     )
 
     NavigationRail(backgroundColor = Green, contentColor = MaterialTheme.colors.onPrimary) {

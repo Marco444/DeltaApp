@@ -48,8 +48,6 @@ fun LogIn(actionRedirect: (Int) -> Unit, backButton: () -> Unit, viewModel: User
 
     var passWord by remember { mutableStateOf(TextFieldValue("")) }
     var email by remember { mutableStateOf(TextFieldValue("")) }
-    var snackbar by remember { mutableStateOf(false) }
-    val configuration = LocalConfiguration.current
     val focusManager = LocalFocusManager.current
     val uiState by viewModel.userState.collectAsState()
     val auth by uiState.isAuthenticated.collectAsState()
