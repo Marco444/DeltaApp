@@ -19,14 +19,10 @@ sealed class Screen(val route: String) {
     object Settings : Screen("settings")
 }
 
-sealed class NavBarScreen(val title: String,
-                          val icon: ImageVector,
-                          private val route_: String): Screen(route = route_) {
+sealed class NavBarScreen(val title: String, val icon: ImageVector, private val route_: String): Screen(route = route_) {
     object Routines: NavBarScreen("Routines", Icons.Default.FitnessCenter , route_ = "routines_screen")
     object Progress: NavBarScreen("Progress", Icons.Default.BarChart, route_ = "progress_screen")
-    object Explore: NavBarScreen("Explore", Icons.Default.Search,
-        route_ = "explore_screen")
+    object Explore: NavBarScreen("Explore", Icons.Default.Search, route_ = "explore_screen")
     object QR: NavBarScreen("QR", Icons.Default.QrCode, route_ = "qr_screen")
-
 }
 
