@@ -9,6 +9,7 @@ import androidx.compose.runtime.*
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.clip
+import androidx.compose.ui.draw.rotate
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.unit.dp
@@ -29,7 +30,10 @@ import com.example.myapplication.ui.components.Chart
 fun ProgressDetailScreen(viewModel: RoutinesViewModel, viewRoutineHandler: () -> Unit, routineId: String?, backButtonHandler: () -> Unit, errorRedirect: () -> Unit) {
 
     val id = routineId?.substringAfter('}')?.toInt() ?: -1
-    val routine: Routines = viewModel.routineUser(id)
+    val routine by viewModel.selectRoutine.collectAsState()
+    val fetchingState by viewModel.fetchingState.collectAsState()
+
+    val (snackbarVisibleState, setSnackBarState) = remember { mutableStateOf(false) }
 
     val routineProgress: RoutineProgress = routine.routineProgress
     var showChart by remember {
@@ -82,8 +86,19 @@ fun ProgressDetailScreen(viewModel: RoutinesViewModel, viewRoutineHandler: () ->
 
                             if(routine.delta?.isNotEmpty() == true) {
                                 var i = 0
-                                val map = routine.delta?.associate { (i++) to it }
+                                lateinit var map : Map<Int,Float>
+                                if((routine.delta?.size?.compareTo(10) ?: 0) < 0)
+                                     map = routine.delta?.associate { (i++) to it }?: emptyMap()
+                                else{
+
+                                    map = routine.delta?.slice(
+                                        (routine.delta?.size?.minus(
+                                            10
+                                        ))?.rangeTo((routine.delta?.size!! - 1)) ?: 0..10
+                                    )?.associate { (i++) to it }?: emptyMap()
+                                }
                                 Box() {
+
                                     Chart(
                                         data = map ?: emptyMap(), height = 250.dp,
                                         isExpanded = showChart,
@@ -108,5 +123,26 @@ fun ProgressDetailScreen(viewModel: RoutinesViewModel, viewRoutineHandler: () ->
             }
         }
     }
+    LaunchedEffect(key1 = fetchingState.error){
+        if(fetchingState.error)
+            setSnackBarState(true)
+    }
+
+
+    // The Snackbar
+    if (snackbarVisibleState) {
+        Snackbar(
+            action = {
+                Button(
+                    onClick = {setSnackBarState(!snackbarVisibleState);backButtonHandler()},
+                ) {
+                    Text(text = stringResource(id = R.string.go_back))
+                }
+            },
+            modifier = Modifier.padding(8.dp)
+
+        ) { Text(text =  fetchingState.message) }
+    }
+
 }
 

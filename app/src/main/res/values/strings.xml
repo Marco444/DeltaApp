@@ -39,6 +39,8 @@
     <string name="settings">Settings</string>
     <string name="conection_error">Connection Error</string>
     <string name="try_again">Try again</string>
+    <string name="go_back">Go back</string>
+
     <string name="finish">Finish</string>
     <string name="review_routine">Review this routine:</string>
     <string name="good_delta">You have surpass your average!</string>

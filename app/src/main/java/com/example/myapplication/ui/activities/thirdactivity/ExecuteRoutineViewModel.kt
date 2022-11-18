@@ -122,10 +122,7 @@ class ExecuteRoutineViewModel(
         executeRoutine.value.currentRoutine.value.delta = executeRoutine.value.currentRoutine.value.delta?.plus(
             delta
         )
-
-
-
-            runBlocking {
+        runBlocking {
                 kotlin.runCatching {
                     launch {
                         if(executeRoutine.value.currentRoutine.value.points.value > 0)

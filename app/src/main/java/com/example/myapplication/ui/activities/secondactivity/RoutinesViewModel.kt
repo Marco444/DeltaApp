@@ -27,6 +27,7 @@ class RoutinesViewModel(
     private val _routinesState = MutableStateFlow(RoutinesState())
     private val _hasNextPageExplore = MutableStateFlow(false)
     private val _hasNextPageUser = MutableStateFlow(false)
+    private val _selectRoutine = MutableStateFlow(Routines())
 
 
     val error = MutableStateFlow(false)
@@ -34,6 +35,8 @@ class RoutinesViewModel(
         error.update { false }
     }
     private val _fetchingState = MutableStateFlow(FetchState())
+    val selectRoutine: StateFlow<Routines>
+        get() = _selectRoutine.asStateFlow()
 
     val fetchingState: StateFlow<FetchState>
         get() = _fetchingState.asStateFlow()
@@ -269,6 +272,18 @@ class RoutinesViewModel(
     fun getRoutines(routineCard: RoutineCard): List<MutableStateFlow<Routines>> {
         return if(routineCard == RoutineCard.ExploreRoutine) _routinesState.value.exploreRoutines
         else _routinesState.value.userRoutines
+    }
+    fun getRoutine(id : Int) = viewModelScope.launch{
+        _fetchingState.update { it.copy(isFetching = true,error = false) }
+        kotlin.runCatching {
+            _selectRoutine.update { Routines() }
+            _selectRoutine.update {  routinesRepository.getRoutine(id) }
+        }.onSuccess{
+            _fetchingState.update { it.copy(isFetching = false,error = false) }
+        }.onFailure {apiError ->
+            _fetchingState.update { it.copy(isFetching = false,error = true, message = apiError.message?:"") }
+        }
+
     }
 
     fun routineUser(id: Int): Routines {
