@@ -23,5 +23,6 @@ sealed class NavBarScreen(val title: String, val icon: ImageVector, private val 
     object Routines: NavBarScreen("Routines", Icons.Default.FitnessCenter , route_ = "routines_screen")
     object Progress: NavBarScreen("Progress", Icons.Default.BarChart, route_ = "progress_screen")
     object Explore: NavBarScreen("Explore", Icons.Default.Search, route_ = "explore_screen")
+    object Profile : NavBarScreen("Profile", Icons.Default.VerifiedUser, route_ = "profile")
 }
 

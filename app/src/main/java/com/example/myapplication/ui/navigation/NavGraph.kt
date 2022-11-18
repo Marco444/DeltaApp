@@ -9,8 +9,10 @@ import androidx.navigation.compose.NavHost
 import androidx.navigation.compose.composable
 import androidx.navigation.navArgument
 import androidx.navigation.navDeepLink
+import com.example.myapplication.ui.activities.mainactivity.UserViewModel
 import com.example.myapplication.ui.screens.*
 import com.example.myapplication.ui.activities.secondactivity.RoutinesViewModel
+import com.example.myapplication.ui.components.DrawerContent
 
 @Composable
 
@@ -19,14 +21,21 @@ import com.example.myapplication.ui.activities.secondactivity.RoutinesViewModel
 * que va a llevar, y de esa manera hacer que esa accion se manje direction directamente y
 * unicamente desde aca
 * */
-fun NavGraph(navController: NavHostController, viewModel: RoutinesViewModel, executeRedirect: (Int) -> Unit, scaffoldState: ScaffoldState) {
+fun NavGraph(userViewModel: UserViewModel,
+             navController: NavHostController,
+             viewModel: RoutinesViewModel,
+             executeRedirect: (Int) -> Unit,
+             scaffoldState: ScaffoldState,
+             logoutRedirect: () -> Unit) {
+
     NavHost(
         navController = navController,
         startDestination = NavBarScreen.Routines.route,
     ) {
         composable(NavBarScreen.Routines.route) {
             RoutinesScreen(viewModel = viewModel,
-                actionRedirect = executeRedirect, scaffoldState,
+                actionRedirect = executeRedirect,
+                scaffoldState = scaffoldState,
                 errorRedirect = {navController.navigate(Screen.Error.route)},
                 settingsRedirect = {navController.navigate(Screen.Settings.route)}
             )
@@ -39,9 +48,12 @@ fun NavGraph(navController: NavHostController, viewModel: RoutinesViewModel, exe
                 settingsRedirect = {navController.navigate(Screen.Settings.route)}
             )
         }
+        composable(NavBarScreen.Profile.route) {
+            DrawerContent(userViewModel = userViewModel, logoutRedirect = logoutRedirect)
+        }
         composable(NavBarScreen.Explore.route) { entry ->
             ExploreScreen(viewModel = viewModel,
-                scaffoldState,
+                scaffoldState = scaffoldState,
                 actionRedirect = executeRedirect,
                 refferedRoutineId = id,
                 errorRedirect = {navController.navigate(Screen.Error.route)},

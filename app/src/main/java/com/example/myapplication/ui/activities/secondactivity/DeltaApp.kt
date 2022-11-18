@@ -35,9 +35,6 @@ fun DeltaApp(
     logoutRedirect: () -> Unit,
     userViewModel: UserViewModel = viewModel(factory = getViewModelFactory()),
 ) {
-//    if (routineId != -1){
-//       executeRedirect(routineId)
-//    }
     viewModel.setWidth(windowSize)
 
     // Variables for drawer
@@ -64,6 +61,8 @@ fun DeltaApp(
                     )
             ) {
                 NavGraph(
+                    userViewModel = userViewModel,
+                    logoutRedirect = logoutRedirect,
                     navController = navController,
                     viewModel = viewModel,
                     executeRedirect = executeRedirect,
@@ -77,15 +76,18 @@ fun DeltaApp(
             bottomBar = {
                 SideBar(navController = navController)
             },
+            scaffoldState = scaffoldState
         ) {
             Box(
                 modifier = Modifier
                     .fillMaxSize()
                     .padding(
-                        start = it.calculateLeftPadding(LayoutDirection.Rtl),
+                        start = it.calculateBottomPadding() / 10,
                     )
             ) {
                 NavGraph(
+                    userViewModel = userViewModel,
+                    logoutRedirect = logoutRedirect,
                     navController = navController,
                     viewModel = viewModel,
                     scaffoldState = scaffoldState,
