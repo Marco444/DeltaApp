@@ -100,13 +100,11 @@ class RoutinesViewModel(
                 _hasNextPageUser.update { !response!!.isLastPage }
             }.onFailure {
                 error.update { true }
-                throw it
-
+                //throw it
             }
         }.onFailure {
             error.update { true }
-            throw it
-
+            //throw it
         }
     }
     fun getExploreWithParamsWrapper(text: String?){
@@ -146,8 +144,8 @@ class RoutinesViewModel(
         runCatching {
             response = routinesRepository.getRoutines(true,pageExplore,null)
         }.onSuccess {
-
-
+            _routinesState.value.exploreRoutines = emptyList()
+            _routinesState.value.exploreRoutines = response.content.map { MutableStateFlow(it) }
             var content = routinesRepository.getFavourites(0)
             val favourites = content.content.toMutableList()
             while (!content.isLastPage) {
@@ -155,17 +153,10 @@ class RoutinesViewModel(
                 favourites += content.content
             }
 
-            _routinesState.value.exploreRoutines = emptyList()
-            for (routine in response.content) {
-                var found = false
+            for (routine in _routinesState.value.exploreRoutines) {
                 for (favourite in favourites) {
-                    if (routine.id == favourite.id)
-                        _routinesState.value.exploreRoutines += MutableStateFlow(routine.copy(favourite = true))
-                    found = true
-                    break
-                }
-                if(!found) {
-                    _routinesState.value.exploreRoutines += MutableStateFlow(routine.copy())
+                    if (routine.value.id == favourite.id)
+                        routine.update {it.copy(favourite = true)}
                 }
             }
 

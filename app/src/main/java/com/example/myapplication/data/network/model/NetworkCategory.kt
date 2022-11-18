@@ -7,7 +7,7 @@ data class NetworkCategory (
     var id : Int,
 
     @SerializedName("name")
-    var name : String,
+    var name : String? = null,
 
     @SerializedName("detail")
     var detail : String? = null

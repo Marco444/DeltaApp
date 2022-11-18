@@ -29,6 +29,7 @@ class SecondActivity : ComponentActivity() {
                 DeltaApp(
                     windowSize = calculateWindowSizeClass(this).widthSizeClass,
                     executeRedirect = {
+                        finish()
                         val args = Bundle()
                         args.putString("routineId", it.toString())
                         navigate.putExtras(args)

@@ -11,16 +11,16 @@ data class NetworkRoutine (
     var id: Int,
 
     @SerializedName("name")
-    var name: String,
+    var name: String? = "",
 
     @SerializedName("detail")
-    var detail: String,
+    var detail: String? = "",
 
     @SerializedName("date")
     var date : Date? = null,
 
     @SerializedName("score")
-    var score : Int,
+    var score : Int? = 0,
 
     @SerializedName("isPublic")
     var isPublic : Boolean,
@@ -32,7 +32,7 @@ data class NetworkRoutine (
     var user : NetworkUserLite? = null,
 
     @SerializedName("category")
-    var category: NetworkCategory? = NetworkCategory(1,"",""),
+    var category: NetworkCategory? = NetworkCategory(1),
 
     @SerializedName("metadata")
     var metadata: NetworkRoutineMetadata? = null
@@ -41,9 +41,9 @@ data class NetworkRoutine (
         return Routines(
             id = id,
             img = metadata?.img ?: "",
-            description = detail,
-            title = name,
-            points = MutableStateFlow(score),
+            description = detail?: "",
+            title = name?: "",
+            points = MutableStateFlow(score?: 0),
            favourite = metadata?.isFavorite ?: false,
             difficulty = difficulty?: "",
             isPublic = isPublic,
