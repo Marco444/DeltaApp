@@ -15,6 +15,7 @@ import androidx.compose.material.*
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.filled.*
 import androidx.compose.runtime.*
+import androidx.compose.ui.Alignment
 import androidx.compose.ui.Alignment.Companion.CenterHorizontally
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.scale
@@ -116,15 +117,21 @@ fun LogIn(actionRedirect: (Int) -> Unit, backButton: () -> Unit, viewModel: User
                 modifier = Modifier.align(CenterHorizontally),
                 password = passWord
             )
-            Button1(
-                fontSize = 23,
-                text = stringResource(id = R.string.login),
-                handler = {
-                    viewModel.login(email.text, passWord.text )
+            val userState by viewModel.userState.collectAsState()
+            if(!userState.isFetching) {
+                Button1(
+                    fontSize = 23,
+                    text = stringResource(id = R.string.login),
+                    handler = {
+                        viewModel.login(email.text, passWord.text)
 
                     },
-                modifier = Modifier.align(CenterHorizontally)
-            )
+                    modifier = Modifier.align(CenterHorizontally)
+                )
+            }
+            else {
+                    LoadingScreen()
+            }
 
             LaunchedEffect(key1 = auth){
                 if(auth) {
