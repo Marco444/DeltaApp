@@ -28,8 +28,9 @@
             android:name=".ui.activities.secondactivity.SecondActivity"
             android:exported="false"
             android:label="@string/title_activity_main2"
+            android:theme="@style/Theme.MyApplication"
             android:launchMode="singleInstance"
-            android:theme="@style/Theme.MyApplication">
+            >
 
             <meta-data
                 android:name="android.app.lib_name"

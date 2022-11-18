@@ -104,12 +104,12 @@ fun LogIn(actionRedirect: (Int) -> Unit, viewModel: UserViewModel, routineId: In
                     LoadingScreen()
             }
 
-            LaunchedEffect(key1 = auth){
+            //LaunchedEffect(key1 = auth){
                 if(auth) {
                     setSnackBarState(false)
                     actionRedirect(routineId)
                 }
-            }
+            //}
             LaunchedEffect(key1 = uiState.errorBoolean){
                 if(uiState.errorBoolean == true)
                     setSnackBarState(true)

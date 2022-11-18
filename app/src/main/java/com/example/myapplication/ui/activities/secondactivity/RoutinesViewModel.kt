@@ -185,6 +185,7 @@ class RoutinesViewModel(
             }
             displayUserFavorites(onlyFavourites = false)
 
+
             pageExplore = response.page
             _hasNextPageExplore.update { true }
         }.onFailure {
