@@ -78,7 +78,8 @@ fun LoadingScreen(
 
     // container for circles
     Row(
-        modifier = Modifier
+        modifier = Modifier.fillMaxWidth(),
+        horizontalArrangement = Arrangement.Center
         //.border(width = 2.dp, color = Color.Magenta)
     ) {
 
