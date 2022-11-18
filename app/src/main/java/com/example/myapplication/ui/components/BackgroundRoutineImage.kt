@@ -7,6 +7,8 @@ import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.asImageBitmap
 import androidx.compose.ui.layout.ContentScale
+import androidx.compose.ui.res.painterResource
+import com.example.myapplication.R
 import com.example.myapplication.ui.classes.Routines
 
 @Composable
@@ -15,6 +17,14 @@ fun BackgroundRoutineImage(routine: Routines) {
     if (bitmap != null) {
         Image(
             bitmap = bitmap,
+            contentDescription = "Routine Picture",
+            contentScale = ContentScale.Crop,
+            modifier = Modifier.fillMaxSize(),
+            alpha = 0.5f
+        )
+    } else {
+        Image(
+            painter = painterResource(id = R.drawable.registration_background),
             contentDescription = "Routine Picture",
             contentScale = ContentScale.Crop,
             modifier = Modifier.fillMaxSize(),

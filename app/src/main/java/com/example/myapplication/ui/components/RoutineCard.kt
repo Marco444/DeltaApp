@@ -56,7 +56,7 @@ fun RoutineCardDetails( routine: Routines, buttonText: String, buttonHandler: ()
         text = routine.description,
         fontSize = 25.sp,
         color = Green,
-        modifier = Modifier
+        modifier = Modifier.fillMaxWidth(0.85f)
     )
     Row (verticalAlignment = Alignment.CenterVertically) {
         Stars(routine = routine, clickable = false)

@@ -1,0 +1,143 @@
+Index: app/src/main/java/com/example/myapplication/ui/components/BackgroundRoutineImage.kt
+IDEA additional info:
+Subsystem: com.intellij.openapi.diff.impl.patch.BaseRevisionTextPatchEP
+<+>package com.example.myapplication.ui.components\n\nimport Base64BitMap\nimport androidx.compose.foundation.Image\nimport androidx.compose.foundation.layout.fillMaxSize\nimport androidx.compose.runtime.Composable\nimport androidx.compose.ui.Modifier\nimport androidx.compose.ui.graphics.asImageBitmap\nimport androidx.compose.ui.layout.ContentScale\nimport com.example.myapplication.ui.classes.Routines\n\n@Composable\nfun BackgroundRoutineImage(routine: Routines) {\n    val bitmap = Base64BitMap(routine.img)?.asImageBitmap()\n    if (bitmap != null) {\n        Image(\n            bitmap = bitmap,\n            contentDescription = \"Routine Picture\",\n            contentScale = ContentScale.Crop,\n            modifier = Modifier.fillMaxSize(),\n            alpha = 0.5f\n        )\n    }\n}
+Subsystem: com.intellij.openapi.diff.impl.patch.CharsetEP
+<+>UTF-8
+===================================================================
+diff --git a/app/src/main/java/com/example/myapplication/ui/components/BackgroundRoutineImage.kt b/app/src/main/java/com/example/myapplication/ui/components/BackgroundRoutineImage.kt
+--- a/app/src/main/java/com/example/myapplication/ui/components/BackgroundRoutineImage.kt	(revision 3e92b2a8dc6f55a30ee9f29228e1ce1f6e7b45a4)
++++ b/app/src/main/java/com/example/myapplication/ui/components/BackgroundRoutineImage.kt	(date 1668805548282)
+@@ -7,6 +7,8 @@
+ import androidx.compose.ui.Modifier
+ import androidx.compose.ui.graphics.asImageBitmap
+ import androidx.compose.ui.layout.ContentScale
++import androidx.compose.ui.res.painterResource
++import com.example.myapplication.R
+ import com.example.myapplication.ui.classes.Routines
+ 
+ @Composable
+@@ -19,6 +21,14 @@
+             contentScale = ContentScale.Crop,
+             modifier = Modifier.fillMaxSize(),
+             alpha = 0.5f
++        )
++    } else {
++        Image(
++            painter = painterResource(id = R.drawable.registration_background),
++            contentDescription = "Routine Picture",
++            contentScale = ContentScale.Crop,
++            modifier = Modifier.fillMaxSize(),
++            alpha = 0.5f
+         )
+     }
+ }
+\ No newline at end of file
+Index: app/src/main/java/com/example/myapplication/ui/components/RoutineCard.kt
+IDEA additional info:
+Subsystem: com.intellij.openapi.diff.impl.patch.BaseRevisionTextPatchEP
+<+>package com.example.myapplication.ui.components\n\nimport androidx.compose.foundation.Image\nimport Base64BitMap\nimport android.content.Context\nimport android.content.Intent\nimport android.graphics.BitmapFactory\nimport android.util.Base64\nimport androidx.compose.foundation.background\nimport androidx.compose.foundation.clickable\nimport androidx.compose.foundation.layout.*\nimport androidx.compose.foundation.shape.RoundedCornerShape\nimport androidx.compose.material.*\nimport androidx.compose.material.icons.Icons\nimport androidx.compose.material.icons.filled.*\nimport androidx.compose.material.icons.outlined.Add\nimport androidx.compose.material.icons.outlined.Favorite\nimport androidx.compose.material.icons.outlined.FavoriteBorder\nimport androidx.compose.runtime.*\nimport androidx.compose.ui.Alignment\nimport androidx.compose.ui.Modifier\nimport androidx.compose.ui.draw.clip\nimport androidx.compose.ui.draw.scale\nimport androidx.compose.ui.graphics.Brush\nimport androidx.compose.ui.graphics.Color\nimport androidx.compose.ui.graphics.ImageBitmap\nimport androidx.compose.ui.graphics.asImageBitmap\nimport androidx.compose.ui.graphics.vector.ImageVector\nimport androidx.compose.ui.layout.ContentScale\nimport androidx.compose.ui.platform.LocalContext\nimport androidx.compose.ui.res.painterResource\nimport androidx.compose.ui.text.style.TextAlign\nimport androidx.compose.ui.text.style.TextOverflow\nimport androidx.compose.ui.unit.Dp\nimport androidx.compose.ui.unit.dp\nimport androidx.compose.ui.unit.sp\nimport com.example.myapplication.R\nimport com.example.myapplication.ui.classes.Routines\nimport com.example.myapplication.ui.theme.Green\nimport com.example.myapplication.ui.activities.secondactivity.RoutinesViewModel\nimport com.example.myapplication.ui.navigation.NavBarScreen\nimport com.example.myapplication.ui.theme.Gray\n\n\nconst val ROUTINE_CARD_WIDTH = 370;\n\nsealed class RoutineCard(val iconClicked: ImageVector, val iconUnClicked: ImageVector, val description: String) {\n    object MyRoutine: RoutineCard ( Icons.Default.Favorite, Icons.Outlined.FavoriteBorder, \"Start\")\n    object Progress: RoutineCard (Icons.Default.Favorite, Icons.Outlined.FavoriteBorder, \"See Progress\")\n    object ExploreRoutine: RoutineCard (  Icons.Default.Favorite, Icons.Outlined.FavoriteBorder, \"Preview\")\n}\n\n@Composable\nfun RoutineCardDetails( routine: Routines, buttonText: String, buttonHandler: () -> Unit) {\n    Text(\n        text = routine.description,\n        fontSize = 25.sp,\n        color = Green,\n        modifier = Modifier\n    )\n    Row (verticalAlignment = Alignment.CenterVertically) {\n        Stars(routine = routine, clickable = false)\n        Button1(fontSize = 16, text = buttonText, handler = buttonHandler)\n    }\n}\n\n\nprivate fun shareRoutine(context: Context, routine: Routines) {\n    val intent = Intent(Intent.ACTION_SEND).apply {\n        type = \"text/plain\"\n        putExtra(Intent.EXTRA_SUBJECT, \"Routine: \" + routine.title)\n        putExtra(Intent.EXTRA_TEXT, context.getString(R.string.share_msg) + \"http://deltapp.com/\" + routine.id)\n    }\n    context.startActivity(\n        Intent.createChooser(\n            intent,\n            \"Share routine\"\n        )\n    )\n}\n\n@Composable\nfun CardOptions(viewModel: RoutinesViewModel, routine: Routines) {\n\n    val context = LocalContext.current\n\n    var expanded by remember { mutableStateOf(false) }\n\n    Icon(\n        Icons.Default.MoreVert,\n        contentDescription = null,\n        modifier = Modifier\n            .clickable(onClick = { expanded = true })\n            .scale(1.5f)\n            .padding(end = 5.dp),\n        tint = Color.White,\n    )\n    DropdownMenu(expanded = expanded, onDismissRequest = { expanded = false }, modifier = Modifier\n        .background(\n            Color.White\n        )\n        .clip(RoundedCornerShape(8.dp))) {\n\n        if(routine.isPublic) {\n            DropdownMenuItem(onClick = { expanded = false; shareRoutine(context, routine) }) {\n                Text(text = \"Share\")\n            }\n        }\n        DropdownMenuItem(onClick = { expanded = false ; viewModel.deleteRoutine(routine.id)} ) {\n            Text(text = \"Delete\")\n        }\n    }\n}\n\n\n@Composable\nfun RoutineCardTitle(routineCard: RoutineCard, routine: Routines, iconId: ImageVector, clickedIcon: () -> Unit = {}, viewModel: RoutinesViewModel) {\n\n\n    val context = LocalContext.current\n\n    Row ( horizontalArrangement  =  Arrangement.SpaceBetween, verticalAlignment = Alignment.CenterVertically) {\n\n        Text(\n            text = routine.title,\n            fontSize = 50.sp,\n            color = Color.White,\n            textAlign = TextAlign.Start,\n            maxLines = 1,\n            overflow = TextOverflow.Ellipsis,\n            modifier = Modifier.width((ROUTINE_CARD_WIDTH - 100).dp)\n        )\n\n        Spacer(modifier = Modifier.width(10.dp))\n            Icon(\n                iconId,\n                contentDescription = null,\n                modifier = Modifier\n                    .clickable(onClick = clickedIcon)\n                    .scale(1.5f)\n                    .padding(end = 5.dp),\n                tint = Color.White,\n            )\n\n        if(routineCard == RoutineCard.ExploreRoutine) {\n            Icon(\n                Icons.Default.Share,\n                contentDescription = null,\n                modifier = Modifier\n                    .clickable(onClick = { shareRoutine(context, routine) })\n                    .padding(end = 5.dp),\n                tint = Color.White,\n            )\n        } else {\n            CardOptions(viewModel = viewModel, routine = routine)\n        }\n\n    }\n}\n\n@Composable\nfun BackgroundImageCard(routine: Routines, imageHeight: Dp) {\n\n    if(routine.img == \"\")\n        Image(\n            painter = painterResource( R.drawable.registration_background),\n            contentDescription = \"Routine Picture\",\n            contentScale = ContentScale.Crop,\n            modifier = Modifier\n                .width(ROUTINE_CARD_WIDTH.dp)\n                .clip(RoundedCornerShape(20.dp))\n                .height(imageHeight),\n            alpha = 0.4f\n        )\n    else {\n        val bitmap = Base64BitMap(routine.img)?.asImageBitmap()\n        if (bitmap != null) {\n            Image(\n                bitmap = bitmap,\n                contentDescription = \"Routine Picture\",\n                contentScale = ContentScale.Crop,\n                modifier = Modifier\n                    .width(ROUTINE_CARD_WIDTH.dp)\n                    .clip(RoundedCornerShape(20.dp))\n                    .height(imageHeight),\n                alpha = 0.4f\n            )\n        }\n    }}\n\n@Composable\nfun RoutineCard(routine: Routines, iconId: ImageVector, clickedIcon: () -> Unit = {}, actionHandler: () -> Unit = {}, routineCard: RoutineCard, viewModel: RoutinesViewModel, buttonText: String) {\n\n    var expanded by remember { mutableStateOf(!viewModel.cardsExpandable()) }\n    var imageHeight by remember { mutableStateOf(if (!viewModel.cardsExpandable()) 200.dp else 70.dp) }\n\n    Box(\n        Modifier\n            .width(ROUTINE_CARD_WIDTH.dp)\n            .clickable {\n                expanded = if (viewModel.cardsExpandable()) !expanded else true\n                imageHeight = if (expanded) 200.dp else 70.dp\n            }\n            .background(Gray, RoundedCornerShape(20.dp)),\n        contentAlignment = Alignment.Center\n    ) {\n        val showImage by viewModel.displayRoutineImages.collectAsState()\n\n        if(showImage) {\n            BackgroundImageCard(routine, imageHeight)\n        }\n\n            Column(\n                horizontalAlignment = Alignment.CenterHorizontally,\n            ) {\n\n                RoutineCardTitle(\n                    routineCard = routineCard,\n                    routine = routine,\n                    iconId = iconId,\n                    clickedIcon = { clickedIcon() },\n                    viewModel = viewModel\n                )\n                if (expanded)\n                    RoutineCardDetails(\n                        routine = routine,\n                        buttonHandler = actionHandler,\n                        buttonText = buttonText\n                    )\n\n            }\n\n    }\n\n    Spacer(modifier = Modifier.height(30.dp))\n\n\n}\n
+Subsystem: com.intellij.openapi.diff.impl.patch.CharsetEP
+<+>UTF-8
+===================================================================
+diff --git a/app/src/main/java/com/example/myapplication/ui/components/RoutineCard.kt b/app/src/main/java/com/example/myapplication/ui/components/RoutineCard.kt
+--- a/app/src/main/java/com/example/myapplication/ui/components/RoutineCard.kt	(revision 3e92b2a8dc6f55a30ee9f29228e1ce1f6e7b45a4)
++++ b/app/src/main/java/com/example/myapplication/ui/components/RoutineCard.kt	(date 1668803739153)
+@@ -56,7 +56,7 @@
+         text = routine.description,
+         fontSize = 25.sp,
+         color = Green,
+-        modifier = Modifier
++        modifier = Modifier.fillMaxWidth(0.85f)
+     )
+     Row (verticalAlignment = Alignment.CenterVertically) {
+         Stars(routine = routine, clickable = false)
+Index: app/src/main/java/com/example/myapplication/ui/screens/ProgressDetailsScreen.kt
+IDEA additional info:
+Subsystem: com.intellij.openapi.diff.impl.patch.BaseRevisionTextPatchEP
+<+>package com.example.myapplication.ui.screens\n\nimport androidx.compose.animation.ExperimentalAnimationApi\nimport androidx.compose.foundation.background\nimport androidx.compose.foundation.layout.*\nimport androidx.compose.foundation.shape.RoundedCornerShape\nimport androidx.compose.material.*\nimport androidx.compose.runtime.*\nimport androidx.compose.ui.Alignment\nimport androidx.compose.ui.Modifier\nimport androidx.compose.ui.draw.clip\nimport androidx.compose.ui.graphics.Color\nimport androidx.compose.ui.res.stringResource\nimport androidx.compose.ui.unit.dp\nimport androidx.compose.ui.unit.sp\nimport com.example.myapplication.R\nimport com.example.myapplication.ui.classes.RoutineProgress\nimport com.example.myapplication.ui.classes.Routines\nimport com.example.myapplication.ui.components.BackButton\nimport com.example.myapplication.ui.theme.Green\nimport com.example.myapplication.ui.activities.secondactivity.RoutinesViewModel\nimport com.example.myapplication.ui.components.BackgroundRoutineImage\nimport com.example.myapplication.ui.components.Chart\n\n\n@Composable\nfun SliderDelta(value: Float,\n                enabled: Boolean,\n                handler: (Float) -> Unit,\n                color: Color = Green,\n                range: ClosedFloatingPointRange<Float> = 0f..100f) {\n    Slider(\n        value = value,\n        enabled = enabled,\n        onValueChange = handler,\n        valueRange = range,\n        modifier = Modifier\n            .clip(RoundedCornerShape(20.dp))\n            .background(color))\n}\n\n@OptIn(ExperimentalAnimationApi::class)\n@Composable\nfun ProgressDetailScreen(viewModel: RoutinesViewModel, viewRoutineHandler: () -> Unit, routineId: String?, backButtonHandler: () -> Unit, errorRedirect: () -> Unit) {\n\n    val id = routineId?.substringAfter('}')?.toInt() ?: -1\n    val routine: Routines = viewModel.routineUser(id)\n\n    val routineProgress: RoutineProgress = routine.routineProgress\n    var showChart by remember {\n        mutableStateOf(true)\n    }\n    Column(\n        horizontalAlignment = Alignment.CenterHorizontally,\n        modifier = Modifier\n            .fillMaxWidth()\n            .fillMaxHeight()\n            .background(MaterialTheme.colors.background),\n    ) {\n\n        Box() {\n           BackgroundRoutineImage(routine = routine)\n            Column(verticalArrangement = Arrangement.SpaceEvenly) {\n\n                Column(modifier = Modifier.fillMaxWidth()) {\n\n                    BackButton(handler = backButtonHandler)\n\n\n                    Column(\n                        horizontalAlignment = Alignment.CenterHorizontally,\n                        verticalArrangement = Arrangement.SpaceEvenly,\n                        modifier = Modifier\n                            .fillMaxSize()\n                            .padding(top = 10.dp),\n                    ) {\n\n                        Text(text = routine.title, style = MaterialTheme.typography.h1, fontSize = 50.sp)\n                        \n                        Text(text = stringResource(id = R.string.explanationProgress), style = MaterialTheme.typography.h3, fontSize = 20.sp, color = Color.White)\n\n                        Column(\n                            horizontalAlignment = Alignment.CenterHorizontally,\n                            modifier = Modifier\n                                .padding(top = 50.dp) //este padding sirve como margin\n                                .clip(RoundedCornerShape(30.dp))\n                                .fillMaxWidth(0.8f)\n                                .background(MaterialTheme.colors.background)\n                                .padding(20.dp) //este como padding per se, ya con el background\n                        ) {\n\n/*\n                            Text(\n                                text = routineProgress.progressTile(),\n                                style = MaterialTheme.typography.h1,\n                                color = routineProgress.color(),\n                                fontSize = 40.sp\n                            )\n                            Spacer(modifier = Modifier.height(20.dp))\n                            SliderDelta(\n                                routineProgress.agreggatePerformance,\n                                false,\n                                {},\n                                routineProgress.color()\n                            )\n\n                            Spacer(modifier = Modifier.height(30.dp))\n                            Text(\n                                text = routineProgress.progressDescription(),\n                                style = MaterialTheme.typography.h3,\n                                fontSize = 20.sp,\n                                color = Color.White\n                            )*/\n                            if(routine.delta?.isNotEmpty() == true) {\n                                var i = 0\n                                val map = routine.delta?.associate { (i++) to it }\n                                Chart(\n                                    data = map ?: emptyMap(), height = 250.dp,\n                                    isExpanded = showChart,\n                                    bottomEndRadius = 20.dp,\n                                    bottomStartRadius = 20.dp\n                                )\n                            }\n\n                        }\n\n\n\n                        Spacer(modifier = Modifier.height(20.dp))\n                    }\n\n                }\n            }\n        }\n    }\n}\n\n
+Subsystem: com.intellij.openapi.diff.impl.patch.CharsetEP
+<+>UTF-8
+===================================================================
+diff --git a/app/src/main/java/com/example/myapplication/ui/screens/ProgressDetailsScreen.kt b/app/src/main/java/com/example/myapplication/ui/screens/ProgressDetailsScreen.kt
+--- a/app/src/main/java/com/example/myapplication/ui/screens/ProgressDetailsScreen.kt	(revision 3e92b2a8dc6f55a30ee9f29228e1ce1f6e7b45a4)
++++ b/app/src/main/java/com/example/myapplication/ui/screens/ProgressDetailsScreen.kt	(date 1668805626523)
+@@ -23,21 +23,6 @@
+ import com.example.myapplication.ui.components.Chart
+ 
+ 
+-@Composable
+-fun SliderDelta(value: Float,
+-                enabled: Boolean,
+-                handler: (Float) -> Unit,
+-                color: Color = Green,
+-                range: ClosedFloatingPointRange<Float> = 0f..100f) {
+-    Slider(
+-        value = value,
+-        enabled = enabled,
+-        onValueChange = handler,
+-        valueRange = range,
+-        modifier = Modifier
+-            .clip(RoundedCornerShape(20.dp))
+-            .background(color))
+-}
+ 
+ @OptIn(ExperimentalAnimationApi::class)
+ @Composable
+@@ -76,8 +61,14 @@
+                     ) {
+ 
+                         Text(text = routine.title, style = MaterialTheme.typography.h1, fontSize = 50.sp)
+-                        
+-                        Text(text = stringResource(id = R.string.explanationProgress), style = MaterialTheme.typography.h3, fontSize = 20.sp, color = Color.White)
++
++                        Text(
++                            text = stringResource(id = R.string.explanationProgress),
++                            style = MaterialTheme.typography.h3,
++                            fontSize = 20.sp,
++                            color = Color.White,
++                            modifier = Modifier.fillMaxWidth(0.8f)
++                        )
+ 
+                         Column(
+                             horizontalAlignment = Alignment.CenterHorizontally,
+@@ -89,28 +80,6 @@
+                                 .padding(20.dp) //este como padding per se, ya con el background
+                         ) {
+ 
+-/*
+-                            Text(
+-                                text = routineProgress.progressTile(),
+-                                style = MaterialTheme.typography.h1,
+-                                color = routineProgress.color(),
+-                                fontSize = 40.sp
+-                            )
+-                            Spacer(modifier = Modifier.height(20.dp))
+-                            SliderDelta(
+-                                routineProgress.agreggatePerformance,
+-                                false,
+-                                {},
+-                                routineProgress.color()
+-                            )
+-
+-                            Spacer(modifier = Modifier.height(30.dp))
+-                            Text(
+-                                text = routineProgress.progressDescription(),
+-                                style = MaterialTheme.typography.h3,
+-                                fontSize = 20.sp,
+-                                color = Color.White
+-                            )*/
+                             if(routine.delta?.isNotEmpty() == true) {
+                                 var i = 0
+                                 val map = routine.delta?.associate { (i++) to it }
+@@ -123,10 +92,6 @@
+                             }
+ 
+                         }
+-
+-
+-
+-                        Spacer(modifier = Modifier.height(20.dp))
+                     }
+ 
+                 }
