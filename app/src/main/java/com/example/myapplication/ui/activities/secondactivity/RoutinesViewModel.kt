@@ -7,6 +7,7 @@ import com.example.myapplication.data.model.User
 import com.example.myapplication.ui.classes.Routines
 import com.example.myapplication.data.repository.RoutinesRepository
 import com.example.myapplication.data.repository.UserRepository
+import com.example.myapplication.ui.classes.FetchState
 import com.example.myapplication.ui.components.RoutineCard
 import com.example.myapplication.ui.components.SortOption
 import com.example.myapplication.ui.navigation.NavBarScreen
@@ -32,6 +33,10 @@ class RoutinesViewModel(
     fun errorHandled() {
         error.update { false }
     }
+    private val _fetchingState = MutableStateFlow(FetchState())
+
+    val fetchingState: StateFlow<FetchState>
+        get() = _fetchingState.asStateFlow()
 
     private var pageExplore = 0
     private var pageUser = 0
@@ -84,7 +89,7 @@ class RoutinesViewModel(
     private fun getUserRoutines() = viewModelScope.launch {
         if(loggedIn()) {
             var aux: User? = User(-1)
-
+            _fetchingState.update { it.copy(isFetching = true, error = false) }
             runCatching {
                 aux = userRepository.getCurrentUser(false)!!
             }.onSuccess {
@@ -92,6 +97,8 @@ class RoutinesViewModel(
                 runCatching {
                     response = userRepository.getUserRoutine(true, aux!!.id, pageUser)
                 }.onSuccess {
+                    _fetchingState.update { it.copy(isFetching = false, error = false) }
+
                     _routinesState.value.userRoutines += response!!.content.map { routine ->
                         MutableStateFlow(
                             routine
@@ -99,13 +106,14 @@ class RoutinesViewModel(
                     }
                     pageUser = response!!.page
                     _hasNextPageUser.update { !response!!.isLastPage }
-                }.onFailure {
+                }.onFailure { apiError ->
+                    _fetchingState.update { it.copy(isFetching = false, error = true, message = apiError.message?:"") }
+
                     error.update { true }
-                    //throw it
                 }
-            }.onFailure {
+            }.onFailure { apiError ->
+                _fetchingState.update { it.copy(isFetching = false, error = true, message = apiError.message?:"") }
                 error.update { true }
-                //throw it
             }
         }
     }
@@ -141,13 +149,17 @@ class RoutinesViewModel(
     }
 
     fun getExploreRoutines() = viewModelScope.launch {
-        var response = PagedRoutines(emptyList(), 0, true)
-
+        _routinesState.value.exploreRoutines = emptyList()
+        _fetchingState.update { it.copy(isFetching = true, error = false) }
         runCatching {
-            response = routinesRepository.getRoutines(true,pageExplore,null)
-        }.onSuccess {
+            var page = 0
+            var response = routinesRepository.getRoutines(true,page++,null)
             _routinesState.value.exploreRoutines = emptyList()
             _routinesState.value.exploreRoutines = response.content.map { MutableStateFlow(it) }
+            while (!response.isLastPage) {
+                response = routinesRepository.getRoutines(true,page++,null)
+                _routinesState.value.exploreRoutines += response.content.map { MutableStateFlow(it) }
+            }
             var content = routinesRepository.getFavourites(0)
             val favourites = content.content.toMutableList()
             while (!content.isLastPage) {
@@ -161,10 +173,11 @@ class RoutinesViewModel(
                         routine.update {it.copy(favourite = true)}
                 }
             }
-
-            pageExplore = response.page
-            _hasNextPageExplore.update { !response.isLastPage }
-        }.onFailure {
+        }.onSuccess {
+            _fetchingState.update { it.copy(isFetching = false, error = false) }
+            _hasNextPageExplore.update { false }
+        }.onFailure { apiError ->
+            _fetchingState.update { it.copy(isFetching = false, error = true, message = apiError.message?:"") }
             error.update { true }
         }
 

@@ -120,6 +120,7 @@ fun ExploreScreen(viewModel: RoutinesViewModel,
                   settingsRedirect: () -> Unit
 ) {
     val coroutineScope = rememberCoroutineScope()
+    val fetchState by viewModel.fetchingState.collectAsState()
 
     val error by viewModel.error.collectAsState()
     if(error) {
@@ -166,6 +167,9 @@ fun ExploreScreen(viewModel: RoutinesViewModel,
             }
 
         }
+    }
+    if(fetchState.isFetching){
+        SimpleCircularProgressComponent()
     }
 }
 

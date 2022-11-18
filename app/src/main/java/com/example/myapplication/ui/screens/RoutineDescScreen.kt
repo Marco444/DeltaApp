@@ -10,6 +10,7 @@ import androidx.compose.material.*
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.filled.Close
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.LaunchedEffect
 import androidx.compose.runtime.collectAsState
 import androidx.compose.runtime.getValue
 import androidx.compose.ui.Alignment
@@ -22,6 +23,7 @@ import com.example.myapplication.ui.components.Button1
 import com.example.myapplication.ui.components.ExPreviewCard
 import com.example.myapplication.ui.theme.Green
 import com.example.myapplication.ui.activities.thirdactivity.ExecuteRoutineViewModel
+import com.example.myapplication.ui.components.SimpleCircularProgressComponent
 
 @SuppressLint("StateFlowValueCalledInComposition")
 @Composable
@@ -36,7 +38,7 @@ fun RoutineDescriptionScreen(viewModel: ExecuteRoutineViewModel,
 
 
     val error by viewModel.error.collectAsState()
-
+    val fetchState by viewModel.fetchingState.collectAsState()
     if(error) {
         errorRedirect()
         viewModel.errorHandled()
@@ -93,6 +95,10 @@ fun RoutineDescriptionScreen(viewModel: ExecuteRoutineViewModel,
      }
 
     }
+    if(fetchState.isFetching){
+        SimpleCircularProgressComponent()
+    }
+
 }
 
 @SuppressLint("StateFlowValueCalledInComposition")

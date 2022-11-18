@@ -28,6 +28,7 @@ fun RoutinesScreen(viewModel: RoutinesViewModel,
 ){
 
     val error by viewModel.error.collectAsState()
+    val fetchState by viewModel.fetchingState.collectAsState()
 
     if(error) {
         errorRedirect()
@@ -71,5 +72,8 @@ fun RoutinesScreen(viewModel: RoutinesViewModel,
                 )
             }
         }
+    }
+    if(fetchState.isFetching){
+        SimpleCircularProgressComponent()
     }
 }

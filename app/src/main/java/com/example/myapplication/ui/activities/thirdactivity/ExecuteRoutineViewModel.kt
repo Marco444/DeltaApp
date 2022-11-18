@@ -4,14 +4,11 @@ import androidx.compose.ui.res.stringResource
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import com.example.myapplication.R
-import com.example.myapplication.ui.classes.Exercise
 import com.example.myapplication.data.repository.CyclesExercisesRepository
 import com.example.myapplication.data.repository.RoutinesCycleRepository
 import com.example.myapplication.data.repository.RoutinesRepository
 import com.example.myapplication.data.repository.UserRepository
-import com.example.myapplication.ui.classes.CyclesExercise
-import com.example.myapplication.ui.classes.Routines
-import com.example.myapplication.ui.classes.RoutinesCycles
+import com.example.myapplication.ui.classes.*
 import kotlinx.coroutines.async
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.StateFlow
@@ -44,6 +41,12 @@ class ExecuteRoutineViewModel(
     var actualExercise = MutableStateFlow(CyclesExercise(0,"","","",0,0f,0,0f,0,0))
         private set
 
+    private val _fetchingState = MutableStateFlow(FetchState())
+
+    val fetchingState: StateFlow<FetchState>
+        get() = _fetchingState.asStateFlow()
+
+
     val state: StateFlow<CyclesExercise>
         get() = actualExercise.asStateFlow()
 
@@ -53,13 +56,15 @@ class ExecuteRoutineViewModel(
 
 
     init {
-        viewModelScope.launch {
-            executeRoutine.value.currentRoutine.update { routinesRepository.getRoutine(routineId) }
-            executeRoutine.value.currentRoutine.value.points.value = 0
+        _fetchingState.update {
+            it.isFetching = true
+            it.error = false
+            it
         }
         viewModelScope.launch {
-
                 runCatching {
+                    executeRoutine.value.currentRoutine.update { routinesRepository.getRoutine(routineId) }
+                    executeRoutine.value.currentRoutine.value.points.value = 0
                     cycles = routinesCycleRepository.getRoutinCycles(routineId)
                     _execRoutineState.value.exercises[0].value =
                         cyclesExercisesRepository.getCycleExercises(cycles[0].id)
@@ -67,11 +72,12 @@ class ExecuteRoutineViewModel(
                         cyclesExercisesRepository.getCycleExercises(cycles[1].id)
                     _execRoutineState.value.exercises[2].value =
                         cyclesExercisesRepository.getCycleExercises(cycles[2].id)
-                }.onFailure {
-                   error.update{ true }
+                }.onSuccess {
+                    _fetchingState.update { it.copy(isFetching = false,error = false) }
+                }.onFailure { apiError ->
+                    _fetchingState.update { it.copy(isFetching = false,error = true, message = apiError.message?:"") }
+                    error.update{ true }
                 }
-
-
                 initAllExercises()
                 exerciseCount = _execRoutineState.value.allExercises.size
                 iterator = _execRoutineState.value.allExercises.listIterator()
