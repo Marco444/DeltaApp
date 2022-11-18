@@ -9,15 +9,14 @@ import androidx.compose.foundation.shape.CircleShape
 import androidx.compose.material.*
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.filled.Close
-import androidx.compose.runtime.Composable
-import androidx.compose.runtime.LaunchedEffect
-import androidx.compose.runtime.collectAsState
-import androidx.compose.runtime.getValue
+import androidx.compose.runtime.*
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
+import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
+import com.example.myapplication.R
 import com.example.myapplication.ui.classes.Routines
 import com.example.myapplication.ui.components.Button1
 import com.example.myapplication.ui.components.ExPreviewCard
@@ -39,10 +38,9 @@ fun RoutineDescriptionScreen(viewModel: ExecuteRoutineViewModel,
 
     val error by viewModel.error.collectAsState()
     val fetchState by viewModel.fetchingState.collectAsState()
-    if(error) {
-        errorRedirect()
-        viewModel.errorHandled()
-    }
+    val (snackbarVisibleState, setSnackBarState) = remember { mutableStateOf(false) }
+
+
 
     val routine by viewModel.executeRoutine.value.currentRoutine.collectAsState()
 
@@ -97,6 +95,24 @@ fun RoutineDescriptionScreen(viewModel: ExecuteRoutineViewModel,
     }
     if(fetchState.isFetching){
         SimpleCircularProgressComponent()
+    }
+    LaunchedEffect(key1 = fetchState.error, block = {
+        if(fetchState.error)
+            setSnackBarState(true)
+    })
+    // The Snackbar
+    if (snackbarVisibleState) {
+        Snackbar(
+            action = {
+                Button(
+                    onClick = { setSnackBarState(!snackbarVisibleState);backHandler() },
+                ) {
+                    Text(text = "Go back")
+                }
+            },
+            modifier = Modifier.padding(8.dp)
+
+        ) { Text(text = fetchState.message) }
     }
 
 }

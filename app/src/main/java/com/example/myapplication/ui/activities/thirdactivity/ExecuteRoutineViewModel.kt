@@ -123,15 +123,17 @@ class ExecuteRoutineViewModel(
             delta
         )
 
-        runBlocking {
 
-            launch {
-                routinesRepository.addReview(
-                    executeRoutine.value.currentRoutine.value.id,
-                    Review(score = executeRoutine.value.currentRoutine.value.points.value, "")
-                )
+        if(executeRoutine.value.currentRoutine.value.points.value > 0)
+            runBlocking {
+
+                launch {
+                    routinesRepository.addReview(
+                        executeRoutine.value.currentRoutine.value.id,
+                        Review(score = executeRoutine.value.currentRoutine.value.points.value, "")
+                    )
+                }
             }
-        }
         runBlocking {
             launch {
                     val currentUser = userRepository.getCurrentUser(true)
