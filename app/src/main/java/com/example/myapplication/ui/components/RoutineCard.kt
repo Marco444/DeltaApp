@@ -47,7 +47,7 @@ const val ROUTINE_CARD_WIDTH = 370;
 sealed class RoutineCard(val iconClicked: ImageVector, val iconUnClicked: ImageVector, val description: String) {
     object MyRoutine: RoutineCard ( Icons.Default.Favorite, Icons.Outlined.FavoriteBorder, "Start")
     object Progress: RoutineCard (Icons.Default.Favorite, Icons.Outlined.FavoriteBorder, "See Progress")
-    object ExploreRoutine: RoutineCard (  Icons.Default.CheckCircle, Icons.Outlined.Add, "Preview")
+    object ExploreRoutine: RoutineCard (  Icons.Default.Favorite, Icons.Outlined.FavoriteBorder, "Preview")
 }
 
 @Composable

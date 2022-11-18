@@ -41,11 +41,10 @@ class RoutinesViewModel(
         get() = _hasNextPageExplore.asStateFlow()
 
     init {
-        if(loggedIn())
-            getUserRoutines()
-
         getExploreRoutines()
 
+        if(loggedIn())
+            getUserRoutines()
     }
 
     private fun loggedIn(): Boolean {
@@ -53,17 +52,21 @@ class RoutinesViewModel(
     }
 
 
-    fun showFavorites() = viewModelScope.launch {
+    fun getUserFavoritesWrapper() {
         _routinesState.value.exploreRoutines = emptyList()
+        getUserFavorites()
+    }
+
+    private fun getUserFavorites() = viewModelScope.launch {
 
         var content = routinesRepository.getFavourites(0)
-        var favourites = content.content
-        while(!content.isLastPage) {
+        val favourites = content.content.toMutableList()
+        while (!content.isLastPage) {
             content = routinesRepository.getFavourites(content.page + 1)
             favourites += content.content
         }
 
-        _routinesState.value.exploreRoutines = favourites.map{ MutableStateFlow(it.copy(favourite = true))}
+       _routinesState.value.exploreRoutines = favourites.map { MutableStateFlow(it.copy(favourite = true)) }
     }
 
     private fun addFavourite(id: Int) = viewModelScope.launch{
@@ -110,7 +113,7 @@ class RoutinesViewModel(
         if(text != null) {
             _routinesState.value.exploreRoutines = emptyList()
             getExploreWithParams(text)
-        }else{
+        } else{
             _routinesState.value.exploreRoutines = emptyList()
             getExploreRoutines()
         }
@@ -137,13 +140,35 @@ class RoutinesViewModel(
         }
     }
 
-    private fun getExploreRoutines() = viewModelScope.launch {
+    fun getExploreRoutines() = viewModelScope.launch {
         var response = PagedRoutines(emptyList(), 0, true)
 
         runCatching {
             response = routinesRepository.getRoutines(true,pageExplore,null)
         }.onSuccess {
-            _routinesState.value.exploreRoutines += response.content.map { MutableStateFlow(it) }
+
+
+            var content = routinesRepository.getFavourites(0)
+            val favourites = content.content.toMutableList()
+            while (!content.isLastPage) {
+                content = routinesRepository.getFavourites(content.page + 1)
+                favourites += content.content
+            }
+
+            _routinesState.value.exploreRoutines = emptyList()
+            for (routine in response.content) {
+                var found = false
+                for (favourite in favourites) {
+                    if (routine.id == favourite.id)
+                        _routinesState.value.exploreRoutines += MutableStateFlow(routine.copy(favourite = true))
+                    found = true
+                    break
+                }
+                if(!found) {
+                    _routinesState.value.exploreRoutines += MutableStateFlow(routine.copy())
+                }
+            }
+
             pageExplore = response.page
             _hasNextPageExplore.update { !response.isLastPage }
         }.onFailure {
@@ -179,7 +204,7 @@ class RoutinesViewModel(
 
     fun sortRoutines(option: SortOption, screen: NavBarScreen) {
         if(screen == NavBarScreen.Explore)
-            _routinesState.value.exploreRoutines = _routinesState.value.exploreRoutines.sortedWith { a: MutableStateFlow<Routines>, b: MutableStateFlow<Routines> -> option.comparator(a, b) }
+        _routinesState.value.userRoutines = _routinesState.value.userRoutines.sortedWith { a: MutableStateFlow<Routines>, b: MutableStateFlow<Routines> -> option.comparator(a, b) }
         else
             _routinesState.value.userRoutines = _routinesState.value.userRoutines.sortedWith { a: MutableStateFlow<Routines>, b: MutableStateFlow<Routines> -> option.comparator(a, b) }
     }
