@@ -14,6 +14,7 @@ import androidx.compose.foundation.layout.*
 import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.material.Icon
 import androidx.compose.material.IconButton
+import androidx.compose.material.Text
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.filled.KeyboardArrowUp
 import androidx.compose.runtime.*
@@ -28,10 +29,13 @@ import androidx.compose.ui.geometry.Size
 import androidx.compose.ui.graphics.*
 import androidx.compose.ui.graphics.drawscope.drawIntoCanvas
 import androidx.compose.ui.graphics.vector.ImageVector
+import androidx.compose.ui.input.pointer.PointerIconDefaults.Text
 import androidx.compose.ui.input.pointer.pointerInput
+import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.unit.Dp
 import androidx.compose.ui.unit.dp
 import androidx.core.graphics.ColorUtils
+import com.example.myapplication.R
 import com.example.myapplication.ui.theme.Gray
 import com.example.myapplication.ui.theme.Green
 import kotlinx.coroutines.delay
@@ -108,6 +112,7 @@ fun Chart(
             )
             .animateContentSize()
     ) {
+
 
 
         Canvas(modifier = Modifier
@@ -212,6 +217,13 @@ fun Chart(
                     spaceStep += spaceBetweenBars + barWidth
                 }
             })
+            Text(
+                modifier = Modifier
+                    .rotate(-90f)
+                    .padding(20.dp),
+                text = stringResource(R.string.volume),
+                color = Color.White
+            )
     }
 }
 

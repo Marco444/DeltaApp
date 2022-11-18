@@ -83,12 +83,14 @@ fun ProgressDetailScreen(viewModel: RoutinesViewModel, viewRoutineHandler: () ->
                             if(routine.delta?.isNotEmpty() == true) {
                                 var i = 0
                                 val map = routine.delta?.associate { (i++) to it }
-                                Chart(
-                                    data = map ?: emptyMap(), height = 250.dp,
-                                    isExpanded = showChart,
-                                    bottomEndRadius = 20.dp,
-                                    bottomStartRadius = 20.dp
-                                )
+                                Box() {
+                                    Chart(
+                                        data = map ?: emptyMap(), height = 250.dp,
+                                        isExpanded = showChart,
+                                        bottomEndRadius = 20.dp,
+                                        bottomStartRadius = 20.dp
+                                    )
+                                }
                             } else {
                                 Text(
                                     text = "You have not yet executed this routine!",
