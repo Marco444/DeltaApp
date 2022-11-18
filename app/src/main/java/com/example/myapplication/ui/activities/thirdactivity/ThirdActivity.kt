@@ -22,9 +22,8 @@ class ThirdActivity : ComponentActivity() {
                 val systemUiController = rememberSystemUiController()
                 systemUiController.setSystemBarsColor(color = androidx.compose.ui.graphics.Color.Black )
 
-                val saved: String? = intent.extras!!.getString("routineId")
+                val saved: String? = intent.extras?.getString("routineId")
                 val navigate = Intent(this@ThirdActivity, SecondActivity::class.java)
-
 
                 if(saved != null) {
                    DeltaAppExecute(
@@ -35,6 +34,8 @@ class ThirdActivity : ComponentActivity() {
                                          },
                        viewModel = viewModel(factory = getExecRoutineViewModelFactory(routineId = saved.toInt()))
                    )
+                } else {
+                    startActivity(navigate)
                 }
                 
             }

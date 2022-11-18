@@ -36,8 +36,6 @@ class SecondActivity : ComponentActivity() {
                         startActivity(navigate)
                     },
                     logoutRedirect = { finish(); startActivity(logoutIntent)},
-                    routineId = saved.toInt()
-
                 )
             }
         }

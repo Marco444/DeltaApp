@@ -22,7 +22,7 @@ class MainActivity : ComponentActivity() {
                 val systemUiController = rememberSystemUiController()
                 systemUiController.setSystemBarsColor(color = androidx.compose.ui.graphics.Color.Black )
 
-                val navigateRoutines = Intent(this@MainActivity, SecondActivity::class.java)
+                val navigateRoutines = Intent(this@MainActivity, ThirdActivity::class.java)
 
                 DeltaAppInit(initialisedHandler = {
                     if(it == -1) {

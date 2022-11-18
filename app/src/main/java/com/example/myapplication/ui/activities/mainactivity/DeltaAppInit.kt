@@ -38,8 +38,7 @@ fun DeltaAppInit(
             )) { entry ->
             val id = entry.arguments?.getInt("id") ?: -1
             LogIn(
-                actionRedirect = initialisedHandler,
-                backButton = {navController.popBackStack()},
+                actionRedirect = { initialisedHandler(it); navController.popBackStack() },
                 viewModel = viewModel,
                 routineId = id
             )

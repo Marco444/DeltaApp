@@ -7,44 +7,37 @@ import android.view.KeyEvent
 import androidx.compose.foundation.*
 import androidx.compose.foundation.layout.*
 
-import androidx.compose.foundation.shape.CircleShape
 import androidx.compose.foundation.shape.RoundedCornerShape
-import androidx.compose.foundation.text.ClickableText
 import androidx.compose.foundation.text.KeyboardOptions
 import androidx.compose.material.*
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.filled.*
 import androidx.compose.runtime.*
-import androidx.compose.ui.Alignment
 import androidx.compose.ui.Alignment.Companion.CenterHorizontally
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.scale
 import androidx.compose.ui.graphics.Brush
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.input.key.onKeyEvent
-import androidx.compose.ui.platform.LocalConfiguration
 import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.platform.LocalFocusManager
 import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.res.stringResource
-import androidx.compose.ui.text.SpanStyle
 import androidx.compose.ui.text.TextStyle
-import androidx.compose.ui.text.buildAnnotatedString
 import androidx.compose.ui.text.input.KeyboardType
 import androidx.compose.ui.text.input.PasswordVisualTransformation
 import androidx.compose.ui.text.input.TextFieldValue
 import androidx.compose.ui.text.input.VisualTransformation
-import androidx.compose.ui.text.style.TextDecoration
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import com.example.myapplication.R
 import com.example.myapplication.ui.activities.mainactivity.UserViewModel
+import com.example.myapplication.ui.components.BackgroundImage
 import com.example.myapplication.ui.components.Button1
-import com.example.myapplication.ui.theme.Green
 
 
 @Composable
-fun LogIn(actionRedirect: (Int) -> Unit, backButton: () -> Unit, viewModel: UserViewModel, routineId: Int){
+fun LogIn(actionRedirect: (Int) -> Unit, viewModel: UserViewModel, routineId: Int){
 
     var passWord by remember { mutableStateOf(TextFieldValue("")) }
     var email by remember { mutableStateOf(TextFieldValue("")) }
@@ -111,12 +104,12 @@ fun LogIn(actionRedirect: (Int) -> Unit, backButton: () -> Unit, viewModel: User
                     LoadingScreen()
             }
 
-            LaunchedEffect(key1 = auth){
+            //LaunchedEffect(key1 = auth){
                 if(auth) {
                     setSnackBarState(false)
                     actionRedirect(routineId)
                 }
-            }
+            //}
             LaunchedEffect(key1 = uiState.errorBoolean){
                 if(uiState.errorBoolean == true)
                     setSnackBarState(true)
