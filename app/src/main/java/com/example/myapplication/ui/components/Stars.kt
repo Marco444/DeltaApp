@@ -1,7 +1,9 @@
 package com.example.myapplication.ui.components
 
 import androidx.compose.foundation.layout.Row
+import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.padding
+import androidx.compose.foundation.layout.size
 import androidx.compose.material.Icon
 import androidx.compose.material.IconButton
 import androidx.compose.material.icons.Icons
@@ -21,13 +23,14 @@ fun Stars(routine: Routines, clickable: Boolean) {
 
    val selectedStars by routine.points.collectAsState()
 
-    Row {
+    Row()
+    {
         for (starIndex in 1..5) {
-            IconButton(onClick = { if(clickable) routine.points.update { starIndex } }) {
+            IconButton(onClick = { if(clickable) routine.points.update { starIndex } }, modifier = Modifier.padding(0.dp)) {
                 Icon(
                     if (starIndex <= selectedStars) Icons.Default.Star
                     else Icons.Default.StarBorder,
-                    contentDescription = "bordered star", tint = White,
+                    contentDescription = "bordered star", tint = White, modifier = Modifier.size(30.dp)
                 )
             }
         }

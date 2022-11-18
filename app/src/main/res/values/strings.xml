@@ -37,5 +37,12 @@
     <string name="exec_routine_mode_title">Routine Execution Lite Mode</string>
     <string name="exec_routine_mode_description">Lite mode simplifies the way you execute a routine. Only see the name of the exercise and the description.</string>
     <string name="settings">Settings</string>
-
+    <string name="finish">Finish</string>
+    <string name="review_routine">Review this routine:</string>
+    <string name="good_delta">You have surpass your average!</string>
+    <string name="regular_delta">You almost reached your average!</string>
+    <string name="bad_delta">Your performance was below average</string>
+    <string name="good_delta_title">Well Done!</string>
+    <string name="regular_delta_title">Almost!</string>
+    <string name="bad_delta_title">Carry On</string>
 </resources>

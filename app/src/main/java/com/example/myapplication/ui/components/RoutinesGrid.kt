@@ -60,12 +60,12 @@ fun RoutinesGrid(viewModel: RoutinesViewModel,
             Column(
                 horizontalAlignment = Alignment.CenterHorizontally
             ) {
-                if(((routineCard == RoutineCard.ExploreRoutine ||  routineCard == RoutineCard.Progress) && hasNextPageExplore) || (routineCard == RoutineCard.MyRoutine && hasNextPageUser)) {
+                if(((routineCard == RoutineCard.MyRoutine ||  routineCard == RoutineCard.Progress) && hasNextPageUser) || (routineCard == RoutineCard.ExploreRoutine && hasNextPageExplore)) {
                     Button1(
                         fontSize = 17,
                         text = stringResource(id = R.string.load_more),
                         handler = {
-                            if(routineCard == RoutineCard.ExploreRoutine || routineCard == RoutineCard.Progress)
+                            if(routineCard == RoutineCard.ExploreRoutine)
                                 viewModel.nextPageExplore()
                             else
                                 viewModel.nextPageUser()
