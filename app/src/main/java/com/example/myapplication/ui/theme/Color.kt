@@ -2,7 +2,7 @@ package com.example.myapplication.ui.theme
 
 import androidx.compose.ui.graphics.Color
 
-val Green = Color(0xFFF44336)
+val Green = Color(0xFFCFFFB3)
 val GreenTransparency = Color(0xDDCFFFB3)
 
 val Gray = Color(0xFF4B4B4B)

@@ -45,6 +45,7 @@ fun ExploreScreen(viewModel: RoutinesViewModel,
     val fetchState by viewModel.fetchingState.collectAsState()
     val (snackbarVisibleState, setSnackBarState) = remember { mutableStateOf(false) }
 
+    val displayHamburguer by viewModel.hamburguer.collectAsState()
     val error by viewModel.error.collectAsState()
 
     Column(
@@ -56,7 +57,7 @@ fun ExploreScreen(viewModel: RoutinesViewModel,
     ) {
 
         Column(modifier = Modifier.align(Alignment.Start)) {
-            TopBar(scaffoldState, settingsRedirect, hamburguerDisplay = viewModel.cardsExpandable())
+            TopBar(scaffoldState, settingsRedirect, hamburguerDisplay = displayHamburguer)
         }
         Row {
             Column(

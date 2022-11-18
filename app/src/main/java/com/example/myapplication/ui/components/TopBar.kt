@@ -19,12 +19,12 @@ fun TopBar(
     hamburguerDisplay: Boolean
 ){
     val coroutineScope = rememberCoroutineScope()
-    Row(
-        modifier = Modifier.padding(top = 10.dp, start = 10.dp).fillMaxWidth(),
-        horizontalArrangement = Arrangement.SpaceBetween
-    ) {
+    if(hamburguerDisplay) {
+        Row(
+            modifier = Modifier.padding(top = 10.dp, start = 10.dp).fillMaxWidth(),
+            horizontalArrangement = Arrangement.SpaceBetween
+        ) {
 
-        if(hamburguerDisplay) {
             HamburgerButton(
                 modifier = Modifier.align(Alignment.CenterVertically),
                 onClick = {
@@ -33,10 +33,17 @@ fun TopBar(
                     }
                 }
             )
+            SettingsButton(
+                modifier = Modifier.align(Alignment.CenterVertically),
+                onClick = settingsRedirect
+            )
         }
-        SettingsButton(
-            modifier = Modifier.align(Alignment.CenterVertically),
-            onClick = settingsRedirect
-        )
+    } else {
+       Row(horizontalArrangement = Arrangement.End, modifier = Modifier.fillMaxWidth()) {
+           SettingsButton(
+               onClick = settingsRedirect,
+               modifier = Modifier
+           )
+       }
     }
 }

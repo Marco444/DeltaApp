@@ -12,6 +12,7 @@ import androidx.navigation.navDeepLink
 import com.example.myapplication.ui.activities.mainactivity.UserViewModel
 import com.example.myapplication.ui.screens.*
 import com.example.myapplication.ui.activities.secondactivity.RoutinesViewModel
+import com.example.myapplication.ui.activities.secondactivity.SecondActivity
 import com.example.myapplication.ui.components.DrawerContent
 
 @Composable
@@ -26,7 +27,8 @@ fun NavGraph(userViewModel: UserViewModel,
              viewModel: RoutinesViewModel,
              executeRedirect: (Int) -> Unit,
              scaffoldState: ScaffoldState,
-             logoutRedirect: () -> Unit) {
+             logoutRedirect: () -> Unit,
+             ) {
 
     NavHost(
         navController = navController,
@@ -37,7 +39,7 @@ fun NavGraph(userViewModel: UserViewModel,
                 actionRedirect = executeRedirect,
                 scaffoldState = scaffoldState,
                 errorRedirect = {navController.navigate(Screen.Error.route)},
-                settingsRedirect = {navController.navigate(Screen.Settings.route)}
+                settingsRedirect = {navController.navigate(Screen.Settings.route)},
             )
         }
         composable(NavBarScreen.Progress.route) {
