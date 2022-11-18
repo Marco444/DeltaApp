@@ -124,12 +124,13 @@ class ExecuteRoutineViewModel(
         )
 
 
-        if(executeRoutine.value.currentRoutine.value.points.value > 0)
+
             runBlocking {
                 kotlin.runCatching {
                     launch {
-                        routinesRepository.addReview(
-                            executeRoutine.value.currentRoutine.value.id,
+                        if(executeRoutine.value.currentRoutine.value.points.value > 0)
+                            routinesRepository.addReview(
+                                executeRoutine.value.currentRoutine.value.id,
                             Review(
                                 score = executeRoutine.value.currentRoutine.value.points.value,
                                 ""
