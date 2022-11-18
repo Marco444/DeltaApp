@@ -46,7 +46,7 @@ fun ProgressScreen(viewModel: RoutinesViewModel,
         horizontalAlignment = Alignment.CenterHorizontally
     ) {
         Column(modifier = Modifier.align(Alignment.Start)) {
-            TopBar(scaffoldState, settingsRedirect)
+            TopBar(scaffoldState, settingsRedirect, hamburguerDisplay = viewModel.cardsExpandable())
         }
         Row {
             Column(

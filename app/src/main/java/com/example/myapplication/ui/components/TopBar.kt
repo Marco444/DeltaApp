@@ -15,21 +15,25 @@ import kotlinx.coroutines.launch
 @Composable
 fun TopBar(
     scaffoldState: ScaffoldState,
-    settingsRedirect: () -> Unit
+    settingsRedirect: () -> Unit,
+    hamburguerDisplay: Boolean
 ){
     val coroutineScope = rememberCoroutineScope()
     Row(
         modifier = Modifier.padding(top = 10.dp, start = 10.dp).fillMaxWidth(),
         horizontalArrangement = Arrangement.SpaceBetween
     ) {
-        HamburgerButton(
-            modifier = Modifier.align(Alignment.CenterVertically),
-            onClick = {
-                coroutineScope.launch {
-                    scaffoldState.drawerState.open()
+
+        if(hamburguerDisplay) {
+            HamburgerButton(
+                modifier = Modifier.align(Alignment.CenterVertically),
+                onClick = {
+                    coroutineScope.launch {
+                        scaffoldState.drawerState.open()
+                    }
                 }
-            }
-        )
+            )
+        }
         SettingsButton(
             modifier = Modifier.align(Alignment.CenterVertically),
             onClick = settingsRedirect

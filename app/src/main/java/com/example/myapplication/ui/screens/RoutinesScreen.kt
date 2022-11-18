@@ -46,7 +46,7 @@ fun RoutinesScreen(viewModel: RoutinesViewModel,
     ){
 
         Column(modifier = Modifier.align(Alignment.Start)) {
-            TopBar(scaffoldState, settingsRedirect)
+            TopBar(scaffoldState, settingsRedirect, hamburguerDisplay = viewModel.cardsExpandable())
         }
         Row {
             Column(
