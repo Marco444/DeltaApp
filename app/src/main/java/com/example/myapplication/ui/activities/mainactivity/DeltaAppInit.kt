@@ -5,7 +5,6 @@ import android.content.Intent
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.layout.ContentScale
 import com.example.myapplication.ui.screens.LogIn
-import com.example.myapplication.ui.screens.LandingScreen
 import androidx.lifecycle.viewmodel.compose.viewModel
 import androidx.navigation.NavHostController
 import androidx.navigation.NavType
@@ -23,14 +22,7 @@ fun DeltaAppInit(
     navController: NavHostController,
     initialisedHandler: (Int) -> Unit,
 ) {
-    NavHost(navController = navController, startDestination = Screen.Home.route) {
-        composable(Screen.Home.route) {
-            LandingScreen(
-                loginHandler = { navController.navigate(Screen.Login.route) },
-                tryOutHandler = initialisedHandler,
-                userViewModel = viewModel,
-            )
-        }
+    NavHost(navController = navController, startDestination = Screen.Login.route) {
         composable(Screen.Login.route,
             deepLinks = listOf(
                 navDeepLink {

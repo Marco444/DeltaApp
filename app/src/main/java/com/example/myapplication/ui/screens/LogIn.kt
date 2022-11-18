@@ -68,28 +68,6 @@ fun LogIn(actionRedirect: (Int) -> Unit, backButton: () -> Unit, viewModel: User
             .fillMaxHeight()
             .background(gradient)
     ) {
-        Column(modifier = Modifier
-            .fillMaxWidth()
-            .verticalScroll(rememberScrollState()))
-        {
-            Button(
-                onClick = backButton,
-                shape = CircleShape,
-                colors = ButtonDefaults.buttonColors(backgroundColor = Green),
-                modifier = Modifier
-                    .padding(start = 18.dp, top = 15.dp)
-                    .size(55.dp)
-            )
-            {
-                Icon(
-                    Icons.Default.ArrowBack,
-                    contentDescription = "content description",
-                    tint = Color.Black
-                )
-            }
-
-
-        }
         Column(
             modifier = Modifier
                 .height(500.dp)
@@ -102,8 +80,10 @@ fun LogIn(actionRedirect: (Int) -> Unit, backButton: () -> Unit, viewModel: User
                 painter = painterResource(R.drawable.delta_logo),
                 contentDescription = null,
                 modifier = Modifier
-                    .fillMaxWidth(0.3F)
+                    .fillMaxWidth(0.6F)
                     .align(CenterHorizontally)
+                    .padding(bottom = 30.dp)
+                    .scale(1.6f)
             )
             EmailTextField(
                 onTextChange = {email = it },
