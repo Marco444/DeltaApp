@@ -29,6 +29,7 @@ import androidx.compose.ui.graphics.vector.ImageVector
 import androidx.compose.ui.layout.ContentScale
 import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.res.painterResource
+import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.text.style.TextOverflow
 import androidx.compose.ui.unit.Dp
@@ -103,11 +104,11 @@ fun CardOptions(viewModel: RoutinesViewModel, routine: Routines) {
 
         if(routine.isPublic) {
             DropdownMenuItem(onClick = { expanded = false; shareRoutine(context, routine) }) {
-                Text(text = "Share")
+                Text(text = stringResource(id = R.string.share))
             }
         }
         DropdownMenuItem(onClick = { expanded = false ; viewModel.deleteRoutine(routine.id)} ) {
-            Text(text = "Delete")
+            Text(text = stringResource(id = R.string.delete))
         }
     }
 }

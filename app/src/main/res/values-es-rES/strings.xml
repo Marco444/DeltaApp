@@ -42,6 +42,9 @@
     <string name="settings">Configuracion</string>
     <string name="finish">Terminar</string>
     <string name="review_routine">Califica esta rutina:</string>
+    <string name="share">Compartir</string>
+    <string name="delete">Borrar</string>
+    <string name="all">Todo</string>
     <string name="good_delta">¡Has superado tu promedio!</string>
     <string name="regular_delta">¡Casi llegaste a tu promedio!</string>
     <string name="bad_delta">Tu desempeño estuvo por debajo del promedio</string>
@@ -53,5 +56,8 @@
     <string name="volume">Volumen</string>
     <string name="weight">Peso (Kg)</string>
     <string name="reps">Repeticiones</string>
-
+    <string name="go_back">Volver</string>
+    <string name="profile">Perfil</string>
+    <string name="not_executed">No has ejecutado esta rutina aun.</string>
+    <string name="executions">Ejecuciones</string>
 </resources>

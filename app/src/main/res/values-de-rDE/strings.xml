@@ -53,4 +53,11 @@
     <string name="volume">Volumen</string>
     <string name="weight">Gewicht (kg)</string>
     <string name="reps">Wiederholungen</string>
+    <string name="go_back">geh zurück</string>
+    <string name="share">Teilen</string>
+    <string name="delete">Löschen</string>
+    <string name="all">Alle</string>
+    <string name="profile">Profil</string>
+    <string name="not_executed">Sie haben diese Routine noch nicht ausgeführt!</string>
+    <string name="executions">Hinrichtungen</string>
 </resources>

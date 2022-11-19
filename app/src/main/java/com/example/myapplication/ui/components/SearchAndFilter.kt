@@ -82,7 +82,7 @@ fun FilterButton(viewModel: RoutinesViewModel) {
             )
             .clip(RoundedCornerShape(8.dp))) {
             DropdownMenuItem(onClick = { viewModel.getExploreRoutines() ; expanded = false }) {
-                Text(text = "all")
+                Text(text = stringResource(id = R.string.all))
             }
             DropdownMenuItem(onClick = { viewModel.getUserFavoritesWrapper() ; expanded = false }) {
                 Text(text = stringResource(id = R.string.favourite))

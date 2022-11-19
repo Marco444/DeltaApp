@@ -53,4 +53,11 @@
     <string name="reps">repeticiones</string>
     <string name="review_routine">" Revoyez cette routine :"</string>
     <string name="exec_routine_mode_title">" Mode Lite d'exécution de routine"</string>
+    <string name="go_back">Retourner</string>
+    <string name="share">Partager</string>
+    <string name="delete">Effacer</string>
+    <string name="all">Tout</string>
+    <string name="profile">Profil</string>
+    <string name="not_executed">Vous n\'avez pas encore exécuté cette routine !</string>
+    <string name="executions">Exécutions</string>
 </resources>

@@ -73,10 +73,10 @@ fun LogIn(actionRedirect: (Int) -> Unit, viewModel: UserViewModel, routineId: In
                 painter = painterResource(R.drawable.delta_logo),
                 contentDescription = null,
                 modifier = Modifier
-                    .fillMaxWidth(0.6F)
+                    .fillMaxWidth(0.5F)
                     .align(CenterHorizontally)
                     .padding(bottom = 30.dp)
-                    .scale(1.6f)
+                    //.scale(1.6f)
             )
             EmailTextField(
                 onTextChange = {email = it },

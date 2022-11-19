@@ -41,6 +41,7 @@ import androidx.core.graphics.ColorUtils
 import com.example.myapplication.R
 import com.example.myapplication.ui.theme.Gray
 import com.example.myapplication.ui.theme.Green
+import com.example.myapplication.ui.theme.NormalFont
 import kotlinx.coroutines.delay
 
 @ExperimentalAnimationApi
@@ -62,7 +63,7 @@ fun Chart(
     closeIcon: ImageVector = Icons.Default.KeyboardArrowUp,
 ) {
 
-
+    val executions_text = stringResource(R.string.executions)
     val shape = RoundedCornerShape(
         topStart = topStartRadius,
         topEnd = topEndRadius,
@@ -119,7 +120,8 @@ fun Chart(
         Text(
             modifier = Modifier
                 .padding(top=20.dp).rotate(-90f),
-            fontSize = 18.sp,
+            fontSize = 13.sp,
+            fontFamily = NormalFont,
             text = stringResource(R.string.volume),
             color = Color.White
         )
@@ -227,8 +229,9 @@ fun Chart(
 
                     spaceStep += spaceBetweenBars + barWidth
                 }
+
                 drawContext.canvas.nativeCanvas.drawText(
-                    "Executions",
+                    executions_text,
                     size.width - 60 ,
                     size.height + 40,
                     paint

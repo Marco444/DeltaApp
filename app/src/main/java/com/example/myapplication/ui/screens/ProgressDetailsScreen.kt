@@ -5,6 +5,9 @@ import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.*
 import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.material.*
+import androidx.compose.material.icons.Icons
+import androidx.compose.material.icons.filled.Help
+import androidx.compose.material.icons.filled.QuestionMark
 import androidx.compose.runtime.*
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
@@ -22,7 +25,7 @@ import com.example.myapplication.ui.theme.Green
 import com.example.myapplication.ui.activities.secondactivity.RoutinesViewModel
 import com.example.myapplication.ui.components.BackgroundRoutineImage
 import com.example.myapplication.ui.components.Chart
-
+import com.example.myapplication.ui.theme.Gray
 
 
 @OptIn(ExperimentalAnimationApi::class)
@@ -61,27 +64,20 @@ fun ProgressDetailScreen(viewModel: RoutinesViewModel, viewRoutineHandler: () ->
                         verticalArrangement = Arrangement.SpaceEvenly,
                         modifier = Modifier
                             .fillMaxSize()
-                            .padding(top = 10.dp),
+                            .padding(top = 0.dp),
                     ) {
 
                         Text(text = routine.title, style = MaterialTheme.typography.h1, fontSize = 50.sp)
 
-                        Text(
-                            text = stringResource(id = R.string.explanationProgress),
-                            style = MaterialTheme.typography.h3,
-                            fontSize = 20.sp,
-                            color = Color.White,
-                            modifier = Modifier.fillMaxWidth(0.8f)
-                        )
 
                         Column(
                             horizontalAlignment = Alignment.CenterHorizontally,
                             modifier = Modifier
-                                .padding(top = 50.dp) //este padding sirve como margin
+                                .padding(top = 0.dp) //este padding sirve como margin
                                 .clip(RoundedCornerShape(30.dp))
                                 .fillMaxWidth(0.8f)
                                 .background(MaterialTheme.colors.background)
-                                .padding(20.dp) //este como padding per se, ya con el background
+                                .padding(15.dp) //este como padding per se, ya con el background
                         ) {
 
                             if(routine.delta?.isNotEmpty() == true) {
@@ -100,7 +96,7 @@ fun ProgressDetailScreen(viewModel: RoutinesViewModel, viewRoutineHandler: () ->
                                 Box() {
 
                                     Chart(
-                                        data = map ?: emptyMap(), height = 250.dp,
+                                        data = map ?: emptyMap(), height = 200.dp,
                                         isExpanded = showChart,
                                         bottomEndRadius = 20.dp,
                                         bottomStartRadius = 20.dp
@@ -108,7 +104,7 @@ fun ProgressDetailScreen(viewModel: RoutinesViewModel, viewRoutineHandler: () ->
                                 }
                             } else {
                                 Text(
-                                    text = "You have not yet executed this routine!",
+                                    text = stringResource(id = R.string.not_executed),
                                     style = MaterialTheme.typography.h4,
                                     fontSize = 20.sp,
                                     color = Color.White,
@@ -116,6 +112,30 @@ fun ProgressDetailScreen(viewModel: RoutinesViewModel, viewRoutineHandler: () ->
                                 )
                             }
 
+                        }
+                        Column(
+                            modifier = Modifier
+                                .fillMaxWidth(0.85F)
+                                .background(Gray, RoundedCornerShape(20.dp))
+                        ) {
+                            Row(
+                                modifier = Modifier.padding(20.dp),
+                                verticalAlignment = Alignment.CenterVertically
+                            ){
+                                Icon(
+                                    Icons.Default.Help,
+                                    contentDescription = "Question mark",
+                                    tint = Green
+                                )
+                                Spacer(modifier = Modifier.width(20.dp))
+                                Text(
+                                    text = stringResource(id = R.string.explanationProgress),
+                                    style = MaterialTheme.typography.h3,
+                                    fontSize = 15.sp,
+                                    color = Color.White,
+                                    modifier = Modifier.fillMaxWidth(0.8f)
+                                )
+                            }
                         }
                     }
 

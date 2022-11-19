@@ -4,8 +4,10 @@ import androidx.compose.material.*
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.getValue
 import androidx.compose.ui.graphics.Color
+import androidx.compose.ui.res.stringResource
 import androidx.navigation.NavController
 import androidx.navigation.compose.currentBackStackEntryAsState
+import com.example.myapplication.R
 import com.example.myapplication.ui.theme.Green
 
 @Composable
@@ -24,7 +26,15 @@ fun SideBar(navController: NavController) {
         items.forEach { item ->
             NavigationRailItem(
                 icon = { Icon(imageVector = item.icon, contentDescription = item.title) },
-                label = { Text(text = item.title, color = Color.Gray) },
+                label = {
+                    Text(
+                        text = if(item == NavBarScreen.Explore) stringResource(id = R.string.explore_title)
+                        else if(item == NavBarScreen.Progress) stringResource(id = R.string.progress_title)
+                        else if(item == NavBarScreen.Routines) stringResource(id = R.string.routines_title)
+                        else stringResource(id = R.string.profile),
+                        color = Color.Gray
+                    )
+                },
                 alwaysShowLabel = true,
                 selectedContentColor = Color.Black,
                 unselectedContentColor = Color.Gray,

@@ -51,7 +51,13 @@
     <string name="bad_delta_title">Carry On</string>
     <string name="routine_finished_title">Done</string>
     <string name="routine_finished_text">Take a break, you have finished this routine</string>
+    <string name="share">Share</string>
+    <string name="delete">Delete</string>
+    <string name="all">All</string>
+    <string name="profile">Profile</string>
     <string name="volume">Volume</string>
     <string name="weight">Weight (Kg)</string>
     <string name="reps">Reps</string>
+    <string name="not_executed">You have not yet executed this routine!</string>
+    <string name="executions">Executions</string>
 </resources>
