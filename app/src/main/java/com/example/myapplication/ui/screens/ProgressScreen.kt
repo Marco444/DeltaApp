@@ -48,7 +48,7 @@ fun ProgressScreen(viewModel: RoutinesViewModel,
 
                 Text(
                     text = stringResource(R.string.progress_title),
-                    style = MaterialTheme.typography.h1
+                    style = MaterialTheme.typography.h2
                 )
 
 
@@ -63,7 +63,8 @@ fun ProgressScreen(viewModel: RoutinesViewModel,
                     actionRedirect = actionRedirect,
                     routineCard = RoutineCard.Progress,
                     buttonText = stringResource(id = R.string.see_progress),
-                    errorRedirect = errorRedirect
+                    errorRedirect = errorRedirect,
+                    refreshFunction = {viewModel.getUserRoutines()}
                 )
             }
         }

@@ -14,44 +14,53 @@ import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.unit.dp
 import com.example.myapplication.R
 import com.example.myapplication.ui.activities.secondactivity.RoutinesViewModel
+import com.google.accompanist.swiperefresh.SwipeRefresh
+import com.google.accompanist.swiperefresh.rememberSwipeRefreshState
 
 @Composable
 fun RoutinesGrid(viewModel: RoutinesViewModel,
                  actionRedirect: (Int) -> Unit,
                  routineCard: RoutineCard,
                  buttonText: String,
-                 errorRedirect: () -> Unit) {
+                 errorRedirect: () -> Unit,
+                 refreshFunction : () -> Unit
+) {
 
 
     val hasNextPageUser by viewModel.hasNextPageUser.collectAsState()
     val hasNextPageExplore by viewModel.hasNextPageExplore.collectAsState()
+    val fetchingState by viewModel.fetchingState.collectAsState()
+    val swipeRefreshState = rememberSwipeRefreshState(isRefreshing = fetchingState.isFetching)
 
-    LazyVerticalGrid(
-        GridCells.Adaptive(ROUTINE_CARD_WIDTH.dp)) {
-        items(viewModel.getRoutines(routineCard)) { routineState ->
-            Box(
-                modifier= Modifier
-                    .fillMaxSize()
-                    .padding(bottom = 20.dp),
-                contentAlignment = Alignment.Center
-            ) {
+    SwipeRefresh(state = swipeRefreshState , onRefresh = { refreshFunction()}, modifier = Modifier.fillMaxHeight()) {
+        LazyVerticalGrid(
+            GridCells.Adaptive(ROUTINE_CARD_WIDTH.dp)) {
+            items(viewModel.getRoutines(routineCard)) { routineState ->
+                Box(
+                    modifier= Modifier
+                        .fillMaxSize()
+                        .padding(bottom = 20.dp),
+                    contentAlignment = Alignment.Center
+                ) {
 
-                val routine by routineState.collectAsState()
-                RoutineCard(
-                    routine = routine,
-                    iconId =    if (!viewModel.isSelected(routine.id, routineCard))
-                        routineCard.iconUnClicked
-                    else
-                        routineCard.iconClicked,
-                    clickedIcon = { viewModel.clickedIcon(routine.id, routineCard) },
-                    routineCard = routineCard,
-                    buttonText = buttonText,
-                    viewModel = viewModel,
-                    actionHandler = { actionRedirect(routine.id) }
-                )
+                    val routine by routineState.collectAsState()
+                    RoutineCard(
+                        routine = routine,
+                        iconId =    if (!viewModel.isSelected(routine.id, routineCard))
+                            routineCard.iconUnClicked
+                        else
+                            routineCard.iconClicked,
+                        clickedIcon = { viewModel.clickedIcon(routine.id, routineCard) },
+                        routineCard = routineCard,
+                        buttonText = buttonText,
+                        viewModel = viewModel,
+                        actionHandler = { actionRedirect(routine.id) }
+                    )
 
-                Spacer(modifier = Modifier.height(30.dp))
+                    Spacer(modifier = Modifier.height(30.dp))
+                }
             }
         }
     }
+
 }

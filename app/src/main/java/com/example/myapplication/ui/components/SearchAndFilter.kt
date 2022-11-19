@@ -56,7 +56,8 @@ fun SearchField(viewModel: RoutinesViewModel) {
             focusedIndicatorColor =  Color.Transparent),
         textStyle = TextStyle.Default.copy(fontSize = 15.sp),
         modifier = Modifier
-            .height(55.dp).widthIn(min = 300.dp, max = 600.dp)
+            .height(55.dp)
+            .widthIn(min = 300.dp, max = 600.dp)
     )
 }
 
@@ -98,5 +99,9 @@ fun SearchAndFilter(viewModel: RoutinesViewModel) {
         SearchField(viewModel)
         Spacer(Modifier.width(10.dp))
         FilterButton(viewModel = viewModel)
+        Spacer(Modifier.width(10.dp))
+       /* IconButton(onClick = { viewModel.getExploreRoutines() }) {
+            //Icon(painter = Icons.Filled.Re, contentDescription = )
+        }*/
     }
 }

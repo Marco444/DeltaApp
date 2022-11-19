@@ -1,5 +1,6 @@
 package com.example.myapplication.ui.activities.secondactivity
 
+import androidx.compose.material3.windowsizeclass.WindowHeightSizeClass
 import androidx.compose.material3.windowsizeclass.WindowWidthSizeClass
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
@@ -349,6 +350,11 @@ class RoutinesViewModel(
     }
 
     private var screenWidth = MutableStateFlow(WindowWidthSizeClass.Compact)
+    val width: StateFlow<WindowWidthSizeClass>
+        get() = screenWidth.asStateFlow()
+    private var screenHeight = MutableStateFlow(WindowHeightSizeClass.Compact)
+    val height: StateFlow<WindowHeightSizeClass>
+        get() = screenHeight.asStateFlow()
     val hamburguer = MutableStateFlow(true)
 
     fun cardsExpandable(): Boolean {
@@ -358,6 +364,9 @@ class RoutinesViewModel(
     fun setWidth(width: WindowWidthSizeClass) {
         screenWidth.update { width };
         hamburguer.update { width != WindowWidthSizeClass.Medium }
+    }
+    fun setHeight(width: WindowHeightSizeClass) {
+        screenHeight.update { width };
     }
 
     // SETTINGS -> TODO moverlo para arriba una vez que funque

@@ -5,6 +5,8 @@ import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.*
 import androidx.compose.material.*
 import androidx.compose.material3.windowsizeclass.ExperimentalMaterial3WindowSizeClassApi
+import androidx.compose.material3.windowsizeclass.WindowHeightSizeClass
+import androidx.compose.material3.windowsizeclass.WindowWidthSizeClass
 import androidx.compose.material3.windowsizeclass.calculateWindowSizeClass
 
 import androidx.compose.runtime.*
@@ -32,7 +34,6 @@ fun RoutinesScreen(viewModel: RoutinesViewModel,
     val error by viewModel.error.collectAsState()
     val fetchState by viewModel.fetchingState.collectAsState()
     val (snackbarVisibleState, setSnackBarState) = remember { mutableStateOf(false) }
-
     val displayHamburguer by viewModel.hamburguer.collectAsState()
 
     Column (
@@ -52,10 +53,11 @@ fun RoutinesScreen(viewModel: RoutinesViewModel,
                 horizontalAlignment = Alignment.CenterHorizontally
             ) {
 
-                Text(
-                    text = stringResource(R.string.routines_title),
-                    style = MaterialTheme.typography.h1
-                )
+                    Text(
+                        text = stringResource(R.string.routines_title),
+                        style = MaterialTheme.typography.h2
+                    )
+
 
 
                 Spacer(modifier = Modifier.height(10.dp))
@@ -67,7 +69,9 @@ fun RoutinesScreen(viewModel: RoutinesViewModel,
                     actionRedirect = actionRedirect,
                     routineCard = RoutineCard.MyRoutine,
                     buttonText = stringResource(id = R.string.Start),
-                    errorRedirect = errorRedirect
+                    errorRedirect = errorRedirect,
+                    refreshFunction = {viewModel.getUserRoutines()}
+
                 )
             }
         }
