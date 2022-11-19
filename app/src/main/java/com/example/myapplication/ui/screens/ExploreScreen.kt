@@ -82,7 +82,8 @@ fun ExploreScreen(viewModel: RoutinesViewModel,
                     actionRedirect = actionRedirect,
                     routineCard = RoutineCard.ExploreRoutine,
                     buttonText = stringResource(id = R.string.Preview),
-                    errorRedirect = errorRedirect
+                    errorRedirect = errorRedirect,
+                    refreshFunction = {viewModel.getExploreRoutines()}
                 )
             }
 

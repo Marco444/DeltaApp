@@ -67,7 +67,9 @@ fun RoutinesScreen(viewModel: RoutinesViewModel,
                     actionRedirect = actionRedirect,
                     routineCard = RoutineCard.MyRoutine,
                     buttonText = stringResource(id = R.string.Start),
-                    errorRedirect = errorRedirect
+                    errorRedirect = errorRedirect,
+                    refreshFunction = {viewModel.getUserRoutines()}
+
                 )
             }
         }
