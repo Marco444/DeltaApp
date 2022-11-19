@@ -65,7 +65,7 @@ fun ExploreScreen(viewModel: RoutinesViewModel,
             ) {
                 Text(
                     text = stringResource(R.string.explore_title),
-                    style = MaterialTheme.typography.h1
+                    style = MaterialTheme.typography.h2
                 )
 
                 if(refferedRoutineId != -1) {

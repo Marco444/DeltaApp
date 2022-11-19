@@ -48,7 +48,7 @@ fun ProgressScreen(viewModel: RoutinesViewModel,
 
                 Text(
                     text = stringResource(R.string.progress_title),
-                    style = MaterialTheme.typography.h1
+                    style = MaterialTheme.typography.h2
                 )
 
 
